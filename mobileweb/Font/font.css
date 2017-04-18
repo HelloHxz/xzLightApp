@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('./fontawesome-webfont.eot?v=4.4.0');
+  src: url('./fontawesome-webfont.eot?#iefix&v=4.4.0') format('embedded-opentype'), url('./fontawesome-webfont.woff2?v=4.4.0') format('woff2'), url('./fontawesome-webfont.woff?v=4.4.0') format('woff'), url('./fontawesome-webfont.ttf?v=4.4.0') format('truetype'), url('./fontawesome-webfont.svg?v=4.4.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+    font-family: 'icomoon';
+    src:    url('./icomoon.eot?r8kyb9');
+    src:    url('./icomoon.eot?r8kyb9#iefix') format('embedded-opentype'),
+        url('./icomoon.ttf?r8kyb9') format('truetype'),
+        url('./icomoon.woff?r8kyb9') format('woff'),
+        url('./icomoon.svg?r8kyb9#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.xz-icon{
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.xz-icon i:before{
+  speak: none;
+   font-style: normal;
+   font-weight: normal;
+   font-variant: normal;
+   text-transform: none;
+   content:attr(data-icon) ;
+}

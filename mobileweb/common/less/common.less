@@ -1,0 +1,137 @@
+
+
+.xz-z100
+{z-index: 100;}
+*{
+  padding: 0;
+  margin: 0;
+  -moz-flex-shrink: 0;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+.xz-design-outer-wrapper
+{
+  position: relative;
+  width: 100%;
+  height:100%;
+  overflow: hidden;
+}
+
+.xz-scrolling{
+  -webkit-overflow-scrolling: touch;
+}
+.xz-page-out-wrapper,.xz-page-route-wrapper
+{
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  position: absolute;
+  overflow: hidden;
+}
+
+@keyframes rightin
+{
+  from {transform:translateX(100%);}
+  to {transform:translateX(0);}
+}
+
+@keyframes rightout
+{
+  from {transform:translateX(0);}
+  to {transform:translateX(-100%);}
+}
+
+@keyframes leftin
+{
+  from {transform:translateX(-100%);}
+  to {transform:translateX(0);}
+}
+
+@keyframes leftout
+{
+  from {transform:translateX(0);}
+  to {transform:translateX(100%);}
+}
+
+.right-in{
+  animation:rightin .2s ease;
+  transform:translateX(0);
+}
+.right-out{
+  animation:rightout .33s ease;
+  transform:translateX(-100%);
+}
+.left-in{
+  animation:leftin .2s ease;
+  transform:translateX(0);
+
+}
+.left-out{
+  animation:leftout .33s ease;
+  transform:translateX(100%);
+}
+
+html,body{
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  width:100%;
+  height:100%;
+  overflow: hidden;
+}
+
+.xz-pageview-outer{
+  position: relative;
+  z-index: 10;
+  height:100%;
+}
+.xz-pageview
+{
+  height:100%;
+  width:100%;
+  overflow: auto;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: flex-start;
+  -webkit-justify-content:flex-start;
+  -webkit-overflow-scrolling:touch;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -moz-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+.xz-root-container{
+  position: relative;
+  height:100%;
+  width:100%;
+}
+
+.xz-drawer-page-wrapper{
+  position: relative;
+  height:100%;
+  width:100%;
+  overflow: hidden;
+}
+.xz-tab-body-wapper
+{
+  position: relative;
+  height:100%;
+  width:100%;
+}
+.displayflex{
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-overflow-scrolling:touch;
+}

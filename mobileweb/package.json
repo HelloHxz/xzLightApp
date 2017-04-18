@@ -1,0 +1,38 @@
+{
+  "name": "react-learn",
+  "version": "1.0.0",
+  "description": "react",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./server.js"
+  },
+  "author": "Jason Hu",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^5.8.38",
+    "babel-loader": "^5.4.0",
+    "css-loader": "^0.21.0",
+    "es6-promise": "^3.2.1",
+    "express": "^4.14.0",
+    "fastclick": "^1.0.6",
+    "history": "^1.17.0",
+    "immutable": "^3.8.1",
+    "isomorphic-fetch": "^2.2.1",
+    "jsx-loader": "^0.13.2",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "react-mixin": "^3.0.5",
+    "react-redux": "^4.4.5",
+    "react-timer-mixin": "^0.13.3",
+    "redux": "^3.5.2",
+    "redux-devtools": "^2.1.5",
+    "redux-thunk": "^1.0.3",
+    "style-loader": "^0.13.1"
+  },
+  "devDependencies": {
+    "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1"
+  }
+}
