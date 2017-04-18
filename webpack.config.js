@@ -16,7 +16,7 @@ module.exports = {
     // bundle the client for hot reloading
     // only- means to only hot reload for successful updates
 
-    './index.js'
+    './page1/index.js'
     // the entry point of our app
   ],
   output: {
@@ -57,7 +57,6 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     // enable HMR globally
     new webpack.NamedModulesPlugin(),
     

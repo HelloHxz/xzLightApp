@@ -6,16 +6,17 @@ class Navigation extends React.Component {
 
 
   }
-   componentDidMount(){
+
+  componentDidMount(){
    	window.onhashchange=function(){
    		
    	};
    
-   }
+  }
 
 
   render() {
-    return (<div>sss</div>);
+    return (<div>todo...</div>);
   }
 }
 module.exports = Navigation;
