@@ -1,24 +1,29 @@
 const path = require('path');
 const webpack = require('webpack');
 
-module.exports = {
+
+
+
+
+module.exports = function (env) {
+  const nodeEnv = env && env.prod ? 'production' : 'development';
+const isProd = nodeEnv === 'production';
+
+var entry = ['./page1/index.js'];
+if(!isProd){
+  entry = entry.concat([
+      'react-hot-loader/patch',
+
+      'webpack-dev-server/client?http://localhost:8080',
+
+      'webpack/hot/only-dev-server',
+    ]);
+}
+return {
+
   context: path.resolve(__dirname, 'example'),
 
-  entry: [
-    'react-hot-loader/patch',
-    // activate HMR for React
-
-    'webpack-dev-server/client?http://localhost:8080',
-    // bundle the client for webpack-dev-server
-    // and connect to the provided endpoint
-
-    'webpack/hot/only-dev-server',
-    // bundle the client for hot reloading
-    // only- means to only hot reload for successful updates
-
-    './page1/index.js'
-    // the entry point of our app
-  ],
+  entry:entry,
   output: {
     filename: 'bundle.js',
     // the output bundle
@@ -29,8 +34,7 @@ module.exports = {
     // necessary for HMR to know where to load the hot update chunks
   },
 
-  // devtool: 'inline-source-map',
-  devtool: 'hidden-source-map',
+  devtool: isProd ? 'hidden-source-map' : 'eval',
 
   devServer: {
     hot: true,
@@ -57,6 +61,7 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     // enable HMR globally
     new webpack.NamedModulesPlugin(),
     
@@ -65,3 +70,4 @@ module.exports = {
     })
   ],
 };
+}
