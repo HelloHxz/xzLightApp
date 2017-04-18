@@ -1,14 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
 const {Navigation} = require("../index").default
+Navigation.start();
 
-const render = () => {
-  ReactDOM.render(
-      <Navigation/>,
-    document.getElementById('root')
-  );
-};
-
-render();
 

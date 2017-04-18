@@ -1,4 +1,4 @@
-import Navigation from './src/navigation/main' 
+import Navigation from './src/navigation' 
 
 export default {
 	"pagecontainer":"xxxxxxx",
