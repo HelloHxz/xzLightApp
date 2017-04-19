@@ -1,8 +1,9 @@
 const {Navigation} = require("../../index").default
 Navigation.start({
-	root:"index",
+	root:"delayload",
 	pages:{
-		index:require("./pages/index")
+		index:require("./pages/index"),
+		delayload:require("./delayloadpages/delayload")
 	},
 });
 

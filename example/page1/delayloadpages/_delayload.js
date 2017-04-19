@@ -3,11 +3,6 @@ const {XzComponents} = require("../../../index").default
 
 
 
-// function loadC(name) {
-// 	require.ensure(["../components/button"], function(require) {
-// 		alert("s");
-// 	});
-// }
 class PageView extends React.Component {
   constructor(props) {
     super(props)
@@ -15,7 +10,7 @@ class PageView extends React.Component {
 
   render() {
   		
-    return (<div><XzComponents.listview/></div>);
+    return (<div>分包加载</div>);
   }
 }
 module.exports = PageView;
