@@ -11,7 +11,6 @@ function loadC(name) {
 
 export default {
 	start(){
-		console.log(loadC("button"));
 		ReactDOM.render(<Navigation/>,
    		 document.getElementById('xz-lightapp-root'));
 	}
