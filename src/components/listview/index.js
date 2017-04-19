@@ -8,7 +8,7 @@ class ListView extends React.Component {
 
 
   render() {
-    return (<div>xxx</div>);
+    return (<div>listview</div>);
   }
 }
 module.exports = ListView;

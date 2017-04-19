@@ -1,4 +1,5 @@
 var React = require("react");
+const {XzComponents} = require("../../../index").default
 
 class PageView extends React.Component {
   constructor(props) {
@@ -7,7 +8,7 @@ class PageView extends React.Component {
 
 
   render() {
-    return (<div>sdsadasdasdasasd</div>);
+    return (<div><XzComponents.listview/></div>);
   }
 }
 module.exports = PageView;

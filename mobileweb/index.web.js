@@ -56,7 +56,7 @@ function getParamsFromUrl(){
 class RootNav extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.state={curpagename:null}
+    this.state={curpagename:null,pagerenderseed:0}
     this.isPrevent = false;
     this.isForward = true;
     this.FromPage = this.getPageNameFromUrl();

@@ -12,7 +12,13 @@ var React = require("react");
 class Navigation extends React.Component {
   constructor(props) {
     super(props)
-
+    this.routeStack = [];
+    if(!this.props.config.root){
+      console.error("没有指定root页面");
+    }
+    this.state={
+        curpagename:this.props.config.root
+        ,pagerenderseed:0}  
 
   }
 
@@ -25,10 +31,7 @@ class Navigation extends React.Component {
     this.start();
   }
 
-  hashChange(){
-
-
-  }
+ 
 
   start() {
     let config = this.props.config;
@@ -117,8 +120,17 @@ class Navigation extends React.Component {
   }
 
 
+  hashChange(){
+    var ToPageName = this.getPageNameFromUrl();
+    var ToPageInstance = this.props.config.pages[ToPageName];
+    this.FromPage = this.state.curpagename;
+    var key = ToPageName+"_"+this.routeStack.length;
+    this.routeStack.push(<ToPageInstance key={key}></ToPageInstance>);
+    this.setState({curpagename:ToPageName,pagerenderseed:this.state.pagerenderseed+1});
+  }
+
   render() {
-    return (<div className='xz-pageview-outer'>todo...</div>);
+    return (<div className='xz-pageview-outer'>{this.routeStack}</div>);
   }
 }
 module.exports = Navigation;
