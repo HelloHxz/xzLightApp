@@ -1,4 +1,5 @@
 var React = require("react");
+var PageView = require("./container/pageview");
 
 /*
   路由需要支持：
@@ -122,10 +123,14 @@ class Navigation extends React.Component {
 
   hashChange(){
     var ToPageName = this.getPageNameFromUrl();
-    var ToPageInstance = this.props.config.pages[ToPageName];
+    if(!this.props.config.pages){
+      console.error("没有配置pages属性");
+    }
+   
     this.FromPage = this.state.curpagename;
     var key = ToPageName+"_"+this.routeStack.length;
-    this.routeStack.push(<ToPageInstance key={key}></ToPageInstance>);
+
+    this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
     this.setState({curpagename:ToPageName,pagerenderseed:this.state.pagerenderseed+1});
   }
 
