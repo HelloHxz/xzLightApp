@@ -132,20 +132,28 @@ class Navigation extends React.Component {
       console.error("没有配置pages属性");
     }
 
-    if(this.isForward){
-      console.log("前进");
-    }else{
-      if(this.routeStack.length===0){
-        console.log("刷新");
-      }else{
-       console.log("后退");
-      }
-    }
-   
     this.FromPage = this.state.curpagename;
     var key = ToPageName+"_"+this.routeStack.length;
 
-    this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
+    if(this.isForward){
+      console.log("前进");
+      this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
+    }else{
+      if(this.routeStack.length===0){
+        console.log("刷新");
+        this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
+      }else{
+        if(this.routeStack.length>1){
+          this.routeStack.splice(this.routeStack.length-1,1)
+        }else{
+          alert("s");
+        }
+        console.log("后退");
+      }
+    }
+   
+ 
+
     this.setState({curpagename:ToPageName,pagerenderseed:this.state.pagerenderseed+1});
     this.isForward = false;
   }
