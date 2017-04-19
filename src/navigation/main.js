@@ -6,7 +6,7 @@ var PageView = require("./container/pageview");
     1. 多级路由
     2. 参数传递
     3. modifyparams deleteparams addparams 修改参数 页面不刷新
-    4. 阻止后退 可以使用自身的UI进行阻止
+    4. 阻止后退 可以使用自身的UI进行阻止（刚进来的第一页也可以阻止）
     5. 默认的是keepAlive 可设置不保留 前一个页面的状态和dom
 */
 
@@ -14,6 +14,7 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props)
     this.routeStack = [];
+    this.isForward = false;
     if(!this.props.config.root){
       console.error("没有指定root页面");
     }
@@ -32,6 +33,10 @@ class Navigation extends React.Component {
     this.start();
   }
 
+  goBack() {
+        this.isForward = false;
+        window.history.go(-1);
+  }
  
 
   start() {
@@ -126,12 +131,23 @@ class Navigation extends React.Component {
     if(!this.props.config.pages){
       console.error("没有配置pages属性");
     }
+
+    if(this.isForward){
+      console.log("前进");
+    }else{
+      if(this.routeStack.length===0){
+        console.log("刷新");
+      }else{
+       console.log("后退");
+      }
+    }
    
     this.FromPage = this.state.curpagename;
     var key = ToPageName+"_"+this.routeStack.length;
 
     this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
     this.setState({curpagename:ToPageName,pagerenderseed:this.state.pagerenderseed+1});
+    this.isForward = false;
   }
 
   render() {

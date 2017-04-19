@@ -7,18 +7,30 @@ const webpack = require('webpack');
 
 module.exports = function (env) {
   const nodeEnv = env && env.prod ? 'production' : 'development';
-const isProd = nodeEnv === 'production';
+  const isProd = nodeEnv === 'production';
 
-var entry = ['./page1/index.js'];
-if(!isProd){
-  entry = entry.concat([
-      'react-hot-loader/patch',
+  var plugins= [
+      new webpack.NamedModulesPlugin(),
+      new webpack.LoaderOptionsPlugin({
+          minimize: true
+      })
+  ];
+  if(!isProd){
+    plugins.push(
+    new webpack.HotModuleReplacementPlugin()
+      );
+  }
 
-      'webpack-dev-server/client?http://localhost:8080',
+  var entry = ['./page1/index.js'];
+  if(!isProd){
+    entry = entry.concat([
+        'react-hot-loader/patch',
 
-      'webpack/hot/only-dev-server',
-    ]);
-}
+        'webpack-dev-server/client?http://localhost:8080',
+
+        'webpack/hot/only-dev-server',
+      ]);
+  }
 return {
 
   context: path.resolve(__dirname, 'example'),
@@ -70,14 +82,6 @@ return {
     ],
   },
 
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    // enable HMR globally
-    new webpack.NamedModulesPlugin(),
-    
-    new webpack.LoaderOptionsPlugin({
-        minimize: true
-    })
-  ],
+  plugins:plugins,
 };
 }

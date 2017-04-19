@@ -5,6 +5,8 @@ class PageView extends React.Component {
     super(props)
   }
 
+ 
+
 
   render() {
   	var ToPageInstance = this.props.pagemanager.props.config.pages[this.props.pagename];
@@ -12,7 +14,7 @@ class PageView extends React.Component {
        console.error("pages属性中没有引入["+ToPageName+"]页面");
     }
     return (<ToPageInstance 
-    			pageinstance={this} 
+    			pageview={this} 
     			pagemanager={this.props.pagemanager} 
     			key={this.props.pkey+"_inner"}>
     		</ToPageInstance>);
