@@ -65,8 +65,17 @@ class Navigation extends React.Component {
     isPrevent = false;
     params = params || {};
     var preUrlParams = this.getParamsFromUrl();
-    params.__pr = preUrlParams.__r;
-    params.__r = this.getUniqueSeed();
+    var prePageName = this.getPageNameFromUrl();
+    if(prePageName===pageKey&&preUrlParams.__r!==undefined&&preUrlParams.__pr!==undefined&&preUrlParams.__pr!=='undefined'){
+       params.__pr = preUrlParams.__pr;
+       params.__r = preUrlParams.__r;
+    }else{
+      if(preUrlParams.__r!==undefined){
+        params.__pr = preUrlParams.__r;
+      }
+      params.__r = this.getUniqueSeed();
+    }
+    
     var paramsArr = [];
     for (var key in params) {
         paramsArr.push(key + "=" + params[key]);
