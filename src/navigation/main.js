@@ -236,6 +236,7 @@ class Navigation extends React.Component {
 
     this.preUrlParams = this.getParamsFromUrl();
     if(!this.preUrlParams.__r&&!this.firstLoadToChangeHash){
+      //禁止离开应用 todo 事件插件机制
       isWantToPreventRoute = true;
       var p = this.getParamsFromUrl()||{};
       p.__r =this.preUrlParams.__r|| this.getUniqueSeed();
