@@ -15,7 +15,16 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props)
     this.routeStack = [];
-    this.seed = (new Date()).valueOf();
+    var params = this.getParamsFromUrl();
+    var r = 0;
+    if(params.__r&&!isNaN(params.__r)){
+      r = parseInt(r);
+    }
+    var pr = 0;
+    if(params.__pr&&!isNaN(params.__pr)){
+      pr = parseInt(pr);
+    }
+    this.seed = Math.max(r,pr)+1000;
     this.isForward = false;
     //浏览器并不会为第一个url记录hash记录 所以想禁止第一个页面离开 需要在第一次加载根路径的时候增加一个hash记录
     this.firstLoadToChangeHash = false;
@@ -67,6 +76,7 @@ class Navigation extends React.Component {
     var preUrlParams = this.getParamsFromUrl();
     var prePageName = this.getPageNameFromUrl();
     if(prePageName===pageKey&&preUrlParams.__r!==undefined&&preUrlParams.__pr!==undefined&&preUrlParams.__pr!=='undefined'){
+       //避免本不应该发生hashchange 被__r引发hashchange
        params.__pr = preUrlParams.__pr;
        params.__r = preUrlParams.__r;
     }else{
