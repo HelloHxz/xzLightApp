@@ -34,7 +34,7 @@ class Navigation extends React.Component {
     }
     this.state={
         curpagename:this.props.config.root
-        ,pagerenderseed:0}  
+        ,pages:[]}  
 
   }
 
@@ -187,7 +187,8 @@ class Navigation extends React.Component {
     }
 
     this.FromPage = this.state.curpagename;
-    var key = ToPageName+"_"+this.routeStack.length;
+    var key = ToPageName+"_"+curParams.__r;
+    console.log(key);
 
 
     if(this.isForward){
@@ -220,7 +221,7 @@ class Navigation extends React.Component {
     }
 
 
-    this.setState({curpagename:ToPageName,pagerenderseed:this.state.pagerenderseed+1});
+    this.setState({pages:this.routeStack});
     this.isForward = false;
     this.isInit = false;
 
@@ -247,7 +248,7 @@ class Navigation extends React.Component {
 
 
   render() {
-    return (<div className='xz-pageview-outer'>{this.routeStack}</div>);
+    return (<div className='xz-pageview-outer'>{this.state.pages}</div>);
   }
 }
 module.exports = Navigation;
