@@ -15,7 +15,7 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props)
     this.routeStack = [];
-    this.seed = 0;
+    this.seed = (new Date()).valueOf();
     this.isForward = false;
     //浏览器并不会为第一个url记录hash记录 所以想禁止第一个页面离开 需要在第一次加载根路径的时候增加一个hash记录
     this.firstLoadToChangeHash = false;
@@ -60,7 +60,7 @@ class Navigation extends React.Component {
     }
   }
 
-  go(pageKey, params) {
+  prepareGo(pageKey, params){
     this.isForward = true;
     isPrevent = false;
     params = params || {};
@@ -80,6 +80,11 @@ class Navigation extends React.Component {
     for (var key in params) {
         paramsArr.push(key + "=" + params[key]);
     }
+    return paramsArr;
+  }
+
+  go(pageKey, params) {
+    var paramsArr = this.prepareGo(pageKey, params);
     if (paramsArr.length > 0) {
         location.hash = pageKey + "?" + paramsArr.join("&");
     } else {
@@ -92,16 +97,7 @@ class Navigation extends React.Component {
 
   }
   replaceGo(pageKey, params) {
-    this.isForward = true;
-    isPrevent = false;
-    params = params || {};
-    var preUrlParams = this.getParamsFromUrl();
-    params.__pr = preUrlParams.__r;
-    params.__r = this.getUniqueSeed();
-    var paramsArr = [];
-    for (var key in params) {
-        paramsArr.push(key + "=" + params[key]);
-    }
+    var paramsArr = this.prepareGo(pageKey, params);
     isReplaceGo = true;
     if (paramsArr.length > 0) {
         location.replace(location.href.split("#")[0] + '#' + pageKey + "?" +  paramsArr.join("&"));
@@ -182,7 +178,7 @@ class Navigation extends React.Component {
 
 
     if(this.isForward){
-      console.log("前进");
+      console.log("前进1");
       this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
     }else{
       if(this.routeStack.length===0){
@@ -210,7 +206,7 @@ class Navigation extends React.Component {
 
     if(this.firstLoadToChangeHash){
         var p = this.getParamsFromUrl()||{};
-        p._r = this.getUniqueSeed();
+        p._f = this.getUniqueSeed();
         p.__r = this.getUniqueSeed();
         isWantToPreventRoute = true;
         this.go(this.appConfig.root,p);
