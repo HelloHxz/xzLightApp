@@ -14,7 +14,7 @@ class PageView extends React.Component {
   }
 
   clickHandle(){
-  	this.props.pagemanager.go("delayload",{x:1});
+  	this.props.pagemanager.go("delayload");
   }
 
   render() {

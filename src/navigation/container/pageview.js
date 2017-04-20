@@ -11,7 +11,7 @@ class PageView extends React.Component {
   render() {
   	var ToPageInstance = this.props.pagemanager.props.config.pages[this.props.pagename];
     if(!ToPageInstance){
-       console.error("pages属性中没有引入["+ToPageName+"]页面");
+       console.error("pages属性中没有引入["+this.props.pagename+"]页面");
     }
     return (<ToPageInstance 
     			pageview={this} 

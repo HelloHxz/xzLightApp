@@ -9,12 +9,17 @@ var PageView = require("./container/pageview");
     4. 阻止后退 可以使用自身的UI进行阻止（刚进来的第一页也可以阻止）
     5. 默认的是keepAlive 可设置不保留 前一个页面的状态和dom
 */
+var isWantToPreventRoute = false;
 
 class Navigation extends React.Component {
   constructor(props) {
     super(props)
     this.routeStack = [];
+    this.seed = 0;
     this.isForward = false;
+    //浏览器并不会为第一个url记录hash记录 所以想禁止第一个页面离开 需要在第一次加载根路径的时候增加一个hash记录
+    this.firstLoadToChangeHash = false;
+    this.isInit = true;
     if(!this.props.config.root){
       console.error("没有指定root页面");
     }
@@ -22,6 +27,11 @@ class Navigation extends React.Component {
         curpagename:this.props.config.root
         ,pagerenderseed:0}  
 
+  }
+
+  getUniqueSeed(){
+    this.seed+=1;
+    return this.seed;
   }
 
   componentDidMount(){
@@ -54,6 +64,9 @@ class Navigation extends React.Component {
     this.isForward = true;
     isPrevent = false;
     params = params || {};
+    var curParams = this.getParamsFromUrl();
+    params.__pr = curParams.__r;
+    params.__r = this.getUniqueSeed();
     var paramsArr = [];
     for (var key in params) {
         paramsArr.push(key + "=" + params[key]);
@@ -73,6 +86,9 @@ class Navigation extends React.Component {
     this.isForward = true;
     isPrevent = false;
     params = params || {};
+    var curParams = this.getParamsFromUrl();
+    params.__pr = curParams.__r;
+    params.__r = this.getUniqueSeed();
     var paramsArr = [];
     for (var key in params) {
         paramsArr.push(key + "=" + params[key]);
@@ -135,7 +151,17 @@ class Navigation extends React.Component {
 
 
   hashChange(){
+    if(isWantToPreventRoute){
+      isWantToPreventRoute = false;
+      this.firstLoadToChangeHash = false;
+      return;
+    }
     var ToPageName = this.getPageNameFromUrl();
+
+    if(this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
+        this.firstLoadToChangeHash = true;
+    }
+
     if(!this.props.config.pages){
       console.error("没有配置pages属性");
     }
@@ -159,13 +185,21 @@ class Navigation extends React.Component {
         console.log("后退");
       }
     }
-    console.log(this.routeStack.length);
-   
- 
 
     this.setState({curpagename:ToPageName,pagerenderseed:this.state.pagerenderseed+1});
     this.isForward = false;
+    this.isInit = false;
+
+    if(this.firstLoadToChangeHash){
+        var p = this.getParamsFromUrl()||{};
+        p._r = this.getUniqueSeed();
+        p.__r = this.getUniqueSeed();
+        isWantToPreventRoute = true;
+        this.go(this.appConfig.root,p);
+    }
   }
+
+
 
   render() {
     return (<div className='xz-pageview-outer'>{this.routeStack}</div>);
