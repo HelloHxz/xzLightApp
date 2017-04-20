@@ -69,9 +69,10 @@ class Navigation extends React.Component {
     }
   }
 
-  prepareGo(pageKey, params){
-    this.isForward = true;
-    isPrevent = false;
+  prepareGo(pageKey, params,isNotForward){
+    if(isNotForward!==true){
+      this.isForward = true;
+    }
     params = params || {};
     var preUrlParams = this.getParamsFromUrl();
     var prePageName = this.getPageNameFromUrl();
@@ -94,8 +95,8 @@ class Navigation extends React.Component {
     return paramsArr;
   }
 
-  go(pageKey, params) {
-    var paramsArr = this.prepareGo(pageKey, params);
+  go(pageKey, params,isNotForward) {
+    var paramsArr = this.prepareGo(pageKey, params,isNotForward);
     if (paramsArr.length > 0) {
         location.hash = pageKey + "?" + paramsArr.join("&");
     } else {
@@ -178,7 +179,7 @@ class Navigation extends React.Component {
 
     var ToPageName = this.getPageNameFromUrl();
 
-    if(!curParams._f&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
+    if(!curParams.__r&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
         this.firstLoadToChangeHash = true;
     }
     if(!this.props.config.pages){
@@ -197,17 +198,22 @@ class Navigation extends React.Component {
         console.log("刷新");
         this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
       }else{
-        if(curParams.__pr===this.preUrlParams.__r){
+        if(!this.preUrlParams.__r){
+          
+        }else{
+          if(curParams.__pr===this.preUrlParams.__r){
             console.log("前进");
             this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
-        }else{
-           if(this.routeStack.length>1){
-              console.log("后退 有前一个页面的引用");
-              this.routeStack.splice(this.routeStack.length-1,1)
-            }else{
-              console.log("刷新后的后退 没有前一个页面的引用");
-            }
+          }else{
+             if(this.routeStack.length>1){
+                console.log("后退 有前一个页面的引用");
+                this.routeStack.splice(this.routeStack.length-1,1)
+              }else{
+                console.log("刷新后的后退 没有前一个页面的引用");
+              }
+          }
         }
+        
       }
     }
 
@@ -216,16 +222,23 @@ class Navigation extends React.Component {
     this.isForward = false;
     this.isInit = false;
 
+
     if(this.firstLoadToChangeHash){
         var p = this.getParamsFromUrl()||{};
-        p._f = this.getUniqueSeed();
         p.__r = this.getUniqueSeed();
         isWantToPreventRoute = true;
-        this.go(this.appConfig.root,p);
+        setTimeout(()=>{
+          this.go(this.appConfig.root,p);
+        },2);
     }
 
     this.preUrlParams = this.getParamsFromUrl();
-
+    if(!this.preUrlParams.__r&&!this.firstLoadToChangeHash){
+      isWantToPreventRoute = true;
+      var p = this.getParamsFromUrl()||{};
+      p.__r =this.preUrlParams.__r|| this.getUniqueSeed();
+      this.go(this.appConfig.root,p,true);
+    }
   }
 
 
