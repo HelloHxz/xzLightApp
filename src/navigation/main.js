@@ -24,7 +24,7 @@ class Navigation extends React.Component {
     if(params.__pr&&!isNaN(params.__pr)){
       pr = parseInt(params.__pr);
     }
-    this.seed = Math.max(pr,r)+500;
+    this.seed = Math.max(pr,r);
     this.isForward = false;
     //浏览器并不会为第一个url记录hash记录 所以想禁止第一个页面离开 需要在第一次加载根路径的时候增加一个hash记录
     this.firstLoadToChangeHash = false;
@@ -75,7 +75,7 @@ class Navigation extends React.Component {
     params = params || {};
     var preUrlParams = this.getParamsFromUrl();
     var prePageName = this.getPageNameFromUrl();
-    if(!this.firstLoadToChangeHash&&prePageName===pageKey&&preUrlParams.__r!==undefined&&preUrlParams.__pr!==undefined&&preUrlParams.__pr!=='undefined'){
+    if(prePageName===pageKey&&preUrlParams.__r!==undefined&&preUrlParams.__pr!==undefined&&preUrlParams.__pr!=='undefined'){
        //避免本不应该发生hashchange 被__r引发hashchange
        params.__pr = preUrlParams.__pr;
        params.__r = preUrlParams.__r;
@@ -84,6 +84,7 @@ class Navigation extends React.Component {
         params.__pr = preUrlParams.__r;
       }
       params.__r = this.getUniqueSeed();
+
     }
     
     var paramsArr = [];
@@ -100,6 +101,7 @@ class Navigation extends React.Component {
     } else {
         location.hash = pageKey;
     }
+
     //当没有出发hashchange的时候
     setTimeout(()=>{
       this.isForward = false;
@@ -114,12 +116,13 @@ class Navigation extends React.Component {
     } else {
         location.replace(location.href.split("#")[0] + '#' + pageKey);
     }
+
     //当没有出发hashchange的时候
     setTimeout(()=>{
       this.isForward = false;
     },200);
-
   }
+
 
   getPageNameFromUrl() {
     var nameArr = window.location.hash.split("#");
@@ -175,9 +178,8 @@ class Navigation extends React.Component {
 
     var ToPageName = this.getPageNameFromUrl();
 
-    if(this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
+    if(!curParams._f&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
         this.firstLoadToChangeHash = true;
-        console.log("[][][][][]][]]");
     }
     if(!this.props.config.pages){
       console.error("没有配置pages属性");
