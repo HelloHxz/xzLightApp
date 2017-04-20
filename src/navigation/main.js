@@ -209,6 +209,8 @@ class Navigation extends React.Component {
                 console.log("后退 有前一个页面的引用");
                 this.routeStack.splice(this.routeStack.length-1,1)
               }else{
+                this.routeStack = [];
+                this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
                 console.log("刷新后的后退 没有前一个页面的引用");
               }
           }
