@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "webpack -p --progress --config webpack.config.js  --env.prod=true"
+    "build": "webpack -p --progress --config  webpack.config.js  --env.prod=true"
   },
   "author": "",
   "license": "ISC",

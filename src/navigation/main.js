@@ -63,6 +63,10 @@ class Navigation extends React.Component {
     } else {
         location.hash = pageKey;
     }
+    //当没有出发hashchange的时候
+    setTimeout(()=>{
+      this.isForward = false;
+    },200);
 
   }
   replaceGo(pageKey, params) {
@@ -79,6 +83,10 @@ class Navigation extends React.Component {
     } else {
         location.replace(location.href.split("#")[0] + '#' + pageKey);
     }
+    //当没有出发hashchange的时候
+    setTimeout(()=>{
+      this.isForward = false;
+    },200);
 
   }
 
@@ -146,11 +154,12 @@ class Navigation extends React.Component {
         if(this.routeStack.length>1){
           this.routeStack.splice(this.routeStack.length-1,1)
         }else{
-          alert("s");
+          //刷新后的后退
         }
         console.log("后退");
       }
     }
+    console.log(this.routeStack.length);
    
  
 
