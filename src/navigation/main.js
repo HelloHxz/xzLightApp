@@ -64,8 +64,8 @@ class Navigation extends React.Component {
     this.isForward = true;
     isPrevent = false;
     params = params || {};
-    var curParams = this.getParamsFromUrl();
-    params.__pr = curParams.__r;
+    var preUrlParams = this.getParamsFromUrl();
+    params.__pr = preUrlParams.__r;
     params.__r = this.getUniqueSeed();
     var paramsArr = [];
     for (var key in params) {
@@ -86,8 +86,8 @@ class Navigation extends React.Component {
     this.isForward = true;
     isPrevent = false;
     params = params || {};
-    var curParams = this.getParamsFromUrl();
-    params.__pr = curParams.__r;
+    var preUrlParams = this.getParamsFromUrl();
+    params.__pr = preUrlParams.__r;
     params.__r = this.getUniqueSeed();
     var paramsArr = [];
     for (var key in params) {
@@ -156,9 +156,11 @@ class Navigation extends React.Component {
       this.firstLoadToChangeHash = false;
       return;
     }
+    var curParams = this.getParamsFromUrl();
+
     var ToPageName = this.getPageNameFromUrl();
 
-    if(this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
+    if(!curParams._r&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
         this.firstLoadToChangeHash = true;
     }
 
@@ -169,6 +171,7 @@ class Navigation extends React.Component {
     this.FromPage = this.state.curpagename;
     var key = ToPageName+"_"+this.routeStack.length;
 
+
     if(this.isForward){
       console.log("前进");
       this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
@@ -177,14 +180,20 @@ class Navigation extends React.Component {
         console.log("刷新");
         this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
       }else{
-        if(this.routeStack.length>1){
-          this.routeStack.splice(this.routeStack.length-1,1)
+        if(curParams.__pr===this.preUrlParams.__r){
+            console.log("前进");
+            this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
         }else{
-          //刷新后的后退
+           if(this.routeStack.length>1){
+              console.log("后退 有前一个页面的引用");
+              this.routeStack.splice(this.routeStack.length-1,1)
+            }else{
+              console.log("刷新后的后退 没有前一个页面的引用");
+            }
         }
-        console.log("后退");
       }
     }
+
 
     this.setState({curpagename:ToPageName,pagerenderseed:this.state.pagerenderseed+1});
     this.isForward = false;
@@ -197,6 +206,9 @@ class Navigation extends React.Component {
         isWantToPreventRoute = true;
         this.go(this.appConfig.root,p);
     }
+
+    this.preUrlParams = this.getParamsFromUrl();
+
   }
 
 
