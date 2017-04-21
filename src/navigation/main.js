@@ -178,6 +178,8 @@ class Navigation extends React.Component {
     var curParams = this.getParamsFromUrl();
 
     var ToPageName = this.getPageNameFromUrl();
+    var ToPageNameArr = ToPageName.split("/");
+    ToPageName = ToPageNameArr.pop();
 
     if(!curParams.__r&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
         this.firstLoadToChangeHash = true;
@@ -191,26 +193,26 @@ class Navigation extends React.Component {
 
 
     if(this.isForward){
-      console.log("前进1");
-      this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
+      console.log("前进!");
+      this.routeStack.push(<PageView leftrote={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
     }else{
       if(this.routeStack.length===0){
         console.log("刷新");
-        this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
+        this.routeStack.push(<PageView leftrote={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
       }else{
         if(!this.preUrlParams.__r){
           
         }else{
           if(curParams.__pr===this.preUrlParams.__r){
             console.log("前进");
-            this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
+            this.routeStack.push(<PageView leftrote={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
           }else{
              if(this.routeStack.length>1){
                 console.log("后退 有前一个页面的引用");
                 this.routeStack.splice(this.routeStack.length-1,1)
               }else{
                 this.routeStack = [];
-                this.routeStack.push(<PageView pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
+                this.routeStack.push(<PageView leftrote={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
                 console.log("刷新后的后退 没有前一个页面的引用");
               }
           }

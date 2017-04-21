@@ -43,7 +43,7 @@ return {
 
     path: path.resolve(__dirname, 'dist'),
 
-    publicPath: './'
+    publicPath: isProd?'./':'/'
     // necessary for HMR to know where to load the hot update chunks
   },
 
@@ -56,7 +56,7 @@ return {
     contentBase: path.resolve(__dirname, 'dist'),
     // match the output path
 
-    publicPath: './'
+    publicPath: isProd?'./':'/'
     // match the output `publicPath`
   },
 
