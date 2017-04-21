@@ -38,11 +38,12 @@ return {
   entry:entry,
   output: {
     filename: 'bundle.js',
+    chunkFilename: !isProd ? '[name].bundle.js' : '[name].[chunkhash:8].min.js',
     // the output bundle
 
     path: path.resolve(__dirname, 'dist'),
 
-    publicPath: '/'
+    publicPath: './'
     // necessary for HMR to know where to load the hot update chunks
   },
 
@@ -55,7 +56,7 @@ return {
     contentBase: path.resolve(__dirname, 'dist'),
     // match the output path
 
-    publicPath: '/'
+    publicPath: './'
     // match the output `publicPath`
   },
 

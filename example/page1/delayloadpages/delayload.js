@@ -14,7 +14,7 @@ class PageView extends React.Component {
 	require.ensure([], function(require) {
 		var Com = require("./_delayload");
     	_this.setState({innerChild:<Com/>});
-	});
+	},'delayloadpage');
   }
 
 

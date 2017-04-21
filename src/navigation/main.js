@@ -188,7 +188,6 @@ class Navigation extends React.Component {
 
     this.FromPage = this.state.curpagename;
     var key = ToPageName+"_"+curParams.__r;
-    console.log(key);
 
 
     if(this.isForward){
