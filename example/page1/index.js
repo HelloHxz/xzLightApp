@@ -3,7 +3,8 @@ Navigation.start({
 	root:"index",
 	pages:{
 		index:require("./pages/index"),
-		delayload:require("./delayloadpages/delayload")
+		delayload:require("./delayloadpages/delayload"),
+		twolevelroute:require("./pages/twolevelroute")
 	},
 });
 

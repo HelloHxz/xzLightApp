@@ -14,7 +14,9 @@ export default {
 	start(config){
 		ReactDOM.render(<Navigation config={config}/>,
    		 document.getElementById('xz-lightapp-root'));
-	}
+	},
+	PageContainer:require("./container/pageContainer")
+
 }
 
 
