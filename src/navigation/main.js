@@ -62,11 +62,7 @@ class Navigation extends React.Component {
     let config = this.props.config;
     this.appConfig = config;
     var toPage = this.getPageNameFromUrl();
-    if (!toPage) {
-        this.go(config.root, this.getParamsFromUrl());
-    } else {
-        this.hashChange();
-    }
+   this.hashChange();
   }
 
   prepareGo(pageKey, params,isNotForward){
@@ -177,11 +173,11 @@ class Navigation extends React.Component {
     }
     var curParams = this.getParamsFromUrl();
 
-    var ToPageName = this.getPageNameFromUrl();
+    var ToPageName = this.getPageNameFromUrl()||this.props.config.root;
     var ToPageNameArr = ToPageName.split("/");
     ToPageName = ToPageNameArr.shift();
 
-    if(!curParams.__r&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
+    if(this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
         this.firstLoadToChangeHash = true;
     }
     if(!this.props.config.pages){
@@ -233,16 +229,20 @@ class Navigation extends React.Component {
         isWantToPreventRoute = true;
         setTimeout(()=>{
           this.go(this.appConfig.root,p);
-        },2);
+        },100);
     }
 
     this.preUrlParams = this.getParamsFromUrl();
-    if(!this.preUrlParams.__r&&!this.firstLoadToChangeHash){
+
+    if(!this.preUrlParams.__r&&!this.firstLoadToChangeHash&&!this.isForward){
       //禁止离开应用 todo 事件插件机制
       isWantToPreventRoute = true;
       var p = this.getParamsFromUrl()||{};
       p.__r =this.preUrlParams.__r|| this.getUniqueSeed();
-      this.go(this.appConfig.root,p,true);
+      
+      setTimeout(()=>{
+          this.go(this.appConfig.root,p,true);
+      },100);
     }
   }
 
