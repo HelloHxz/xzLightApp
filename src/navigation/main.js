@@ -128,10 +128,10 @@ class Navigation extends React.Component {
     // }
     var s = nameArr[1];
     if(!s){
-      return this.rootPageKey;
+      return this.props.config.root;
     }
     var sArr = s.split("?");
-    return sArr[0];
+    return sArr[0]||"";
   }
 
   getParamsStrFromUrl() {
@@ -191,7 +191,11 @@ class Navigation extends React.Component {
 
     if(this.isForward){
       console.log("前进!");
-      this.routeStack.push(<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
+      if(this.prePageName === ToPageName&&ToPageNameArr.length>0){
+
+      }else{
+        this.routeStack.push(<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
+      }
     }else{
       if(this.routeStack.length===0){
         console.log("刷新");
@@ -206,7 +210,11 @@ class Navigation extends React.Component {
           }else{
              if(this.routeStack.length>1){
                 console.log("后退 有前一个页面的引用");
-                this.routeStack.splice(this.routeStack.length-1,1)
+                if( this.prePageName === ToPageName&&ToPageNameArr.length>0){
+
+                }else{
+                 this.routeStack.splice(this.routeStack.length-1,1)
+                }
               }else{
                 this.routeStack = [];
                 this.routeStack.push(<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
@@ -236,6 +244,9 @@ class Navigation extends React.Component {
     }
 
     this.preUrlParams = this.getParamsFromUrl();
+    var prePath = this.getPageNameFromUrl();
+    var prePathArr = prePath.split("/");
+    this.prePageName = prePathArr.shift();
 
     if(!this.preUrlParams.__r&&!this.firstLoadToChangeHash&&!this.isForward){
       //禁止离开应用 todo 事件插件机制
