@@ -192,7 +192,8 @@ class Navigation extends React.Component {
     if(this.isForward){
       console.log("前进!");
       if(this.prePageName === ToPageName&&ToPageNameArr.length>0){
-
+        this.routeStack[this.routeStack.length-1].page = 
+        <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
       }else{
         this.routeStack.push({
           key:ToPageName,
@@ -220,7 +221,8 @@ class Navigation extends React.Component {
              if(this.routeStack.length>1){
                 console.log("后退 有前一个页面的引用");
                 if( this.prePageName === ToPageName&&ToPageNameArr.length>0){
-
+                   this.routeStack[this.routeStack.length-1].page = 
+                      <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
                 }else{
                  this.routeStack.splice(this.routeStack.length-1,1)
                 }
