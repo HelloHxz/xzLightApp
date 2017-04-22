@@ -13,18 +13,10 @@ class PageView extends React.Component {
     super(props)
   }
 
-  clickHandle(params){
-    if(params===1){
-     this.props.pagemanager.go("delayload");
 
-    }else{
-      this.props.pagemanager.go("threelevelroute/twolevelroute/one");
-    }
-  }
 
   render() {
-    return (<div><button onClick={this.clickHandle.bind(this,1)}>跳转</button>
-      <button onClick={this.clickHandle.bind(this,2)}>跳转</button></div>);
+    return (<div>one</div>);
   }
 }
 module.exports = PageView;

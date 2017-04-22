@@ -11,7 +11,7 @@ class Com extends React.Component {
 
   render() {
   	console.log("render");
-    return (<div>teswwwwt<Navigation.PageContainer owner={this}/></div>);
+    return (<div>third<Navigation.PageContainer owner={this}/></div>);
   }
 }
 module.exports = Com;
