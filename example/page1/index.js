@@ -6,7 +6,8 @@ Navigation.start({
 		delayload:require("./delayloadpages/delayload"),
 		twolevelroute:require("./pages/twolevelroute"),
 		threelevelroute:require("./pages/threelevelroute"),
-		one:require("./pages/one")
+		one:require("./pages/one"),
+		two:require("./pages/two")
 	},
 });
 
