@@ -194,19 +194,28 @@ class Navigation extends React.Component {
       if(this.prePageName === ToPageName&&ToPageNameArr.length>0){
 
       }else{
-        this.routeStack.push(<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
+        this.routeStack.push({
+          key:ToPageName,
+          page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
+        });
       }
     }else{
       if(this.routeStack.length===0){
         console.log("刷新");
-        this.routeStack.push(<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
+        this.routeStack.push({
+          key:ToPageName,
+          page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
+        });
       }else{
         if(!this.preUrlParams.__r){
           
         }else{
           if(curParams.__pr===this.preUrlParams.__r){
             console.log("前进");
-            this.routeStack.push(<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
+             this.routeStack.push({
+              key:ToPageName,
+              page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
+            });
           }else{
              if(this.routeStack.length>1){
                 console.log("后退 有前一个页面的引用");
@@ -217,7 +226,10 @@ class Navigation extends React.Component {
                 }
               }else{
                 this.routeStack = [];
-                this.routeStack.push(<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>);
+                this.routeStack.push({
+                  key:ToPageName,
+                  page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
+                });
                 console.log("刷新后的后退 没有前一个页面的引用");
               }
           }
@@ -228,8 +240,11 @@ class Navigation extends React.Component {
 
     console.log("routeStack length:",this.routeStack.length)
 
-
-    this.setState({pages:this.routeStack});
+    var pages = [];
+    for(var i=0,j=this.routeStack.length;i<j;i++){
+      pages.push(this.routeStack[i].page);
+    }
+    this.setState({pages:pages});
     this.isForward = false;
     this.isInit = false;
 
