@@ -23,7 +23,6 @@ class PageView extends React.Component {
   }
 
   render() {
-  		
     return (<div><button onClick={this.clickHandle.bind(this,1)}>跳转</button>
       <button onClick={this.clickHandle.bind(this,2)}>跳转</button></div>);
   }

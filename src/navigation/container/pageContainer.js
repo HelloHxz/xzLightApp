@@ -6,11 +6,17 @@ class PageContainer extends React.Component {
   }
 
  
-
+  clickMethod(){
+  	this.props.owner.props.pagemanager.go("twolevelroute/two");
+  }
 
   render() {
+  	var route = [];
+  	if(this.props.owner){
+  		route = this.props.owner.props.pageview.props.leftroute;
+  	}
   	
-    return (<div>xxx</div>);
+    return (<div><button onClick={this.clickMethod.bind(this)}>test</button>{route}</div>);
   }
 }
 module.exports = PageContainer;

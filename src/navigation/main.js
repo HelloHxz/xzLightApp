@@ -171,13 +171,14 @@ class Navigation extends React.Component {
       this.firstLoadToChangeHash = false;
       return;
     }
+
     var curParams = this.getParamsFromUrl();
 
     var ToPageName = this.getPageNameFromUrl()||this.props.config.root;
     var ToPageNameArr = ToPageName.split("/");
     ToPageName = ToPageNameArr.shift();
 
-    if(this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
+    if(!curParams.__r&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
         this.firstLoadToChangeHash = true;
     }
     if(!this.props.config.pages){
@@ -216,6 +217,8 @@ class Navigation extends React.Component {
         
       }
     }
+
+    console.log("routeStack length:",this.routeStack.length)
 
 
     this.setState({pages:this.routeStack});
