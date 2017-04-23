@@ -190,10 +190,9 @@ class Navigation extends React.Component {
 
     this.FromPage = this.state.curpagename;
     var key = ToPageName+"_"+curParams.__r;
-
-
+    var action = '前进';
     if(this.isForward){
-      console.log("前进!");
+      action = '前进';
       if(this.prePageName === ToPageName&&ToPageNameArr.length>0){
         this.routeStack[this.routeStack.length-1].page = 
         <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
@@ -205,7 +204,7 @@ class Navigation extends React.Component {
       }
     }else{
       if(this.routeStack.length===0){
-        console.log("刷新");
+        action = '刷新';
         this.routeStack.push({
           key:ToPageName,
           page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
@@ -215,14 +214,14 @@ class Navigation extends React.Component {
           
         }else{
           if(curParams.__pr===this.preUrlParams.__r){
-            console.log("前进");
+            action = '前进';
              this.routeStack.push({
               key:ToPageName,
               page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
             });
           }else{
+             action = '后退';
              if(this.routeStack.length>1){
-                console.log("后退 有前一个页面的引用");
                 if( this.prePageName === ToPageName&&ToPageNameArr.length>0){
                    this.routeStack[this.routeStack.length-1].page = 
                       <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
@@ -235,7 +234,6 @@ class Navigation extends React.Component {
                   key:ToPageName,
                   page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
                 });
-                console.log("刷新后的后退 没有前一个页面的引用");
               }
           }
         }
@@ -245,10 +243,14 @@ class Navigation extends React.Component {
 
     console.log("routeStack length:",this.routeStack.length)
 
-    var pages = [];
-    for(var i=0,j=this.routeStack.length;i<j;i++){
-      pages.push(this.routeStack[i].page);
+    var pages = this.props.pagelayout(this.routeStack,action);
+    if(!pages){
+       pages = [];
+       for(var i=0,j=this.routeStack.length;i<j;i++){
+        pages.push(this.routeStack[i].page);
+      }
     }
+
     this.setState({pages:pages});
     this.isForward = false;
     this.isInit = false;
