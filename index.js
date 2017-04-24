@@ -21,7 +21,7 @@ export default {
 							if(i===len-1){
 				        		pages.push(<div className='xz-page-route-wrapper right-in' key={_key}>{instance}</div>);
 							}else if(i===len-2){
-								pages.push(<div className='xz-page-route-wrapper right-out' key={_key}>{instance}</div>);
+								pages.push(<div className='xz-page-route-wrapper left-out' key={_key}>{instance}</div>);
 							}else{
 								pages.push(<div className='xz-page-route-wrapper' key={_key} style={{left:"-120%"}}>{instance}</div>);
 							}
@@ -31,7 +31,7 @@ export default {
 							var _key = routeStack[i]._key+"_wrapper";
 							var instance = routeStack[i].page;
 							if(i===len-1){
-				        		pages.push(<div className='xz-page-route-wrapper left-out' key={_key}>{instance}</div>);
+				        		pages.push(<div className='xz-page-route-wrapper right-out' key={_key}>{instance}</div>);
 							}else if(i===len-2){
 								pages.push(<div className='xz-page-route-wrapper left-in' key={_key}>{instance}</div>);
 							}else{
