@@ -74,7 +74,6 @@ class Navigation extends React.Component {
     var prePageName = this.getPageNameFromUrl();
     prePageName = prePageName.split("/").shift();
     var toPageName = pageKey.split("/").shift();
-    console.log(prePageName+" "+toPageName);
     if(toPageName===prePageName&&preUrlParams.__r!==undefined&&preUrlParams.__pr!==undefined&&preUrlParams.__pr!=='undefined'){
        //避免本不应该发生hashchange 被__r引发hashchange
        params.__pr = preUrlParams.__pr;
@@ -181,7 +180,7 @@ class Navigation extends React.Component {
     var ToPageNameArr = ToPageName.split("/");
     ToPageName = ToPageNameArr.shift();
 
-    if(!curParams.__r&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
+    if(this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
         this.firstLoadToChangeHash = true;
     }
     if(!this.props.config.pages){
@@ -234,7 +233,7 @@ class Navigation extends React.Component {
                    animationAction = '后退删除最后';
                 }
               }else{
-                if((ToPageName===this.props.config.root&&this.routeStack[this.routeStack.length-1].key === ToPageName)){
+                if((this.props.config.root===this.routeStack[this.routeStack.length-1].key)){
                 }else{
                   if(this.routeStack[this.routeStack.length-1]._key !== key){
                     animationAction = '后退删除最后';
