@@ -8,9 +8,13 @@ class PageView extends React.Component {
     super(props)
   }
 
+  clickHandle(){
+  	this.props.pagemanager.replaceGo("two");
+  }
+
   render() {
   		
-    return (<div>分包加载...</div>);
+    return (<div>分包加载...<button onClick={this.clickHandle.bind(this)}>RepacelGoTo</button></div>);
   }
 }
 module.exports = PageView;

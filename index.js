@@ -33,14 +33,14 @@ function GoPreOrNext(lastClass,preClass,len,routeStack,pages){
 export default {
 	"Navigation":{
 		start(config){
-			Navigation.start(config,(routeStack,action,animationAction)=>{
+			Navigation.start(config,(routeStack,action,animationAction,isReplaceGo)=>{
 				var pages = [];
 				var len = routeStack.length;
 			    console.log(animationAction+"	"+"	"+action+"	"+len);
 
 			   	if(len>1){
 			   		if(animationAction==='前进'){
-			   			GoPreOrNext('xz-page-route-wrapper right-in','xz-page-route-wrapper left-out',len,routeStack,pages);
+			   			GoPreOrNext('xz-page-route-wrapper right-in','xz-page-route-wrapper left-out',len,routeStack,pages,isReplaceGo);
 			   		}else if(animationAction==="后退删除最后"){
 				   		GoPreOrNext('xz-page-route-wrapper right-out','xz-page-route-wrapper left-in',len,routeStack,pages);
 						routeStack.splice(routeStack.length-1,1)

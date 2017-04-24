@@ -7,10 +7,12 @@ class PageView extends React.Component {
     super(props)
   }
 
-
+clickHandle(params){
+     this.props.pagemanager.replaceGo("one");
+  }
 
   render() {
-    return (<div>two</div>);
+    return (<div>zheshiw2<button onClick={this.clickHandle.bind(this)}>ReplaceGo</button></div>);
   }
 }
 module.exports = PageView;

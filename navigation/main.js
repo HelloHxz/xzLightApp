@@ -9,7 +9,7 @@ var PageView = require("./container/pageview");
     4. 阻止后退 可以使用自身的UI进行阻止（刚进来的第一页也可以阻止）
     5. 默认的是keepAlive 可设置不保留 前一个页面的状态和dom
 */
-var isWantToPreventRoute = false;
+var isWantToPreventRoute = false,isReplaceGo=false;
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -65,7 +65,7 @@ class Navigation extends React.Component {
    this.hashChange();
   }
 
-  prepareGo(pageKey, params,isNotForward){
+  prepareGo(pageKey, params,isNotForward,_isReplaceGo){
     if(isNotForward!==true){
       this.isForward = true;
     }
@@ -74,7 +74,7 @@ class Navigation extends React.Component {
     var prePageName = this.getPageNameFromUrl();
     prePageName = prePageName.split("/").shift();
     var toPageName = pageKey.split("/").shift();
-    if(toPageName===prePageName&&preUrlParams.__r!==undefined&&preUrlParams.__pr!==undefined&&preUrlParams.__pr!=='undefined'){
+    if(_isReplaceGo||(toPageName===prePageName&&preUrlParams.__r!==undefined&&preUrlParams.__pr!==undefined&&preUrlParams.__pr!=='undefined')){
        //避免本不应该发生hashchange 被__r引发hashchange
        params.__pr = preUrlParams.__pr;
        params.__r = preUrlParams.__r;
@@ -94,7 +94,7 @@ class Navigation extends React.Component {
   }
 
   go(pageKey, params,isNotForward) {
-    var paramsArr = this.prepareGo(pageKey, params,isNotForward);
+    var paramsArr = this.prepareGo(pageKey, params,isNotForward,true);
     if (paramsArr.length > 0) {
         location.hash = pageKey + "?" + paramsArr.join("&");
     } else {
@@ -180,7 +180,7 @@ class Navigation extends React.Component {
     var ToPageNameArr = ToPageName.split("/");
     ToPageName = ToPageNameArr.shift();
 
-    if(this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
+    if(!curParams.__r&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
         this.firstLoadToChangeHash = true;
     }
     if(!this.props.config.pages){
@@ -190,6 +190,11 @@ class Navigation extends React.Component {
     this.FromPage = this.state.curpagename;
     var key = ToPageName+"_"+curParams.__r;
     var action = '前进',animationAction = '不动';
+
+    this.prePathArr = this.prePathArr||[];
+    if(isReplaceGo&&this.prePathArr.length===0){
+       this.routeStack.shift();
+    }
     if(this.isForward){
       action = '前进';
       if(this.prePageName === ToPageName&&ToPageNameArr.length>0){
@@ -230,6 +235,8 @@ class Navigation extends React.Component {
                    this.routeStack[this.routeStack.length-1].page = 
                       <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
                 }else{
+                   this.routeStack[this.routeStack.length-2].page = 
+                      <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
                    animationAction = '后退删除最后';
                 }
               }else{
@@ -259,7 +266,7 @@ class Navigation extends React.Component {
 
     console.log("routeStack length:",this.routeStack.length)
 
-    var pages = this.props.pagelayout(this.routeStack,action,animationAction);
+    var pages = this.props.pagelayout(this.routeStack,action,animationAction,isReplaceGo);
     if(!pages){
       console.error("没有实现pagelayout！");
     }
@@ -267,6 +274,7 @@ class Navigation extends React.Component {
     this.setState({pages:pages});
     this.isForward = false;
     this.isInit = false;
+    isReplaceGo = false;
 
 
     if(this.firstLoadToChangeHash){
@@ -280,8 +288,8 @@ class Navigation extends React.Component {
 
     this.preUrlParams = this.getParamsFromUrl();
     var prePath = this.getPageNameFromUrl();
-    var prePathArr = prePath.split("/");
-    this.prePageName = prePathArr.shift();
+    this.prePathArr = prePath.split("/");
+    this.prePageName = this.prePathArr.shift();
 
     if(!this.preUrlParams.__r&&!this.firstLoadToChangeHash&&!this.isForward){
       //禁止离开应用 todo 事件插件机制
