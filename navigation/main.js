@@ -234,7 +234,7 @@ class Navigation extends React.Component {
                    animationAction = '后退删除最后';
                 }
               }else{
-                if(this.routeStack[this.routeStack.length-1]._key === key){
+                if(this.routeStack[this.routeStack.length-1]._key === key||this.routeStack[this.routeStack.length-1].key === ToPageName){
                 }else{
                    animationAction = '后退删除最后';
                     this.routeStack =[{
