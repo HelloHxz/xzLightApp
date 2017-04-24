@@ -195,7 +195,7 @@ class Navigation extends React.Component {
 
     this.prePathArr = this.prePathArr||[];
     if(isReplaceGo&&this.prePathArr.length===0){
-       this.routeStack.shift();
+       this.routeStack.pop();
     }
     if(this.isForward){
       action = '前进';
