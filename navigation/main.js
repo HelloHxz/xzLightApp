@@ -94,7 +94,7 @@ class Navigation extends React.Component {
   }
 
   go(pageKey, params,isNotForward) {
-    var paramsArr = this.prepareGo(pageKey, params,isNotForward,true);
+    var paramsArr = this.prepareGo(pageKey, params,isNotForward);
     if (paramsArr.length > 0) {
         location.hash = pageKey + "?" + paramsArr.join("&");
     } else {
@@ -108,8 +108,8 @@ class Navigation extends React.Component {
 
   }
   replaceGo(pageKey, params) {
-    var paramsArr = this.prepareGo(pageKey, params);
     isReplaceGo = true;
+    var paramsArr = this.prepareGo(pageKey, params,false,isReplaceGo);
     if (paramsArr.length > 0) {
         location.replace(location.href.split("#")[0] + '#' + pageKey + "?" +  paramsArr.join("&"));
     } else {
