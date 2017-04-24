@@ -190,15 +190,17 @@ class Navigation extends React.Component {
 
     this.FromPage = this.state.curpagename;
     var key = ToPageName+"_"+curParams.__r;
-    var action = '前进';
+    var action = '前进',animationAction = '不动';
     if(this.isForward){
       action = '前进';
       if(this.prePageName === ToPageName&&ToPageNameArr.length>0){
         this.routeStack[this.routeStack.length-1].page = 
         <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
       }else{
+        animationAction = '前进';
         this.routeStack.push({
           key:ToPageName,
+          _key:key,
           page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
         });
       }
@@ -207,6 +209,7 @@ class Navigation extends React.Component {
         action = '刷新';
         this.routeStack.push({
           key:ToPageName,
+          _key:key,
           page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
         });
       }else{
@@ -215,8 +218,10 @@ class Navigation extends React.Component {
         }else{
           if(curParams.__pr===this.preUrlParams.__r){
             action = '前进';
+            animationAction = '前进';
              this.routeStack.push({
               key:ToPageName,
+              _key:key,
               page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
             });
           }else{
@@ -226,14 +231,15 @@ class Navigation extends React.Component {
                    this.routeStack[this.routeStack.length-1].page = 
                       <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
                 }else{
-                 this.routeStack.splice(this.routeStack.length-1,1)
+                   animationAction = '后退删除最后';
                 }
               }else{
-                this.routeStack = [];
-                this.routeStack.push({
+                animationAction = '后退删除最后';
+                this.routeStack =[{
                   key:ToPageName,
+                  _key:key,
                   page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
-                });
+                }].concat(this.routeStack);
               }
           }
         }
@@ -243,12 +249,9 @@ class Navigation extends React.Component {
 
     console.log("routeStack length:",this.routeStack.length)
 
-    var pages = this.props.pagelayout(this.routeStack,action);
+    var pages = this.props.pagelayout(this.routeStack,action,animationAction);
     if(!pages){
-       pages = [];
-       for(var i=0,j=this.routeStack.length;i<j;i++){
-        pages.push(this.routeStack[i].page);
-      }
+      console.error("没有实现pagelayout！");
     }
 
     this.setState({pages:pages});

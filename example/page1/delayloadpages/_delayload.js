@@ -10,7 +10,7 @@ class PageView extends React.Component {
 
   render() {
   		
-    return (<div>分包加载</div>);
+    return (<div>分包加载...</div>);
   }
 }
 module.exports = PageView;
