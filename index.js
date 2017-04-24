@@ -36,14 +36,16 @@ export default {
 			Navigation.start(config,(routeStack,action,animationAction,isReplaceGo)=>{
 				var pages = [];
 				var len = routeStack.length;
-			    console.log(animationAction+"	"+"	"+action+"	"+len);
+			    console.log(animationAction+"	"+"	"+action +"	"+len);
 
 			   	if(len>1){
 			   		if(animationAction==='前进'){
 			   			GoPreOrNext('xz-page-route-wrapper right-in','xz-page-route-wrapper left-out',len,routeStack,pages,isReplaceGo);
 			   		}else if(animationAction==="后退删除最后"){
 				   		GoPreOrNext('xz-page-route-wrapper right-out','xz-page-route-wrapper left-in',len,routeStack,pages);
+						console.log("删除");
 						routeStack.pop();
+						
 			   		}else{
 			   			NoAnimation(routeStack,pages);
 			   		}
@@ -51,7 +53,9 @@ export default {
 			   	}else{
 			   		NoAnimation(routeStack,pages);
 			   	}
-			    
+			   	
+
+			    console.log(routeStack.length);
 			    return pages;
 			})
 		},

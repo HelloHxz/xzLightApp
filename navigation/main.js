@@ -190,12 +190,19 @@ class Navigation extends React.Component {
     }
 
     this.FromPage = this.state.curpagename;
+
     var key = ToPageName+"_"+curParams.__r;
+    if(!curParams.__r){
+      ////禁止离开应用 todo 事件插件机制
+      isWantToPreventRoute = true;
+      window.history.go(1);
+      return;
+    }
     var action = '前进',animationAction = '不动';
 
     this.prePathArr = this.prePathArr||[];
-    if(isReplaceGo&&this.prePathArr.length===0){
-       this.routeStack.pop();
+    if(isReplaceGo&&ToPageName!==this.prePageName){
+      this.routeStack.pop();
     }
     if(this.isForward){
       action = '前进';
@@ -232,19 +239,9 @@ class Navigation extends React.Component {
             });
           }else{
              action = '后退';
-             if(this.routeStack.length>1){
-                if( this.prePageName === ToPageName&&ToPageNameArr.length>0){
-                   this.routeStack[this.routeStack.length-1].page = 
-                      <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
-                }else{
-                   this.routeStack[this.routeStack.length-2].page = 
-                      <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
-                   animationAction = '后退删除最后';
-                }
-              }else{
-                if((this.props.config.root===this.routeStack[this.routeStack.length-1].key)){
-                }else{
-                  if(this.routeStack[this.routeStack.length-1]._key !== key){
+             if(this.routeStack.length===1){
+                console.log(this.routeStack[0]._key +"  "+key);
+                if(this.routeStack[0]._key !== key){
                     animationAction = '后退删除最后';
                     this.routeStack =[{
                       key:ToPageName,
@@ -252,20 +249,29 @@ class Navigation extends React.Component {
                       page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
                     }].concat(this.routeStack);
                   }else{
-                      this.routeStack[this.routeStack.length-1].page = 
+                      this.routeStack[0].page = 
                       <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
-                  }
-                   
-                }
+                      // if(this.preLastPageInstance&&this.routeStack.length){
+                      //    animationAction = '后退删除最后';
 
-               
+                      // }
+                  }
+              }else{
+                  
+               if( this.prePageName === ToPageName&&ToPageNameArr.length>0){
+                   this.routeStack[this.routeStack.length-1].page = 
+                      <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
+                }else{
+                   this.routeStack[this.routeStack.length-2].page = 
+                      <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
+                   animationAction = '后退删除最后';
+                }
               }
           }
         }
         
       }
     }
-
 
     var pages = this.props.pagelayout(this.routeStack,action,animationAction,isReplaceGo);
 
@@ -277,6 +283,8 @@ class Navigation extends React.Component {
     this.isForward = false;
     this.isInit = false;
     isReplaceGo = false;
+
+    //this.preLastPageInstance = this.routeStack[this.routeStack.length-1];
 
 
     if(this.firstLoadToChangeHash){
