@@ -190,8 +190,8 @@ class Navigation extends React.Component {
     }
 
     this.FromPage = this.state.curpagename;
-
-    var key = ToPageName+"_"+curParams.__r;
+    var r = curParams.__r;
+    var key = ToPageName+"_"+r;
     if(!curParams.__r&&!this.isForward&&!this.isInit){
       ////禁止离开应用 todo 事件插件机制
       isWantToPreventRoute = true;
@@ -219,6 +219,7 @@ class Navigation extends React.Component {
         animationAction = '前进';
         this.routeStack.push({
           key:ToPageName,
+          r:r,
           _key:key,
           page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
         });
@@ -229,6 +230,7 @@ class Navigation extends React.Component {
         this.routeStack.push({
           key:ToPageName,
           _key:key,
+          r:r,
           page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
         });
       }else{
@@ -241,6 +243,7 @@ class Navigation extends React.Component {
              this.routeStack.push({
               key:ToPageName,
               _key:key,
+              r:r,
               page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
             });
           }else{
@@ -251,6 +254,7 @@ class Navigation extends React.Component {
                     this.routeStack =[{
                       key:ToPageName,
                       _key:key,
+                      r:r,
                       page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
                     }].concat(this.routeStack);
                   }else{
@@ -277,11 +281,13 @@ class Navigation extends React.Component {
       }
     }
 
-    var pages = this.props.pagelayout(this.routeStack,action,animationAction,isReplaceGo);
+    var pages = this.props.pagelayout(this,action,animationAction,isReplaceGo);
 
     if(!pages){
       console.error("没有实现pagelayout！");
     }
+
+    console.log(this.routeStack);
 
     this.setState({pages:pages});
     this.isForward = false;
