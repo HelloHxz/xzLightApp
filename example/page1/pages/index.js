@@ -11,6 +11,7 @@ const {XzComponents} = require("../../../index").default
 class PageView extends React.Component {
   constructor(props) {
     super(props)
+    console.log("constructor");
   }
 
   clickHandle(params){

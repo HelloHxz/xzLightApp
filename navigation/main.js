@@ -201,9 +201,15 @@ class Navigation extends React.Component {
     var action = '前进',animationAction = '不动';
 
     this.prePathArr = this.prePathArr||[];
-    if(isReplaceGo&&ToPageName!==this.prePageName){
-      this.routeStack.pop();
+  
+    if(isReplaceGo){
+      if(this.prePathArr.length===0){
+        this.routeStack.pop();
+      }else{
+        this.routeStack[this.routeStack.length-1].isDelete = true;
+      }
     }
+
     if(this.isForward){
       action = '前进';
       if(this.prePageName === ToPageName&&ToPageNameArr.length>0){

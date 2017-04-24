@@ -7,6 +7,7 @@ function NoAnimation(routeStack,pages){
 	for(var i=0,j=routeStack.length;i<j;i++){
 		var _key = routeStack[i]._key+"_wrapper";
 		var instance = routeStack[i].page;
+		
 		if(i===j-1){
 			pages.push(<div className='xz-page-route-wrapper' key={_key}>{instance}</div>);
 	    }else{
@@ -20,6 +21,8 @@ function GoPreOrNext(lastClass,preClass,len,routeStack,pages){
 	for(var i=0;i<len;i++){
 		var _key = routeStack[i]._key+"_wrapper";
 		var instance = routeStack[i].page;
+		//isDelete
+		
 		if(i===len-1){
     		pages.push(<div className={lastClass} key={_key}>{instance}</div>);
 		}else if(i===len-2){
@@ -46,6 +49,7 @@ export default {
 						console.log("删除");
 						routeStack.pop();
 						
+
 			   		}else{
 			   			NoAnimation(routeStack,pages);
 			   		}
@@ -53,6 +57,7 @@ export default {
 			   	}else{
 			   		NoAnimation(routeStack,pages);
 			   	}
+
 			   	
 
 			    console.log(routeStack.length);
