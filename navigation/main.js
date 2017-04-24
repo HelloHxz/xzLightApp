@@ -76,6 +76,7 @@ class Navigation extends React.Component {
     var toPageName = pageKey.split("/").shift();
     if((_isReplaceGo&&this.prePathArr.length===0)||(toPageName===prePageName&&preUrlParams.__r!==undefined&&preUrlParams.__pr!==undefined&&preUrlParams.__pr!=='undefined')){
        //避免本不应该发生hashchange 被__r引发hashchange
+       // 当是replace的时候也走这里 但是当前页面是多级的就不走了
        params.__pr = preUrlParams.__pr;
        params.__r = preUrlParams.__r;
     }else{
@@ -265,9 +266,9 @@ class Navigation extends React.Component {
       }
     }
 
-    console.log("routeStack length:",this.routeStack.length)
 
     var pages = this.props.pagelayout(this.routeStack,action,animationAction,isReplaceGo);
+
     if(!pages){
       console.error("没有实现pagelayout！");
     }

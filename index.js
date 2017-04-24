@@ -43,7 +43,7 @@ export default {
 			   			GoPreOrNext('xz-page-route-wrapper right-in','xz-page-route-wrapper left-out',len,routeStack,pages,isReplaceGo);
 			   		}else if(animationAction==="后退删除最后"){
 				   		GoPreOrNext('xz-page-route-wrapper right-out','xz-page-route-wrapper left-in',len,routeStack,pages);
-						routeStack.splice(routeStack.length-1,1)
+						routeStack.pop();
 			   		}else{
 			   			NoAnimation(routeStack,pages);
 			   		}
