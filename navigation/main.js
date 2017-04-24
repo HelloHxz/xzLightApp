@@ -74,7 +74,7 @@ class Navigation extends React.Component {
     var prePageName = this.getPageNameFromUrl();
     prePageName = prePageName.split("/").shift();
     var toPageName = pageKey.split("/").shift();
-    if(_isReplaceGo||(toPageName===prePageName&&preUrlParams.__r!==undefined&&preUrlParams.__pr!==undefined&&preUrlParams.__pr!=='undefined')){
+    if((_isReplaceGo&&this.prePathArr.length===0)||(toPageName===prePageName&&preUrlParams.__r!==undefined&&preUrlParams.__pr!==undefined&&preUrlParams.__pr!=='undefined')){
        //避免本不应该发生hashchange 被__r引发hashchange
        params.__pr = preUrlParams.__pr;
        params.__r = preUrlParams.__r;
@@ -109,7 +109,8 @@ class Navigation extends React.Component {
   }
   replaceGo(pageKey, params) {
     isReplaceGo = true;
-    var paramsArr = this.prepareGo(pageKey, params,false,isReplaceGo);
+    var paramsArr = this.prepareGo(pageKey, params,false,true);
+    this.isForward = true;
     if (paramsArr.length > 0) {
         location.replace(location.href.split("#")[0] + '#' + pageKey + "?" +  paramsArr.join("&"));
     } else {
