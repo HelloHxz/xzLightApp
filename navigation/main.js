@@ -234,12 +234,17 @@ class Navigation extends React.Component {
                    animationAction = '后退删除最后';
                 }
               }else{
-                animationAction = '后退删除最后';
-                this.routeStack =[{
-                  key:ToPageName,
-                  _key:key,
-                  page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
-                }].concat(this.routeStack);
+                if(this.routeStack[this.routeStack.length-1]._key === key){
+                }else{
+                   animationAction = '后退删除最后';
+                    this.routeStack =[{
+                      key:ToPageName,
+                      _key:key,
+                      page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
+                    }].concat(this.routeStack);
+                }
+
+               
               }
           }
         }
