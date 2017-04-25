@@ -11,7 +11,7 @@ class Com extends React.Component {
 
   render() {
   	console.log("render");
-    return (<div>第二级的内容<Navigation.PageContainer owner={this}/></div>);
+    return (<div>第二级的内容<Navigation.PageContainer {...this.props} key={this.props.pkey+"container"}  owner={this}/></div>);
   }
 }
 module.exports = Com;
