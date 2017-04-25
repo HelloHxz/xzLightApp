@@ -15,9 +15,9 @@ class PageView extends React.Component {
     this.setState({pagename:props.pagename,leftroute:props.leftroute});
   }
 
-   shouldComponentUpdate(){
-    return this.shouldUpdate;
-  }
+  //  shouldComponentUpdate(){
+  //   return this.shouldUpdate;
+  // }
 
  
 

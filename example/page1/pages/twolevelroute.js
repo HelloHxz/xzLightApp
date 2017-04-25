@@ -4,7 +4,7 @@ const {Navigation,XzComponents} = require("../../../index").default
 class Com extends React.Component {
   constructor(props) {
     super(props)
-  	console.log("constructor");
+  	console.log("constructor 》》》》》》》》");
   }
 
  

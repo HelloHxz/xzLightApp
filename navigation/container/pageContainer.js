@@ -5,29 +5,12 @@ class PageContainer extends React.Component {
     super(props)
     this.arr = {};
     this.dict = {};
-    var route = [];
-    this.shouldUpdate = true;
-    if(props.owner){
-      route = JSON.stringify(props.owner.props.pageview.props.leftroute);
-      route = JSON.parse(route);
-    }
-    var ToPageName = route.shift();
-    this.curpagename = ToPageName;
-    var key = props.owner.props.pageview.props.pkey+"_"+ToPageName;
-    this.arr[ToPageName]=(<PageView 
-                    leftroute={route} 
-                    ref={(instance)=>{
-                      this.dict[ToPageName] = instance;
-                    }}
-                    pagename={ToPageName} 
-                    pagemanager={props.owner.props.pagemanager} 
-                    key={key} 
-                    pkey={key}></PageView>) ;
+   
+    this.prepareRoute(props,null);
 
   }
 
- 
-  componentWillReceiveProps(props){
+  prepareRoute(props,cacheSuccess){
     var route = [];
     if(props.owner){
       route = JSON.stringify(props.leftroute);
@@ -35,7 +18,6 @@ class PageContainer extends React.Component {
     }
     var ToPageName = route.shift();
     this.curpagename = ToPageName;
-    this.shouldUpdate = true; 
     var key = props.owner.props.pageview.props.pkey+"_"+ToPageName;
     if(!this.arr[ToPageName]){
       this.arr[ToPageName]=(<PageView 
@@ -49,14 +31,18 @@ class PageContainer extends React.Component {
                     pkey={key}></PageView>) ;
 
     }else{
-      this.dict[ToPageName].setState({leftroute:route,pagename:ToPageName});
+      cacheSuccess&&cacheSuccess(route,ToPageName);
     }
+  }
+
+ 
+  componentWillReceiveProps(props){
+    this.prepareRoute(props,(route,ToPageName)=>{
+      this.dict[ToPageName].setState({leftroute:route,pagename:ToPageName});
+    });
     
   }
 
-  shouldComponentUpdate(){
-    return this.shouldUpdate;
-  }
 
   render() {
     var re = [];
