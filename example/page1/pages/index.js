@@ -1,13 +1,10 @@
 var React = require("react");
-const {XzComponents} = require("../../../index").default
+const {XzComponents,style} = require("../../../index").default
 
 
 
-// function loadC(name) {
-// 	require.ensure(["../components/button"], function(require) {
-// 		alert("s");
-// 	});
-// }
+//style.createSheet(i);
+
 class PageView extends React.Component {
   constructor(props) {
     super(props)

@@ -1,5 +1,6 @@
 import Navigation from './navigation' 
 import XzComponents from './src/components' 
+import style from './utils/style' 
 import './css/main.css';
 var React = require("react");
 
@@ -34,6 +35,7 @@ function GoPreOrNext(lastClass,preClass,len,routeStack,pages){
 }
 
 export default {
+	"style":style,
 	"Navigation":{
 		start(config){
 			for(var key in config.pages){
