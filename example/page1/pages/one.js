@@ -12,7 +12,7 @@ clickHandle(params){
      this.props.pagemanager.go("threelevelroute/twolevelroute/two");
   }
   testClick(){
-  	this.props.pagemanager.go("twolevelroute/one",{test:"1"});
+  	this.props.pagemanager.go("twolevelroute/one_a",{test:"1"});
   }
 
   render() {

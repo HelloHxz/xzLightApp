@@ -36,6 +36,11 @@ function GoPreOrNext(lastClass,preClass,len,routeStack,pages){
 export default {
 	"Navigation":{
 		start(config){
+			for(var key in config.pages){
+				if(key.split("_").length>1){
+					console.error(key+ " start 方法pages对象页面注册名称不能带有 _ 标示");
+				}
+			}
 			Navigation.start(config,(manager,action,animationAction,isReplaceGo)=>{
 				var pages = [];
 				var routeStack = manager.routeStack;
