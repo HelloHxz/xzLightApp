@@ -129,14 +129,19 @@ class Navigation extends React.Component {
     }else{
       var paramsIsNotSame = false;
       if(prePageName===toPageName){
-        for(var key in params){
-          var curkeyValue = (params[key]||"").toString();
-          var prekeyValue = (preUrlParams[key]||"").toString();
-          if(key!==systemseedname&& curkeyValue!==prekeyValue){
-            paramsIsNotSame = true;
-            break;
+        if(this.prePathArr.length===0){
+          for(var key in params){
+            var curkeyValue = (params[key]||"").toString();
+            var prekeyValue = (preUrlParams[key]||"").toString();
+            if(key!==systemseedname&& curkeyValue!==prekeyValue){
+              paramsIsNotSame = true;
+              break;
+            }
           }
+        }else{
+          paramsIsNotSame = false;
         }
+        
       }else{
         paramsIsNotSame = true;
       }
