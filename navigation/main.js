@@ -9,7 +9,7 @@ var PageView = require("./container/pageview");
     4. 阻止后退 可以使用自身的UI进行阻止（刚进来的第一页也可以阻止）
     5. 默认的是keepAlive 可设置不保留 前一个页面的状态和dom
 */
-var isWantToPreventRoute = false,isReplaceGo=false;
+var isWantToPreventRoute = false,isReplaceGo=false,splitchar='.',systemseedname='__h';
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -66,12 +66,12 @@ class Navigation extends React.Component {
 
   getUrlSeedStr(){
     var params =  this.getParamsFromUrl();
-    return params._hxz;
+    return params[systemseedname];
   }
 
   convertUrlSeedToObj(str){
     str = str||"";
-    var arr = str.split("_");
+    var arr = str.split(splitchar);
     var re =  {
       __r:arr[0],
       __pr:arr[1],
@@ -106,7 +106,7 @@ class Navigation extends React.Component {
 
   getNewSeedStr(preSeedObj){
     var Re = [this.getUniqueSeed(),preSeedObj.__r,this.getUniqueSeed()]
-    return Re.join("_");
+    return Re.join(splitchar);
   }
   prepareGo(pageKey, params,isNotForward,_isReplaceGo){
     if(isNotForward!==true){
@@ -122,11 +122,11 @@ class Navigation extends React.Component {
        //避免本不应该发生hashchange 被__r引发hashchange
        // 当是replace的时候也走这里 但是当前页面是多级的就不走了
  
-       params._hxz =seedStr;
+       params[systemseedname] =seedStr;
     }else{
 
       var seedObj = this.convertUrlSeedToObj(seedStr);
-      params._hxz = this.getNewSeedStr(seedObj);
+      params[systemseedname] = this.getNewSeedStr(seedObj);
 
       // if(preUrlParams.__r!==undefined){
       //   params.__pr = preUrlParams.__r;
@@ -232,7 +232,7 @@ class Navigation extends React.Component {
     var ToPageNameArr = ToPageName.split("/");
     ToPageName = ToPageNameArr.shift();
 
-    if(!curParams._hxz&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
+    if(!curParams[systemseedname]&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
         this.firstLoadToChangeHash = true;
     }
     if(!this.props.config.pages){
@@ -243,7 +243,7 @@ class Navigation extends React.Component {
     var r = curSeedObj.__r;
     var key = ToPageName+"_"+r;
 
-    if(!curParams._hxz&&!this.isForward&&!this.isInit){
+    if(!curParams[systemseedname]&&!this.isForward&&!this.isInit){
       ////禁止离开应用 todo 事件插件机制
       isWantToPreventRoute = true;
       window.history.go(1);
@@ -285,7 +285,7 @@ class Navigation extends React.Component {
           page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
         });
       }else{
-        if(!this.preUrlParams._hxz){
+        if(!this.preUrlParams[systemseedname]){
           
         }else{
           console.log(curSeedObj)
