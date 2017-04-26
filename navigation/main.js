@@ -9,7 +9,7 @@ var PageView = require("./container/pageview");
     4. 阻止后退 可以使用自身的UI进行阻止（刚进来的第一页也可以阻止）
     5. 默认的是keepAlive 可设置不保留 前一个页面的状态和dom
 */
-var isWantToPreventRoute = false,isReplaceGo=false,splitchar='.',systemseedname='__h';
+var isWantToPreventRoute = false,isReplaceGo=false,splitchar='.',systemseedname='_hxz';
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -106,6 +106,7 @@ class Navigation extends React.Component {
 
   getNewSeedStr(preSeedObj){
     var Re = [this.getUniqueSeed(),preSeedObj.__r,this.getUniqueSeed()]
+
     return Re.join(splitchar);
   }
   prepareGo(pageKey, params,isNotForward,_isReplaceGo){
@@ -118,20 +119,34 @@ class Navigation extends React.Component {
     prePageName = prePageName.split("/").shift();
     var toPageName = pageKey.split("/").shift();
     var seedStr = this.getUrlSeedStr();
-    if((_isReplaceGo&&this.prePathArr.length===0)||(toPageName===prePageName&&seedStr)){
+    if(!seedStr){
+      seedStr = [this.getUniqueSeed(),0,this.getUniqueSeed()].join(splitchar);
+    }
+    if((_isReplaceGo&&this.prePathArr.length===0)){
        //避免本不应该发生hashchange 被__r引发hashchange
        // 当是replace的时候也走这里 但是当前页面是多级的就不走了
- 
        params[systemseedname] =seedStr;
     }else{
+      var paramsIsNotSame = false;
+      if(prePageName===toPageName){
+        for(var key in params){
+          var curkeyValue = (params[key]||"").toString();
+          var prekeyValue = (preUrlParams[key]||"").toString();
+          if(key!==systemseedname&& curkeyValue!==prekeyValue){
+            paramsIsNotSame = true;
+            break;
+          }
+        }
+      }else{
+        paramsIsNotSame = true;
+      }
 
-      var seedObj = this.convertUrlSeedToObj(seedStr);
-      params[systemseedname] = this.getNewSeedStr(seedObj);
-
-      // if(preUrlParams.__r!==undefined){
-      //   params.__pr = preUrlParams.__r;
-      // }
-      // params.__r = this.getUniqueSeed();
+      if(!paramsIsNotSame){
+         params[systemseedname] =seedStr;
+      }else{
+         var seedObj = this.convertUrlSeedToObj(seedStr);
+          params[systemseedname] = this.getNewSeedStr(seedObj);
+      }
 
     }
     
