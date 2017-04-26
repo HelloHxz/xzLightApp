@@ -11,9 +11,15 @@ class PageView extends React.Component {
 clickHandle(params){
      this.props.pagemanager.go("threelevelroute/twolevelroute/two");
   }
+  testClick(){
+  	this.props.pagemanager.go("twolevelroute/one",{test:"1"});
+  }
 
   render() {
-    return (<div><button onClick={this.clickHandle.bind(this)}>GoTwo</button></div>);
+    return (<div>
+    	{this.props.params.test||"没有"}
+    	<button onClick={this.testClick.bind(this)}>GotoSame</button>
+    	<button onClick={this.clickHandle.bind(this)}>GoTwo</button></div>);
   }
 }
 module.exports = PageView;

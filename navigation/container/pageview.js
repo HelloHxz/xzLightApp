@@ -27,8 +27,10 @@ class PageView extends React.Component {
     if(!ToPageInstance){
        console.error("pages属性中没有引入["+this.state.pagename+"]页面");
     }
+    var params = this.props.pagemanager.getParamsFromUrl();
     return (<ToPageInstance 
     			pageview={this} 
+          params={params}
           pagename={this.state.pagename}
           leftroute = {this.state.leftroute}
     			pagemanager={this.props.pagemanager}

@@ -6,7 +6,7 @@ class PageContainer extends React.Component {
     this.arr = {};
     this.dict = {};
    
-    this.prepareRoute(props,null);
+    this.prepareRoute(props);
 
   }
 
