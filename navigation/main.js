@@ -15,16 +15,8 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props)
     this.routeStack = [];
-    var params = this.getParamsFromUrl();
-    var r = 0;
-    if(params.__r&&!isNaN(params.__r)){
-      r = parseInt(params.__r);
-    }
-    var pr = 0;
-    if(params.__pr&&!isNaN(params.__pr)){
-      pr = parseInt(params.__pr);
-    }
-    this.seed = Math.max(pr,r);
+      
+    this.seed = this.getMaxSeed();
     this.isForward = false;
     //浏览器并不会为第一个url记录hash记录 所以想禁止第一个页面离开 需要在第一次加载根路径的时候增加一个hash记录
     this.firstLoadToChangeHash = false;
@@ -36,6 +28,12 @@ class Navigation extends React.Component {
         curpagename:this.props.config.root
         ,pages:[]}  
 
+  }
+
+  getMaxSeed(){
+    var seedObj = this.getUrlSeedObj();
+
+    return Math.max(seedObj.__r,seedObj.__pr,seedObj.__ar);
   }
 
   getUniqueSeed(){
@@ -65,6 +63,51 @@ class Navigation extends React.Component {
    this.hashChange();
   }
 
+
+  getUrlSeedStr(){
+    var params =  this.getParamsFromUrl();
+    return params._hxz;
+  }
+
+  convertUrlSeedToObj(str){
+    str = str||"";
+    var arr = str.split("_");
+    var re =  {
+      __r:arr[0],
+      __pr:arr[1],
+      __ar:arr[2]
+    };
+
+    if(isNaN(re.__r)||!re.__r){
+      re.__r = 0;
+
+    }else{
+       re.__r = parseInt(re.__r);
+    }
+
+    if(isNaN(re.__pr)||!re.__pr){
+      re.__pr = 0;
+    }else{
+       re.__pr = parseInt(re.__pr);
+    }
+
+    if(isNaN(re.__ar)||!re.__ar){
+      re.__ar = 0;
+    }else{
+       re.__ar = parseInt(re.__ar);
+    }
+    return re;
+  }
+
+  getUrlSeedObj(){
+    var seedStr = this.getUrlSeedStr();
+    return this.convertUrlSeedToObj(seedStr);
+  }
+
+  getNewSeedStr(preSeedObj){
+    var Re = [this.getUniqueSeed(),preSeedObj.__r,this.getUniqueSeed()]
+    return Re.join("_");
+  }
   prepareGo(pageKey, params,isNotForward,_isReplaceGo){
     if(isNotForward!==true){
       this.isForward = true;
@@ -74,16 +117,21 @@ class Navigation extends React.Component {
     var prePageName = this.getPageNameFromUrl();
     prePageName = prePageName.split("/").shift();
     var toPageName = pageKey.split("/").shift();
-    if((_isReplaceGo&&this.prePathArr.length===0)||(toPageName===prePageName&&preUrlParams.__r!==undefined&&preUrlParams.__pr!==undefined&&preUrlParams.__pr!=='undefined')){
+    var seedStr = this.getUrlSeedStr();
+    if((_isReplaceGo&&this.prePathArr.length===0)||(toPageName===prePageName&&seedStr)){
        //避免本不应该发生hashchange 被__r引发hashchange
        // 当是replace的时候也走这里 但是当前页面是多级的就不走了
-       params.__pr = preUrlParams.__pr;
-       params.__r = preUrlParams.__r;
+ 
+       params._hxz =seedStr;
     }else{
-      if(preUrlParams.__r!==undefined){
-        params.__pr = preUrlParams.__r;
-      }
-      params.__r = this.getUniqueSeed();
+
+      var seedObj = this.convertUrlSeedToObj(seedStr);
+      params._hxz = this.getNewSeedStr(seedObj);
+
+      // if(preUrlParams.__r!==undefined){
+      //   params.__pr = preUrlParams.__r;
+      // }
+      // params.__r = this.getUniqueSeed();
 
     }
     
@@ -168,7 +216,7 @@ class Navigation extends React.Component {
     return re;
   }
 
-
+  /*seed格式  id_preid_autoincreaseid*/
   hashChange(){
     if(isWantToPreventRoute){
       isWantToPreventRoute = false;
@@ -178,11 +226,13 @@ class Navigation extends React.Component {
 
     var curParams = this.getParamsFromUrl();
 
+    var curSeedObj = this.getUrlSeedObj();
+
     var ToPageName = this.getPageNameFromUrl()||this.props.config.root;
     var ToPageNameArr = ToPageName.split("/");
     ToPageName = ToPageNameArr.shift();
 
-    if(!curParams.__r&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
+    if(!curParams._hxz&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
         this.firstLoadToChangeHash = true;
     }
     if(!this.props.config.pages){
@@ -190,9 +240,10 @@ class Navigation extends React.Component {
     }
 
     this.FromPage = this.state.curpagename;
-    var r = curParams.__r;
+    var r = curSeedObj.__r;
     var key = ToPageName+"_"+r;
-    if(!curParams.__r&&!this.isForward&&!this.isInit){
+
+    if(!curParams._hxz&&!this.isForward&&!this.isInit){
       ////禁止离开应用 todo 事件插件机制
       isWantToPreventRoute = true;
       window.history.go(1);
@@ -234,10 +285,12 @@ class Navigation extends React.Component {
           page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
         });
       }else{
-        if(!this.preUrlParams.__r){
+        if(!this.preUrlParams._hxz){
           
         }else{
-          if(curParams.__pr===this.preUrlParams.__r){
+          console.log(curSeedObj)
+          console.log(this.preSeedObj)
+          if(curSeedObj.__pr===this.preSeedObj.__r){
             action = '前进';
             animationAction = '前进';
              this.routeStack.push({
@@ -299,7 +352,6 @@ class Navigation extends React.Component {
 
     if(this.firstLoadToChangeHash){
         var p = this.getParamsFromUrl()||{};
-        p.__r = this.getUniqueSeed();
         isWantToPreventRoute = true;
         setTimeout(()=>{
           this.go(this.appConfig.root,p);
@@ -307,6 +359,7 @@ class Navigation extends React.Component {
     }
 
     this.preUrlParams = this.getParamsFromUrl();
+    this.preSeedObj = this.getUrlSeedObj();
     var prePath = this.getPageNameFromUrl();
     this.prePathArr = prePath.split("/");
     this.prePageName = this.prePathArr.shift();
