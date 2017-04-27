@@ -33,7 +33,7 @@ class Navigation extends React.Component {
   getMaxSeed(){
     var seedObj = this.getUrlSeedObj();
 
-    return Math.max(seedObj.__r,seedObj.__pr,seedObj.__ar);
+    return Math.max(seedObj.__r,seedObj.__pr);
   }
 
   getUniqueSeed(){
@@ -75,7 +75,6 @@ class Navigation extends React.Component {
     var re =  {
       __r:arr[0],
       __pr:arr[1],
-      __ar:arr[2]
     };
 
     if(isNaN(re.__r)||!re.__r){
@@ -91,11 +90,7 @@ class Navigation extends React.Component {
        re.__pr = parseInt(re.__pr);
     }
 
-    if(isNaN(re.__ar)||!re.__ar){
-      re.__ar = 0;
-    }else{
-       re.__ar = parseInt(re.__ar);
-    }
+   
     return re;
   }
 
@@ -105,7 +100,7 @@ class Navigation extends React.Component {
   }
 
   getNewSeedStr(preSeedObj){
-    var Re = [this.getUniqueSeed(),preSeedObj.__r,this.getUniqueSeed()]
+    var Re = [this.getUniqueSeed(),preSeedObj.__r]
 
     return Re.join(splitchar);
   }
@@ -120,7 +115,7 @@ class Navigation extends React.Component {
     var toPageName = pageKey.split("/").shift();
     var seedStr = this.getUrlSeedStr();
     if(!seedStr){
-      seedStr = [this.getUniqueSeed(),0,this.getUniqueSeed()].join(splitchar);
+      seedStr = [this.getUniqueSeed(),0].join(splitchar);
     }
     if((_isReplaceGo&&this.prePathArr.length===0)){
        //避免本不应该发生hashchange 被__r引发hashchange
