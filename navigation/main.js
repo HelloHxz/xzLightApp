@@ -70,9 +70,7 @@ class Navigation extends React.Component {
     return params[systemseedname];
   }
 
-  showPage(){
-    alert("-=-=-=-===");
-  }
+
 
   convertUrlSeedToObj(str){
     str = str||"";
@@ -356,15 +354,11 @@ class Navigation extends React.Component {
       console.error("没有实现pagelayout！");
     }
 
-    console.log(this.routeStack);
-
     this.setState({pages:pages});
+
     this.isForward = false;
     this.isInit = false;
     isReplaceGo = false;
-
-    //this.preLastPageInstance = this.routeStack[this.routeStack.length-1];
-
 
     if(this.firstLoadToChangeHash){
         var p = this.getParamsFromUrl()||{};
@@ -374,14 +368,12 @@ class Navigation extends React.Component {
         },100);
     }
 
+    var prePath = this.getPageNameFromUrl();
     this.preUrlParams = this.getParamsFromUrl();
     this.preseedStr = this.getUrlSeedStr();
     this.preSeedObj =  this.convertUrlSeedToObj(this.preseedStr);
-    var prePath = this.getPageNameFromUrl();
     this.prePathArr = prePath.split("/");
     this.prePageName = this.prePathArr.shift();
-
-
   }
 
 

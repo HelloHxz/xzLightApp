@@ -24,7 +24,7 @@ class PageView extends React.Component {
     }
   }
   showPage(){
-    this.props.pagemanager.showPage({
+    this.props.pageview.showPage({
       pagekey:"two",
       mode:"fromBottom"
     });
@@ -35,7 +35,6 @@ class PageView extends React.Component {
       <button onClick={this.clickHandle.bind(this,2)}>去三级</button>
        <button onClick={this.clickHandle.bind(this,3)}>去二级</button>
        <button onClick={this.clickHandle.bind(this,4)}>GoSame</button>
-
        <button onClick={this.showPage.bind(this,3)}>ShowPage</button></div>);
   }
 }

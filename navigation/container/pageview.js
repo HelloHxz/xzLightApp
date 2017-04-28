@@ -4,6 +4,7 @@ class PageView extends React.Component {
   constructor(props) {
     super(props)
     this.shouldUpdate = true;
+    this.showPages = [];
     this.state={
       leftroute:props.leftroute,
       pagename:props.pagename
@@ -21,6 +22,9 @@ class PageView extends React.Component {
     }
   }
 
+  showPage(){
+    alert("-=-=-=-===");
+  }
 
 
   render() {
@@ -31,18 +35,21 @@ class PageView extends React.Component {
     }
     //this.props.pkey
     var params = this.props.pagemanager.getParamsFromUrl();
-    return (<ToPageInstance 
-    			pageview={this} 
+    return (<div key={this.props.pkey+"_outer"}>
+        {this.showPages}
+        <ToPageInstance 
+          pageview={this} 
           ref={(instance)=>{
             this.props.pagemanager.pageInstanceDict[this.props.pkey] = instance;
           }}
           params={params}
           pagename={this.state.pagename}
           leftroute = {this.state.leftroute}
-    			pagemanager={this.props.pagemanager}
-          pkey={this.props.pkey+"_inner_"} 
-    			key={this.props.pkey+"_inner"}>
-    		</ToPageInstance>);
+          pagemanager={this.props.pagemanager}
+          pkey={this.props.pkey+"_inner"} 
+          key={this.props.pkey+"_inner"}>
+        </ToPageInstance>
+      </div>);
   }
 }
 module.exports = PageView;
