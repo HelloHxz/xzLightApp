@@ -9,7 +9,7 @@ var PageView = require("./container/pageview");
     4. 阻止后退 可以使用自身的UI进行阻止（刚进来的第一页也可以阻止）
     5. 默认的是keepAlive 可设置不保留 前一个页面的状态和dom
 */
-var isWantToPreventRoute = false,isReplaceGo=false,splitchar='.',systemseedname='_hxz';
+var isWantToPreventRoute = false,isReplaceGo=false,splitchar='_',systemseedname='_hxz';
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -24,6 +24,7 @@ class Navigation extends React.Component {
     if(!this.props.config.root){
       console.error("没有指定root页面");
     }
+    this.pageInstanceDict={};
     this.state={
         curpagename:this.props.config.root
         ,pages:[]}  
@@ -67,6 +68,10 @@ class Navigation extends React.Component {
   getUrlSeedStr(){
     var params =  this.getParamsFromUrl();
     return params[systemseedname];
+  }
+
+  showPage(){
+    alert("-=-=-=-===");
   }
 
   convertUrlSeedToObj(str){
@@ -241,7 +246,8 @@ class Navigation extends React.Component {
 
     var curParams = this.getParamsFromUrl();
 
-    var curSeedObj = this.getUrlSeedObj();
+    var curseedStr = this.getUrlSeedStr();
+    var curSeedObj =  this.convertUrlSeedToObj(curseedStr);
 
     var ToPageName = this.getPageNameFromUrl()||this.props.config.root;
     var ToPageNameArr = ToPageName.split("/");
@@ -253,10 +259,11 @@ class Navigation extends React.Component {
     if(!this.props.config.pages){
       console.error("没有配置pages属性");
     }
+    console.log(this.prePageName+"_"+this.preseedStr)
 
     this.FromPage = this.state.curpagename;
     var r = curSeedObj.__r;
-    var key = ToPageName+"_"+r;
+    var key = ToPageName+"_"+curseedStr;
 
     if(!curParams[systemseedname]&&!this.isForward&&!this.isInit){
       ////禁止离开应用 todo 事件插件机制
@@ -270,7 +277,7 @@ class Navigation extends React.Component {
   
     if(isReplaceGo){
       if(this.prePathArr.length===0){
-        this.routeStack.pop();
+        var popRoute=  this.routeStack.pop();
       }else{
         this.routeStack[this.routeStack.length-1].isDelete = true;
       }
@@ -284,7 +291,7 @@ class Navigation extends React.Component {
       }else{
         animationAction = '前进';
         this.routeStack.push({
-          key:ToPageName,
+          pagename:ToPageName,
           r:r,
           _key:key,
           page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
@@ -294,7 +301,7 @@ class Navigation extends React.Component {
       if(this.routeStack.length===0){
         action = '刷新';
         this.routeStack.push({
-          key:ToPageName,
+          pagename:ToPageName,
           _key:key,
           r:r,
           page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
@@ -303,13 +310,11 @@ class Navigation extends React.Component {
         if(!this.preUrlParams[systemseedname]){
           
         }else{
-          console.log(curSeedObj)
-          console.log(this.preSeedObj)
           if(curSeedObj.__pr===this.preSeedObj.__r){
             action = '前进';
             animationAction = '前进';
              this.routeStack.push({
-              key:ToPageName,
+              pagename:ToPageName,
               _key:key,
               r:r,
               page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
@@ -320,7 +325,7 @@ class Navigation extends React.Component {
                 if(this.routeStack[0]._key !== key){
                     animationAction = '后退删除最后';
                     this.routeStack =[{
-                      key:ToPageName,
+                      pagename:ToPageName,
                       _key:key,
                       r:r,
                       page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
@@ -328,12 +333,8 @@ class Navigation extends React.Component {
                   }else{
                       this.routeStack[0].page = 
                       <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
-                      // if(this.preLastPageInstance&&this.routeStack.length){
-                      //    animationAction = '后退删除最后';
-                      // }
                   }
               }else{
-                  
                if( this.prePageName === ToPageName&&ToPageNameArr.length>0){
                    this.routeStack[this.routeStack.length-1].page = 
                       <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
@@ -374,10 +375,12 @@ class Navigation extends React.Component {
     }
 
     this.preUrlParams = this.getParamsFromUrl();
-    this.preSeedObj = this.getUrlSeedObj();
+    this.preseedStr = this.getUrlSeedStr();
+    this.preSeedObj =  this.convertUrlSeedToObj(this.preseedStr);
     var prePath = this.getPageNameFromUrl();
     this.prePathArr = prePath.split("/");
     this.prePageName = this.prePathArr.shift();
+
 
   }
 

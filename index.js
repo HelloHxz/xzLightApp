@@ -12,7 +12,7 @@ function NoAnimation(routeStack,pages){
 		if(i===j-1){
 			pages.push(<div className='xz-page-route-wrapper' key={_key}>{instance}</div>);
 	    }else{
-	    	pages.push(<div className='xz-page-route-wrapper'  style={{left:"-120%"}} key={_key}>{instance}</div>);
+	    	pages.push(<div className='xz-page-route-wrapper'  style={{left:"-120%",visibility:"hidden"}} key={_key}>{instance}</div>);
 
 	    }
 	}
@@ -29,7 +29,7 @@ function GoPreOrNext(lastClass,preClass,len,routeStack,pages){
 		}else if(i===len-2){
 			pages.push(<div className={preClass} key={_key}>{instance}</div>);
 		}else{
-			pages.push(<div className='xz-page-route-wrapper' key={_key} style={{left:"-120%"}}>{instance}</div>);
+			pages.push(<div className='xz-page-route-wrapper' key={_key} style={{left:"-120%",visibility:"hidden"}}>{instance}</div>);
 		}
 	}
 }
@@ -57,17 +57,16 @@ export default {
 						console.log("删除");
 						routeStack.pop();
 
-						var params = manager.getParamsFromUrl();
-						var r = params.__r;
+						var seedObj = manager.getUrlSeedObj();
+						var r = seedObj.__r;
 						if(r){
-						
 							r = parseInt(r);
 
 							for(var i=routeStack.length-1;i>=0;i--){
+
 								var rr = routeStack[i].r;
 								if(rr&&routeStack[i].isDelete){
 									rr = parseInt(rr);
-									
 									if(rr>r){
 										routeStack.splice(i,1); 
 									}

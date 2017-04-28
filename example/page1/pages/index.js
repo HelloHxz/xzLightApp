@@ -23,12 +23,20 @@ class PageView extends React.Component {
        this.props.pagemanager.go("index",{x:111});
     }
   }
+  showPage(){
+    this.props.pagemanager.showPage({
+      pagekey:"two",
+      mode:"fromBottom"
+    });
+  }
 
   render() {
     return (<div><button onClick={this.clickHandle.bind(this,1)}>跳转</button>
       <button onClick={this.clickHandle.bind(this,2)}>去三级</button>
        <button onClick={this.clickHandle.bind(this,3)}>去二级</button>
-       <button onClick={this.clickHandle.bind(this,4)}>GoSame</button></div>);
+       <button onClick={this.clickHandle.bind(this,4)}>GoSame</button>
+
+       <button onClick={this.showPage.bind(this,3)}>ShowPage</button></div>);
   }
 }
 module.exports = PageView;

@@ -15,11 +15,12 @@ class PageView extends React.Component {
     this.setState({pagename:props.pagename,leftroute:props.leftroute});
   }
 
-  //  shouldComponentUpdate(){
-  //   return this.shouldUpdate;
-  // }
+  componentWillUnmount(){
+    if(this.props.pagemanager.pageInstanceDict[this.props.pkey]){
+      delete this.props.pagemanager.pageInstanceDict[this.props.pkey];
+    }
+  }
 
- 
 
 
   render() {
@@ -28,9 +29,13 @@ class PageView extends React.Component {
     if(!ToPageInstance){
        console.error("pages属性中没有引入["+realpagename+"]页面");
     }
+    //this.props.pkey
     var params = this.props.pagemanager.getParamsFromUrl();
     return (<ToPageInstance 
     			pageview={this} 
+          ref={(instance)=>{
+            this.props.pagemanager.pageInstanceDict[this.props.pkey] = instance;
+          }}
           params={params}
           pagename={this.state.pagename}
           leftroute = {this.state.leftroute}
