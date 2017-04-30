@@ -83,10 +83,18 @@ export default {
 			   	}else{
 			   		NoAnimation(routeStack,pages);
 			   	}
-
-			   	
+			   	//因为动画 页面没有清楚干净 
+			   	if(animationAction!=='前进'){
+					setTimeout(()=>{
+				   		var lastPages = [];
+				   		NoAnimation(routeStack,lastPages);
+				   		manager.setState({pages:lastPages});
+				   	},300);
+			   	}
+			   
 
 			    console.log(routeStack.length);
+			   
 			    return pages;
 			})
 		},

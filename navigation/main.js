@@ -26,7 +26,8 @@ class Navigation extends React.Component {
     }
     this.pageInstanceDict={};
     this.state={
-        curpagename:this.props.config.root
+        curpagename:this.props.config.root,
+        renderseed:0
         ,pages:[]}  
 
   }
