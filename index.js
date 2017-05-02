@@ -89,7 +89,7 @@ export default {
 				   		var lastPages = [];
 				   		NoAnimation(routeStack,lastPages);
 				   		manager.setState({pages:lastPages});
-				   	},300);
+				   	},250);
 			   	}
 			   
 

@@ -18,8 +18,13 @@ class PageView extends React.Component {
 
   componentWillUnmount(){
     if(this.props.pagemanager.pageInstanceDict[this.props.pkey]){
+      console.log(this.props.pkey+" delete");
       delete this.props.pagemanager.pageInstanceDict[this.props.pkey];
     }
+  }
+
+  componentDidMount(){
+    this.props.pagemanager.pageInstanceDict[this.props.pkey] = this.pageInstance;
   }
 
   showPage(){
@@ -40,7 +45,7 @@ class PageView extends React.Component {
         <ToPageInstance 
           pageview={this} 
           ref={(instance)=>{
-            this.props.pagemanager.pageInstanceDict[this.props.pkey] = instance;
+            this.pageInstance = instance;
           }}
           params={params}
           pagename={this.state.pagename}

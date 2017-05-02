@@ -357,6 +357,7 @@ class Navigation extends React.Component {
 
     this.setState({pages:pages});
 
+
     this.isForward = false;
     this.isInit = false;
     isReplaceGo = false;
@@ -375,6 +376,18 @@ class Navigation extends React.Component {
     this.preSeedObj =  this.convertUrlSeedToObj(this.preseedStr);
     this.prePathArr = prePath.split("/");
     this.prePageName = this.prePathArr.shift();
+
+    setTimeout(()=>{
+      console.log(this.preseedStr+" "+prePath);
+      console.log("-=-=-=-=-")
+      for(var key in this.pageInstanceDict){
+        console.log(key);
+      }
+      console.log("-=-=-=-=-") 
+   },400);
+ 
+
+
   }
 
 
