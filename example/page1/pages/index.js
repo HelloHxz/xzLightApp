@@ -12,7 +12,6 @@ class PageView extends React.Component {
   }
 
   onResume(){
-    console.log(this.props.pkey+" onpageresume");
   }
 
   clickHandle(params){

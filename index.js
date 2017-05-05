@@ -54,28 +54,8 @@ export default {
 			   			GoPreOrNext('xz-page-route-wrapper right-in','xz-page-route-wrapper left-out',len,routeStack,pages,isReplaceGo);
 			   		}else if(animationAction==="后退删除最后"){
 				   		GoPreOrNext('xz-page-route-wrapper right-out','xz-page-route-wrapper left-in',len,routeStack,pages);
-						console.log("删除");
 						routeStack.pop();
-
-						var seedObj = manager.getUrlSeedObj();
-						var r = seedObj.__r;
-						if(r){
-							r = parseInt(r);
-
-							for(var i=routeStack.length-1;i>=0;i--){
-
-								var rr = routeStack[i].r;
-								if(rr&&routeStack[i].isDelete){
-									rr = parseInt(rr);
-									if(rr>r){
-										routeStack.splice(i,1); 
-									}
-								}
-							}
-						}
-
-						
-
+					
 			   		}else{
 			   			NoAnimation(routeStack,pages);
 			   		}
@@ -85,16 +65,34 @@ export default {
 			   	}
 			   	//因为动画 页面没有清楚干净 
 			   	if(animationAction!=='前进'){
+
+
+		   			
+
+
 					setTimeout(()=>{
 				   		var lastPages = [];
 				   		NoAnimation(routeStack,lastPages);
 				   		manager.setState({pages:lastPages});
 				   	},250);
 			   	}
-			   
 
-			    console.log(routeStack.length);
-			   
+			   	setTimeout(()=>{
+			   		var seedObj = manager.getUrlSeedObj();
+					var r = seedObj.__r;
+					if(r){
+						r = parseInt(r);
+						for(var i=routeStack.length-1;i>=0;i--){
+							var rr = routeStack[i].r;
+							if(rr&&routeStack[i].isDelete){
+								rr = parseInt(rr);
+								// if(rr>r){
+									routeStack.splice(i,1); 
+								// }
+							}
+						}
+					}
+			   	},300);
 			    return pages;
 			})
 		},

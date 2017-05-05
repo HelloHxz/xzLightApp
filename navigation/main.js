@@ -121,7 +121,9 @@ class Navigation extends React.Component {
     if(!seedStr){
       seedStr = [this.getUniqueSeed(),0].join(splitchar);
     }
-    if((_isReplaceGo&&this.prePathArr.length===0)){
+    console.log(this.prePathArr.length);
+    if((_isReplaceGo)){
+      //&&this.prePathArr.length===0
        //避免本不应该发生hashchange 被__r引发hashchange
        // 当是replace的时候也走这里 但是当前页面是多级的就不走了
        params[systemseedname] =seedStr;
@@ -334,12 +336,13 @@ class Navigation extends React.Component {
                       <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
                   }
               }else{
+
                if( this.prePageName === ToPageName&&ToPageNameArr.length>0){
                    this.routeStack[this.routeStack.length-1].page = 
                       <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
                 }else{
-                   this.routeStack[this.routeStack.length-2].page = 
-                      <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
+                   // this.routeStack[this.routeStack.length-2].page = 
+                   //    <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
                    animationAction = '后退删除最后';
                 }
               }
@@ -386,12 +389,9 @@ class Navigation extends React.Component {
   }
 
   callResume(prePath,ppSeedStr,ppprePath){
-    console.log(ppSeedStr+">>>"+this.preseedStr+"  "+ppprePath);
     setTimeout(()=>{
-      console.log(this.preseedStr+" "+prePath);
       var prePathArr = prePath.split("/");
       var ppPathArr = ppprePath.split("/");
-      console.log("-=-=-=-=-")
 
       var crKey = "",pcKey = "";
       for(var i=0,j=prePathArr.length;i<j;i++){
@@ -408,8 +408,9 @@ class Navigation extends React.Component {
           if(instanceInfo.isInit){
             instanceInfo.isInit = false;
           }else{
-            console.log(crKey+" ..... "+pcKey);
+
             if(crKey!==pcKey){
+              console.log(crKey+" >>>resume");
               instanceInfo.instance.onResume&&instanceInfo.instance.onResume();
             }
           }
@@ -418,7 +419,6 @@ class Navigation extends React.Component {
 
       }
      
-      console.log("-=-=-=-=-") 
     },300);
   }
 

@@ -8,7 +8,6 @@ class Com extends React.Component {
   }
 
   onResume(){
-  	alert("s");
   }
 
 

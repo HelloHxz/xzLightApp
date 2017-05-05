@@ -17,13 +17,15 @@ class PageView extends React.Component {
   }
 
   componentWillUnmount(){
+    console.log(this.props.pkey+"     unmount>>>");
+
     if(this.props.pagemanager.pageInstanceDict[this.props.pkey]){
-      console.log(this.props.pkey+" delete");
       delete this.props.pagemanager.pageInstanceDict[this.props.pkey];
     }
   }
 
   componentDidMount(){
+    console.log(this.props.pkey+"     didmount>>>");
     this.props.pagemanager.pageInstanceDict[this.props.pkey] = {
       instance:this.pageInstance,
       isInit:true
@@ -31,7 +33,6 @@ class PageView extends React.Component {
   }
 
   showPage(){
-    alert("-=-=-=-===");
   }
 
 
