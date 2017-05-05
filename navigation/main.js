@@ -419,7 +419,7 @@ class Navigation extends React.Component {
 
       }
      
-    },300);
+    },200);
   }
 
 

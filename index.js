@@ -86,9 +86,9 @@ export default {
 							var rr = routeStack[i].r;
 							if(rr&&routeStack[i].isDelete){
 								rr = parseInt(rr);
-								// if(rr>r){
+								if(rr>r){
 									routeStack.splice(i,1); 
-								// }
+								}
 							}
 						}
 					}
