@@ -9,11 +9,16 @@ class PageView extends React.Component {
       leftroute:props.leftroute,
       pagename:props.pagename
     };
+    this.repaireUrlWhenRepalceGo = this.repaireUrlWhenRepalceGo.bind(this);
   }
 
 
   componentWillReceiveProps(props){
     this.setState({pagename:props.pagename,leftroute:props.leftroute});
+  }
+
+  repaireUrlWhenRepalceGo(params){
+    this.setState(params);
   }
 
   componentWillUnmount(){
@@ -38,6 +43,7 @@ class PageView extends React.Component {
 
   render() {
     var realpagename = this.state.pagename.split("_")[0];
+    console.log(realpagename);
   	var ToPageInstance = this.props.pagemanager.props.config.pages[realpagename];
     if(!ToPageInstance){
        console.error("pages属性中没有引入["+realpagename+"]页面");

@@ -341,6 +341,15 @@ class Navigation extends React.Component {
                    this.routeStack[this.routeStack.length-1].page = 
                       <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
                 }else{
+                    var _pi = this.pageInstanceDict[key];
+                    //修复多级别的时候replacego 回来之后显示页面需要显示正确
+                    if(_pi){
+                        _pi.instance.props.pageview.repaireUrlWhenRepalceGo({
+                          leftroute:ToPageNameArr,
+                          pagename:ToPageName
+                        });
+                    }
+
                    // this.routeStack[this.routeStack.length-2].page = 
                    //    <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
                    animationAction = '后退删除最后';
