@@ -7,6 +7,12 @@ class Com extends React.Component {
   	console.log("constructor 》》》》》》》》");
   }
 
+  onResume(){
+  	alert("s");
+  }
+
+
+
  
 
   render() {

@@ -11,6 +11,10 @@ class PageView extends React.Component {
     console.log("constructor");
   }
 
+  onResume(){
+    console.log(this.props.pkey+" onpageresume");
+  }
+
   clickHandle(params){
     if(params===1){
      this.props.pagemanager.go("delayload");

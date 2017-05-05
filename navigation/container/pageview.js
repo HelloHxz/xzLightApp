@@ -24,7 +24,10 @@ class PageView extends React.Component {
   }
 
   componentDidMount(){
-    this.props.pagemanager.pageInstanceDict[this.props.pkey] = this.pageInstance;
+    this.props.pagemanager.pageInstanceDict[this.props.pkey] = {
+      instance:this.pageInstance,
+      isInit:true
+    };
   }
 
   showPage(){

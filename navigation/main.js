@@ -370,24 +370,56 @@ class Navigation extends React.Component {
         },100);
     }
 
-    var prePath = this.getPageNameFromUrl();
+
+    var ppprePath = this.prePath;
+
+    this.prePath = this.getPageNameFromUrl();
     this.preUrlParams = this.getParamsFromUrl();
+    var ppstr =this.preseedStr;
     this.preseedStr = this.getUrlSeedStr();
     this.preSeedObj =  this.convertUrlSeedToObj(this.preseedStr);
-    this.prePathArr = prePath.split("/");
+    this.prePathArr = this.prePath.split("/");
     this.prePageName = this.prePathArr.shift();
 
+    this.callResume(this.prePath,ppstr||"",ppprePath||"");
+
+  }
+
+  callResume(prePath,ppSeedStr,ppprePath){
+    console.log(ppSeedStr+">>>"+this.preseedStr+"  "+ppprePath);
     setTimeout(()=>{
       console.log(this.preseedStr+" "+prePath);
+      var prePathArr = prePath.split("/");
+      var ppPathArr = ppprePath.split("/");
       console.log("-=-=-=-=-")
-      for(var key in this.pageInstanceDict){
-        console.log(key);
+
+      var crKey = "",pcKey = "";
+      for(var i=0,j=prePathArr.length;i<j;i++){
+        if(i===0){
+          crKey = prePathArr[0]+"_"+this.preseedStr;
+          pcKey = ppPathArr[0]+"_"+ppSeedStr;
+        }else{
+          crKey = crKey + "_" +prePathArr[i];
+          pcKey = pcKey+"_"+(ppPathArr[i]||"");
+        }
+
+        var instanceInfo = this.pageInstanceDict[crKey];
+        if(instanceInfo){
+          if(instanceInfo.isInit){
+            instanceInfo.isInit = false;
+          }else{
+            console.log(crKey+" ..... "+pcKey);
+            if(crKey!==pcKey){
+              instanceInfo.instance.onResume&&instanceInfo.instance.onResume();
+            }
+          }
+        }
+        
+
       }
+     
       console.log("-=-=-=-=-") 
-   },400);
- 
-
-
+    },300);
   }
 
 

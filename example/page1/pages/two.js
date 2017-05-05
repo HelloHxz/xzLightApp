@@ -7,6 +7,9 @@ class PageView extends React.Component {
     super(props)
     console.log("constructor: two");
   }
+   onResume(){
+    // alert("two");
+  }
 
 clickHandle(params){
      this.props.pagemanager.replaceGo("one");
