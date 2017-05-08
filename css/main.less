@@ -13,6 +13,19 @@
 }
 
 
+
+
+.px2rem(@name, @px){
+    @{name}: @px / 75 * 1rem;
+}
+
+
+button{
+  .px2rem(font-size, 30);
+  border:1px solid red;
+  .px2rem(border-radius,6);
+}
+
 .xz-scrolling{
   -webkit-overflow-scrolling: touch;
 }

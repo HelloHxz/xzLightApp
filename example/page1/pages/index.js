@@ -1,4 +1,6 @@
 var React = require("react");
+
+require("../css/index.less")
 const {XzComponents,style} = require("../../../index").default
 
 
@@ -34,11 +36,13 @@ class PageView extends React.Component {
   }
 
   render() {
-    return (<div><button onClick={this.clickHandle.bind(this,1)}>跳转</button>
+    return (<div>
+      <div className='testheader'></div>
+      <button onClick={this.clickHandle.bind(this,1)}>跳转</button>
       <button onClick={this.clickHandle.bind(this,2)}>去三级</button>
        <button onClick={this.clickHandle.bind(this,3)}>去二级</button>
        <button onClick={this.clickHandle.bind(this,4)}>GoSame</button>
-       <button onClick={this.showPage.bind(this,3)}>ShowPage</button></div>);
+       <button onClick={this.showPage.bind(this,3)}>我已审批</button></div>);
   }
 }
 module.exports = PageView;
