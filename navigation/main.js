@@ -237,7 +237,7 @@ class Navigation extends React.Component {
     return re;
   }
 
-  /*seed格式  id_preid_autoincreaseid*/
+  /*seed格式  id_preid*/
   hashChange(){
     if(isWantToPreventRoute){
       isWantToPreventRoute = false;

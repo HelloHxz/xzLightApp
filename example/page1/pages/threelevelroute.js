@@ -10,8 +10,7 @@ class Com extends React.Component {
  
 
   render() {
-  	console.log("render");
-    return (<div>third<Navigation.PageContainer {...this.props} key={this.props.pkey+"container"} owner={this}/></div>);
+    return (<div>third<Navigation.PageContainer {...this.props}  owner={this}/></div>);
   }
 }
 module.exports = Com;
