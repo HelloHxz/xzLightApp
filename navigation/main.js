@@ -121,9 +121,7 @@ class Navigation extends React.Component {
     if(!seedStr){
       seedStr = [this.getUniqueSeed(),0].join(splitchar);
     }
-    console.log(this.prePathArr.length);
-    if((_isReplaceGo)){
-      //&&this.prePathArr.length===0
+    if((_isReplaceGo&&this.prePathArr.length===0)){
        //避免本不应该发生hashchange 被__r引发hashchange
        // 当是replace的时候也走这里 但是当前页面是多级的就不走了
        params[systemseedname] =seedStr;
@@ -250,8 +248,8 @@ class Navigation extends React.Component {
     var curseedStr = this.getUrlSeedStr();
     var curSeedObj =  this.convertUrlSeedToObj(curseedStr);
 
-    var ToPageName = this.getPageNameFromUrl()||this.props.config.root;
-    var ToPageNameArr = ToPageName.split("/");
+    var ToPagePath = this.getPageNameFromUrl()||this.props.config.root;
+    var ToPageNameArr = ToPagePath.split("/");
     ToPageName = ToPageNameArr.shift();
 
     if(!curParams[systemseedname]&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
@@ -280,6 +278,7 @@ class Navigation extends React.Component {
       if(this.prePathArr.length===0){
         var popRoute=  this.routeStack.pop();
       }else{
+        //this.routeStack.pop();
         this.routeStack[this.routeStack.length-1].isDelete = true;
       }
     }
@@ -361,14 +360,20 @@ class Navigation extends React.Component {
       }
     }
 
-    var pages = this.props.pagelayout(this,action,animationAction,isReplaceGo);
+
+    var pages = this.props.pagelayout({
+      manager:this,
+      action:action,
+      animationAction:animationAction,
+      isReplaceGo:isReplaceGo,
+      key:key
+    });
 
     if(!pages){
       console.error("没有实现pagelayout！");
     }
 
     this.setState({pages:pages});
-
 
     this.isForward = false;
     this.isInit = false;

@@ -50,7 +50,7 @@ class PageView extends React.Component {
     }
     //this.props.pkey
     var params = this.props.pagemanager.getParamsFromUrl();
-    return (<div key={this.props.pkey+"_outer"}>
+    return (<div className='xz-page-inner' key={this.props.pkey+"_outer"}>
         {this.showPages}
         <ToPageInstance 
           pageview={this} 

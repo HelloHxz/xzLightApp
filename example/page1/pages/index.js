@@ -36,7 +36,7 @@ class PageView extends React.Component {
   }
 
   render() {
-    return (<div>
+    return (<div className='full-screen'>
       <div className='testheader'></div>
       <button onClick={this.clickHandle.bind(this,1)}>跳转</button>
       <button onClick={this.clickHandle.bind(this,2)}>去三级</button>
