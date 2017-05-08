@@ -18,7 +18,7 @@ clickHandle(params){
   	this.props.pagemanager.go("twolevelroute/one_a",{test:"1"});
   }
   replaceGo(){
-   // this.props.pagemanager.replaceGo("threelevelroute/twolevelroute/one_b",{test:"1111"});
+    //this.props.pagemanager.replaceGo("threelevelroute/twolevelroute/one_b",{test:"1111"});
     this.props.pagemanager.replaceGo("one");
   }
 

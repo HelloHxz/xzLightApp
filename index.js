@@ -18,7 +18,7 @@ function NoAnimation(routeStack,pages){
 	}
 }
 
-function findPageInStackByKey(key,routeStack){
+function findPageIndex(key,routeStack){
 	var Re = null;
 	for(var i=0,j=routeStack.length;i<j;i++){
 		if(routeStack[i]._key===key){
@@ -40,9 +40,9 @@ function GoPreOrNext(isGoNext,lastClass,preClass,routeStack,pages,isReplaceGo,go
 			if(!isGoNext){
 				if(goPageKey!==routeStack[i]._key){
 					//修复relacego之后回退路径不正确
-					var realPageInfo  = findPageInStackByKey(goPageKey,routeStack);
-					if(realPageInfo||realPageInfo===0){
-						realIndex = realPageInfo;
+					var index  = findPageIndex(goPageKey,routeStack);
+					if(index||index===0){
+						realIndex = index;
 					}
 					deleteIndex = i;
 					continue;
