@@ -70,6 +70,11 @@ return {
         test: /\.css$/,
         use: [ 'style-loader', 'css-loader', ],
       },
+      { 
+        test: /\.(png|jpg|jpeg|gif|woff)$/, 
+        loader: 'url?limit=4192&name=[path][name].[ext]'
+        //exclude
+      },
       {
             test: /\.less$/,
             use: [{
