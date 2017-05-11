@@ -308,7 +308,7 @@ class Navigation extends React.Component {
     var ToPageNameArr = ToPagePath.split("/");
     ToPageName = ToPageNameArr.shift();
 
-    if(!curParams[systemseedname]&&this.isInit&&ToPageName.toLowerCase() === this.props.config.root.toLowerCase()){
+    if(!curParams[systemseedname]&&this.isInit&&ToPagePath.toLowerCase() === this.props.config.root.toLowerCase()){
         this.firstLoadToChangeHash = true;
     }
     if(!this.props.config.pages){

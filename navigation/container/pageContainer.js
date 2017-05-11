@@ -50,6 +50,10 @@ class PageContainer extends React.Component {
 
   render() {
     var re = [];
+    var className = "";
+    if(this.props.className){
+      className = this.props.className;
+    }
     for(var key in this.arr){
       if(key===this.curpagename){
         re.push(<div key={key+"_containerwrapper"}>{this.arr[key]}</div>);
@@ -57,7 +61,7 @@ class PageContainer extends React.Component {
         re.push(<div  key={key+"_containerwrapper"} style={{display:"none"}}>{this.arr[key]}</div>);
       }
     }
-    return (<div>{re}</div>);
+    return (<div className={className}>{re}</div>);
   }
 }
 module.exports = PageContainer;
