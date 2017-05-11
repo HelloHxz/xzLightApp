@@ -4,10 +4,11 @@ class PageView extends React.Component {
   constructor(props) {
     super(props)
     this.shouldUpdate = true;
-    this.showPages = [];
+    this.showPagesDict = [];
     this.state={
       leftroute:props.leftroute,
-      pagename:props.pagename
+      pagename:props.pagename,
+      showPages:[]
     };
     this.repaireUrlWhenRepalceGo = this.repaireUrlWhenRepalceGo.bind(this);
   }
@@ -37,13 +38,18 @@ class PageView extends React.Component {
     };
   }
 
-  showPage(){
+  showPage(params){
+    var showpages = [];
+    showpages.push(<div className='xz-showpage-frombottom' key='xxx' style={{position:"absolute",zIndex:1,top:0,left:0,backgroundColor:'#fff',height:"100%",width:"100%"}}>
+        <PageView leftroute={[]} pagename={'one'} pagemanager={this.props.pagemanager} key={this.props.pkey+'_sone'} pkey={this.props.pkey+'_sone'}></PageView>
+      </div>);
+    this.setState({showPages:showpages});
   }
 
 
   render() {
     var realpagename = this.state.pagename.split("_")[0];
-    console.log(realpagename);
+
   	var ToPageInstance = this.props.pagemanager.props.config.pages[realpagename];
     if(!ToPageInstance){
        console.error("pages属性中没有引入["+realpagename+"]页面");
@@ -51,7 +57,7 @@ class PageView extends React.Component {
     //this.props.pkey
     var params = this.props.pagemanager.getParamsFromUrl();
     return (<div className='xz-page-inner' key={this.props.pkey+"_outer"}>
-        {this.showPages}
+        {this.state.showPages}
         <ToPageInstance 
           pageview={this} 
           ref={(instance)=>{

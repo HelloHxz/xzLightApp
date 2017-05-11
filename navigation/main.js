@@ -1,6 +1,62 @@
 var React = require("react");
 var PageView = require("./container/pageview");
 
+
+
+function NoAnimation(routeStack,pages){
+  for(var i=0,j=routeStack.length;i<j;i++){
+    var _key = routeStack[i]._key+"_wrapper";
+    var instance = routeStack[i].page;
+
+    if(i===j-1){
+      pages.push(<div className='xz-page-route-wrapper' key={_key}>{instance}</div>);
+      }else{
+        pages.push(<div className='xz-page-route-wrapper'  style={{left:"-120%",visibility:"hidden"}} key={_key}>{instance}</div>);
+
+      }
+  }
+}
+
+function findPageIndex(key,routeStack){
+  var Re = null;
+  for(var i=0,j=routeStack.length;i<j;i++){
+    if(routeStack[i]._key===key){
+      Re = i;
+      break;
+    }
+  }
+  return Re;
+}
+
+function GoPreOrNext(isGoNext,lastClass,preClass,routeStack,pages,isReplaceGo,goPageKey){
+  var deleteIndex = -1,deleteArr=[],realIndex=-1;
+  for(var i=routeStack.length-1,j=routeStack.length;i>=0;i--){
+    var _key = routeStack[i]._key+"_wrapper";
+    var instance = routeStack[i].page;
+    if(i===j-1){
+        pages.push(<div className={lastClass} key={_key}>{instance}</div>);
+    }else if(i===j-2||i===realIndex){
+      if(!isGoNext){
+        if(goPageKey!==routeStack[i]._key){
+          //修复relacego之后回退路径不正确
+          var index  = findPageIndex(goPageKey,routeStack);
+          if(index||index===0){
+            realIndex = index;
+          }
+          deleteIndex = i;
+          continue;
+        }
+      }
+      pages.push(<div className={preClass} key={_key}>{instance}</div>);
+    }else{
+      pages.push(<div className='xz-page-route-wrapper' key={_key} style={{left:"-120%",visibility:"hidden"}}>{instance}</div>);
+    }
+  }
+  if(deleteIndex!==-1){
+    routeStack.splice(deleteIndex,1);
+  }
+}
+
 /*
   路由需要支持：
     1. 多级路由
@@ -361,7 +417,7 @@ class Navigation extends React.Component {
     }
 
 
-    var pages = this.props.pagelayout({
+    var pages = this.pagelayout({
       manager:this,
       action:action,
       animationAction:animationAction,
@@ -399,6 +455,58 @@ class Navigation extends React.Component {
     this.prePageName = this.prePathArr.shift();
 
     this.callResume(this.prePath,ppstr||"",ppprePath||"");
+
+  }
+
+  pagelayout(params){
+        var manager = params.manager;
+        var action = params.action;
+        var animationAction = params.animationAction;
+        var isReplaceGo = params.isReplaceGo;
+        var pages = [];
+        var routeStack = manager.routeStack;
+        var len = routeStack.length;
+          console.log(animationAction+" "+" "+action +" "+len);
+          if(len>1){
+            if(animationAction==='前进'){
+              GoPreOrNext(true,'xz-page-route-wrapper right-in','xz-page-route-wrapper left-out',routeStack,pages,isReplaceGo,params.key);
+            }else if(animationAction==="后退删除最后"){
+              GoPreOrNext(false,'xz-page-route-wrapper right-out','xz-page-route-wrapper left-in',routeStack,pages,false,params.key);
+            routeStack.pop();
+            }else{
+              NoAnimation(routeStack,pages);
+            }
+
+          }else{
+            NoAnimation(routeStack,pages);
+          }
+          //因为动画 页面没有清楚干净 
+          if(animationAction!=='前进'){
+
+          setTimeout(()=>{
+              var lastPages = [];
+              NoAnimation(routeStack,lastPages);
+              manager.setState({pages:lastPages});
+            },250);
+          }
+
+          setTimeout(()=>{
+            var seedObj = manager.getUrlSeedObj();
+          var r = seedObj.__r;
+          if(r){
+            r = parseInt(r);
+            for(var i=routeStack.length-1;i>=0;i--){
+              var rr = routeStack[i].r;
+              if(rr&&routeStack[i].isDelete){
+                rr = parseInt(rr);
+                if(rr>r){
+                  routeStack.splice(i,1); 
+                }
+              }
+            }
+          }
+          },300);
+          return pages;
 
   }
 

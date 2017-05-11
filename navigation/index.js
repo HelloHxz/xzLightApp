@@ -5,9 +5,8 @@ var Navigation = require("./main");
 
 
 export default {
-	start(config,pagelayout){
+	start(config){
 		ReactDOM.render(<Navigation 
-			pagelayout={pagelayout}
 			config={config}/>,
    		 document.getElementById('xz-lightapp-root'));
 	},
