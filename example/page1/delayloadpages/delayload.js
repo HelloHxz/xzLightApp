@@ -1,5 +1,5 @@
-var React = require("react");
-const {XzComponents} = require("../../../index").default
+import React from "react";
+import {XzComponents} from "../../../index"
 
 
 class PageView extends React.Component {
@@ -12,7 +12,7 @@ class PageView extends React.Component {
   load(){
   	var _this = this;
 	require.ensure([], function(require) {
-		var Com = require("./_delayload");
+		var Com = require("./_delayload").default;
     	_this.setState({innerChild:<Com {..._this.props}/>});
 	},'delayloadpage');
   }
@@ -24,4 +24,4 @@ class PageView extends React.Component {
     return (<div>{this.state.innerChild}</div>);
   }
 }
-module.exports = PageView;
+export default PageView;

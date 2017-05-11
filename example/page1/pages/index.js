@@ -1,8 +1,8 @@
-var React = require("react");
+import React from "react"
 
 
-require("../css/index.less")
-const {XzComponents,style} = require("../../../index").default
+import "../css/index.less"
+import {XzComponents,style} from "../../../index"
 
 
 
@@ -46,4 +46,4 @@ class PageView extends React.Component {
        <button onClick={this.showPage.bind(this,3)}>我已审批</button></div>);
   }
 }
-module.exports = PageView;
+export default PageView;

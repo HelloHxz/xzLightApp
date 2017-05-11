@@ -1,5 +1,5 @@
-var React = require("react");
-const {Navigation,XzComponents} = require("../../../index").default
+import React from "react"
+import {XzComponents,Navigation} from "../../../index"
 
 class Com extends React.Component {
   constructor(props) {
@@ -13,4 +13,4 @@ class Com extends React.Component {
     return (<div>third<Navigation.PageContainer {...this.props}  owner={this}/></div>);
   }
 }
-module.exports = Com;
+export default Com;

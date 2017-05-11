@@ -1,6 +1,5 @@
-var React = require("react");
-var PageView = require("./container/pageview");
-
+import React from "react";
+import PageView from "./container/pageview";
 
 
 function NoAnimation(routeStack,pages){
@@ -101,9 +100,9 @@ class Navigation extends React.Component {
 
   componentDidMount(){
     var _this = this;
-   	window.onhashchange=function(){
-   		_this.hashChange();
-   	};
+    window.onhashchange=function(){
+      _this.hashChange();
+    };
 
     this.start();
   }
@@ -306,7 +305,7 @@ class Navigation extends React.Component {
 
     var ToPagePath = this.getPageNameFromUrl()||this.props.config.root;
     var ToPageNameArr = ToPagePath.split("/");
-    ToPageName = ToPageNameArr.shift();
+    var ToPageName = ToPageNameArr.shift();
 
     if(!curParams[systemseedname]&&this.isInit&&ToPagePath.toLowerCase() === this.props.config.root.toLowerCase()){
         this.firstLoadToChangeHash = true;
@@ -469,10 +468,18 @@ class Navigation extends React.Component {
           console.log(animationAction+" "+" "+action +" "+len);
           if(len>1){
             if(animationAction==='前进'){
-              GoPreOrNext(true,'xz-page-route-wrapper right-in','xz-page-route-wrapper left-out',routeStack,pages,isReplaceGo,params.key);
+              if(params.isWeb){
+                NoAnimation(routeStack,pages);
+              }else{
+                GoPreOrNext(true,'xz-page-route-wrapper right-in','xz-page-route-wrapper left-out',routeStack,pages,isReplaceGo,params.key);
+              }
             }else if(animationAction==="后退删除最后"){
-              GoPreOrNext(false,'xz-page-route-wrapper right-out','xz-page-route-wrapper left-in',routeStack,pages,false,params.key);
-            routeStack.pop();
+              if(params.isWeb){
+                NoAnimation(routeStack,pages);
+              }else{
+                GoPreOrNext(false,'xz-page-route-wrapper right-out','xz-page-route-wrapper left-in',routeStack,pages,false,params.key);
+              }
+              routeStack.pop();
             }else{
               NoAnimation(routeStack,pages);
             }
@@ -550,4 +557,4 @@ class Navigation extends React.Component {
     return (<div className='xz-pageview-outer'>{this.state.pages}</div>);
   }
 }
-module.exports = Navigation;
+export default Navigation;

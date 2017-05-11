@@ -1,5 +1,4 @@
-var React = require("react");
-const {XzComponents} = require("../../../index").default
+import React from "react"
 
 
 class PageView extends React.Component {
@@ -30,4 +29,4 @@ clickHandle(params){
     	<button onClick={this.clickHandle.bind(this)}>GoTwo</button></div>);
   }
 }
-module.exports = PageView;
+export default PageView;

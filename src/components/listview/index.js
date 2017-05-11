@@ -1,5 +1,4 @@
-
-var React = require("react");
+import React from "react"
 
 class ListView extends React.Component {
   constructor(props) {
@@ -11,4 +10,4 @@ class ListView extends React.Component {
     return (<div>listview</div>);
   }
 }
-module.exports = ListView;
+export default ListView;

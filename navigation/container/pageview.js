@@ -1,4 +1,4 @@
-var React = require("react");
+import React from "react";
 
 class PageView extends React.Component {
   constructor(props) {
@@ -50,7 +50,7 @@ class PageView extends React.Component {
   render() {
     var realpagename = this.state.pagename.split("_")[0];
 
-  	var ToPageInstance = this.props.pagemanager.props.config.pages[realpagename];
+    var ToPageInstance = this.props.pagemanager.props.config.pages[realpagename];
     if(!ToPageInstance){
        console.error("pages属性中没有引入["+realpagename+"]页面");
     }
@@ -73,4 +73,4 @@ class PageView extends React.Component {
       </div>);
   }
 }
-module.exports = PageView;
+export default PageView;

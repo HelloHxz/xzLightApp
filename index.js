@@ -1,8 +1,8 @@
-import Navigation from './navigation' 
+import N from './navigation' 
 import XzComponents from './src/components' 
 import style from './utils/style' 
 import './css/main.less';
-var React = require("react");
+import React from 'react';
 
 
 function shipei(){
@@ -41,20 +41,16 @@ function shipei(){
 	window.rem = rem;
 }
 
-export default {
-	"style":style,
-	"Navigation":{
+var Navigation = {
 		start(config){
 			shipei();
-			for(var key in config.pages){
-				if(key.split("_").length>1){
-					console.error(key+ " start 方法pages对象页面注册名称不能带有 _ 标示");
-				}
-			}
-			Navigation.start(config)
+			N.start(config)
 		},
-		PageContainer:Navigation.PageContainer
-	},
-	"XzComponents":XzComponents
+		PageContainer:N.PageContainer
+	};
+export {
+	style,
+	Navigation,
+	XzComponents
 
 };

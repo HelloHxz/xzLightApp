@@ -1,5 +1,5 @@
-var React = require("react");
-const {XzComponents} = require("../../../index").default
+import React from "react";
+import {XzComponents} from "../../../index"
 
 
 
@@ -17,4 +17,4 @@ class PageView extends React.Component {
     return (<div>分包加载...<button onClick={this.clickHandle.bind(this)}>RepacelGoTo</button></div>);
   }
 }
-module.exports = PageView;
+export default PageView;
