@@ -123,7 +123,7 @@ class Navigation extends React.Component {
 
   getUrlSeedStr(){
     var params =  this.getParamsFromUrl();
-    return params[systemseedname];
+    return params[systemseedname]||("1"+splitchar+"0");
   }
 
 
