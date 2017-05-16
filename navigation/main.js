@@ -70,6 +70,7 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props)
     this.routeStack = [];
+    this.events={};
       
     this.seed = this.getMaxSeed();
     this.isForward = false;
@@ -319,6 +320,7 @@ class Navigation extends React.Component {
     var r = curSeedObj.__r;
     var key = ToPageName+"_"+curseedStr;
 
+
     if(!curParams[systemseedname]&&!this.isForward&&!this.isInit){
       ////禁止离开应用 todo 事件插件机制
       isWantToPreventRoute = true;
@@ -416,6 +418,8 @@ class Navigation extends React.Component {
     }
 
 
+
+
     var pages = this.pagelayout({
       manager:this,
       action:action,
@@ -428,11 +432,33 @@ class Navigation extends React.Component {
       console.error("没有实现pagelayout！");
     }
 
-    this.setState({pages:pages});
 
     this.isForward = false;
     this.isInit = false;
     isReplaceGo = false;
+
+
+
+
+
+    var ppprePath = this.prePath;
+    this.prePath = this.getPageNameFromUrl();
+    this.preUrlParams = this.getParamsFromUrl();
+    var ppstr =this.preseedStr;
+    this.preseedStr = this.getUrlSeedStr();
+    this.preSeedObj =  this.convertUrlSeedToObj(this.preseedStr);
+    this.prePathArr = this.prePath.split("/");
+    this.prePageName = this.prePathArr.shift();
+
+
+
+    if(!this.callBeforeLeave(this.prePath,ppstr||"",ppprePath||"",action)){
+      return;
+    }
+
+
+    this.setState({pages:pages});
+    
 
     if(this.firstLoadToChangeHash){
         var p = this.getParamsFromUrl()||{};
@@ -442,19 +468,42 @@ class Navigation extends React.Component {
         },100);
     }
 
-
-    var ppprePath = this.prePath;
-
-    this.prePath = this.getPageNameFromUrl();
-    this.preUrlParams = this.getParamsFromUrl();
-    var ppstr =this.preseedStr;
-    this.preseedStr = this.getUrlSeedStr();
-    this.preSeedObj =  this.convertUrlSeedToObj(this.preseedStr);
-    this.prePathArr = this.prePath.split("/");
-    this.prePageName = this.prePathArr.shift();
-
     this.callResume(this.prePath,ppstr||"",ppprePath||"");
+    this.callLeave(this.prePath,ppstr||"",ppprePath||"");
 
+
+    this.triggerEvent("routechange",{
+      path:this.prePath,
+      params:this.preUrlParams,
+      pagename:this.prePageName
+    });
+
+  }
+
+  addListener(eventname,uniqueID,callback){
+    var events = this.events[eventname];
+    if(!events){
+      this.events[eventname]={};
+    }
+    this.events[eventname][uniqueID] = callback;
+
+  }
+
+  removeListener(eventname,uniqueID){
+
+  }
+
+  triggerEvent(eventname,params){
+    var events = this.events[eventname];
+    if(events){
+      for(var key in events){
+        try{
+          events[key](params);
+        }catch(e){
+
+        }
+      }
+    }
   }
 
   pagelayout(params){
@@ -499,30 +548,80 @@ class Navigation extends React.Component {
 
           setTimeout(()=>{
             var seedObj = manager.getUrlSeedObj();
-          var r = seedObj.__r;
-          if(r){
-            r = parseInt(r);
-            for(var i=routeStack.length-1;i>=0;i--){
-              var rr = routeStack[i].r;
-              if(rr&&routeStack[i].isDelete){
-                rr = parseInt(rr);
-                if(rr>r){
-                  routeStack.splice(i,1); 
+            var r = seedObj.__r;
+            if(r){
+              r = parseInt(r);
+              for(var i=routeStack.length-1;i>=0;i--){
+                var rr = routeStack[i].r;
+                if(rr&&routeStack[i].isDelete){
+                  rr = parseInt(rr);
+                  if(rr>r){
+                    routeStack.splice(i,1); 
+                  }
                 }
               }
             }
-          }
           },300);
           return pages;
 
   }
 
+  callBeforeLeave(goPath,curSeedStr,curPath,action){
+    var goSeedStr = this.preseedStr;
+    console.log(curSeedStr+"-----beforeleave------"+this.preseedStr);
+    console.log(curPath+" >> "+goPath);
+
+    var goPathArr = goPath.split("/");
+    var curPathArr = curPath.split("/");
+
+    var crKey = "",pcKey = "";
+
+    // for(var i=0,j=curPath.length;i<j;i++){
+    //   if(i===0){
+    //     crKey = prePathArr[0]+"_"+this.preseedStr;
+    //     pcKey = ppPathArr[0]+"_"+goSeedStr;
+    //   }else{
+    //     crKey = crKey + "_" +prePathArr[i];
+    //     pcKey = pcKey+"_"+(ppPathArr[i]||"");
+    //   }
+
+    //   var instanceInfo = this.pageInstanceDict[crKey];
+    //   if(instanceInfo){
+    //     if(instanceInfo.isInit){
+    //       instanceInfo.isInit = false;
+    //     }else{
+    //       if(crKey!==pcKey){
+    //         console.log(crKey+" >>>beforeleave");
+    //       }
+    //     }
+    //   }
+    // }
+    // isWantToPreventRoute = true;
+    // window.history.go(1);
+    return true;
+  }
+
+  callLeave(curPath,preSeedStr,prePath){
+    //this.preseedStr
+  }
+
   callResume(prePath,ppSeedStr,ppprePath){
-    setTimeout(()=>{
+    if(this.props.config.isWeb){
+      this._callResume(prePath,ppSeedStr,ppprePath);
+    }else{
+      setTimeout(()=>{
+        this._callResume(prePath,ppSeedStr,ppprePath);
+      },200);
+    }
+  }
+
+  _callResume(prePath,ppSeedStr,ppprePath){
+    
       var prePathArr = prePath.split("/");
       var ppPathArr = ppprePath.split("/");
 
       var crKey = "",pcKey = "";
+
       for(var i=0,j=prePathArr.length;i<j;i++){
         if(i===0){
           crKey = prePathArr[0]+"_"+this.preseedStr;
@@ -544,17 +643,43 @@ class Navigation extends React.Component {
             }
           }
         }
-        
-
       }
      
-    },200);
+
+      for(var i=0,j=ppPathArr.length;i<j;i++){
+        if(i===0){
+          pcKey = ppPathArr[0]+"_"+ppSeedStr;
+        }else{
+          pcKey = pcKey+"_"+(ppPathArr[i]||"");
+        }
+        var instanceInfo = this.pageInstanceDict[pcKey];
+        if(instanceInfo){
+          if(instanceInfo.isInit){
+            //第一次实例化不走resume
+            instanceInfo.isInit = false;
+          }else{
+
+          }
+        }
+
+      }
   }
 
 
 
   render() {
     return (<div className='xz-pageview-outer'>{this.state.pages}</div>);
+  }
+
+
+  getUrlInfo(){
+    var path = this.getPageNameFromUrl();
+    return {
+      path:path,
+      pathArr:path.split("/"),
+      seed:this.getUrlSeedStr(),
+      params:this.getParamsFromUrl()
+    };
   }
 }
 export default Navigation;
