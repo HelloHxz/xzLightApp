@@ -21,23 +21,18 @@ module.exports = function (env) {
       );
   }
 
-  var entry = ['./site1/index.js'];
+  var entry = {site1:'./site1/index.js'};
+  
   if(!isProd){
-    entry = entry.concat([
-        'react-hot-loader/patch',
-
-        'webpack-dev-server/client?http://localhost:8080',
-
-        'webpack/hot/only-dev-server',
-      ]);
+    entry.dev_patch = 'react-hot-loader/patch';
+    entry.dev_client = 'webpack-dev-server/client?http://localhost:8080';
+    entry.dev_server= 'webpack/hot/only-dev-server';
   }
 return {
-
   context: path.resolve(__dirname, 'example'),
-
   entry:entry,
   output: {
-    filename: 'bundle.js',
+    filename: '[name].entry.js',
     chunkFilename: !isProd ? '[name].bundle.js' : '[name].[chunkhash:8].min.js',
     // the output bundle
 
