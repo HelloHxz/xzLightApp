@@ -1,6 +1,8 @@
 
 import React from 'react'
 import PageView from './pageview'
+
+import LazyLoadPage from "./lazyLoadPage";
 /*
   如果在同一个container中需要展示同一个页面多次  那么这个页面的名称格式为 页面名称_唯一标示
   比如 index_11
@@ -25,7 +27,12 @@ class PageContainer extends React.Component {
     this.curpagename = ToPageName;
     var key = props.owner.props.pageview.props.pkey+"_"+ToPageName;
     if(!this.arr[ToPageName]){
-      this.arr[ToPageName]=(<PageView 
+      var P = PageView;
+      var ToPageInstance = props.owner.props.pagemanager.props.config.pages[ToPageName];
+      if(!ToPageInstance.prototype.__proto__.forceUpdate){
+        P = LazyLoadPage;
+      }
+      this.arr[ToPageName]=(<P 
                     ref={(instance)=>{
                       this.dict[ToPageName] = instance;
                     }}
@@ -33,7 +40,7 @@ class PageContainer extends React.Component {
                     pagename={ToPageName} 
                     pagemanager={props.owner.props.pagemanager} 
                     key={key} 
-                    pkey={key}></PageView>) ;
+                    pkey={key}></P>) ;
 
     }else{
       cacheSuccess&&cacheSuccess(route,ToPageName);
