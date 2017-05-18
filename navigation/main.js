@@ -615,7 +615,7 @@ class Navigation extends React.Component {
   }
 
   callBeforeLeave(goPath,curSeedStr,curPath,action){
-    return true;
+    return;
     var goSeedStr = this.preseedStr;
 
     var goPathArr = goPath.split("/");
@@ -631,37 +631,37 @@ class Navigation extends React.Component {
         crKey = crKey + "_" +curPathArr[i];
         pcKey = pcKey+"_"+(goPathArr[i]||"");
       }
-
       var instanceInfo = this.pageInstanceDict[crKey];
       if(instanceInfo){
           if(crKey!==pcKey){
             console.log(crKey+" >>>beforeleave");
+            instanceInfo.instance.onPageBeforeLeave&&instanceInfo.instance.onPageBeforeLeave();
             var s = true;
-            if(action!=='前进'){
-              if(instanceInfo.instance.close()){
-                if(instanceInfo.instance.onPageBeforeLeave){
-                  s = instanceInfo.instance.onPageBeforeLeave();
-                }
-              }else{
-                s = false;
-              }
-            }else{
-              if(instanceInfo.instance.onPageBeforeLeave){
-                s = instanceInfo.instance.onPageBeforeLeave();
-              }
-            }
+            // if(action!=='前进'){
+            //   if(instanceInfo.instance.close()){
+            //     if(instanceInfo.instance.onPageBeforeLeave){
+            //       s = instanceInfo.instance.onPageBeforeLeave();
+            //     }
+            //   }else{
+            //     s = false;
+            //   }
+            // }else{
+            //   if(instanceInfo.instance.onPageBeforeLeave){
+            //     s = instanceInfo.instance.onPageBeforeLeave();
+            //   }
+            // }
             
           }
       }
     }
-    if(!s){
-      isWantToPreventRoute = true;
-      if(action!=='前进'){
-         window.history.go(1);
-       }else{
-         window.history.go(-1);
-       }
-    }
+    // if(!s){
+    //   isWantToPreventRoute = true;
+    //   if(action!=='前进'){
+    //      window.history.go(1);
+    //    }else{
+    //      window.history.go(-1);
+    //    }
+    // }
     return true;
   }
 
@@ -702,7 +702,7 @@ class Navigation extends React.Component {
           }else{
             if(crKey!==pcKey){
               console.log(crKey+" >>>resume");
-              instanceInfo.instance.onResume&&instanceInfo.instance.onResume();
+              instanceInfo.instance.onPageResume&&instanceInfo.instance.onPageResume();
             }
           }
         }

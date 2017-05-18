@@ -7,8 +7,13 @@ class PageView extends React.Component {
     super(props)
     console.log("constructor :lazyload");
   }
-    onResume(){
-    // alert("one");
+
+  onPageResume(){
+    
+  }
+
+  onPageBeforeLeave(){
+    alert("s");
   }
 
 
