@@ -21,7 +21,7 @@ module.exports = function (env) {
       );
   }
 
-  var entry = ['./page1/index.js'];
+  var entry = ['./site1/index.js'];
   if(!isProd){
     entry = entry.concat([
         'react-hot-loader/patch',
