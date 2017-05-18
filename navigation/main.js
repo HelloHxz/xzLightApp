@@ -568,34 +568,43 @@ class Navigation extends React.Component {
 
   callBeforeLeave(goPath,curSeedStr,curPath,action){
     var goSeedStr = this.preseedStr;
-    console.log(curSeedStr+"-----beforeleave------"+this.preseedStr);
-    console.log(curPath+" >> "+goPath);
 
     var goPathArr = goPath.split("/");
     var curPathArr = curPath.split("/");
 
     var crKey = "",pcKey = "";
 
-    // for(var i=0,j=curPath.length;i<j;i++){
-    //   if(i===0){
-    //     crKey = prePathArr[0]+"_"+this.preseedStr;
-    //     pcKey = ppPathArr[0]+"_"+goSeedStr;
-    //   }else{
-    //     crKey = crKey + "_" +prePathArr[i];
-    //     pcKey = pcKey+"_"+(ppPathArr[i]||"");
-    //   }
+    for(var i=0,j=curPathArr.length;i<j;i++){
+      if(i===0){
+        crKey = curPathArr[0]+"_"+curSeedStr;
+        pcKey = goPathArr[0]+"_"+goSeedStr;
+      }else{
+        crKey = crKey + "_" +curPathArr[i];
+        pcKey = pcKey+"_"+(goPathArr[i]||"");
+      }
 
-    //   var instanceInfo = this.pageInstanceDict[crKey];
-    //   if(instanceInfo){
-    //     if(instanceInfo.isInit){
-    //       instanceInfo.isInit = false;
-    //     }else{
-    //       if(crKey!==pcKey){
-    //         console.log(crKey+" >>>beforeleave");
-    //       }
-    //     }
-    //   }
-    // }
+      var instanceInfo = this.pageInstanceDict[crKey];
+      if(instanceInfo){
+          if(crKey!==pcKey){
+            console.log(crKey+" >>>beforeleave");
+            var s = true;
+            if(action!=='前进'){
+              if(instanceInfo.instance.close()){
+                if(instanceInfo.instance.onPageBeforeLeave){
+                  s = instanceInfo.instance.onPageBeforeLeave();
+                }
+              }else{
+                s = false;
+              }
+            }else{
+              if(instanceInfo.instance.onPageBeforeLeave){
+                s = instanceInfo.instance.onPageBeforeLeave();
+              }
+            }
+            
+          }
+      }
+    }
     // isWantToPreventRoute = true;
     // window.history.go(1);
     return true;
@@ -636,7 +645,6 @@ class Navigation extends React.Component {
           if(instanceInfo.isInit){
             instanceInfo.isInit = false;
           }else{
-
             if(crKey!==pcKey){
               console.log(crKey+" >>>resume");
               instanceInfo.instance.onResume&&instanceInfo.instance.onResume();

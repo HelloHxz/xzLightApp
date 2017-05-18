@@ -4,7 +4,7 @@ class PageView extends React.Component {
   constructor(props) {
     super(props)
     this.shouldUpdate = true;
-    this.showPagesDict = [];
+    this.showPageInfo = null;
     this.state={
       leftroute:props.leftroute,
       pagename:props.pagename,
@@ -34,8 +34,33 @@ class PageView extends React.Component {
     console.log(this.props.pkey+"     didmount>>>");
     this.props.pagemanager.pageInstanceDict[this.props.pkey] = {
       instance:this.pageInstance,
+      basePageView:this,
       isInit:true
     };
+  }
+
+  close(){
+    if(this.showPageInfo){
+      
+
+      if(this.showPageInfo.page.close()){
+        //onPageBeforeLeave 
+        //close it 
+        if(this.showPageInfo.page.onPageBeforeLeave){
+          var re = this.showPageInfo.page.onPageBeforeLeave();
+          if(!re){
+            return false;
+          }
+          this.showPageInfo.showPage.removeClass("");
+        }
+      }
+      
+      return ;
+    
+    }else{
+      return true;
+    }
+  
   }
 
   showPage(params){
@@ -47,12 +72,15 @@ class PageView extends React.Component {
   }
 
 
+
   render() {
-    var realpagename = this.state.pagename.split("_")[0];
+    var pagename = this.state.pagename||"";
+    var realpagename = pagename.split("_")[0];
 
     var ToPageInstance = this.props.pagemanager.props.config.pages[realpagename];
     if(!ToPageInstance){
        console.error("pages属性中没有引入["+realpagename+"]页面");
+       return <div></div>
     }
     //this.props.pkey
     var params = this.props.pagemanager.getParamsFromUrl();
