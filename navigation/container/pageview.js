@@ -51,8 +51,8 @@ class PageView extends React.Component {
           if(!re){
             return false;
           }
-          this.showPageInfo.showPage.removeClass("");
         }
+        this.showPageInfo.showPage.removeClass("");
       }
       
       return ;
@@ -65,8 +65,11 @@ class PageView extends React.Component {
 
   showPage(params){
     var showpages = [];
-    showpages.push(<div className='xz-showpage-frombottom' key='xxx' style={{position:"absolute",zIndex:1,top:0,left:0,backgroundColor:'#fff',height:"100%",width:"100%"}}>
-        <PageView leftroute={[]} pagename={'one'} pagemanager={this.props.pagemanager} key={this.props.pkey+'_sone'} pkey={this.props.pkey+'_sone'}></PageView>
+    this.showPageInfo={};
+    showpages.push(<div ref={(showPage)=>{
+      this.showPageInfo.showPage = showPage;
+    }} className='xz-showpage-frombottom' key='xxx' style={{position:"absolute",zIndex:1,top:0,left:0,backgroundColor:'#fff',height:"100%",width:"100%"}}>
+        <PageView ref={(page)=>{this.showPageInfo.page = page;}} leftroute={[]} pagename={'one'} pagemanager={this.props.pagemanager} key={this.props.pkey+'_sone'} pkey={this.props.pkey+'_sone'}></PageView>
       </div>);
     this.setState({showPages:showpages});
   }

@@ -19,7 +19,7 @@ class PageView extends React.Component {
 
   clickHandle(params){
     if(params===1){
-     this.props.pagemanager.go("delayload");
+     this.props.pagemanager.go("lazyload");
 
     }else if(params===2){
       this.props.pagemanager.go("threelevelroute/twolevelroute/one");

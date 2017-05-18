@@ -1,5 +1,6 @@
 import React from "react";
 import PageView from "./container/pageview";
+import LazyLoadPage from "./container/lazyLoadPage";
 
 
 function NoAnimation(routeStack,pages){
@@ -26,6 +27,38 @@ function findPageIndex(key,routeStack){
   }
   return Re;
 }
+
+var getObjectClass = function (obj) {
+ if (obj && obj.constructor && obj.constructor.toString()) {
+   /*
+    * for browsers which have name property in the constructor
+    * of the object,such as chrome 
+    */
+   if(obj.constructor.name) {
+    return obj.constructor.name;
+   }
+   var str = obj.constructor.toString();
+   /*
+    * executed if the return of object.constructor.toString() is 
+    * "[object objectClass]"
+    */
+   if(str.charAt(0) == '[')
+   {
+     var arr = str.match(/\[\w+\s*(\w+)\]/);
+   } else {
+     /*
+      * executed if the return of object.constructor.toString() is 
+      * "function objectClass () {}"
+      * for IE Firefox
+      */
+     var arr = str.match(/function\s*(\w+)/);
+   }
+   if (arr && arr.length == 2) {
+      return arr[1];
+   }
+  }
+  return undefined; 
+};
 
 function GoPreOrNext(isGoNext,lastClass,preClass,routeStack,pages,isReplaceGo,goPageKey){
   var deleteIndex = -1,deleteArr=[],realIndex=-1;
@@ -299,6 +332,11 @@ class Navigation extends React.Component {
       return;
     }
 
+
+   
+
+    var P = PageView;
+
     var curParams = this.getParamsFromUrl();
 
     var curseedStr = this.getUrlSeedStr();
@@ -307,6 +345,16 @@ class Navigation extends React.Component {
     var ToPagePath = this.getPageNameFromUrl()||this.props.config.root;
     var ToPageNameArr = ToPagePath.split("/");
     var ToPageName = ToPageNameArr.shift();
+
+
+
+    var realpagename = ToPageName.split("_")[0];
+    var ToPageInstance = this.props.config.pages[realpagename];
+    
+    if(!ToPageInstance.prototype.__proto__.forceUpdate){
+      P = LazyLoadPage;
+    }
+
 
     if(!curParams[systemseedname]&&this.isInit&&ToPagePath.toLowerCase() === this.props.config.root.toLowerCase()){
         this.firstLoadToChangeHash = true;
@@ -344,14 +392,14 @@ class Navigation extends React.Component {
       action = '前进';
       if(this.prePageName === ToPageName&&ToPageNameArr.length>0){
         this.routeStack[this.routeStack.length-1].page = 
-        <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
+        <P leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></P>;
       }else{
         animationAction = '前进';
         this.routeStack.push({
           pagename:ToPageName,
           r:r,
           _key:key,
-          page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
+          page:<P leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></P>
         });
       }
     }else{
@@ -361,7 +409,7 @@ class Navigation extends React.Component {
           pagename:ToPageName,
           _key:key,
           r:r,
-          page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
+          page:<P leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></P>
         });
       }else{
         if(!this.preUrlParams[systemseedname]){
@@ -374,7 +422,7 @@ class Navigation extends React.Component {
               pagename:ToPageName,
               _key:key,
               r:r,
-              page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
+              page:<P leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></P>
             });
           }else{
              action = '后退';
@@ -385,17 +433,17 @@ class Navigation extends React.Component {
                       pagename:ToPageName,
                       _key:key,
                       r:r,
-                      page:<PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>
+                      page:<P leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></P>
                     }].concat(this.routeStack);
                   }else{
                       this.routeStack[0].page = 
-                      <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
+                      <P leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></P>;
                   }
               }else{
 
                if( this.prePageName === ToPageName&&ToPageNameArr.length>0){
                    this.routeStack[this.routeStack.length-1].page = 
-                      <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
+                      <P leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></P>;
                 }else{
                     var _pi = this.pageInstanceDict[key];
                     //修复多级别的时候replacego 回来之后显示页面需要显示正确
@@ -567,6 +615,7 @@ class Navigation extends React.Component {
   }
 
   callBeforeLeave(goPath,curSeedStr,curPath,action){
+    return true;
     var goSeedStr = this.preseedStr;
 
     var goPathArr = goPath.split("/");
@@ -605,8 +654,14 @@ class Navigation extends React.Component {
           }
       }
     }
-    // isWantToPreventRoute = true;
-    // window.history.go(1);
+    if(!s){
+      isWantToPreventRoute = true;
+      if(action!=='前进'){
+         window.history.go(1);
+       }else{
+         window.history.go(-1);
+       }
+    }
     return true;
   }
 
