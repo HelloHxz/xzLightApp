@@ -12,6 +12,9 @@ class PageView extends React.Component {
   constructor(props) {
     super(props)
     console.log("constructor");
+    this.state={
+      refreshing:"sss"
+    };
   }
 
 
@@ -36,6 +39,7 @@ class PageView extends React.Component {
   render() {
     return (<div className='full-screen'>
       <div className='testheader'></div>
+      <XzComponents.scrollview></XzComponents.scrollview>
       <button onClick={this.clickHandle.bind(this,1)}>跳转</button>
       <button onClick={this.clickHandle.bind(this,2)}>去三级</button>
        <button onClick={this.clickHandle.bind(this,3)}>去二级</button>
