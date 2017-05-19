@@ -14,13 +14,10 @@ class PageView extends React.Component {
     console.log("constructor");
   }
 
-  onResume(){
-  }
 
   clickHandle(params){
     if(params===1){
      this.props.pagemanager.go("lazyload");
-
     }else if(params===2){
       this.props.pagemanager.go("threelevelroute/twolevelroute/one");
     }else if(params===3){

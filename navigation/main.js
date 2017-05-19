@@ -615,7 +615,7 @@ class Navigation extends React.Component {
   }
 
   callBeforeLeave(goPath,curSeedStr,curPath,action){
-    return;
+    return true;
     var goSeedStr = this.preseedStr;
 
     var goPathArr = goPath.split("/");

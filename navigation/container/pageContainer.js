@@ -28,7 +28,7 @@ class PageContainer extends React.Component {
     var key = props.owner.props.pageview.props.pkey+"_"+ToPageName;
     if(!this.arr[ToPageName]){
       var P = PageView;
-      var ToPageInstance = props.owner.props.pagemanager.props.config.pages[ToPageName];
+      var ToPageInstance = props.owner.props.pagemanager.props.config.pages[ToPageName.split("_")[0]];
       if(!ToPageInstance.prototype.__proto__.forceUpdate){
         P = LazyLoadPage;
       }
