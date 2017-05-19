@@ -1,0 +1,366 @@
+<html><head>
+<meta charset="utf-8">
+<title>五子棋</title>
+<style type="text/css">
+html,body{
+	margin:0;
+	padding: 0;
+	box-sizing: border-box;
+}
+.cell{
+	display: inline-block;
+	position: relative;
+	width:40px;
+	height:40px;
+	border-right:1px solid gray;
+	border-bottom:1px solid gray;
+}
+
+.cell-0:before,.cell-1:before{
+	position: absolute;
+	content: "";
+	width:20px;
+	height:20px;
+	top:50%;
+	border-radius: 100%;
+	left:50%;
+	transform:translate3d(-50%,-50%,0);
+}
+.cell-0:before{
+	background-color: red;
+	-moz-box-shadow:3px 2px 5px #8c8c8c, 2px 2px 5px #8c8c8c; 
+	-webkit-box-shadow:3px 2px 5px #8c8c8c, 2px 2px 5px #8c8c8c;
+	 box-shadow:3px 2px 5px #8c8c8c, 2px 2px 5px #8c8c8c;
+}
+.cell-1:before{
+	background-color: black;
+	-moz-box-shadow:3px 2px 5px #8c8c8c, 2px 2px 5px #8c8c8c; 
+	-webkit-box-shadow:3px 2px 5px #8c8c8c, 2px 2px 5px #8c8c8c;
+	 box-shadow:3px 2px 5px #8c8c8c, 2px 2px 5px #8c8c8c;
+}
+
+
+.cell:hover{
+	cursor: pointer;
+	background-color: #eee;
+}
+.out-wrap{
+	width:820px;
+}
+.out-wrap .row:first-child{
+	border-top: 1px solid gray;
+}
+</style>
+<script type="text/javascript">
+
+var MainArr = [],rowCount = 20,curRole = 0,hasWin = -1;
+
+function Point(params){
+	this.x = params.x;
+	this.y = params.y;
+}
+
+function checkRightBottomDirection(){
+	//检测右下方向
+	var pre = -1,win = -1,
+	result = {
+			"0":0,
+			"1":0,
+			"-1":0
+		};
+	//1. 检测第一行
+	for(var x=0;x<rowCount;x++){
+		if(win!==-1){
+			break;
+		}
+		result = {
+			"0":0,
+			"1":0,
+			"-1":0
+		}
+		pre = -1;
+		var xIndex = x;
+		for(var y=0;y<rowCount;y++,xIndex--){
+			if(xIndex<0||y>rowCount-1){
+				break;
+			}
+			var val = MainArr[xIndex][y];
+			win = cal(val,result,pre);
+			pre = val;
+			if(win!==-1){
+				break;
+			}
+		}
+	}
+
+	if(win!==-1){
+		return win;
+	}
+
+
+	//2. 检测最后一行
+	for(var xx=0;xx<rowCount;xx++){
+		if(win!==-1){
+			break;
+		}
+		result = {
+			"0":0,
+			"1":0,
+			"-1":0
+		}
+		pre = -1;
+		var xxIndex = xx;
+		for(var yy=rowCount-1;yy>=0;yy--,xxIndex++){
+			if(xxIndex>rowCount-1||yy<0){
+				break;
+			}
+			var val = MainArr[xxIndex][yy];
+			win = cal(val,result,pre);
+			pre = val;
+			if(win!==-1){
+				break;
+			}
+
+			
+		}
+	}
+	return win;
+}
+function checkLeftBottomDirection(){
+	//检测左下方向
+	var pre = -1,win = -1,
+	result = {
+			"0":0,
+			"1":0,
+			"-1":0
+		};
+	//1. 检测第一行
+	for(var x=0;x<rowCount;x++){
+		if(win!==-1){
+			break;
+		}
+		result = {
+			"0":0,
+			"1":0,
+			"-1":0
+		}
+		pre = -1;
+		var xIndex = x;
+		for(var y=0;y<rowCount;y++,xIndex++){
+			if(xIndex>rowCount-1||y>rowCount-1){
+				break;
+			}
+			var val = MainArr[xIndex][y];
+			win = cal(val,result,pre);
+			pre = val;
+			if(win!==-1){
+				break;
+			}
+		}
+	}
+	if(win!==-1){
+		return win;
+	}
+
+	//2. 检测最后一行
+	for(var xx=0;xx<rowCount;xx++){
+		if(win!==-1){
+			break;
+		}
+		result = {
+			"0":0,
+			"1":0,
+			"-1":0
+		}
+		pre = -1;
+		var xxIndex = xx;
+		for(var yy=rowCount-1;yy>=0;yy--,xxIndex--){
+			if(xxIndex<0||yy<0){
+				break;
+			}
+			var val = MainArr[xxIndex][yy];
+			win = cal(val,result,pre);
+			pre = val;
+			if(win!==-1){
+				break;
+			}
+
+			
+		}
+	}
+	return win;
+}
+function checkRightDirection(){
+	//检测行 仅需要检测第一列
+	var pre = -1,win = -1;
+	for(var y=0;y<rowCount;y++){
+		if(win!==-1){
+			break;
+		}
+		var result = {
+			"0":0,
+			"1":0,
+			"-1":0
+		}
+		pre = -1;
+		for(var x=0;x<rowCount;x++){
+			var val = MainArr[x][y];
+			win = cal(val,result,pre);
+			pre = val;
+			if(win!==-1){
+				break;
+			}
+		}
+
+		
+	}
+	return win;
+}
+function checkBottomDirection(){
+	//检测列 仅需要检测第一行
+	
+	var pre = -1,win=-1;
+	for(var x=0;x<rowCount;x++){
+		if(win!==-1){
+			break;
+		}
+		var result = {
+			"0":0,
+			"1":0,
+			"-1":0
+		}
+		pre = -1;
+		for(var y=0;y<rowCount;y++){
+			var val = MainArr[x][y];
+			win = cal(val,result,pre);
+			pre = val;
+			if(win!==-1){
+				break;
+			}
+		}
+	}
+
+	return win;
+}
+
+function cal(val,result,pre){
+	var win = -1;
+
+	for(var key in result){
+		if(val.toString()===key&&pre === val&&val!==-1){
+			result[key]+=1;
+		}else{
+			result[key] = 0;
+		}
+		if(result[key]>=4){
+			win = parseInt(key);
+			break;
+		}
+	}
+
+	return win;
+}
+
+function checkResult(){
+
+	var val = checkRightDirection();
+	if(val!==-1){
+		return val;
+	}
+	val = checkBottomDirection();
+	if(val!==-1){
+		return val;
+	}
+
+	val = checkRightBottomDirection();
+	if(val!==-1){
+		return val;
+	}
+
+	val = checkLeftBottomDirection();
+
+	if(val!==-1){
+		return val;
+	}
+
+	return -1;
+
+
+}
+
+
+function createPanel(count){
+	var wrap = document.createElement("DIV");
+	wrap.className = "out-wrap";
+	for(var i=0;i<count;i++){
+		var rowEl = document.createElement("DIV");
+		rowEl.className = "row";
+		var row = [];
+		for(var j=0;j<count;j++){
+			var cellEl = document.createElement("DIV");
+			cellEl.className = "cell";
+			cellEl.setAttribute("x",j);
+			cellEl.setAttribute("y",i);
+			rowEl.appendChild(cellEl);
+			row.push(-1);
+		}
+		wrap.appendChild(rowEl);
+		MainArr.push(row);
+	}
+
+	document.body.appendChild(wrap);
+
+}
+function clickMethod(e){
+	if(hasWin!==-1){
+			alert(hasWin===0?"红方已经胜利":"黑方已经胜利");
+			return;
+	}
+	var target = e.target||e.srcElement;
+	var x = target.getAttribute("x");
+	var y = target.getAttribute("y");
+	if(x){
+		x = parseInt(x);
+		y = parseInt(y);
+
+		var curVal = MainArr[x][y];
+		if(curVal===-1){
+			MainArr[x][y] = curRole;
+			target.className = "cell cell-"+curRole;
+			if(curRole===0){
+				curRole = 1;
+			}else{
+				curRole = 0;
+			}
+			hasWin= checkResult();
+			if(hasWin!==-1){
+				alert(hasWin===0?"红方胜利":"黑方胜利");
+			}
+		}
+	}
+
+}
+
+window.onload = function(){
+	createPanel(rowCount);
+}
+</script>
+</head>
+
+<body onclick="clickMethod(event)">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>

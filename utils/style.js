@@ -1,18 +1,18 @@
 export default {
 	rem:0,
+	dpr:0,
 	_shipei(){
-		var dpr, scale;
+		var scale;
 		var docEl = document.documentElement;
 		var fontEl = document.createElement('style');
 		var metaEl = document.querySelector('meta[name="viewport"]');
-		dpr = window.devicePixelRatio || 1;
-		this.rem = docEl.clientWidth * dpr / 10;
-		scale = 1 / dpr;
-		metaEl.setAttribute('content', 'width=' + dpr * docEl.clientWidth + ',initial-scale=' + scale + ',maximum-scale=' + scale + ', minimum-scale=' + scale + ',user-scalable=no');
-		docEl.setAttribute('data-dpr', dpr);
+		this.dpr = window.devicePixelRatio || 1;
+		this.rem = docEl.clientWidth * this.dpr / 10;
+		scale = 1 / this.dpr;
+		metaEl.setAttribute('content', 'width=' + this.dpr * docEl.clientWidth + ',initial-scale=' + scale + ',maximum-scale=' + scale + ', minimum-scale=' + scale + ',user-scalable=no');
+		docEl.setAttribute('data-dpr', this.dpr);
 		docEl.firstElementChild.appendChild(fontEl);
 		fontEl.innerHTML = 'html{font-size:' + this.rem + 'px!important;}';
-		window.dpr = dpr;
 	},
 	rem2px(v){
 		if(this.rem===0){
