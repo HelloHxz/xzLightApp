@@ -45,7 +45,7 @@ html,body{
 	background-color: #eee;
 }
 .out-wrap{
-	width:820px;
+	width:1320px;
 }
 .out-wrap .row:first-child{
 	border-top: 1px solid gray;
@@ -53,7 +53,7 @@ html,body{
 </style>
 <script type="text/javascript">
 
-var MainArr = [],rowCount = 20,curRole = 0,hasWin = -1;
+var MainArr = [],rowCount = 30,curRole = 0,hasWin = -1;
 function checkRightBottomDirection(){
 	//检测右下方向
 	var pre = -1,win = -1,
@@ -547,7 +547,7 @@ function getThreePointScore(pointInfo,dir,pointkey){
 	}
 	if(xx>=0&&yy>=0&&xx<rowCount&&yy<rowCount){
 		if(MainArr[xx][yy]===-1){
-			return 400;
+			return 600;
 		}
 	}
 	return 0;
