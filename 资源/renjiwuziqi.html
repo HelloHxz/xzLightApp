@@ -350,7 +350,6 @@ function calEightPointWeightOfPoint(weight,x,y){
 		{x:x,y:y+1},
 		{x:x+1,y:y+1}
 	];
-	console.log(eightPoints);
 	for(var i=0,j=eightPoints.length;i<j;i++){
 		var point = eightPoints[i];
 
@@ -377,23 +376,16 @@ function calWeightOfPointInDirection(re,key,point,x,y){
 	if(!re[key]){
 		re[key] =  {point:-1,count:0,emptyCount:0};
 	}
-		if(val===-1){
-			re[key].emptyCount+=1;
-			if(re[key].emptyCount>=2){
-				return false;
-			}
-		}else{
-			re[key].emptyCount = 0;
-		}
 
-	// if(x===point.x){
-	// 	re[key].firstIsEmpty=MainArr[point.x][point.y]===-1;
-	// }else{
-	// 	if(re[key].firstIsEmpty&&val===-1){
-	// 		//连续两个空格不计算了
-	// 		return false;
-	// 	}
-	// }
+	if(val===-1){
+		re[key].emptyCount+=1;
+		if(re[key].emptyCount>=2){
+			return false;
+		}
+	}else{
+		re[key].emptyCount = 0;
+	}
+
 	if(val!==-1&&re.preval==-1){
 		re.preval = val;
 		re[key].point = val;
@@ -476,7 +468,7 @@ function getWeightOfPoint(point){
 var scoreDict ={
 	score0:{
 		"4":1300,
-		"3":140,
+		"3":100,
 		"2":16,
 		"1":1,
 		"0":0
@@ -504,7 +496,6 @@ function betaChichen(){
 		}
 	}
 
-	console.log(PointWeightDict);
 
 	var xy = getHighestScorePoint(PointWeightDict);
 
@@ -512,8 +503,6 @@ function betaChichen(){
 	var xyarr = xy.split("_");
 	var x = parseInt(xyarr[0]);
 	var y = parseInt(xyarr[1]);
-
-
 
 	MainArr[x][y] = 1;
 	document.getElementById(xy).className = "cell cell-1";
@@ -524,34 +513,164 @@ function betaChichen(){
 	}
 }
 
+function getThreePointScore(pointInfo,dir,pointkey){
+	//如果三颗子的对面也是空格 那么加分100
+	//todo 如果三个子的时候 没法连成5子的时候减分
+	var xyarr = pointkey.split("_"),
+	x = parseInt(xyarr[0]),
+	y = parseInt(xyarr[1]),
+	xx =-1,yy=-1;
+	if(dir==="top"){
+		xx = x;
+		yy = y-3;
+	}else if(dir==="lefttop"){
+		xx = x - 3;
+		yy = y-3;
+	}else if(dir ==="righttop"){
+		xx = x + 3;
+		yy = y-3;
+	}else if(dir ==="right"){
+		xx = x + 3;
+		yy = y;
+	}else if(dir ==="rightbottom"){
+		xx = x + 3;
+		yy = y + 3;
+	}else if(dir ==="bottom"){
+		xx = x;
+		yy = y + 3;
+	}else if(dir ==="leftbottom"){
+		xx = x - 3;
+		yy = y + 3;
+	}else if(dir==="left"){
+		xx = x - 3;
+		yy = y ;
+	}
+	if(xx>=0&&yy>=0&&xx<rowCount&&yy<rowCount){
+		if(MainArr[xx][yy]===-1){
+			return 100;
+		}
+	}
+	return 0;
+}
+function getTwoPointScore(pointInfo,dir,pointkey){
+	var record = 0;
+	//如果相对有一个子和一个空格 加一百分
+	var xyarr = pointkey.split("_"),
+	x = parseInt(xyarr[0]),
+	y = parseInt(xyarr[1]),
+	xx =-1,yy=-1,xxx=-1,yyy=-1,xxxx=-1,yyyy=-1;
+	if(dir==="top"){
+		xx = x;
+		yy = y+1;
+
+		xxx = x;
+		yyy = y+2;
+
+		xxxx = x;
+		yyyy = y+3;
+	}else if(dir==="lefttop"){
+		xx = x+1;
+		yy = y+1;
+
+		xxx = x+2;
+		yyy = y+2;
+
+		xxxx = x+3;
+		yyyy = y+3;
+	}else if(dir ==="righttop"){
+		xx = x - 1;
+		yy = y+1;
+
+		xxx = x - 2;
+		yyy = y+2;
+
+		xxxx = x - 3;
+		yyyy = y+3;
+	}else if(dir ==="right"){
+		xx = x -1;
+		yy = y;
+
+		xxx = x -2;
+		yyy = y;
+
+		xxxx = x -3;
+		yyyy = y;
+	}else if(dir ==="rightbottom"){
+		xx = x - 1;
+		yy = y - 1;
+
+		xxx = x - 2;
+		yyy = y - 2;
+
+		xxxx = x -3;
+		yyyy = y -3;
+	}else if(dir ==="bottom"){
+		xx = x;
+		yy = y - 1;
+
+		xxx = x;
+		yyy = y - 2;
+
+		xxxx = x;
+		yyyy = y -3;
+	}else if(dir ==="leftbottom"){
+		xx = x + 1;
+		yy = y - 1;
+
+		xxx = x + 2;
+		yyy = y - 2;
+
+		xxxx = x + 3;
+		yyyy = y -3;
+	}else if(dir==="left"){
+		xx = x + 1;
+		yy = y ;
+
+		xxx = x + 2;
+		yyy = y ;
+
+		xxxx = x + 3;
+		yyyy = y;
+	}
+	//如果相对有两个子 那么提升至最高分数
+	if(xx>=0&&yy>=0&&xxx>=0&&yyy>=0&&xx<rowCount&&yy<rowCount&&xxx<rowCount&&yyy<rowCount){
+		if(pointInfo.point===MainArr[xx][yy]&&MainArr[xxx][yyy]===-1){
+			record += 100;
+		}
+		if(xxxx>=0&&yyyy>=0&&xxxx<rowCount&&yyyy<rowCount){
+			if(pointInfo.point===MainArr[xxx][yyy]&&pointInfo.point===MainArr[xx][yy]&&MainArr[xxxx][yyyy]===-1){
+				record += scoreDict["score0"]["4"];
+			}
+		}
+	}
+	return record;
+}
+
 function getHighestScorePoint(PointWeightDict){
 	var xy;
 	var hightestScore = 0,hightestScoreKeyArr = [];
 	for(var key in PointWeightDict){
 		var directionPoint = PointWeightDict[key];
 
-		if(directionPoint["top"]&&directionPoint["bottom"]&&directionPoint["top"].point===directionPoint["bottom"].point){
-			directionPoint["top"].count+=1;
-		}
-		if(directionPoint["left"]&&directionPoint["right"]&&directionPoint["right"].point===directionPoint["left"].point){
-			directionPoint["right"].count+=1;
-		}
-		var fangshousum = 0,jingongsum =0;
-		//todo 三个子的时候 对面为空的时候优先级加20分
+		var sum=0;
 
 		for(var dirkey in directionPoint){
-			var dir = directionPoint[dirkey];
-			if(dir.point===-1){continue;}
 
+			var dir = directionPoint[dirkey];
+
+			if(dir.point===-1){continue;}
 			var scroreKey = "score"+dir.point;
 			var score = scoreDict[scroreKey][dir.count.toString()];
-			if(dir.point===0){
-				fangshousum+=score;
-			}else if(dir.point===1){
-				jingongsum+=score;
+			sum+=score;
+
+			if(dir.count===3){
+				sum+=getThreePointScore(dir,dirkey,key);
 			}
+			if(dir.count===2){
+				sum+=getTwoPointScore(dir,dirkey,key);
+			}
+		
 		}
-		sum = fangshousum+jingongsum;
 		if(sum>hightestScore){
 			hightestScore = sum;
 			hightestScoreKeyArr = [key];
