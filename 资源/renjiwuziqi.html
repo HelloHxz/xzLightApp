@@ -545,6 +545,8 @@ function getThreePointScore(pointInfo,dir,pointkey){
 		xx = x - 3;
 		yy = y ;
 	}
+
+	//todo ... 三个棋子的对面有一颗棋子 优先级提到最高
 	if(xx>=0&&yy>=0&&xx<rowCount&&yy<rowCount){
 		if(MainArr[xx][yy]===-1){
 			return 600;
