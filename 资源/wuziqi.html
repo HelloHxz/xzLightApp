@@ -6,6 +6,7 @@ html,body{
 	margin:0;
 	padding: 0;
 	box-sizing: border-box;
+	background-color: #ffe74d;
 }
 .cell{
 	display: inline-block;
@@ -27,13 +28,13 @@ html,body{
 	transform:translate3d(-50%,-50%,0);
 }
 .cell-0:before{
-	background-color: red;
+	background-color: black;
 	-moz-box-shadow:3px 2px 5px #8c8c8c, 2px 2px 5px #8c8c8c; 
 	-webkit-box-shadow:3px 2px 5px #8c8c8c, 2px 2px 5px #8c8c8c;
 	 box-shadow:3px 2px 5px #8c8c8c, 2px 2px 5px #8c8c8c;
 }
 .cell-1:before{
-	background-color: black;
+	background-color: #fff;
 	-moz-box-shadow:3px 2px 5px #8c8c8c, 2px 2px 5px #8c8c8c; 
 	-webkit-box-shadow:3px 2px 5px #8c8c8c, 2px 2px 5px #8c8c8c;
 	 box-shadow:3px 2px 5px #8c8c8c, 2px 2px 5px #8c8c8c;
@@ -42,7 +43,7 @@ html,body{
 
 .cell:hover{
 	cursor: pointer;
-	background-color: #eee;
+	background-color: #f3de58;
 }
 .out-wrap{
 	width:820px;
@@ -313,7 +314,7 @@ function createPanel(count){
 }
 function clickMethod(e){
 	if(hasWin!==-1){
-			alert(hasWin===0?"红方已经胜利":"黑方已经胜利");
+			alert(hasWin===0?"黑方已经胜利":"白方已经胜利");
 			return;
 	}
 	var target = e.target||e.srcElement;
@@ -334,7 +335,7 @@ function clickMethod(e){
 			}
 			hasWin= checkResult();
 			if(hasWin!==-1){
-				alert(hasWin===0?"红方胜利":"黑方胜利");
+				alert(hasWin===0?"黑方胜利":"白方胜利");
 			}
 		}
 	}
