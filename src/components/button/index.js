@@ -1,5 +1,10 @@
 import React from "react"
+import "./index.less"
+/*
+	className
+	disabledClassName
 
+*/
 class Button extends React.Component {
   constructor(props) {
     super(props)
@@ -7,7 +12,7 @@ class Button extends React.Component {
 
 
   render() {
-    return (<div>xxx</div>);
+    return (<div>{this.props.children}</div>);
   }
 }
 

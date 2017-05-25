@@ -40,6 +40,7 @@ class PageView extends React.Component {
     return (<div className='full-screen'>
       <div className='testheader'></div>
       <XzComponents.scrollview>asdashuxiaozhong</XzComponents.scrollview>
+      <XzComponents.button>ButtonClick</XzComponents.button>
       <button onClick={this.clickHandle.bind(this,1)}>跳转</button>
       <button onClick={this.clickHandle.bind(this,2)}>去三级</button>
        <button onClick={this.clickHandle.bind(this,3)}>去二级</button>

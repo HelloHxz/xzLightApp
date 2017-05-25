@@ -8,6 +8,7 @@ class PageView extends React.Component {
     this.state={
       leftroute:props.leftroute,
       pagename:props.pagename,
+      isDestory:false,
       showPages:[]
     };
     this.repaireUrlWhenRepalceGo = this.repaireUrlWhenRepalceGo.bind(this);
@@ -16,6 +17,17 @@ class PageView extends React.Component {
 
   componentWillReceiveProps(props){
     this.setState({pagename:props.pagename,leftroute:props.leftroute});
+  }
+
+  resume(){
+    if(!this.state.isDestory){
+      return;
+    }
+    this.setState({isDestory:false});
+  }
+
+  destroy(){
+    this.setState({isDestory:true});
   }
 
   repaireUrlWhenRepalceGo(params){
@@ -77,6 +89,9 @@ class PageView extends React.Component {
 
 
   render() {
+    if(this.state.isDestory){
+      return null;
+    }
     var pagename = this.state.pagename||"";
     var realpagename = pagename.split("_")[0];
 
