@@ -41,7 +41,6 @@ class PageView extends React.Component {
 
   close(){
     if(this.showPageInfo){
-      
 
       if(this.showPageInfo.page.close()){
         //onPageBeforeLeave 
@@ -52,10 +51,11 @@ class PageView extends React.Component {
             return false;
           }
         }
-        this.showPageInfo.showPage.removeClass("");
+        console.log(this.showPageInfo.showPage);
+        this.showPageInfo.showPage.style["display"]="none";
       }
       
-      return ;
+      return true;
     
     }else{
       return true;

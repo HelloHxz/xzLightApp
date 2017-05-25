@@ -6,7 +6,7 @@ html,body{
 	margin:0;
 	padding: 0;
 	box-sizing: border-box;
-	background-color: #ffe74d;
+	background-color: #ddcf77;
 }
 .cell{
 	display: inline-block;
@@ -550,7 +550,7 @@ function getThreePointScore(pointInfo,dir,pointkey){
 	//todo ... 三个棋子的对面有一颗棋子 优先级提到最高
 	if(xx>=0&&yy>=0&&xx<rowCount&&yy<rowCount){
 		if(MainArr[xx][yy]===-1){
-			return scoreDict["score0"]["4"]+10;
+			return scoreDict["score0"]["3"];
 		}
 	}
 	return 0;
@@ -642,7 +642,7 @@ function getTwoPointScore(pointInfo,dir,pointkey){
 		}
 		if(xxxx>=0&&yyyy>=0&&xxxx<rowCount&&yyyy<rowCount){
 			if(pointInfo.point===MainArr[xxx][yyy]&&pointInfo.point===MainArr[xx][yy]&&MainArr[xxxx][yyyy]===-1){
-				record += scoreDict["score0"]["4"];
+				record += scoreDict["score0"]["3"]+100;
 			}
 		}
 	}

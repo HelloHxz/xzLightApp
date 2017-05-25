@@ -369,12 +369,7 @@ class Navigation extends React.Component {
     var key = ToPageName+"_"+curseedStr;
 
 
-    if(!curParams[systemseedname]&&!this.isForward&&!this.isInit){
-      ////禁止离开应用 todo 事件插件机制
-      isWantToPreventRoute = true;
-      window.history.go(1);
-      return;
-    }
+  
     var action = '前进',animationAction = '不动';
 
     this.prePathArr = this.prePathArr||[];
@@ -454,8 +449,6 @@ class Navigation extends React.Component {
                         });
                     }
 
-                   // this.routeStack[this.routeStack.length-2].page = 
-                   //    <PageView leftroute={ToPageNameArr} pagename={ToPageName} pagemanager={this} key={key} pkey={key}></PageView>;
                    animationAction = '后退删除最后';
                 }
               }
@@ -503,7 +496,12 @@ class Navigation extends React.Component {
     if(!this.callBeforeLeave(this.prePath,ppstr||"",ppprePath||"",action)){
       return;
     }
-
+    if(!curParams[systemseedname]&&!this.isForward&&!this.isInit){
+      ////禁止离开应用 todo 事件插件机制
+      isWantToPreventRoute = true;
+      window.history.go(1);
+      return;
+    }
 
     this.setState({pages:pages});
     
@@ -615,7 +613,6 @@ class Navigation extends React.Component {
   }
 
   callBeforeLeave(goPath,curSeedStr,curPath,action){
-    return true;
     var goSeedStr = this.preseedStr;
 
     var goPathArr = goPath.split("/");
@@ -633,35 +630,38 @@ class Navigation extends React.Component {
       }
       var instanceInfo = this.pageInstanceDict[crKey];
       if(instanceInfo){
-          if(crKey!==pcKey){
+          if(crKey!==pcKey||(goSeedStr===curSeedStr&&curSeedStr===("1"+splitchar+"0"))){
             console.log(crKey+" >>>beforeleave");
-            instanceInfo.instance.onPageBeforeLeave&&instanceInfo.instance.onPageBeforeLeave();
             var s = true;
-            // if(action!=='前进'){
-            //   if(instanceInfo.instance.close()){
-            //     if(instanceInfo.instance.onPageBeforeLeave){
-            //       s = instanceInfo.instance.onPageBeforeLeave();
-            //     }
-            //   }else{
-            //     s = false;
-            //   }
-            // }else{
-            //   if(instanceInfo.instance.onPageBeforeLeave){
-            //     s = instanceInfo.instance.onPageBeforeLeave();
-            //   }
-            // }
+
+            if(action!=='前进'){
+
+              if(instanceInfo.basePageView.close()){
+                if(instanceInfo.instance.onPageBeforeLeave){
+                  s = instanceInfo.instance.onPageBeforeLeave();
+                }else{
+                  s = true;
+               }
+              }else{
+                s = false;
+              }
+            }else{
+              if(instanceInfo.instance.onPageBeforeLeave){
+                s = instanceInfo.instance.onPageBeforeLeave();
+              }
+            }
             
           }
       }
     }
-    // if(!s){
-    //   isWantToPreventRoute = true;
-    //   if(action!=='前进'){
-    //      window.history.go(1);
-    //    }else{
-    //      window.history.go(-1);
-    //    }
-    // }
+    if(s===false){
+      isWantToPreventRoute = true;
+      if(action!=='前进'){
+         window.history.go(1);
+       }else{
+         window.history.go(-1);
+       }
+    }
     return true;
   }
 

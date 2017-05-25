@@ -1,5 +1,6 @@
 import {Navigation} from "../../index"
 
+
 Navigation.start({
 	root:"index",
 	pages:{
@@ -7,7 +8,6 @@ Navigation.start({
 		twolevelroute:require("./pages/twolevelroute").default,
 		threelevelroute:require("./pages/threelevelroute").default,
 		one:require("./pages/one").default,
-		// two:require("./pages/two").default,
 		two:function(callback) {
 			require.ensure([], function(require) {
 		  		callback(require("./pages/two").default);
