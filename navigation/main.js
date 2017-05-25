@@ -469,7 +469,10 @@ class Navigation extends React.Component {
   
     var ppstr =this.preseedStr;
 
+
+
     var _prePath = this.getPageNameFromUrl();
+    this.preseedStr = this.getUrlSeedStr();
 
 
     if(!this.callBeforeLeave(_prePath,ppstr||"",ppprePath||"",action)){
@@ -478,7 +481,6 @@ class Navigation extends React.Component {
 
     this.prePath = _prePath;
     this.preUrlParams = this.getParamsFromUrl();
-    this.preseedStr = this.getUrlSeedStr();
     this.preSeedObj =  this.convertUrlSeedToObj(this.preseedStr);
     this.prePathArr = this.prePath.split("/");
     this.prePageName = this.prePathArr.shift();
@@ -618,7 +620,6 @@ class Navigation extends React.Component {
 
   callBeforeLeave(goPath,curSeedStr,curPath,action){
     var goSeedStr = this.preseedStr;
-
     var goPathArr = goPath.split("/");
     var curPathArr = curPath.split("/");
 
@@ -640,9 +641,8 @@ class Navigation extends React.Component {
             console.log(crKey+" >>>beforeleave");
 
             if(action!=='前进'){
-
-              if(instanceInfo.basePageView.close()){
-                console.log(instanceInfo.instance);
+              var closeResult = instanceInfo.basePageView.close();
+              if(closeResult){
                 if(instanceInfo.instance.onPageBeforeLeave){
                   var  pageLeaveR= instanceInfo.instance.onPageBeforeLeave();
                   if(i===j-1){

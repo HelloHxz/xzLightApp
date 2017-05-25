@@ -63,8 +63,8 @@ class PageView extends React.Component {
             return false;
           }
         }
-        console.log(this.showPageInfo.showPage);
         this.showPageInfo.showPage.style["display"]="none";
+        return false;
       }
       
       return true;
