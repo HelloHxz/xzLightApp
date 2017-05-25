@@ -461,7 +461,30 @@ class Navigation extends React.Component {
 
 
 
-    var pages = this.pagelayout({
+   
+
+
+
+    var ppprePath = this.prePath;
+  
+    var ppstr =this.preseedStr;
+
+    var _prePath = this.getPageNameFromUrl();
+
+
+    if(!this.callBeforeLeave(_prePath,ppstr||"",ppprePath||"",action)){
+      return;
+    }
+
+    this.prePath = _prePath;
+    this.preUrlParams = this.getParamsFromUrl();
+    this.preseedStr = this.getUrlSeedStr();
+    this.preSeedObj =  this.convertUrlSeedToObj(this.preseedStr);
+    this.prePathArr = this.prePath.split("/");
+    this.prePageName = this.prePathArr.shift();
+
+
+     var pages = this.pagelayout({
       manager:this,
       action:action,
       animationAction:animationAction,
@@ -473,35 +496,16 @@ class Navigation extends React.Component {
       console.error("没有实现pagelayout！");
     }
 
-
-    this.isForward = false;
-    this.isInit = false;
-    isReplaceGo = false;
-
-
-
-
-
-    var ppprePath = this.prePath;
-    this.prePath = this.getPageNameFromUrl();
-    this.preUrlParams = this.getParamsFromUrl();
-    var ppstr =this.preseedStr;
-    this.preseedStr = this.getUrlSeedStr();
-    this.preSeedObj =  this.convertUrlSeedToObj(this.preseedStr);
-    this.prePathArr = this.prePath.split("/");
-    this.prePageName = this.prePathArr.shift();
-
-
-
-    if(!this.callBeforeLeave(this.prePath,ppstr||"",ppprePath||"",action)){
-      return;
-    }
     if(!curParams[systemseedname]&&!this.isForward&&!this.isInit){
       ////禁止离开应用 todo 事件插件机制
       isWantToPreventRoute = true;
       window.history.go(1);
       return;
     }
+
+    this.isForward = false;
+    this.isInit = false;
+    isReplaceGo = false;
 
     this.setState({pages:pages});
     
@@ -629,25 +633,35 @@ class Navigation extends React.Component {
         pcKey = pcKey+"_"+(goPathArr[i]||"");
       }
       var instanceInfo = this.pageInstanceDict[crKey];
+      var s = true;
+
       if(instanceInfo){
           if(crKey!==pcKey||(goSeedStr===curSeedStr&&curSeedStr===("1"+splitchar+"0"))){
             console.log(crKey+" >>>beforeleave");
-            var s = true;
 
             if(action!=='前进'){
 
               if(instanceInfo.basePageView.close()){
+                console.log(instanceInfo.instance);
                 if(instanceInfo.instance.onPageBeforeLeave){
-                  s = instanceInfo.instance.onPageBeforeLeave();
+                  var  pageLeaveR= instanceInfo.instance.onPageBeforeLeave();
+                  if(i===j-1){
+                  //只有最末级的页面才能在onPageBeforeLeave阻止离开 其他页面只会走onPageBeforeLeave方法而不能阻止
+                    s = pageLeaveR;
+                  }
                 }else{
                   s = true;
-               }
+                }
               }else{
-                s = false;
+                  s = false;
               }
             }else{
               if(instanceInfo.instance.onPageBeforeLeave){
-                s = instanceInfo.instance.onPageBeforeLeave();
+                var pageLeaveR = instanceInfo.instance.onPageBeforeLeave();
+                if(i===j-1){
+                  //只有最末级的页面才能在onPageBeforeLeave阻止离开 其他页面只会走onPageBeforeLeave方法而不能阻止
+                  s  = pageLeaveR;
+                }
               }
             }
             
@@ -662,7 +676,7 @@ class Navigation extends React.Component {
          window.history.go(-1);
        }
     }
-    return true;
+    return s;
   }
 
   callLeave(curPath,preSeedStr,prePath){

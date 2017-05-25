@@ -13,7 +13,7 @@ class PageView extends React.Component {
   }
 
   onPageBeforeLeave(){
-    alert("s");
+    return true;
   }
 
 
