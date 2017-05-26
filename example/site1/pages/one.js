@@ -9,6 +9,9 @@ class PageView extends React.Component {
     onResume(){
     // alert("one");
   }
+  onPageBeforeLeave(){
+    return true;
+  }
 
 clickHandle(params){
      this.props.pagemanager.go("threelevelroute/twolevelroute/two");

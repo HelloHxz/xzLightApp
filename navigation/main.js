@@ -472,12 +472,14 @@ class Navigation extends React.Component {
 
 
     var _prePath = this.getPageNameFromUrl();
-    this.preseedStr = this.getUrlSeedStr();
+    var preseedStr = this.getUrlSeedStr();
 
 
-    if(!this.callBeforeLeave(_prePath,ppstr||"",ppprePath||"",action)){
+    if(!this.callBeforeLeave(_prePath,ppstr||"",ppprePath||"",preseedStr,action)){
       return;
     }
+
+    this.preseedStr = preseedStr;
 
     this.prePath = _prePath;
     this.preUrlParams = this.getParamsFromUrl();
@@ -618,8 +620,7 @@ class Navigation extends React.Component {
 
   }
 
-  callBeforeLeave(goPath,curSeedStr,curPath,action){
-    var goSeedStr = this.preseedStr;
+  callBeforeLeave(goPath,curSeedStr,curPath,goSeedStr,action){
     var goPathArr = goPath.split("/");
     var curPathArr = curPath.split("/");
 
