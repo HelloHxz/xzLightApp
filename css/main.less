@@ -19,6 +19,10 @@
   height:100%;
 }
 
+body{
+  font-size:.4rem;
+}
+
 
 
 .px2rem(@name, @px){
@@ -145,11 +149,17 @@ button{
 }
 
 
-
-.xz-showpage-frombottom {
+.xz-showpage-frombottom-show {
     animation: showpagefrombottom .15s ease;
     -webkit-animation: showpagefrombottom .15s ease;
     transform: translate3d(0, 0, 0);
+    position:absolute;
+    top:0;
+    z-index:1;
+    left:0;
+    background-color:#fff;
+    height:100%;
+    width:100%;
 }
 
 @keyframes showpagefrombottom {

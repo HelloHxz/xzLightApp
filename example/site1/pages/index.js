@@ -30,8 +30,8 @@ class PageView extends React.Component {
     }
   }
   showPage(){
-    this.props.pageview.showPage({
-      pagekey:"two",
+    this.props.base.showPage({
+      pageKey:"index",
       mode:"fromBottom"
     });
   }

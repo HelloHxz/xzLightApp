@@ -1,11 +1,39 @@
 const path = require('path');
 const webpack = require('webpack');
+var fs= require('fs');
+ 
 
-
-
+function mkdirs(dirname, callback) {
+    fs.exists(dirname, function (exists) {
+        if (exists) {
+            callback();
+        } else {
+            //console.log(path.dirname(dirname));
+            mkdirs(path.dirname(dirname), function () {
+                fs.mkdir(dirname, callback);
+            });
+        }
+    });
+}
 
 
 module.exports = function (env) {
+  const rem = 75;
+  /*
+    这里可以配置框架的适配参数 iphone 6 为 75 iphone6p 为124.2 iphone为64
+    rem 计算方法
+    var docEl = document.documentElement;
+    var dpr = window.devicePixelRatio || 1;
+    console.log(docEl.clientWidth * dpr / 10) ;
+  */
+  mkdirs(path.join(__dirname, '/node_modules/xz-lightapp/css'),function(){
+    fs.writeFile(path.join(__dirname, '/node_modules/xz-lightapp/css/shipei.less'), ".px2rem(@name, @px){ @{name}: @px / "+rem+" * 1rem;}", function (err) {
+      if (err) throw err;
+      console.log("shipei.less write success!!");
+    });
+  });
+ 
+
   const nodeEnv = env && env.prod ? 'production' : 'development';
   const isProd = nodeEnv === 'production';
 

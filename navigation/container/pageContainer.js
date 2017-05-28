@@ -25,7 +25,7 @@ class PageContainer extends React.Component {
     }
     var ToPageName = route.shift();
     this.curpagename = ToPageName;
-    var key = props.owner.props.pageview.props.pkey+"_"+ToPageName;
+    var key = props.owner.props.base.props.pkey+"_"+ToPageName;
     if(!this.arr[ToPageName]){
       var P = PageView;
       var ToPageInstance = props.owner.props.pagemanager.props.config.pages[ToPageName.split("_")[0]];

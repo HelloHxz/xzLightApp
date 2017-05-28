@@ -443,7 +443,7 @@ class Navigation extends React.Component {
                     var _pi = this.pageInstanceDict[key];
                     //修复多级别的时候replacego 回来之后显示页面需要显示正确
                     if(_pi){
-                        _pi.instance.props.pageview.repaireUrlWhenRepalceGo({
+                        _pi.instance.props.base.repaireUrlWhenRepalceGo({
                           leftroute:ToPageNameArr,
                           pagename:ToPageName
                         });
