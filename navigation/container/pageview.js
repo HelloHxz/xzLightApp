@@ -153,10 +153,10 @@ class PageView extends React.Component {
     this.curShowPageInfo={cache:cachePage,pageKey:pageKey,animateConfig:animateConfig};
     this.showPageDict[pageKey] = this.curShowPageInfo;
     this.curShowPageInfo.instance = (<div ref={(showPage)=>{
-      if(showPage){this.curShowPageInfo.showPage = showPage;}
+      if(showPage){this.showPageDict[pageKey].showPage = showPage;}
     }} className='xz-showpage-frombottom-show' key={key+"_wrapper"} >
         <PageView ref={(page)=>{
-          if(page){this.curShowPageInfo.page = page;}}} leftroute={[]} pagename={pageKey} pagemanager={this.props.pagemanager} key={key} pkey={key}></PageView>
+          if(page){this.showPageDict[pageKey].page = page;}}} leftroute={[]} pagename={pageKey} pagemanager={this.props.pagemanager} key={key} pkey={key}></PageView>
       </div>);
     for(var key in this.showPageDict){
       showpages.push(this.showPageDict[key].instance);
@@ -180,21 +180,24 @@ class PageView extends React.Component {
        return null;
     }
     //this.props.pkey
+    var basePageClassName = "xz-page-base-page "+(this.state.basePageClassName||"");
     var params = this.props.pagemanager.getParamsFromUrl();
     return (<div className='xz-page-inner' key={this.props.pkey+"_outer"}>
         {this.state.showPages}
-        <ToPageInstance 
-          base={this} 
-          ref={(instance)=>{
-            this.pageInstance = instance;
-          }}
-          params={params}
-          pagename={this.state.pagename}
-          leftroute = {this.state.leftroute}
-          pagemanager={this.props.pagemanager}
-          pkey={this.props.pkey+"_inner"} 
-          key={this.props.pkey+"_inner"}>
-        </ToPageInstance>
+        <div className={basePageClassName}>
+          <ToPageInstance 
+            base={this} 
+            ref={(instance)=>{
+              this.pageInstance = instance;
+            }}
+            params={params}
+            pagename={this.state.pagename}
+            leftroute = {this.state.leftroute}
+            pagemanager={this.props.pagemanager}
+            pkey={this.props.pkey+"_inner"} 
+            key={this.props.pkey+"_inner"}>
+          </ToPageInstance>
+        </div>
       </div>);
   }
 }
