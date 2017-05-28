@@ -107,6 +107,10 @@ class PageView extends React.Component {
     }
   
   }
+
+  prepareAnimateConfig(config){
+    return config;
+  }
   /*
     params:{
       pageKey:"",
@@ -130,20 +134,33 @@ class PageView extends React.Component {
       alert("show cache page");
       return;
     }
+    var animateConfig = showAnimateConfig[params.animateType];
+    if(!animateConfig){
+      if(params.customAnimateConfig){
+        animateConfig = params.customAnimateConfig;
+      }else{
+        animateConfig = showAnimateConfig["fromBottom"];
+      }
+    }
+
+    animateConfig = this.prepareAnimateConfig(animateConfig);
     var cachePage = params.cache === true;
     if(!pageKey){
       console.error("showPage 方法参数没有指明pageKey");
     }
     var showpages = [];
     var key = this.props.pkey+'_show_'+pageKey;
-    this.curShowPageInfo={cache:cachePage,pageKey:pageKey};
+    this.curShowPageInfo={cache:cachePage,pageKey:pageKey,animateConfig:animateConfig};
     this.showPageDict[pageKey] = this.curShowPageInfo;
-    showpages.push(<div ref={(showPage)=>{
+    this.curShowPageInfo.instance = (<div ref={(showPage)=>{
       if(showPage){this.curShowPageInfo.showPage = showPage;}
     }} className='xz-showpage-frombottom-show' key={key+"_wrapper"} >
         <PageView ref={(page)=>{
           if(page){this.curShowPageInfo.page = page;}}} leftroute={[]} pagename={pageKey} pagemanager={this.props.pagemanager} key={key} pkey={key}></PageView>
       </div>);
+    for(var key in this.showPageDict){
+      showpages.push(this.showPageDict[key].instance);
+    }
     this.setState({showPages:showpages});
   }
 
