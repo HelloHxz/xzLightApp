@@ -29,10 +29,15 @@ class PageView extends React.Component {
        this.props.pagemanager.go("index",{x:111});
     }
   }
+
+  onPageResume(){
+    console.log("asdas");
+  }
   showPage(){
     this.props.base.showPage({
       pageKey:"index",
-      mode:"fromBottom"
+      mode:"fromBottom",
+      cache:true
     });
   }
 
