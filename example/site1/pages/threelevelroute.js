@@ -10,7 +10,7 @@ class Com extends React.Component {
  
 
   render() {
-    return (<div>third<Navigation.PageContainer {...this.props}  owner={this}/></div>);
+    return (<div className='full-screen'>third<Navigation.PageContainer  className='full-screen' {...this.props}  owner={this}/></div>);
   }
 }
 export default Com;

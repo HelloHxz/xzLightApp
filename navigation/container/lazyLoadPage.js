@@ -23,7 +23,7 @@ class LazyPageView extends React.Component {
 
   render() {
   		
-    return (<div className='xz-lazy-page-warp full-screen'>{this.state.innerChild}</div>);
+    return (<div className="xz-page-inner"><div className='xz-lazy-page-warp full-screen'>{this.state.innerChild}</div></div>);
   }
 }
 export default LazyPageView;

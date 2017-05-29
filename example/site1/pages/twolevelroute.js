@@ -13,7 +13,7 @@ class Com extends React.Component {
 
   render() {
   	console.log("render");
-    return (<div>第二级的内容<Navigation.PageContainer {...this.props}   owner={this}/></div>);
+    return (<div className='full-screen'>第二级的内容<Navigation.PageContainer className='full-screen' {...this.props}   owner={this}/></div>);
   }
 }
 export default Com;

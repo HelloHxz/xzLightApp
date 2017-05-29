@@ -362,7 +362,6 @@ class Navigation extends React.Component {
     if(!this.props.config.pages){
       console.error("没有配置pages属性");
     }
-    console.log(this.prePageName+"_"+this.preseedStr)
 
     this.FromPage = this.state.curpagename;
     var r = curSeedObj.__r;

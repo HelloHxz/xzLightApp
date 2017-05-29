@@ -31,13 +31,16 @@ class PageView extends React.Component {
   }
 
   onPageResume(){
-    console.log("asdas");
+  }
+
+  onPageBeforeLeave(){
+
+    return true;
   }
   showPage(){
     this.props.base.showPage({
       pageKey:"index",
-      mode:"fromBottom",
-      cache:true
+      animateType:"fromLeft"
     });
   }
 
@@ -46,11 +49,11 @@ class PageView extends React.Component {
       <div className='testheader'></div>
       <XzComponents.scrollview>asdashuxiaozhong</XzComponents.scrollview>
       <XzComponents.button>ButtonClick</XzComponents.button>
-      <button onClick={this.clickHandle.bind(this,1)}>跳转</button>
+      <div><button onClick={this.clickHandle.bind(this,1)}>跳转</button>
       <button onClick={this.clickHandle.bind(this,2)}>去三级</button>
        <button onClick={this.clickHandle.bind(this,3)}>去二级</button>
        <button onClick={this.clickHandle.bind(this,4)}>GoSame</button>
-       <button onClick={this.showPage.bind(this,3)}>我已审批</button></div>);
+       <button onClick={this.showPage.bind(this,3)}>我已审批</button></div></div>);
   }
 }
 export default PageView;

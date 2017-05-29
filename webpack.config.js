@@ -27,7 +27,7 @@ module.exports = function (env) {
     console.log(docEl.clientWidth * dpr / 10) ;
   */
   mkdirs(path.join(__dirname, '/node_modules/xz-lightapp/css'),function(){
-    fs.writeFile(path.join(__dirname, '/node_modules/xz-lightapp/css/shipei.less'), ".px2rem(@name, @px){ @{name}: @px / "+rem+" * 1rem;}", function (err) {
+    fs.writeFile(path.join(__dirname, '/node_modules/xz-lightapp/css/shipei.less'), ".px2rem(@name, @px){ @{name}: @px / "+rem+" * 1rem;}.px2remtransfrom(@x,@y){transform: translate3d( @x / "+rem+" * 1rem,  @y / "+rem+" * 1rem, 0);-webkit-transform: translate3d( @x / "+rem+" * 1rem,  @y / "+rem+" * 1rem, 0);}", function (err) {
       if (err) throw err;
       console.log("shipei.less write success!!");
     });

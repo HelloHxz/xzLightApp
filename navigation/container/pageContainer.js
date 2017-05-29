@@ -64,9 +64,9 @@ class PageContainer extends React.Component {
     }
     for(var key in this.arr){
       if(key===this.curpagename){
-        re.push(<div key={key+"_containerwrapper"}>{this.arr[key]}</div>);
+        re.push(<div className="full-screen" key={key+"_containerwrapper"}>{this.arr[key]}</div>);
       }else{
-        re.push(<div  key={key+"_containerwrapper"} style={{display:"none"}}>{this.arr[key]}</div>);
+        re.push(<div  className="full-screen"  key={key+"_containerwrapper"} style={{display:"none"}}>{this.arr[key]}</div>);
       }
     }
     return (<div className={className}>{re}</div>);

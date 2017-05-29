@@ -16,9 +16,16 @@ class PageView extends React.Component {
     return true;
   }
 
+  clickHandle(){
+    this.props.base.showPage({
+      pageKey:"one"
+    });
+  }
+
 
   render() {
-    return (<div>lazyload</div>);
+    return (<div>lazyload
+      <button onClick={this.clickHandle.bind(this)}>Show</button></div>);
   }
 }
 export default PageView;

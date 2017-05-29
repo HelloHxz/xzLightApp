@@ -25,7 +25,7 @@ clickHandle(params){
   }
 
   render() {
-    return (<div>
+    return (<div className='full-screen'>
     	{this.props.params.test||"没有"}
     	<button onClick={this.testClick.bind(this)}>GotoSame</button>
       <button onClick={this.replaceGo.bind(this)}>replaceGo</button>

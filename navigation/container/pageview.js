@@ -13,6 +13,17 @@ var showAnimateConfig = {
           hide:""
         }
   },
+  fromLeft:{
+    showPage:{
+      show:"xz-showpage-fromleft-show",
+      hide:"xz-showpage-fromleft-hide"
+    },
+    basePage:{
+      show:"xz-basepage-fromleft-show",
+      hide:"xz-basepage-fromleft-hide"
+    }
+  },
+
   fromTop:{
 
   },
@@ -41,7 +52,8 @@ class PageView extends React.Component {
       pagename:props.pagename,
       isDestory:false,
       basePageClassName:"",
-      showPages:[]
+      showPages:[],
+      showBk:false
     };
     this.repaireUrlWhenRepalceGo = this.repaireUrlWhenRepalceGo.bind(this);
   }
@@ -90,16 +102,20 @@ class PageView extends React.Component {
 
   close(){
     if(this.curShowPageInfo&&this.curShowPageInfo.page){
-      if(this.curShowPageInfo.page.close()){
-        if(this.curShowPageInfo.page.onPageBeforeLeave){
-          var re = this.curShowPageInfo.page.onPageBeforeLeave();
+
+      var showpageinfo = this.props.pagemanager.pageInstanceDict[this.curShowPageInfo.key];
+      if(showpageinfo.instance.onPageBeforeLeave){
+          var re = showpageinfo.instance.onPageBeforeLeave();
           if(!re){
             return false;
           }
-        }
+      }
 
+      if(this.curShowPageInfo.page.close()){
         var hideClassName = "xz-showpage "+this.curShowPageInfo.animateConfig.showPage.hide;
         this.curShowPageInfo.showPage.className = hideClassName;
+        this.setState({showBk:false});
+        this.basePage.className = "xz-page-base-page "+this.curShowPageInfo.animateConfig.basePage.hide;
         if(!this.curShowPageInfo.cache){
           var pageKey = this.curShowPageInfo.pageKey;
           setTimeout(()=>{
@@ -107,8 +123,10 @@ class PageView extends React.Component {
             delete this.showPageDict[pageKey];
           },400)
         }
+        this.pageInstance.onPageResume&&this.pageInstance.onPageResume();
+
         this.curShowPageInfo = null;
-        
+
         return false;
       }
       return false;
@@ -169,6 +187,7 @@ class PageView extends React.Component {
       this.curShowPageInfo.showPage.className = showClassName;
       var showpageinfo = this.props.pagemanager.pageInstanceDict[this.curShowPageInfo.key];
       showpageinfo.instance.onPageResume && showpageinfo.instance.onPageResume();
+      this.setState({showBk:false});
       return;
     }
     animateConfig = showAnimateConfig[params.animateType];
@@ -193,13 +212,23 @@ class PageView extends React.Component {
     this.curShowPageInfo.instance = (<div ref={(showPage)=>{
       if(showPage){this.showPageDict[pageKey].showPage = showPage;}
     }} className={showClassName} key={key+"_wrapper"} >
-        <PageView ref={(page)=>{
-          if(page){this.showPageDict[pageKey].page = page;}}} leftroute={[]} pagename={pageKey} pagemanager={this.props.pagemanager} key={key} pkey={key}></PageView>
+        <PageView 
+          ref={(page)=>{
+              if(page){
+                this.showPageDict[pageKey].page = page;
+              }
+            }
+          } 
+          leftroute={[]} 
+          pagename={pageKey} 
+          owner={this.pageInstance}
+          pagemanager={this.props.pagemanager} 
+          key={key} pkey={key}></PageView>
       </div>);
     for(var key in this.showPageDict){
       showpages.push(this.showPageDict[key].instance);
     }
-    this.setState({showPages:showpages,basePageClassName:""});
+    this.setState({showPages:showpages,basePageClassName:animateConfig.basePage.show,showBk:true});
   }
 
 
@@ -220,11 +249,14 @@ class PageView extends React.Component {
     //this.props.pkey
     var basePageClassName = "xz-page-base-page "+this.state.basePageClassName;
     var params = this.props.pagemanager.getParamsFromUrl();
+    var bkClassName = this.state.showBk?"xz-showpage-bk xz-showpage-bk-show":"xz-showpage-bk xz-showpage-bk-hide";
     return (<div className='xz-page-inner' key={this.props.pkey+"_outer"}>
         {this.state.showPages}
+        <div className={bkClassName}></div>
         <div ref={(basepage)=>{
           this.basePage = basepage;
         }} className={basePageClassName}>
+        <div className='xz-pfull'>
           <ToPageInstance 
             base={this} 
             ref={(instance)=>{
@@ -237,6 +269,7 @@ class PageView extends React.Component {
             pkey={this.props.pkey+"_inner"} 
             key={this.props.pkey+"_inner"}>
           </ToPageInstance>
+        </div>
         </div>
       </div>);
   }
