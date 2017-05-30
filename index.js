@@ -1,6 +1,7 @@
 import N from './navigation' 
 import xz from './src/components' 
 import style from './utils/style' 
+import shallowEqual from './utils/shallowEqual' 
 import './css/main.less';
 import React from 'react';
 
@@ -15,6 +16,7 @@ var Navigation = {
 export {
 	style,
 	Navigation,
-	xz
+	xz,
+	shallowEqual
 
 };

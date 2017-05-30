@@ -1,7 +1,5 @@
 import React from "react";
 
-
-
 var showAnimateConfig = {
   fromBottom:{
         showPage:{
@@ -67,7 +65,7 @@ class PageView extends React.Component {
     if(!this.state.isDestory){
       return;
     }
-    // this.setState({isDestory:false});
+    this.setState({isDestory:false});
   }
 
   destroy(){
@@ -189,7 +187,7 @@ class PageView extends React.Component {
     }
   */
 
-  
+
   showPage(params){
     var pageKey = params.pageKey;
     var animateConfig,showClassName ;

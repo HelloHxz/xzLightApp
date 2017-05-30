@@ -2,11 +2,8 @@ import React from "react"
 
 
 import "../css/index.less"
-import {xz,style} from "../../../index"
+import {xz,style,shallowEqual} from "../../../index"
 
-
-
-//style.createSheet(i);
 
 class PageView extends React.Component {
   constructor(props) {
@@ -17,6 +14,11 @@ class PageView extends React.Component {
     };
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      !shallowEqual(this.state, nextState)
+    );
+  }
 
   clickHandle(params){
     if(params===1){
