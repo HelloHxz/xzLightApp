@@ -33,6 +33,8 @@ class PageView extends React.Component {
   onPageResume(){
   }
 
+
+
   onPageBeforeLeave(){
 
     return true;

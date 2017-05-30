@@ -46,14 +46,14 @@ class PageView extends React.Component {
     this.shouldUpdate = true;
     this.curShowPageInfo = null;
     this.basePage = null;
+    this.bkCover = null;
     this.showPageDict = {};
     this.state={
       leftroute:props.leftroute,
       pagename:props.pagename,
       isDestory:false,
       basePageClassName:"",
-      showPages:[],
-      showBk:false
+      showPages:[]
     };
     this.repaireUrlWhenRepalceGo = this.repaireUrlWhenRepalceGo.bind(this);
   }
@@ -67,7 +67,7 @@ class PageView extends React.Component {
     if(!this.state.isDestory){
       return;
     }
-    this.setState({isDestory:false});
+    // this.setState({isDestory:false});
   }
 
   destroy(){
@@ -100,7 +100,22 @@ class PageView extends React.Component {
     
   }
 
+  bkClick(){
+    this.closeShowPage();
+  }
+
+  closeShowPage(){
+    if(this.curShowPageInfo&&this.curShowPageInfo.page){
+      this.curShowPageInfo.page.props.owner.props.base._close();
+    }
+  }
+
   close(){
+    if(this.props.owner){
+      this.props.owner.props.base._close();
+    }
+  }
+  _close(){
     if(this.curShowPageInfo&&this.curShowPageInfo.page){
 
       var showpageinfo = this.props.pagemanager.pageInstanceDict[this.curShowPageInfo.key];
@@ -110,17 +125,16 @@ class PageView extends React.Component {
             return false;
           }
       }
-
-      if(this.curShowPageInfo.page.close()){
+      if(this.curShowPageInfo.page._close()){
         var hideClassName = "xz-showpage "+this.curShowPageInfo.animateConfig.showPage.hide;
         this.curShowPageInfo.showPage.className = hideClassName;
-        this.setState({showBk:false});
         this.basePage.className = "xz-page-base-page "+this.curShowPageInfo.animateConfig.basePage.hide;
         if(!this.curShowPageInfo.cache){
           var pageKey = this.curShowPageInfo.pageKey;
+          this.bkCover.className = "xz-showpage-bk xz-showpage-bk-hide";
           setTimeout(()=>{
-            this.setState({showPages:null});
             delete this.showPageDict[pageKey];
+            this.setState({showPages:null});
           },400)
         }
         this.pageInstance.onPageResume&&this.pageInstance.onPageResume();
@@ -174,9 +188,9 @@ class PageView extends React.Component {
       }
     }
   */
+
+  
   showPage(params){
-    //   this.curShowPageInfo = null;
-    // this.showPageDict = {};
     var pageKey = params.pageKey;
     var animateConfig,showClassName ;
     this.curShowPageInfo = this.showPageDict[pageKey];
@@ -187,7 +201,8 @@ class PageView extends React.Component {
       this.curShowPageInfo.showPage.className = showClassName;
       var showpageinfo = this.props.pagemanager.pageInstanceDict[this.curShowPageInfo.key];
       showpageinfo.instance.onPageResume && showpageinfo.instance.onPageResume();
-      this.setState({showBk:false});
+      
+      this.bkCover.className = "xz-showpage-bk xz-showpage-bk-hide";
       return;
     }
     animateConfig = showAnimateConfig[params.animateType];
@@ -228,7 +243,8 @@ class PageView extends React.Component {
     for(var key in this.showPageDict){
       showpages.push(this.showPageDict[key].instance);
     }
-    this.setState({showPages:showpages,basePageClassName:animateConfig.basePage.show,showBk:true});
+    this.bkCover.className = "xz-showpage-bk xz-showpage-bk-show";
+    this.setState({showPages:showpages,basePageClassName:animateConfig.basePage.show});
   }
 
 
@@ -249,10 +265,13 @@ class PageView extends React.Component {
     //this.props.pkey
     var basePageClassName = "xz-page-base-page "+this.state.basePageClassName;
     var params = this.props.pagemanager.getParamsFromUrl();
-    var bkClassName = this.state.showBk?"xz-showpage-bk xz-showpage-bk-show":"xz-showpage-bk xz-showpage-bk-hide";
     return (<div className='xz-page-inner' key={this.props.pkey+"_outer"}>
         {this.state.showPages}
-        <div className={bkClassName}></div>
+        <div 
+        ref={(bkCover)=>{
+          this.bkCover = bkCover;
+        }}
+        onClick={this.bkClick.bind(this)} className="xz-showpage-bk xz-showpage-bk-hide"></div>
         <div ref={(basepage)=>{
           this.basePage = basepage;
         }} className={basePageClassName}>

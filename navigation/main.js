@@ -641,7 +641,7 @@ class Navigation extends React.Component {
             console.log(crKey+" >>>beforeleave");
 
             if(action!=='前进'){
-              var closeResult = instanceInfo.basePageView.close();
+              var closeResult = instanceInfo.basePageView._close();
               if(closeResult){
                 if(instanceInfo.instance.onPageBeforeLeave){
                   var  pageLeaveR= instanceInfo.instance.onPageBeforeLeave();
