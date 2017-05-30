@@ -1,5 +1,5 @@
 import N from './navigation' 
-import XzComponents from './src/components' 
+import xz from './src/components' 
 import style from './utils/style' 
 import './css/main.less';
 import React from 'react';
@@ -15,6 +15,6 @@ var Navigation = {
 export {
 	style,
 	Navigation,
-	XzComponents
+	xz
 
 };

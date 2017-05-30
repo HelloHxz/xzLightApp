@@ -2,7 +2,7 @@ import React from "react"
 
 
 import "../css/index.less"
-import {XzComponents,style} from "../../../index"
+import {xz,style} from "../../../index"
 
 
 
@@ -47,13 +47,19 @@ class PageView extends React.Component {
   render() {
     return (<div className='full-screen'>
       <div className='testheader'></div>
-      <XzComponents.scrollview>asdashuxiaozhong</XzComponents.scrollview>
-      <XzComponents.button>ButtonClick</XzComponents.button>
-      <div><button onClick={this.clickHandle.bind(this,1)}>跳转</button>
-      <button onClick={this.clickHandle.bind(this,2)}>去三级</button>
-       <button onClick={this.clickHandle.bind(this,3)}>去二级</button>
-       <button onClick={this.clickHandle.bind(this,4)}>GoSame</button>
-       <button onClick={this.showPage.bind(this,3)}>我已审批</button></div></div>);
+      <xz.scrollview>asdashuxiaozhong</xz.scrollview>
+      <xz.button type="plat">plat button</xz.button><br/>
+      <div className='btn-wrap'>
+        <xz.button onClick={this.clickHandle.bind(this,1)} type="primary">primary button</xz.button>
+        <xz.button>default button</xz.button>
+        <xz.button type="none">none button</xz.button>
+      </div>
+      <br/>
+      <div><xz.button onClick={this.clickHandle.bind(this,1)}>跳转</xz.button>
+      <xz.button type='primary' onClick={this.clickHandle.bind(this,2)}>去三级</xz.button>
+       <xz.button onClick={this.clickHandle.bind(this,3)}>去二级</xz.button>
+       <xz.button onClick={this.clickHandle.bind(this,4)}>GoSame</xz.button>
+       <xz.button onClick={this.showPage.bind(this,3)}>我已审批</xz.button></div></div>);
   }
 }
 export default PageView;

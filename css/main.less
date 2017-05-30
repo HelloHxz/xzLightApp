@@ -1,4 +1,4 @@
-@import url('./shipei.less');
+@import url('./common.less');
 
 html,body{
   -webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -75,11 +75,7 @@ body{
 }
 
 
-button{
-  .px2rem(font-size, 30);
-  border:1px solid red;
-  .px2rem(border-radius,6);
-}
+
 
 .xz-scrolling{
   -webkit-overflow-scrolling: touch;
@@ -145,8 +141,8 @@ button{
 }
 
 .left-out {
-    animation: leftout .4s cubic-bezier(.05, .69, .14, 1);
-    -webkit-animation: leftout .4s cubic-bezier(.05, .69, .14, 1);
+    animation: leftout .3s cubic-bezier(.05, .69, .14, 1);
+    -webkit-animation: leftout .3s cubic-bezier(.05, .69, .14, 1);
     transform: translate3d(-100%, 0, 0);
     -webkit-transform: translate3d(-100%, 0, 0);
 }
@@ -170,8 +166,8 @@ button{
 }
 
 .right-out {
-    animation: rightout .4s cubic-bezier(.05, .69, .14, 1);
-    -webkit-animation: rightout .4s cubic-bezier(.05, .69, .14, 1);
+    animation: rightout .3s cubic-bezier(.05, .69, .14, 1);
+    -webkit-animation: rightout .3s cubic-bezier(.05, .69, .14, 1);
     transform: translate3d(100%, 0, 0);
 }
 
@@ -322,7 +318,7 @@ button{
   bottom:0;
   right:0;
   background-color:black;
-  transition:all .3s ease;
+  transition:all .7s ease;
 }
 
 .xz-showpage-bk-hide{
