@@ -24,6 +24,13 @@ Navigation.start({
 	events:{
 		init:function(pageManager){
 
+		},
+		beforeRender:function(pageManager){
+			if(1!==1){
+				pageManager.renderPage("gobal",{});
+				return false;
+			}
+			return true;
 		}
 	}
 });

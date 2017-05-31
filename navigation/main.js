@@ -85,7 +85,8 @@ class Navigation extends React.Component {
     this.pageInstanceDict={};
     this.state={
         curpagename:this.props.config.root,
-        renderseed:0
+        renderseed:0,
+        isDestory:false
         ,pages:[]}  
 
   }
@@ -479,9 +480,8 @@ class Navigation extends React.Component {
     this.isInit = false;
     isReplaceGo = false;
 
-    this.setState({pages:pages});
+    this.setState({pages:pages,isDestory:false});
     
-
     if(this.firstLoadToChangeHash){
         var p = this.getParamsFromUrl()||{};
         isWantToPreventRoute = true;
@@ -528,63 +528,70 @@ class Navigation extends React.Component {
     }
   }
 
+  refreshApp(){
+    this.routeStack = [];
+    this.setState({isDestory:true},()=>{
+      this.hashChange();
+    });
+    // this.hashChange();
+  }
+
   pagelayout(params){
-        var manager = params.manager;
-        var action = params.action;
-        var animationAction = params.animationAction;
-        var isReplaceGo = params.isReplaceGo;
-        var pages = [];
-        var routeStack = manager.routeStack;
-        var len = routeStack.length;
-          console.log(animationAction+" "+" "+action +" "+len);
-          if(len>1){
-            if(animationAction==='前进'){
-              if(params.isWeb){
-                NoAnimation(routeStack,pages);
-              }else{
-                GoPreOrNext(true,'xz-page-route-wrapper right-in','xz-page-route-wrapper left-out',routeStack,pages,isReplaceGo,params.key);
-              }
-            }else if(animationAction==="后退删除最后"){
-              if(params.isWeb){
-                NoAnimation(routeStack,pages);
-              }else{
-                GoPreOrNext(false,'xz-page-route-wrapper right-out','xz-page-route-wrapper left-in',routeStack,pages,false,params.key);
-              }
-              routeStack.pop();
-            }else{
-              NoAnimation(routeStack,pages);
+    var manager = params.manager;
+    var action = params.action;
+    var animationAction = params.animationAction;
+    var isReplaceGo = params.isReplaceGo;
+    var pages = [];
+    var routeStack = manager.routeStack;
+    var len = routeStack.length;
+    if(len>1){
+      if(animationAction==='前进'){
+        if(params.isWeb){
+          NoAnimation(routeStack,pages);
+        }else{
+          GoPreOrNext(true,'xz-page-route-wrapper right-in','xz-page-route-wrapper left-out',routeStack,pages,isReplaceGo,params.key);
+        }
+      }else if(animationAction==="后退删除最后"){
+        if(params.isWeb){
+          NoAnimation(routeStack,pages);
+        }else{
+          GoPreOrNext(false,'xz-page-route-wrapper right-out','xz-page-route-wrapper left-in',routeStack,pages,false,params.key);
+        }
+        routeStack.pop();
+      }else{
+        NoAnimation(routeStack,pages);
+      }
+
+    }else{
+      NoAnimation(routeStack,pages);
+    }
+      //因为动画 页面没有清楚干净 
+    if(animationAction!=='前进'){
+
+    setTimeout(()=>{
+        var lastPages = [];
+        NoAnimation(routeStack,lastPages);
+        manager.setState({pages:lastPages});
+      },250);
+    }
+
+    setTimeout(()=>{
+      var seedObj = manager.getUrlSeedObj();
+      var r = seedObj.__r;
+      if(r){
+        r = parseInt(r);
+        for(var i=routeStack.length-1;i>=0;i--){
+          var rr = routeStack[i].r;
+          if(rr&&routeStack[i].isDelete){
+            rr = parseInt(rr);
+            if(rr>r){
+              routeStack.splice(i,1); 
             }
-
-          }else{
-            NoAnimation(routeStack,pages);
           }
-          //因为动画 页面没有清楚干净 
-          if(animationAction!=='前进'){
-
-          setTimeout(()=>{
-              var lastPages = [];
-              NoAnimation(routeStack,lastPages);
-              manager.setState({pages:lastPages});
-            },250);
-          }
-
-          setTimeout(()=>{
-            var seedObj = manager.getUrlSeedObj();
-            var r = seedObj.__r;
-            if(r){
-              r = parseInt(r);
-              for(var i=routeStack.length-1;i>=0;i--){
-                var rr = routeStack[i].r;
-                if(rr&&routeStack[i].isDelete){
-                  rr = parseInt(rr);
-                  if(rr>r){
-                    routeStack.splice(i,1); 
-                  }
-                }
-              }
-            }
-          },300);
-          return pages;
+        }
+      }
+    },300);
+    return pages;
 
   }
 
@@ -714,6 +721,9 @@ class Navigation extends React.Component {
 
 
   render() {
+    if(this.state.isDestory){
+      return (<div></div>);
+    }
     return (<div className='xz-pageview-outer'>{this.state.pages}</div>);
   }
 
