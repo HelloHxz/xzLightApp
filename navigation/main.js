@@ -724,7 +724,8 @@ class Navigation extends React.Component {
     if(this.state.isDestory){
       return (<div></div>);
     }
-    return (<div className='xz-pageview-outer'>{this.state.pages}</div>);
+    return (<div className='xz-pageview-outer'>
+      {this.state.pages}</div>);
   }
 
 

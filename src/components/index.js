@@ -1,9 +1,11 @@
 import listview from './listview' 
 import button from './button' 
 import scrollview from './scrollview' 
+import segment from './segment' 
 
 export default {
-	"listview":listview,
-	"button":button,
-	"scrollview":scrollview
+	"ListView":listview,
+	"Button":button,
+	"ScrollView":scrollview,
+	"Segment":segment
 };

@@ -6,6 +6,7 @@ Navigation.start({
 	gobal:"xxxx",//可用于登录 重登录 错误验证  全局loading
 	pages:{
 		index:require("./pages/index").default,
+		tabbarpage:require("./pages/tabbarpage").default,
 		twolevelroute:require("./pages/twolevelroute").default,
 		threelevelroute:require("./pages/threelevelroute").default,
 		one:require("./pages/one").default,

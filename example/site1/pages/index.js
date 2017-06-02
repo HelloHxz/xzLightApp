@@ -32,6 +32,9 @@ class PageView extends React.Component {
        this.props.pagemanager.go("index",{x:111});
     }
   }
+  gotoTabbar(){
+    this.props.pagemanager.go("tabbarpage",{x:111});
+  }
 
   onPageResume(){
   }
@@ -42,6 +45,7 @@ class PageView extends React.Component {
 
     return true;
   }
+
   showPage(){
     this.props.base.showPage({
       pageKey:"index",
@@ -52,19 +56,19 @@ class PageView extends React.Component {
   render() {
     return (<div className='full-screen'>
       <div className='testheader'></div>
-      <xz.scrollview>asdashuxiaozhong</xz.scrollview>
-      <xz.button type="plat">plat button</xz.button><br/>
+      <xz.ScrollView>asdashuxiaozhong</xz.ScrollView>
+      <xz.Button onClick={this.gotoTabbar.bind(this)} type="plat">goto tabbar</xz.Button><br/>
       <div className='btn-wrap'>
-        <xz.button onClick={this.clickHandle.bind(this,1)} type="primary">primary button</xz.button>
-        <xz.button>default button</xz.button>
-        <xz.button type="none">none button</xz.button>
+        <xz.Button onClick={this.clickHandle.bind(this,1)} type="primary">primary Button</xz.Button>
+        <xz.Button>default button</xz.Button>
+        <xz.Button type="none">none button</xz.Button>
       </div>
       <br/>
-      <div><xz.button onClick={this.clickHandle.bind(this,1)}>跳转</xz.button>
-      <xz.button type='primary' onClick={this.clickHandle.bind(this,2)}>去三级</xz.button>
-       <xz.button onClick={this.clickHandle.bind(this,3)}>去二级</xz.button>
-       <xz.button onClick={this.clickHandle.bind(this,4)}>GoSame</xz.button>
-       <xz.button onClick={this.showPage.bind(this,3)}>我已审批</xz.button></div></div>);
+      <div><xz.Button onClick={this.clickHandle.bind(this,1)}>跳转</xz.Button>
+      <xz.Button type='primary' onClick={this.clickHandle.bind(this,2)}>去三级</xz.Button>
+       <xz.Button onClick={this.clickHandle.bind(this,3)}>去二级</xz.Button>
+       <xz.Button onClick={this.clickHandle.bind(this,4)}>GoSame</xz.Button>
+       <xz.Button onClick={this.showPage.bind(this,3)}>我已审批</xz.Button></div></div>);
   }
 }
 export default PageView;

@@ -11,8 +11,10 @@ export default {
 					console.error(key+ " start 方法pages对象页面注册名称不能带有 _ 标示");
 				}
 		}
-		ReactDOM.render(<Navigation 
-			config={config}/>,
+		ReactDOM.render(<div className='xz-app-wrapper'>
+			<div ref={(instance)=>{config.extendArea = instance;}} style={{position:"absolute",width:"0px",height:"0px"}}>
+			</div><Navigation 
+			config={config}/></div>,
    		 document.getElementById('xz-lightapp-root'));
 	},
 	PageContainer:require("./container/pageContainer").default

@@ -6,6 +6,11 @@ html,body{
   height:100%;
   overflow: hidden;
 }
+.xz-app-wrapper{
+  position:relative;
+  width:100%;
+  height:100%;
+}
 .displayflex () {
   display: -webkit-box;
   display: -webkit-flex;
@@ -49,10 +54,11 @@ html,body{
   .displayflex();
   width:100%;
 }
+
 .full-screen{
   position:relative;
   overflow:hidden;
-  flex:1;
+  .flex(1);
   .displayflex();
 }
 
@@ -67,13 +73,6 @@ html,body{
 body{
   font-size:.4rem;
 }
-
-
-
-.px2rem(@name, @px){
-    @{name}: @px / 75 * 1rem;
-}
-
 
 
 
