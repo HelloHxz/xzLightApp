@@ -2,6 +2,11 @@ import React from "react"
 
 
 class PageView extends React.Component {
+
+  static connectStore(params){
+    return {};
+  }
+
   constructor(props) {
     super(props)
     console.log("constructor :one");

@@ -45,6 +45,7 @@ class PageView extends React.Component {
     this.curShowPageInfo = null;
     this.basePage = null;
     this.bkCover = null;
+    this.store = null;
     this.showPageDict = {};
     this.state={
       leftroute:props.leftroute,
@@ -260,6 +261,12 @@ class PageView extends React.Component {
        console.error("pages属性中没有引入["+realpagename+"]页面");
        return null;
     }
+    if(!this.store){
+      if(ToPageInstance.connectStore){
+        this.store = ToPageInstance.connectStore();
+      }
+    }
+    
     //this.props.pkey
     var basePageClassName = "xz-page-base-page "+this.state.basePageClassName;
     var params = this.props.pagemanager.getParamsFromUrl();
@@ -276,6 +283,7 @@ class PageView extends React.Component {
         <div className='xz-pfull'>
           <ToPageInstance 
             base={this} 
+            {...this.store}
             ref={(instance)=>{
               this.pageInstance = instance;
             }}

@@ -4,8 +4,12 @@ import React from "react"
 import "../css/index.less"
 import {xz,style,shallowEqual} from "../../../index"
 
-
 class PageView extends React.Component {
+
+  static connectStore(params){
+    return {};
+  }
+
   constructor(props) {
     super(props)
     console.log("constructor");
