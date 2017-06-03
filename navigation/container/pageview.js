@@ -261,9 +261,19 @@ class PageView extends React.Component {
        console.error("pages属性中没有引入["+realpagename+"]页面");
        return null;
     }
+
+
+    var params = {
+      url:this.props.pagemanager.getUrlInfo(),
+      pagemanager:this.props.pagemanager,
+      base:this,
+      pagename:realpagename,
+      key:this.props.pkey
+    };
+
     if(!this.store){
       if(ToPageInstance.connectStore){
-        this.store = ToPageInstance.connectStore();
+        this.store = ToPageInstance.connectStore(params);
       }
     }
     
