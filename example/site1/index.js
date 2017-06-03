@@ -9,6 +9,7 @@ Navigation.start({
 		tabbarpage:require("./pages/tabbarpage").default,
 		twolevelroute:require("./pages/twolevelroute").default,
 		threelevelroute:require("./pages/threelevelroute").default,
+		segmentdemo:require("./pages/segmentdemo").default,
 		one:require("./pages/one").default,
 		two:function(callback) {
 			require.ensure([], function(require) {

@@ -33,7 +33,7 @@ class PageView extends React.Component {
     }
   }
   gotoTabbar(){
-    this.props.pagemanager.go("tabbarpage",{x:111});
+    this.props.pagemanager.go("tabbarpage/segmentdemo",{x:111});
   }
 
   onPageResume(){
@@ -55,7 +55,7 @@ class PageView extends React.Component {
 
   render() {
     return (<div className='full-screen'>
-      <div className='testheader'></div>
+      <div className='app-header'></div>
       <xz.ScrollView>asdashuxiaozhong</xz.ScrollView>
       <xz.Button onClick={this.gotoTabbar.bind(this)} type="plat">goto tabbar</xz.Button><br/>
       <div className='btn-wrap'>

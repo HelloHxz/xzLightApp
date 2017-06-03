@@ -5,6 +5,52 @@ import "./index.less"
 class Segment extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      selectedKey:props.selectedKey||props.defaultSelectedKey
+    }
+  }
+
+  itemClick(key,itemInstance){
+    if(this.props.onItemClickChange){
+      if(this.props.onItemClickChange({
+        nextKey:key,
+        selectedKey:this.state.selectedKey,
+        itemInstance:itemInstance,
+        segmentInstance:this
+      })===false){
+        return;
+      }
+    }
+    if(this.state.selectedKey!==key){
+      this.setState({
+        selectedKey:key
+      });
+
+    }
+
+    if(this.props.onChange){
+      this.props.onChange({
+        selectedKey:this.state.selectedKey,
+        itemInstance:itemInstance,
+        segmentInstance:this
+      })
+    }
+
+  }
+
+  componentWillReceiveProps(nextProps){
+   if(this.state.selectedKey!==nextProps.selectedKey){
+        this.setState({
+          selectedKey:nextProps.selectedKey
+        });
+        if(this.props.onChange){
+          this.props.onChange({
+            selectedKey:this.state.selectedKey,
+            itemInstance:itemInstance,
+            segmentInstance:this
+          })
+        }
+    }
   }
 
   onTouchStart(){
@@ -35,12 +81,30 @@ class Segment extends React.Component {
     var children = React.Children.map(this.props.children, 
       (child) => {
         if(child.type&&typeof(child.type)!=="string"){
-          return React.cloneElement(child, {scroll:this.props.scroll});
+          return React.cloneElement(child, {
+            selectedClassName:this.props.selectedClassName||"xz-segment-selected-item",
+            scroll:this.props.scroll,
+            itemKey:child.key,
+            selectedKey:this.state.selectedKey,
+            itemClick:this.itemClick.bind(this)
+          });
         }else{
           return child;
         }
       });
-    return (<div {...toucheEvent}>
+    var className = "";
+    if(!scroll){
+      if(this.props.className){
+        className = 'xz-segment '+this.props.className;
+      }
+      return  <div className={className}>
+      {indicator}
+      {children}</div>;
+    }
+     if(this.props.className){
+        className = this.props.className;
+      }
+    return (<div {...toucheEvent} className={className}>
        <div className='xz-segment'>
       {indicator}
     	{children}</div></div>);
@@ -54,11 +118,10 @@ class Item extends React.Component {
   }
 
   onClick(){
-    console.log(this.Dom.getBoundingClientRect());
+    this.props.itemClick&&this.props.itemClick(this.props.itemKey,this);
   }
 
   render() {
-    console.log(this.props);
     var scroll = this.props.scroll === true;
     var children = React.Children.map(this.props.children, 
       (child) => {
@@ -77,7 +140,10 @@ class Item extends React.Component {
     if(this.props.className){
       classNameArr.push(this.props.className);
     }
-  return (<div ref={(instance)=>{this.Dom = instance;}} onClick={this.onClick.bind(this)} className={classNameArr.join(" ")}>
+    if(this.props.selectedKey === this.props.itemKey){
+      classNameArr.push(this.props.selectedClassName);
+    }
+  return (<div key={"item_"+this.props.itemKey} ref={(instance)=>{this.Dom = instance;}} onClick={this.onClick.bind(this)} className={classNameArr.join(" ")}>
     {children}
       </div>);
   }

@@ -1,5 +1,5 @@
 import React from "react"
-import {XzComponents,Navigation} from "../../../index"
+import {xz,Navigation} from "../../../index"
 
 class Com extends React.Component {
   constructor(props) {
