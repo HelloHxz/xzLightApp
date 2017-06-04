@@ -37,6 +37,26 @@ export default {
 	},
 	createSheet(styles){
 		alert(styles);
-	}
+	},
+	translateKeys:null,
+	getTransitionKeys () {
+        if (this.translateKeys) {
+            return this.translateKeys;
+        }
+        var testStyle = document.createElement("DIV").style;
+        var me = {};
+        if ("-webkit-transform" in testStyle) {
+            me.transitionend = "webkitTransitionEnd";
+            me.transform = "-webkit-transform";
+            me.transition = "-webkit-transition";
+        }
+        else {
+            me.transitionend = "transitionend";
+            me.transform = "transform";
+            me.transition = "transition";
+        }
+        this.translateKeys = me;
+        return me;
+    },
 
 }

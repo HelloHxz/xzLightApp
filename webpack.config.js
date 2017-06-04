@@ -30,7 +30,9 @@ module.exports = function (env) {
   */
   mkdirs(path.join(__dirname, '/node_modules/xz-lightapp/css'),function(){
     fs.writeFile(path.join(__dirname, '/node_modules/xz-lightapp/css/common.less'), 
-        `@headerbordercolor:rgb(171,171,173);
+        `
+        @textcolor:#333;
+        @headerbordercolor:rgb(171,171,173);
          @backgroundcolor:rgb(235,235,241);
          @themecolor:rgb(10,96,254);
          @bordercolor:rgb(194,192,198);

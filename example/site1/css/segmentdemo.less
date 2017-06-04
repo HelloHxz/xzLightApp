@@ -1,4 +1,5 @@
 @import url('../../../node_modules/xz-lightapp/css/common.less');
+@import url('../../../node_modules/xz-lightapp/src/components/segment/index.less');
 
 .segement-demo-2{
 	background-color:#fff;
@@ -13,6 +14,7 @@
 	-webkit-transition:all .2s ease;
 }
 
+
 .segement-indi-ltr{
 	background-color:@themecolor;
 	.px2rem(border-radius,5);
@@ -24,4 +26,12 @@
 	.px2rem(border-radius,5);
 	transition:left .2s ease,right .6s ease;
 	-webkit-transition:left .2s ease,right .6s ease;
+}
+
+
+
+.ios-style-segment{
+	.ios-style(500,58);
+	margin:auto;
+	.px2rem(font-size,25);
 }
