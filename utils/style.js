@@ -47,8 +47,8 @@ export default {
         var me = {};
         if ("-webkit-transform" in testStyle) {
             me.transitionend = "webkitTransitionEnd";
-            me.transform = "-webkit-transform";
-            me.transition = "-webkit-transition";
+            me.transform = "WebkitTransform";
+            me.transition = "WebkitTransition";
         }
         else {
             me.transitionend = "transitionend";

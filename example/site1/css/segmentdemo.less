@@ -15,15 +15,17 @@
 }
 
 
-.segement-indi-ltr{
+.segement-indi{
+	position:absolute;
+	bottom:0;
 	background-color:@themecolor;
 	.px2rem(border-radius,5);
+}
+.segement-indi-ltr{
 	transition:left .6s ease,right .2s ease;
 	-webkit-transition:left .6s ease,right .2s ease;
 }
 .segement-indi-rtl{
-	background-color:@themecolor;
-	.px2rem(border-radius,5);
 	transition:left .2s ease,right .6s ease;
 	-webkit-transition:left .2s ease,right .6s ease;
 }

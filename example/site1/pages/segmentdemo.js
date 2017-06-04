@@ -50,14 +50,17 @@ class PageView extends React.Component {
   renderIndicatorOne(params){
     var rect = params.rect;
     var indicatorStyle = {
-      position:"absolute",
-      bottom:"0",
-      left:rect.left,
-      right:style.screen.width-rect.right,
+      left:rect.left-params.scrollOffset,//
+      right:style.screen.width-rect.right+params.scrollOffset,//
       height:style.px2rem(5),
     };
-    var className = params.curIndex>params.preIndex?"segement-indi-ltr":"segement-indi-rtl";
-    return <div className={className} style={indicatorStyle}></div>
+    var indiClassArr = ["segement-indi"];
+    if(params.curIndex>params.preIndex){
+      indiClassArr.push("segement-indi-ltr");
+    }else if(params.curIndex<params.preIndex){
+      indiClassArr.push("segement-indi-rtl");
+    }
+    return <div className={indiClassArr.join(" ")} style={indicatorStyle}></div>
   }
 
 
