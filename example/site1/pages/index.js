@@ -4,18 +4,26 @@ import React from "react"
 import "../css/index.less"
 import {xz,style,shallowEqual} from "../../../index"
 
+import globalStore from "../stores/global"
+import indexStore from "../stores/index"
+
+import {observer} from 'mobx-react'
+
+@observer
 class PageView extends React.Component {
 
   static connectStore(params){
-    return {};
+    return {globalStore:globalStore,indexStore:new indexStore};
   }
 
   constructor(props) {
     super(props)
-    console.log("constructor");
+    
     this.state={
       refreshing:"sss"
     };
+
+    props.globalStore.selectedIndex = "huxiaozhong";
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -26,8 +34,8 @@ class PageView extends React.Component {
 
   clickHandle(params){
     if(params===1){
-     // this.props.pagemanager.go("lazyload");
-     this.props.pagemanager.refreshApp();
+     this.props.pagemanager.go("lazyload");
+     // this.props.pagemanager.refreshApp();
     }else if(params===2){
       this.props.pagemanager.go("threelevelroute/twolevelroute/one");
     }else if(params===3){

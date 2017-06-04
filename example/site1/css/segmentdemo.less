@@ -1,0 +1,27 @@
+@import url('../../../node_modules/xz-lightapp/css/common.less');
+
+.segement-demo-2{
+	background-color:#fff;
+}
+.segement-demo-2 .xz-segment{
+	.px2rem(height,74);
+}
+.segement-demo-indicator-1{
+	background-color:@themecolor;
+	.px2rem(border-radius,5);
+	transition:all .2s ease;
+	-webkit-transition:all .2s ease;
+}
+
+.segement-indi-ltr{
+	background-color:@themecolor;
+	.px2rem(border-radius,5);
+	transition:left .6s ease,right .2s ease;
+	-webkit-transition:left .6s ease,right .2s ease;
+}
+.segement-indi-rtl{
+	background-color:@themecolor;
+	.px2rem(border-radius,5);
+	transition:left .2s ease,right .6s ease;
+	-webkit-transition:left .2s ease,right .6s ease;
+}

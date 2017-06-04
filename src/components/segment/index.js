@@ -5,8 +5,13 @@ import "./index.less"
 class Segment extends React.Component {
   constructor(props) {
     super(props)
+    this.itemCount = 0;
+    this.initItemCount = 0;
+    this.preIndex = 0;
+    this.itemDict = {};
     this.state = {
-      selectedKey:props.selectedKey||props.defaultSelectedKey
+      selectedKey:props.selectedKey||props.defaultSelectedKey,
+      renderKey:0
     }
   }
 
@@ -38,6 +43,16 @@ class Segment extends React.Component {
 
   }
 
+  itemComponentDidMount(itemKey,itemInstance){
+    this.itemDict[itemKey] = itemInstance;
+    this.initItemCount+=1;
+    if(this.initItemCount===this.itemCount){
+      if(this.props.renderIndicator){
+        this.setState({renderKey:this.state.renderKey+1});
+      }
+    }
+  }
+
   componentWillReceiveProps(nextProps){
    if(this.state.selectedKey!==nextProps.selectedKey){
         this.setState({
@@ -66,10 +81,9 @@ class Segment extends React.Component {
   }
 
   render() {
+
     var indicator = null;
-    if(this.props.renderIndicator){
-      indicator = this.props.renderIndicator();
-    }
+   
     var scroll = this.props.scroll === true;
     var toucheEvent = {};
     if(scroll){
@@ -77,14 +91,17 @@ class Segment extends React.Component {
       toucheEvent.onTouchMove = this.onTouchMove.bind(this);
       toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
     }
-
+    var itemCount = 0;
     var children = React.Children.map(this.props.children, 
-      (child) => {
+      (child,index) => {
         if(child.type&&typeof(child.type)!=="string"){
+          itemCount+=1;
           return React.cloneElement(child, {
             selectedClassName:this.props.selectedClassName||"xz-segment-selected-item",
             scroll:this.props.scroll,
             itemKey:child.key,
+            index:index,
+            parent:this,
             selectedKey:this.state.selectedKey,
             itemClick:this.itemClick.bind(this)
           });
@@ -92,22 +109,42 @@ class Segment extends React.Component {
           return child;
         }
       });
+    if(this.itemCount===0){
+      this.itemCount = itemCount;
+    }
+
+    if(this.props.renderIndicator&&this.itemDict[this.state.selectedKey]){
+      var selectedItemInstance = this.itemDict[this.state.selectedKey];
+      indicator = this.props.renderIndicator({
+        itemInstance:selectedItemInstance,
+        curIndex:selectedItemInstance.props.index,
+        preIndex:this.preIndex,
+        rect:selectedItemInstance.Dom.getBoundingClientRect()
+      });
+      this.preIndex = selectedItemInstance.props.index;
+    }
     var className = "";
+
     if(!scroll){
-      if(this.props.className){
-        className = 'xz-segment '+this.props.className;
+     if(this.props.className){
+        className = 'xz-segment '+(this.props.className);
+      }else{
+        className = "xz-segment";
       }
       return  <div className={className}>
       {indicator}
       {children}</div>;
     }
-     if(this.props.className){
-        className = this.props.className;
-      }
-    return (<div {...toucheEvent} className={className}>
+    var classArr = ["xz-scroll-segment"];
+   if(this.props.className){
+        classArr.push(this.props.className);
+    }
+    return (<div {...toucheEvent} className={classArr.join(" ")}>
        <div className='xz-segment'>
+       {children}
       {indicator}
-    	{children}</div></div>);
+    	</div>
+      </div>);
   }
 }
 
@@ -119,6 +156,10 @@ class Item extends React.Component {
 
   onClick(){
     this.props.itemClick&&this.props.itemClick(this.props.itemKey,this);
+  }
+
+  componentDidMount(){
+    this.props.parent.itemComponentDidMount(this.props.itemKey,this);
   }
 
   render() {

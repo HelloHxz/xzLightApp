@@ -18,7 +18,6 @@ Navigation.start({
 		},
 		lazyload:function(callback) {
 			require.ensure([], function(require) {
-				console.log(require("./stores/index").default);
 		  		callback(require("./pages/lazyload").default);
 		  	},"lazyload");
 		}

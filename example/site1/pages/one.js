@@ -1,15 +1,19 @@
 import React from "react"
+import globalStore from "../stores/global"
+
+import {observer} from 'mobx-react'
 
 
+@observer
 class PageView extends React.Component {
 
   static connectStore(params){
-    return {};
+    return {globalStore:globalStore};
   }
 
   constructor(props) {
     super(props)
-    console.log("constructor :one");
+    console.log(props.globalStore);
   }
   
   onPageResume(){

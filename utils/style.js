@@ -6,6 +6,8 @@ export default {
 		var docEl = document.documentElement;
 		this.dpr = window.devicePixelRatio || 1;
 		this.rem = docEl.clientWidth * this.dpr / 10;
+		this.screen.width = docEl.clientWidth*this.dpr;
+		this.screen.height = docEl.clientHeight*this.dpr;
 
 		var scale = 1 / this.dpr;
 		var fontEl = document.createElement('style');
@@ -14,6 +16,10 @@ export default {
 		docEl.setAttribute('data-dpr', this.dpr);
 		docEl.firstElementChild.appendChild(fontEl);
 		fontEl.innerHTML = 'html{font-size:' + this.rem + 'px!important;}';
+	},
+	screen:{
+		width:0,
+		height:0
 	},
 	rem2px(v){
 		if(this.rem===0){
@@ -27,7 +33,7 @@ export default {
 			this._shipei();
 		}
 		v = parseFloat(v);
-		return v / this.rem;
+		return v / this.rem+"rem";
 	},
 	createSheet(styles){
 		alert(styles);
