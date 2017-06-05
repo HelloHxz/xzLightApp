@@ -1,8 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 var fs= require('fs');
- 
-
 
 
 module.exports = function (env) {
@@ -24,7 +22,10 @@ module.exports = function (env) {
     plugins.push(
     new webpack.HotModuleReplacementPlugin()
       );
+   
   }
+
+
 
   var entry = {site1:'./site1/index.js'};
   
