@@ -1,6 +1,5 @@
 import React from "react"
 
-
 import "../css/index.less"
 import {xz,style,shallowEqual} from "../../../index"
 
@@ -8,6 +7,8 @@ import globalStore from "../stores/global"
 import indexStore from "../stores/index"
 
 import {observer} from 'mobx-react'
+
+import '../fonts/iconfont.css'
 
 @observer
 class PageView extends React.Component {
@@ -67,7 +68,7 @@ class PageView extends React.Component {
 
   render() {
     return (<div className='full-screen'>
-      <div className='app-header'></div>
+      <div className='app-header iconfont icon-selection'></div>
       <xz.ScrollView>asdashuxiaozhong</xz.ScrollView>
       <xz.Button onClick={this.gotoTabbar.bind(this)} type="plat">goto tabbar</xz.Button><br/>
       <div className='btn-wrap'>

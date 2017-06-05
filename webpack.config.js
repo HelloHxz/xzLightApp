@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 var fs= require('fs');
-
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = function (env) {
 
@@ -16,8 +16,13 @@ module.exports = function (env) {
       new webpack.NamedModulesPlugin(),
       new webpack.LoaderOptionsPlugin({
           minimize: true
-      })
+      }),
+      // new CopyWebpackPlugin([
+      //       { from: 'site1/font' ,to: 'site1/font'},
+
+      //     ],{copyUnmodified: true})
   ];
+
   if(!isProd){
     plugins.push(
     new webpack.HotModuleReplacementPlugin()
@@ -79,8 +84,11 @@ return {
       },
       { 
         test: /\.(png|jpg|jpeg|gif|woff)$/, 
-        loader: 'url?limit=4192&name=[path][name].[ext]'
-        //exclude
+        loader: 'url-loader?limit=6144&name=imgs/[path][name].[ext]'
+      },
+       {
+          test: /\.(eot|svg|ttf|woff|woff2)$/,
+          loader: 'file-loader?name=fonts/[name].[ext]'
       },
       {
             test: /\.less$/,

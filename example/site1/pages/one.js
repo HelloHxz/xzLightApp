@@ -4,6 +4,8 @@ import globalStore from "../stores/global"
 import {observer} from 'mobx-react'
 
 
+
+
 @observer
 class PageView extends React.Component {
 
