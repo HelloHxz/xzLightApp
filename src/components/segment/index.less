@@ -1,21 +1,23 @@
 @import url('../../../css/common.less');
+
 .xz-segment{
-	.displayflex();
-	.flex-direction(row);
+	position:relative;
+	display:flex;
+	flex-direction:row;
 	.px2rem(height,100);
-	.flex-wrap(nowrap);
+	flex-wrap:nowrap;
 	.px2rem(font-size,26);
 }
 .xz-scroll-segment{
 	position:relative;
 }
 .xz-segment-item{
-	.displayflex();
-	.justify-content(center);
-	.align-items(center)
+	display:flex;
+	justify-content:center;
+	align-items:center;
 }
 .xz-segment-item-flex{
-	.flex(1);
+	flex:1;
 }
 .xz-segment-scroll-item{
 	.px2rem(margin-left,30);
