@@ -100,6 +100,9 @@ class Segment extends React.Component {
     var curTouchX = e.nativeEvent.touches[0].pageX;
     this.diff =  curTouchX - this.touchStartValue;
     var offset = this.offsetValue+this.diff;
+    if(offset>0){
+      offset = offset/3;
+    }
     this.setState({offset:offset});
   }
 
@@ -109,19 +112,38 @@ class Segment extends React.Component {
     var now = new Date().valueOf(); 
     var diffTime = now - this.starttime;
     
-    var offset = this.offsetValue+this.diff;
-    this.setState({offset:offset});
-    console.log(Math.abs(this.diff)+"     "+diffTime)
-    if(Math.abs(this.diff)>18&&diffTime<300){
-      var l = 400; 
-      var b = offset, c =this.diff>0? l:0-l, d =40, t = 0;
+    this.setState({offset:this.state.offset});
+    var abs_diff = Math.abs(this.diff);
+
+    if(this.state.offset>0){
+      var l = this.state.offset; 
+      var b = this.state.offset, c =0-l, d = 20, t = 0;
       this.scrollEngine=  Style.run(t, b, c, d);
       this.scrollEngine.start((val)=>{
         this.setState({offset:val});
       });
+      return;
+    }else if(abs_diff>17&&diffTime<300){
+      var l = 600; 
+      var fun = null;
+      if(l+this.state.offset>0&&this.diff>0){
+        l = 0-this.state.offset;
+        fun = Style.Tween.Back.easeOut;
+      }
+      var b = this.state.offset, c =this.diff>0? l:0-l, d = 44, t = 0;
+      this.scrollEngine=  Style.run(t, b, c, d);
+      this.scrollEngine.start((val)=>{
+        this.setState({offset:val});
+      },fun);
+      return;
     }else{
       this.scrollEngine = null;
     }
+
+    if(abs_diff===0){
+    }
+
+    
    
 
   }
