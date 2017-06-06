@@ -13,6 +13,10 @@ module.exports = function (env) {
   const nodeEnv = env && env.prod ? 'production' : 'development';
   const isProd = nodeEnv === 'production';
 
+  var entry = {
+    site1:'./site1/index.js',
+    site2:'./site2/index.js'
+  };
   var plugins= [
       
       new webpack.NamedModulesPlugin(),
@@ -24,30 +28,23 @@ module.exports = function (env) {
         filename: 'index.html',
         template: './site1/index.html', 
         inject: 'body' ,
+        chunks:["site1"],
+        hash:true
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'index1.html',
+        template: './site2/index.html', 
+        inject: 'body' ,
+        chunks:["site2"],
         hash:true
       })
-      //多个html的话 新增一个
-
-      // new CopyWebpackPlugin([
-      //       { from: 'site1/font' ,to: 'site1/font'},
-
-      //     ],{copyUnmodified: true})
   ];
 
   if(!isProd){
-
-    plugins.push(
-    new webpack.HotModuleReplacementPlugin()
-      );
-
-
-   
+    plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
-
-
-
-  var entry = {site1:'./site1/index.js'};
+  
   
   if(!isProd){
     var ip = arguments["1"].host||"localhost";

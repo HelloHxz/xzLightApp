@@ -11,12 +11,9 @@ class PageView extends React.Component {
     // alert("two");
   }
 
-clickHandle(params){
-     this.props.pagemanager.replaceGo("one");
-  }
 
   render() {
-    return (<div>zheshiw2<button onClick={this.clickHandle.bind(this)}>ReplaceGo</button></div>);
+    return (<div>asaasasasas</div>);
   }
 }
 export default PageView;

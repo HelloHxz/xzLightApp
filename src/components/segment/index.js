@@ -101,6 +101,15 @@ class Segment extends React.Component {
     var offset = this.offsetValue+this.diff;
     this.setState({offset:offset});
 
+    // var b = -400, c = 400, d = 30, t = 0;
+    // var engine=  Style.run(t, b, c, d);
+    // engine.start((val)=>{
+    //   if(val>=-300){
+    //     engine.stop();
+    //   }
+    //   console.log(val);
+    // });
+
   }
 
   render() {

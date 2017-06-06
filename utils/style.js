@@ -1,3 +1,21 @@
+   (function() {
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+    }
+    if (!window.requestAnimationFrame) window.requestAnimationFrame = function(callback) {
+        var id = window.setTimeout(function() {
+            callback();
+        }, 10);
+        return id;
+    };
+    if (!window.cancelAnimationFrame) window.cancelAnimationFrame = function(id) {
+        clearTimeout(id);
+    };
+}());
+
 export default {
 	rem:0,
 	dpr:0,
@@ -56,6 +74,45 @@ export default {
         }
         this.translateKeys = me;
         return me;
+    },
+    //t: current time（当前时间）；
+    //b: beginning value（初始值）；
+    //c: change in value（变化量）；
+    //d: duration（持续时间）
+    run(t, b, c, d){
+    	var _this = this;
+    	return (
+    		function(_t, _b, _c, _d){
+    			var isStop = false;
+    			var curval = 0;
+    			var timeoutID;
+    			var re = {
+        			start:function(callback,method){
+        				if(isStop){
+        					return;
+        				}
+        				method = method||_this.Tween.Back.easeIn;
+        				curval = Math.ceil(method(_t, _b, _c, _d));
+        				callback(curval);
+        				if (_t < _d) {
+			                _t++;
+			                timeoutID = requestAnimationFrame(()=>{
+	        					re.start(callback);
+	        				});
+			            }
+        				
+        			},
+        			stop:function(){
+        				isStop = true;
+        				if(timeoutID){
+        					cancelAnimationFrame(timeoutID);
+        				}
+        				return curval;
+        			}
+        		};;
+        		return re;
+    		}
+    	)(t, b, c, d) 
     },
     Tween:{
         Linear (t, b, c, d) {
