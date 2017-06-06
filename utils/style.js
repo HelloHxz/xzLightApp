@@ -2,7 +2,6 @@ export default {
 	rem:0,
 	dpr:0,
 	_shipei(){
-
 		var docEl = document.documentElement;
 		this.dpr = window.devicePixelRatio || 1;
 		this.rem = docEl.clientWidth * this.dpr / 10;

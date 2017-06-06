@@ -15,6 +15,7 @@ const ReplaceSource = require("webpack-sources").ReplaceSource;
 const CachedSource = require("webpack-sources").CachedSource;
 const LineToLineMappedSource = require("webpack-sources").LineToLineMappedSource;
 
+const WebpackError = require("./WebpackError");
 const Module = require("./Module");
 const ModuleParseError = require("./ModuleParseError");
 const ModuleBuildError = require("./ModuleBuildError");
@@ -42,8 +43,7 @@ function contextify(context, request) {
 	}).join("!");
 }
 
-class NonErrorEmittedError extends Error {
-
+class NonErrorEmittedError extends WebpackError {
 	constructor(error) {
 		super();
 
@@ -257,7 +257,7 @@ class NormalModule extends Module {
 	}
 
 	build(options, compilation, resolver, fs, callback) {
-		this.buildTimestamp = new Date().getTime();
+		this.buildTimestamp = Date.now();
 		this.built = true;
 		this._source = null;
 		this.error = null;
@@ -454,6 +454,10 @@ class NormalModule extends Module {
 
 		this.sourceBlock(this, [], dependencyTemplates, source, outputOptions, requestShortener);
 		return new CachedSource(source);
+	}
+
+	originalSource() {
+		return this._source;
 	}
 
 	getHighestTimestamp(keys, timestampsByKey) {

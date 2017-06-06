@@ -5,7 +5,7 @@ import shallowEqual from './utils/shallowEqual'
 import './css/main.less';
 import React from 'react';
 
-
+var init = false;
 var Navigation = {
 		start(config){
 			style._shipei();

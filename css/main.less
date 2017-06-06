@@ -12,25 +12,13 @@ html,body{
   height:100%;
 }
 .displayflex () {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -moz-flex;
-  display: -ms-flexbox;
   display: flex;
   justify-content: flex-start;
-  -webkit-justify-content:flex-start;
-  -webkit-box-direction: normal;
-  -webkit-box-orient: vertical;
-  -moz-flex-direction: column;
-  -webkit-flex-direction: column;
   flex-direction: column;
 }
 *{
   padding: 0;
   margin: 0;
-  -moz-flex-shrink: 0;
-  -webkit-flex-shrink: 0;
   flex-shrink: 0;
   box-sizing: border-box;
 }
@@ -44,22 +32,23 @@ html,body{
   width:100%;
   height:100%;
   overflow:hidden;
-  .displayflex();
+  display:flex;
 }
 
 .xz-page-inner{
   position:relative;
   overflow:hidden;
   height:100%;
-  .displayflex();
+  display:flex;
   width:100%;
 }
 
 .full-screen{
   position:relative;
   overflow:hidden;
-  .flex(1);
-  .displayflex();
+  flex:1;
+  display:flex;
+  flex-direction: column;
 }
 
 .xz-page-base-page{
@@ -114,20 +103,8 @@ body{
 }
 
 .right-in {
-
-    -webkit-animation: rightin .3s cubic-bezier(.05, .69, .14, 1);
     animation: rightin .3s cubic-bezier(.05, .69, .14, 1);
     transform: translate3d(0, 0, 0);
-    -webkit-transform: translate3d(0, 0, 0);
-}
-
-@-webkit-keyframes rightin {
-    0% {
-        -webkit-transform: translate3d(100%, 0, 0);
-    }
-    100% {
-        -webkit-transform: translate3d(0, 0, 0);
-    }
 }
 
 @keyframes rightin {
@@ -141,9 +118,7 @@ body{
 
 .left-out {
     animation: leftout .3s cubic-bezier(.05, .69, .14, 1);
-    -webkit-animation: leftout .3s cubic-bezier(.05, .69, .14, 1);
     transform: translate3d(-100%, 0, 0);
-    -webkit-transform: translate3d(-100%, 0, 0);
 }
 
 @keyframes leftout {
@@ -155,18 +130,8 @@ body{
     }
 }
 
-@-webkit-keyframes leftout {
-    0% {
-        -webkit-transform: translate3d(0, 0, 0);
-    }
-    100% {
-        -webkit-transform: translate3d(-100%, 0, 0);
-    }
-}
-
 .right-out {
     animation: rightout .3s cubic-bezier(.05, .69, .14, 1);
-    -webkit-animation: rightout .3s cubic-bezier(.05, .69, .14, 1);
     transform: translate3d(100%, 0, 0);
 }
 
@@ -176,15 +141,6 @@ body{
     }
     100% {
         transform: translate3d(100%, 0, 0);
-    }
-}
-
-@-webkit-keyframes rightout {
-    0% {
-        -webkit-transform: translate3d(0, 0, 0);
-    }
-    100% {
-        -webkit-transform: translate3d(100%, 0, 0);
     }
 }
 
@@ -201,9 +157,7 @@ body{
 
 .xz-showpage-frombottom-hide{
   animation: showpagefrombottomhide .35s ease;
-  -webkit-animation: showpagefrombottomhide .35s ease;
   transform: translate3d(0, 100%, 0);
-  -webkit-transform: translate3d(0, 100%, 0);
 }
 
 @keyframes showpagefrombottomhide {
@@ -215,21 +169,11 @@ body{
     }
 }
 
-@-webkit-keyframes showpagefrombottomhide {
-     0% {
-        -webkit-transform:translate3d(0, 0, 0);
-    }
-    100% {
-        -webkit-transform:  translate3d(0, 100%, 0);
-    }
-}
 
 
 .xz-showpage-frombottom-show {
     animation: showpagefrombottom .15s ease;
-    -webkit-animation: showpagefrombottom .15s ease;
     transform: translate3d(0, 0, 0);
-    -webkit-transform: translate3d(0, 0, 0);
 }
 
 @keyframes showpagefrombottom {
@@ -241,20 +185,10 @@ body{
     }
 }
 
-@-webkit-keyframes showpagefrombottom {
-     0% {
-        -webkit-transform: translate3d(0, 100%, 0);
-    }
-    100% {
-        -webkit-transform: translate3d(0, 0, 0);
-    }
-}
-
 
 .xz-showpage-fromleft-show{
   .px2rem(width, 600);
   animation: showpagefromleft .25s ease;
-  -webkit-animation: showpagefromleft .25s ease;
   .px2remtransfrom(0,0);
 }
 
@@ -267,20 +201,10 @@ body{
     }
 }
 
-@-webkit-keyframes showpagefromleft {
-     0% {
-        .px2remtransfrom(-600,0);
-    }
-    100% {
-        .px2remtransfrom(0,0);
-    }
-}
-
 
 .xz-showpage-fromleft-hide{
   .px2rem(width, 600);
   animation: showpagefromlefthide .3s ease;
-  -webkit-animation: showpagefromlefthide .3s ease;
   .px2remtransfrom(-600,0);
 }
 
@@ -293,14 +217,6 @@ body{
     }
 }
 
-@-webkit-keyframes showpagefromlefthide {
-     0% {
-        .px2remtransfrom(0,0);
-    }
-    100% {
-        .px2remtransfrom(-600,0);
-    }
-}
 
 
 .xz-pageview-outer{
@@ -335,7 +251,8 @@ body{
   overflow: auto;
   position: relative;
   -webkit-overflow-scrolling:touch;
-  .displayflex();
+  display:flex;
+  flex-direction:column;
 }
 
 .xz-root-container{
@@ -355,14 +272,4 @@ body{
   position: relative;
   height:100%;
   width:100%;
-}
-.displayflex{
-    position: relative;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-overflow-scrolling:touch;
 }

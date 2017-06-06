@@ -9,10 +9,13 @@ class Segment extends React.Component {
     this.initItemCount = 0;
     this.preIndex = 0;
     this.itemDict = {};
+    this.tranDict = Style.getTransitionKeys();
     this.state = {
       selectedKey:props.selectedKey||props.defaultSelectedKey,
-      renderKey:0
+      renderKey:0,
+      offset:0
     }
+
   }
 
   itemClick(key,itemInstance){
@@ -70,15 +73,33 @@ class Segment extends React.Component {
     }
   }
 
-  onTouchStart(){
-    console.log("start");
+  curStartValue:0
+
+  diff:0
+
+  onTouchStart(e){
+    this.touchStartValue = e.nativeEvent.touches[0].pageX;
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    this.diff = 0;
+    this.offsetValue = this.state.offset;
   }
 
-  onTouchMove(){
+  onTouchMove(e){
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
 
+    var curTouchX = e.nativeEvent.touches[0].pageX;
+    this.diff =  curTouchX - this.touchStartValue;
+    var offset = this.offsetValue+this.diff;
+    this.setState({offset:offset});
   }
 
   onTouchEnd(){
+    var offset = this.offsetValue+this.diff;
+    this.setState({offset:offset});
 
   }
 
@@ -104,6 +125,7 @@ class Segment extends React.Component {
             itemKey:child.key,
             index:index,
             parent:this,
+
             selectedKey:this.state.selectedKey,
             itemClick:this.itemClick.bind(this)
           });
@@ -119,6 +141,7 @@ class Segment extends React.Component {
       var selectedItemInstance = this.itemDict[this.state.selectedKey];
       indicator = this.props.renderIndicator({
         itemInstance:selectedItemInstance,
+        scrollOffset:this.state.offset,
         curIndex:selectedItemInstance.props.index,
         preIndex:this.preIndex,
         rect:selectedItemInstance.Dom.getBoundingClientRect()
@@ -141,8 +164,11 @@ class Segment extends React.Component {
    if(this.props.className){
         classArr.push(this.props.className);
     }
+    var moveStyle = {};
+    moveStyle[this.tranDict.transform] ="translate3d("+Style.px2rem(this.state.offset)+",0,0)";
+    moveStyle[this.tranDict.transition] = this.state.animate===false?"none":this.tranDict.transform+"  .3s ease";
     return (<div {...toucheEvent} className={classArr.join(" ")}>
-       <div className='xz-segment'>
+       <div style={moveStyle} className='xz-segment'>
        {children}
       {indicator}
     	</div>

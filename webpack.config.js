@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 var fs= require('fs');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = function (env) {
 
@@ -13,10 +14,20 @@ module.exports = function (env) {
   const isProd = nodeEnv === 'production';
 
   var plugins= [
+      
       new webpack.NamedModulesPlugin(),
+
       new webpack.LoaderOptionsPlugin({
           minimize: true
       }),
+      new HtmlWebpackPlugin({
+        filename: 'index.html',
+        template: './site1/index.html', 
+        inject: 'body' ,
+        hash:true
+      })
+      //多个html的话 新增一个
+
       // new CopyWebpackPlugin([
       //       { from: 'site1/font' ,to: 'site1/font'},
 
@@ -24,11 +35,15 @@ module.exports = function (env) {
   ];
 
   if(!isProd){
+
     plugins.push(
     new webpack.HotModuleReplacementPlugin()
       );
+
+
    
   }
+
 
 
 
@@ -38,9 +53,7 @@ module.exports = function (env) {
     var ip = arguments["1"].host||"localhost";
     var port =  arguments["1"].port;
     var url = ip+":"+port;
-    if(ip!=="localhost"){
-      url = "http://"+url;
-    }
+    url = "http://"+url;
     entry.dev_patch = 'react-hot-loader/patch';
     entry.dev_client = 'webpack-dev-server/client?'+url;
     entry.dev_server= 'webpack/hot/only-dev-server';
@@ -80,7 +93,16 @@ return {
       },
       {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader', ],
+        use: [ 'style-loader', 'css-loader',{
+              loader:"postcss-loader",
+               options: {
+                plugins: (loader) => [
+                  require('postcss-import')({ root: loader.resourcePath }),
+                  require('autoprefixer')(),
+                  require('cssnano')()
+                ]
+              }
+            } ],
       },
       { 
         test: /\.(png|jpg|jpeg|gif|woff)$/, 
@@ -146,19 +168,19 @@ function writeCommonless(){
   */
   mkdirs(path.join(__dirname, '/node_modules/xz-lightapp/css'),function(){
     fs.writeFile(path.join(__dirname, '/node_modules/xz-lightapp/css/common.less'), 
-        `
-        @textcolor:#333;
-        @headerbordercolor:rgb(171,171,173);
+        `@textcolor:#333;
+         @headerbordercolor:rgb(171,171,173);
          @backgroundcolor:rgb(235,235,241);
          @themecolor:rgb(10,96,254);
          @bordercolor:rgb(194,192,198);
          .px2rem(@name, @px){ @{name}: @px / ${rem} * 1rem;}
          .px2remtransfrom(@x,@y){
-          transform: translate3d( @x / ${rem} * 1rem,  @y / ${rem} * 1rem, 0);
-          -webkit-transform: translate3d( @x / ${rem} * 1rem,  @y / ${rem} * 1rem, 0);
-        }`, function (err) {
-      if (err) throw err;
-      console.log("common.less write success!!");
-    });
+            transform: translate3d( @x / ${rem} * 1rem,  @y / ${rem} * 1rem, 0);
+            -webkit-transform: translate3d( @x / ${rem} * 1rem,  @y / ${rem} * 1rem, 0);
+         }`,
+         function (err) {
+          if (err) throw err;
+          console.log("common.less write success!!");
+      });
   });
 }
