@@ -8,7 +8,7 @@
     if (!window.requestAnimationFrame) window.requestAnimationFrame = function(callback) {
         var id = window.setTimeout(function() {
             callback();
-        }, 10);
+        }, 0);
         return id;
     };
     if (!window.cancelAnimationFrame) window.cancelAnimationFrame = function(id) {
@@ -91,7 +91,7 @@ export default {
         				if(isStop){
         					return;
         				}
-        				method = method||_this.Tween.Back.easeIn;
+        				method = method||_this.Tween.Cubic.easeOut;
         				curval = Math.ceil(method(_t, _b, _c, _d));
         				callback(curval);
         				if (_t < _d) {

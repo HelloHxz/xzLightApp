@@ -77,13 +77,19 @@ class Segment extends React.Component {
 
   diff:0
 
+  starttime:0
+
   onTouchStart(e){
+    this.starttime = new Date().valueOf();
     this.touchStartValue = e.nativeEvent.touches[0].pageX;
     e.preventDefault();
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
     this.diff = 0;
     this.offsetValue = this.state.offset;
+    if(this.scrollEngine){
+       this.setState({offset:this.scrollEngine.stop()});
+    }
   }
 
   onTouchMove(e){
@@ -97,18 +103,26 @@ class Segment extends React.Component {
     this.setState({offset:offset});
   }
 
+  scrollEngine:null
+
   onTouchEnd(){
+    var now = new Date().valueOf(); 
+    var diffTime = now - this.starttime;
+    
     var offset = this.offsetValue+this.diff;
     this.setState({offset:offset});
-
-    // var b = -400, c = 400, d = 30, t = 0;
-    // var engine=  Style.run(t, b, c, d);
-    // engine.start((val)=>{
-    //   if(val>=-300){
-    //     engine.stop();
-    //   }
-    //   console.log(val);
-    // });
+    console.log(Math.abs(this.diff)+"     "+diffTime)
+    if(Math.abs(this.diff)>18&&diffTime<300){
+      var l = 400; 
+      var b = offset, c =this.diff>0? l:0-l, d =40, t = 0;
+      this.scrollEngine=  Style.run(t, b, c, d);
+      this.scrollEngine.start((val)=>{
+        this.setState({offset:val});
+      });
+    }else{
+      this.scrollEngine = null;
+    }
+   
 
   }
 

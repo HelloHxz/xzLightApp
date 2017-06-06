@@ -182,7 +182,7 @@
             Start(document.getElementById("test"), t, b, c, d);
         }
         function Start(element, t, b, c, d) {
-            element.style.top = Math.ceil(Tween.Bounce.easeOut(t, b, c, d)) + "px";
+            element.style.top = Math.ceil(Tween.Bounce.easeIn(t, b, c, d)) + "px";
             if (t < d) {
                 t++;
                 requestAnimationFrame(function () {
