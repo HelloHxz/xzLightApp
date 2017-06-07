@@ -33,17 +33,19 @@ class Segment extends React.Component {
     if(this.state.selectedKey!==key){
       this.setState({
         selectedKey:key
+      },()=>{
+        if(this.props.onChange){
+          this.props.onChange({
+            selectedKey:this.state.selectedKey,
+            itemInstance:itemInstance,
+            segmentInstance:this
+          })
+        }
       });
 
     }
 
-    if(this.props.onChange){
-      this.props.onChange({
-        selectedKey:this.state.selectedKey,
-        itemInstance:itemInstance,
-        segmentInstance:this
-      })
-    }
+    
 
   }
 
@@ -65,14 +67,17 @@ class Segment extends React.Component {
    if(this.state.selectedKey!==nextProps.selectedKey){
         this.setState({
           selectedKey:nextProps.selectedKey
+        },()=>{
+
+          //  if(this.props.onChange){
+          //   this.props.onChange({
+          //     selectedKey:this.state.selectedKey,
+          //     itemInstance:this.itemDict[this.state.selectedKey],
+          //     segmentInstance:this
+          //   })
+          // }
         });
-        if(this.props.onChange){
-          this.props.onChange({
-            selectedKey:this.state.selectedKey,
-            itemInstance:itemInstance,
-            segmentInstance:this
-          })
-        }
+       
     }
   }
 
@@ -160,7 +165,6 @@ class Segment extends React.Component {
       if(this.diff<0&&Math.abs(this.state.offset-l)>rightlimit){
         
         l =(rightlimit+this.state.offset);
-        console.log("sss");
       }
       var b = this.state.offset, c =this.diff>0? l:0-l, t = 0;
       this.scrollEngine=  Style.run(t, b, c, d);
@@ -242,7 +246,7 @@ class Segment extends React.Component {
         classArr.push(this.props.className);
     }
     var moveStyle = {};
-    moveStyle[this.tranDict.transform] ="translate3d("+Style.px2rem(this.state.offset)+",0,0)";
+    moveStyle[this.tranDict.transform] ="translate3d("+this.state.offset+"px,0,0)";
     return (<div {...toucheEvent} className={classArr.join(" ")}>
        <ul style={moveStyle} 
           ref={(scrollInner)=>{this.scrollInner = scrollInner;}}

@@ -72,8 +72,6 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props)
     this.routeStack = [];
-    this.events={};
-      
     this.seed = this.getMaxSeed();
     this.isForward = false;
     //浏览器并不会为第一个url记录hash记录 所以想禁止第一个页面离开 需要在第一次加载根路径的时候增加一个hash记录
@@ -316,6 +314,10 @@ class Navigation extends React.Component {
     var ToPageNameArr = ToPagePath.split("/");
     var ToPageName = ToPageNameArr.shift();
 
+    if(ToPageName===""){
+      ToPageName = ToPageNameArr.shift();
+    }
+
 
 
     var realpagename = ToPageName.split("_")[0];
@@ -494,39 +496,12 @@ class Navigation extends React.Component {
     this.callLeave(this.prePath,ppstr||"",ppprePath||"");
 
 
-    this.triggerEvent("routechange",{
-      path:this.prePath,
-      params:this.preUrlParams,
-      pagename:this.prePageName
-    });
+   
 
   }
 
-  addListener(eventname,uniqueID,callback){
-    var events = this.events[eventname];
-    if(!events){
-      this.events[eventname]={};
-    }
-    this.events[eventname][uniqueID] = callback;
+ 
 
-  }
-
-  removeListener(eventname,uniqueID){
-
-  }
-
-  triggerEvent(eventname,params){
-    var events = this.events[eventname];
-    if(events){
-      for(var key in events){
-        try{
-          events[key](params);
-        }catch(e){
-
-        }
-      }
-    }
-  }
 
   refreshApp(){
     this.routeStack = [];

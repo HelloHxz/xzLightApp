@@ -297,10 +297,12 @@ class PageView extends React.Component {
             ref={(instance)=>{
               this.pageInstance = instance;
             }}
+            urlinfo={this.props.pagemanager.getUrlInfo()}
             params={params}
             pagename={this.state.pagename}
             leftroute = {this.state.leftroute}
             pagemanager={this.props.pagemanager}
+            basekey={this.props.pkey}
             pkey={this.props.pkey+"_inner"} 
             key={this.props.pkey+"_inner"}>
           </ToPageInstance>

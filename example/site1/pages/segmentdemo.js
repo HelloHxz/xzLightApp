@@ -8,18 +8,14 @@ class PageView extends React.Component {
     this.state = {
       demo2SelectedKey:"1"
     }
+    
+    console.log(props);
   }
 
   demo2Select(){
     this.setState({demo2SelectedKey:"2"});
   }
   
-  onPageResume(){
-    // alert("one");
-  }
-  onPageBeforeLeave(){
-    return true;
-  }
 
   renderIndicatorThree(params){
     var rect = params.itemInstance.Dom.children[0].getBoundingClientRect();

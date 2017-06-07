@@ -1,10 +1,20 @@
 import React from "react"
 import "../css/tabbarpage.less"
+
+import tabbarPageStore from "../stores/tabbarpage"
+import {observer} from 'mobx-react'
 import {xz,style,shallowEqual,Navigation} from "../../../index"
 
+@observer
 class PageView extends React.Component {
+
+  static connectStore(params){
+    return {store:new tabbarPageStore};
+  }
+  
   constructor(props) {
     super(props)
+    this.props.store.tabSelectedKey = "tabbarpage/segmentdemo";
   }
 
   onPageResume(){
@@ -16,17 +26,21 @@ class PageView extends React.Component {
   }
 
 
+  tabbarChange(params){
+     this.props.store.tabSelectedKey =  params.selectedKey;
+    this.props.pagemanager.replaceGo(params.selectedKey);
+  }
+
+
 
   render() {
     return (<div className='full-screen'>
-       <Navigation.PageContainer className='tabbarpage-content' {...this.props}   owner={this}/>
-        <xz.Segment className="tabbarpage-tabbar" selectedKey="1" scroll={true}>
-          <xz.Segment.Item key='1'>首页</xz.Segment.Item>
-          <xz.Segment.Item key='2'>商城</xz.Segment.Item> 
+       <Navigation.PageContainer className='tabbarpage-content' {...this.props}  owner={this}/>
+        <xz.Segment onChange={this.tabbarChange.bind(this)} className="tabbarpage-tabbar" selectedKey={this.props.store.tabSelectedKey}>
+          <xz.Segment.Item key='tabbarpage/segmentdemo'>首页</xz.Segment.Item>
+          <xz.Segment.Item key='tabbarpage/dpdcdemo'>商城</xz.Segment.Item> 
           <xz.Segment.Item key='3'>应用</xz.Segment.Item>  
-          <xz.Segment.Item key='4'>设计</xz.Segment.Item>
-          <xz.Segment.Item key='5'>设置</xz.Segment.Item>
-          <xz.Segment.Item key='6'>我的</xz.Segment.Item>
+          <xz.Segment.Item key='4'>设置</xz.Segment.Item>
          </xz.Segment>
       </div>);
   }

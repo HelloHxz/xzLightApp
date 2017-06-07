@@ -8,6 +8,7 @@ Navigation.start({
 		index:require("./pages/index").default,
 		tabbarpage:require("./pages/tabbarpage").default,
 		twolevelroute:require("./pages/twolevelroute").default,
+		dpdcdemo:require("./pages/dpdcdemo").default,
 		threelevelroute:require("./pages/threelevelroute").default,
 		segmentdemo:require("./pages/segmentdemo").default,
 		one:require("./pages/one").default,
