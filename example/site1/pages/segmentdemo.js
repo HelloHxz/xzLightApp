@@ -5,7 +5,6 @@ import {xz,style,shallowEqual,Navigation} from "../../../index"
 class PageView extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
       demo2SelectedKey:"1"
     }
@@ -49,9 +48,10 @@ class PageView extends React.Component {
 
   renderIndicatorOne(params){
     var rect = params.rect;
+
     var indicatorStyle = {
-      left:rect.left-params.scrollOffset,//
-      right:style.screen.width-rect.right+params.scrollOffset,//
+      left:rect.left,//
+      right:style.screen.width-rect.right,//
       height:style.px2rem(5),
     };
     var indiClassArr = ["segement-indi"];
@@ -75,6 +75,10 @@ class PageView extends React.Component {
           <xz.Segment.Item key='5'>设置</xz.Segment.Item>
           <xz.Segment.Item key='6'>我的</xz.Segment.Item>
           <xz.Segment.Item key='7'>更多</xz.Segment.Item>
+          <xz.Segment.Item key='61'>我的</xz.Segment.Item>
+          <xz.Segment.Item key='71'>更多</xz.Segment.Item>
+          <xz.Segment.Item key='62'>我的</xz.Segment.Item>
+          <xz.Segment.Item key='73'>更多</xz.Segment.Item>
          </xz.Segment>
 <br/>
         <xz.Segment selectedKey="1">

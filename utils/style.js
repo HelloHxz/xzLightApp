@@ -22,9 +22,13 @@ export default {
 	_shipei(){
 		var docEl = document.documentElement;
 		this.dpr = window.devicePixelRatio || 1;
-		this.rem = docEl.clientWidth * this.dpr / 10;
-		this.screen.width = docEl.clientWidth*this.dpr;
-		this.screen.height = docEl.clientHeight*this.dpr;
+		var docClientWidth =  docEl.clientWidth;
+		var docClientHeight = docEl.clientHeight;
+		this.rem = docClientWidth * this.dpr / 10;
+		this.screen.width = docClientWidth*this.dpr;
+		this.screen.originWidth = docClientWidth;
+		this.screen.originHeight = docClientHeight;
+		this.screen.height = docClientHeight*this.dpr;
 
 		var scale = 1 / this.dpr;
 		var fontEl = document.createElement('style');
@@ -36,6 +40,8 @@ export default {
 	},
 	screen:{
 		width:0,
+		originWidth:0,
+		originHeight:0,
 		height:0
 	},
 	rem2px(v){

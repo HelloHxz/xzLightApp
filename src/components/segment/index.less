@@ -8,8 +8,11 @@
 	flex-wrap:nowrap;
 	.px2rem(font-size,26);
 }
+
+
 .xz-scroll-segment{
 	position:relative;
+	overflow:hidden;
 }
 .xz-segment-item{
 	display:flex;
@@ -24,6 +27,24 @@
 	.px2rem(padding-left,20);
 	.px2rem(padding-right,20);
 }
+
+.xz-segment-ul{
+	position:relative;
+	 white-space: nowrap;
+    float: left;
+    .px2rem(height,100);
+	.px2rem(padding-right,30);
+}
+
+.xz-segment-ul li{
+    white-space: nowrap;
+    position:relative;
+    .px2rem(line-height,100);
+    display: inline-block;
+}
+
+
+
 
 .xz-segment-selected-item{
 	color:@themecolor;

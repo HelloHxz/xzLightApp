@@ -9,6 +9,7 @@ class Segment extends React.Component {
     this.initItemCount = 0;
     this.preIndex = 0;
     this.itemDict = {};
+    this.scrollInnerWidth = 0;
     this.tranDict = Style.getTransitionKeys();
     this.state = {
       selectedKey:props.selectedKey||props.defaultSelectedKey,
@@ -47,9 +48,11 @@ class Segment extends React.Component {
   }
 
   itemComponentDidMount(itemKey,itemInstance){
+    
     this.itemDict[itemKey] = itemInstance;
     this.initItemCount+=1;
     if(this.initItemCount===this.itemCount){
+     
       if(this.props.renderIndicator){
         setTimeout(()=>{
           this.setState({renderKey:this.state.renderKey+1});
@@ -80,11 +83,16 @@ class Segment extends React.Component {
   starttime:0
 
   onTouchStart(e){
+
+    if(!this.scrollInnerWidth){
+       var rect  =this.scrollInner.getBoundingClientRect();
+          this.scrollInnerWidth=rect.width;
+    }
     this.starttime = new Date().valueOf();
     this.touchStartValue = e.nativeEvent.touches[0].pageX;
-    e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
+    // e.preventDefault();
+    // e.stopPropagation();
+    // e.nativeEvent.stopImmediatePropagation();
     this.diff = 0;
     this.offsetValue = this.state.offset;
     if(this.scrollEngine){
@@ -115,7 +123,10 @@ class Segment extends React.Component {
     this.setState({offset:this.state.offset});
     var abs_diff = Math.abs(this.diff);
 
-    if(this.state.offset>0){
+    var abs_offset = Math.abs(this.state.offset);
+    var rightlimit = this.scrollInnerWidth-Style.screen.width;
+
+    if(this.state.offset>0||rightlimit<0){
       var l = this.state.offset; 
       var b = this.state.offset, c =0-l, d = 20, t = 0;
       this.scrollEngine=  Style.run(t, b, c, d);
@@ -123,14 +134,35 @@ class Segment extends React.Component {
         this.setState({offset:val});
       });
       return;
-    }else if(abs_diff>17&&diffTime<300){
-      var l = 600; 
-      var fun = null;
-      if(l+this.state.offset>0&&this.diff>0){
-        l = 0-this.state.offset;
-        fun = Style.Tween.Back.easeOut;
+    }
+    else if(abs_offset>rightlimit){
+      var l =(-rightlimit-this.state.offset); 
+      var b = this.state.offset, c =l, d = 20, t = 0;
+      this.scrollEngine=  Style.run(t, b, c, d);
+      this.scrollEngine.start((val)=>{
+        this.setState({offset:val});
+      });
+      return;
+    }
+    else if(abs_diff>17&&diffTime<300){
+      var l = Style.screen.width-this.state.offset; 
+      d = 60;
+      if(abs_diff<270){
+        l = abs_diff/270*l;
+        d = 40;
       }
-      var b = this.state.offset, c =this.diff>0? l:0-l, d = 44, t = 0;
+      var fun = null;
+      
+      if(l+this.state.offset>0&&this.diff>0){
+        
+        l = 0-this.state.offset;
+      }
+      if(this.diff<0&&Math.abs(this.state.offset-l)>rightlimit){
+        
+        l =(rightlimit+this.state.offset);
+        console.log("sss");
+      }
+      var b = this.state.offset, c =this.diff>0? l:0-l, t = 0;
       this.scrollEngine=  Style.run(t, b, c, d);
       this.scrollEngine.start((val)=>{
         this.setState({offset:val});
@@ -201,9 +233,9 @@ class Segment extends React.Component {
       }else{
         className = "xz-segment";
       }
-      return  <div className={className}>
+      return  <ul className={className}>
       {indicator}
-      {children}</div>;
+      {children}</ul>;
     }
     var classArr = ["xz-scroll-segment"];
    if(this.props.className){
@@ -211,12 +243,13 @@ class Segment extends React.Component {
     }
     var moveStyle = {};
     moveStyle[this.tranDict.transform] ="translate3d("+Style.px2rem(this.state.offset)+",0,0)";
-    moveStyle[this.tranDict.transition] = this.state.animate===false?"none":this.tranDict.transform+"  .3s ease";
     return (<div {...toucheEvent} className={classArr.join(" ")}>
-       <div style={moveStyle} className='xz-segment'>
+       <ul style={moveStyle} 
+          ref={(scrollInner)=>{this.scrollInner = scrollInner;}}
+            className='xz-segment-ul'>
        {children}
-      {indicator}
-    	</div>
+    	</ul>
+       {indicator}
       </div>);
   }
 }
@@ -257,9 +290,9 @@ class Item extends React.Component {
     if(this.props.selectedKey === this.props.itemKey){
       classNameArr.push(this.props.selectedClassName);
     }
-  return (<div key={"item_"+this.props.itemKey} ref={(instance)=>{this.Dom = instance;}} onClick={this.onClick.bind(this)} className={classNameArr.join(" ")}>
+  return (<li key={"item_"+this.props.itemKey} ref={(instance)=>{this.Dom = instance;}} onClick={this.onClick.bind(this)} className={classNameArr.join(" ")}>
     {children}
-      </div>);
+      </li>);
   }
 }
 
