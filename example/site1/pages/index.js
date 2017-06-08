@@ -70,6 +70,7 @@ class PageView extends React.Component {
     return (<div className='full-screen'>
       <div className='app-header iconfont icon-selection'></div>
         <xz.ScrollView className='full-screen'>
+         <br/>
           <xz.Button onClick={this.gotoTabbar.bind(this)} type="plat">goto tabbar</xz.Button><br/>
               <div className='btn-wrap'>
                 <xz.Button onClick={this.clickHandle.bind(this,1)} type="primary">primary Button</xz.Button>

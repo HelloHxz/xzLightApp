@@ -24,8 +24,8 @@ class PageView extends React.Component {
       position:"absolute",
       bottom:"0",
       left:rect.left,
-      width:style.px2rem(rect.width),
-      height:style.px2rem(5),
+      width:style.px2rem(rect.width)+"rem",
+      height:style.px2rem(5)+"rem",
     };
     return <div className="segement-demo-indicator-1" style={indicatorStyle}></div>
   }
@@ -37,8 +37,8 @@ class PageView extends React.Component {
       position:"absolute",
       bottom:"0",
       left:rect.left,
-      width:style.px2rem(rect.width),
-      height:style.px2rem(5),
+      width:style.px2rem(rect.width)+"rem",
+      height:style.px2rem(5)+"rem",
     };
     return <div className="segement-demo-indicator-1" style={indicatorStyle}></div>
   }
@@ -49,7 +49,7 @@ class PageView extends React.Component {
     var indicatorStyle = {
       left:rect.left,//
       right:style.screen.width-rect.right,//
-      height:style.px2rem(5),
+      height:style.px2rem(5)+"rem",
     };
     var indiClassArr = ["segement-indi"];
     if(params.curIndex>params.preIndex){
