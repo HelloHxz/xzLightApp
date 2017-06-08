@@ -23,7 +23,6 @@ class PageView extends React.Component {
     this.state={
       refreshing:"sss"
     };
-
     props.globalStore.selectedIndex = "huxiaozhong";
   }
 
@@ -40,6 +39,7 @@ class PageView extends React.Component {
     }else if(params===2){
       this.props.pagemanager.go("threelevelroute/twolevelroute/one");
     }else if(params===3){
+      this.props.base.close();
       this.props.pagemanager.go("twolevelroute/one");
     }else{
        this.props.pagemanager.go("index",{x:111});
@@ -69,19 +69,21 @@ class PageView extends React.Component {
   render() {
     return (<div className='full-screen'>
       <div className='app-header iconfont icon-selection'></div>
-      <xz.ScrollView>asdashuxiaozhong</xz.ScrollView>
-      <xz.Button onClick={this.gotoTabbar.bind(this)} type="plat">goto tabbar</xz.Button><br/>
-      <div className='btn-wrap'>
-        <xz.Button onClick={this.clickHandle.bind(this,1)} type="primary">primary Button</xz.Button>
-        <xz.Button>default button</xz.Button>
-        <xz.Button type="none">none button</xz.Button>
-      </div>
-      <br/>
-      <div><xz.Button onClick={this.clickHandle.bind(this,1)}>跳转</xz.Button>
-      <xz.Button type='primary' onClick={this.clickHandle.bind(this,2)}>去三级</xz.Button>
-       <xz.Button onClick={this.clickHandle.bind(this,3)}>去二级</xz.Button>
-       <xz.Button onClick={this.clickHandle.bind(this,4)}>GoSame</xz.Button>
-       <xz.Button onClick={this.showPage.bind(this,3)}>我已审批</xz.Button></div></div>);
+        <xz.ScrollView className='full-screen'>
+          <xz.Button onClick={this.gotoTabbar.bind(this)} type="plat">goto tabbar</xz.Button><br/>
+              <div className='btn-wrap'>
+                <xz.Button onClick={this.clickHandle.bind(this,1)} type="primary">primary Button</xz.Button>
+                <xz.Button>default button</xz.Button>
+                <xz.Button type="none">none button</xz.Button>
+              </div>
+              <br/>
+              <div><xz.Button onClick={this.clickHandle.bind(this,1)}>跳转</xz.Button>
+              <xz.Button type='primary' onClick={this.clickHandle.bind(this,2)}>去三级</xz.Button>
+               <xz.Button onClick={this.clickHandle.bind(this,3)}>去二级</xz.Button>
+               <xz.Button onClick={this.clickHandle.bind(this,4)}>GoSame</xz.Button>
+               <xz.Button onClick={this.showPage.bind(this,3)}>我已审批</xz.Button></div>
+        </xz.ScrollView>
+       </div>);
   }
 }
 export default PageView;

@@ -8,8 +8,9 @@ class PageView extends React.Component {
     this.state = {
       demo2SelectedKey:"1"
     }
-    
-    console.log(props);
+
+    // console.log(props.owner);
+
   }
 
   demo2Select(){

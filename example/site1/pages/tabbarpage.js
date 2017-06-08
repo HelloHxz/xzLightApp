@@ -11,7 +11,7 @@ class PageView extends React.Component {
   static connectStore(params){
     return {store:new tabbarPageStore};
   }
-  
+
   constructor(props) {
     super(props)
     this.props.store.tabSelectedKey = "tabbarpage/segmentdemo";
@@ -35,7 +35,7 @@ class PageView extends React.Component {
 
   render() {
     return (<div className='full-screen'>
-       <Navigation.PageContainer className='tabbarpage-content' {...this.props}  owner={this}/>
+       <Navigation.PageContainer {...this.props}  className='tabbarpage-content'  owner={this}/>
         <xz.Segment onChange={this.tabbarChange.bind(this)} className="tabbarpage-tabbar" selectedKey={this.props.store.tabSelectedKey}>
           <xz.Segment.Item key='tabbarpage/segmentdemo'>首页</xz.Segment.Item>
           <xz.Segment.Item key='tabbarpage/dpdcdemo'>商城</xz.Segment.Item> 

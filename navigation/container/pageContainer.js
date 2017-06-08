@@ -19,11 +19,18 @@ class PageContainer extends React.Component {
 
   prepareRoute(props,cacheSuccess){
     var route = [];
-    if(props.owner){
-      route = JSON.stringify(props.leftroute);
-      route = JSON.parse(route);
+    var ToPageName;
+    if(props.withurl ===false){//pageContainer  不和url使用
+
+    }else{
+      if(props.owner){
+        route = JSON.stringify(props.leftroute);
+        route = JSON.parse(route);
+      }
+      ToPageName = route.shift();
     }
-    var ToPageName = route.shift();
+
+   
     this.curpagename = ToPageName;
     var key = props.owner.props.base.props.pkey+"_"+ToPageName;
     if(!this.arr[ToPageName]){
@@ -32,11 +39,14 @@ class PageContainer extends React.Component {
       if(!ToPageInstance.prototype.__proto__.forceUpdate){
         P = LazyLoadPage;
       }
+
       this.arr[ToPageName]=(<P 
                     ref={(instance)=>{
                       this.dict[ToPageName] = instance;
                     }}
+                    propsstore={props.store}
                     leftroute={route} 
+                    owner = {props.owner}
                     pagename={ToPageName} 
                     pagemanager={props.owner.props.pagemanager} 
                     key={key} 

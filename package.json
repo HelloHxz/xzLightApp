@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --host 10.21.2.234 --port 8080",
+    "start": "webpack-dev-server --host localhost --port 8080",
     "build": "webpack -p --progress --config  webpack.config.js  --env.prod=true"
   },
   "author": "",
@@ -33,7 +33,6 @@
     "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.5",
     "react-hot-loader": "^3.0.0-beta.6",
-    "sockjs-client": "^1.1.4",
     "style-loader": "^0.16.1",
     "url-loader": "^0.5.8",
     "webpack": "^2.3.3",

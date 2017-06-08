@@ -8,6 +8,19 @@ class ScrollView extends React.Component {
   }
 
 
+  onTouchStart(e){
+
+  }
+
+  onTouchMove(e){
+
+  }
+
+  onTouchEnd(e){
+
+  }
+
+
   render() {
   	var refreshHeight = Style.px2rem(100);
   	var refreshStyle = {
@@ -15,7 +28,16 @@ class ScrollView extends React.Component {
   		background:"red",
   		marginTop:(0-refreshHeight)+"rem"
   	};
-    return (<div className='xz-scrollview'>
+    var toucheEvent = {};
+    toucheEvent.onTouchStart = this.onTouchStart.bind(this);
+    toucheEvent.onTouchMove = this.onTouchMove.bind(this);
+    toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
+    
+    var classNameArr = ['xz-scrollview'];
+    if(this.props.className){
+      classNameArr.push(this.props.className);
+    }
+    return (<div {...toucheEvent} className={classNameArr.join(" ")}>
     	<div className='xz-refresh-control' style={refreshStyle}></div>
     	{this.props.children}</div>);
   }

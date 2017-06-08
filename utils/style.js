@@ -56,7 +56,7 @@ export default {
 			this._shipei();
 		}
 		v = parseFloat(v);
-		return v / this.rem+"rem";
+		return v / this.rem;
 	},
 	createSheet(styles){
 		alert(styles);

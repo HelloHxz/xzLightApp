@@ -276,10 +276,11 @@ class PageView extends React.Component {
         this.store = ToPageInstance.connectStore(params);
       }
     }
+
+
     
     //this.props.pkey
     var basePageClassName = "xz-page-base-page "+this.state.basePageClassName;
-    var params = this.props.pagemanager.getParamsFromUrl();
     return (<div className='xz-page-inner' key={this.props.pkey+"_outer"}>
         {this.state.showPages}
         <div 
@@ -297,8 +298,8 @@ class PageView extends React.Component {
             ref={(instance)=>{
               this.pageInstance = instance;
             }}
+            owner = {this.props.owner}
             urlinfo={this.props.pagemanager.getUrlInfo()}
-            params={params}
             pagename={this.state.pagename}
             leftroute = {this.state.leftroute}
             pagemanager={this.props.pagemanager}
