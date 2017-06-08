@@ -3,7 +3,6 @@ import {Navigation} from "../../index"
 
 Navigation.start({
 	root:"index",
-	gobal:"xxxx",//可用于登录 重登录 错误验证  全局loading
 	pages:{
 		index:require("./pages/index").default,
 		tabbarpage:require("./pages/tabbarpage").default,
@@ -26,13 +25,6 @@ Navigation.start({
 	events:{
 		init:function(pageManager){
 
-		},
-		beforeRender:function(pageManager){
-			if(1!==1){
-				pageManager.renderPage("gobal",{});
-				return false;
-			}
-			return true;
 		}
 	}
 });
