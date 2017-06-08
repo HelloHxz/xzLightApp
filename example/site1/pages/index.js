@@ -59,6 +59,10 @@ class PageView extends React.Component {
     return true;
   }
 
+  onRefresh(){
+    
+  }
+
   showPage(){
     this.props.base.showPage({
       pageKey:"index",
@@ -69,7 +73,7 @@ class PageView extends React.Component {
   render() {
     return (<div className='full-screen'>
       <div className='app-header iconfont icon-selection'></div>
-        <xz.ScrollView className='full-screen'>
+        <xz.ScrollView onRefresh={this.onRefresh.bind(this)} className='full-screen'>
          <br/>
           <xz.Button onClick={this.gotoTabbar.bind(this)} type="plat">goto tabbar</xz.Button><br/>
               <div className='btn-wrap'>

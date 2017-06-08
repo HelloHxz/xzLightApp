@@ -38,7 +38,7 @@ class PageView extends React.Component {
 
   render() {
     return (<div className='full-screen'>
-    	{this.props.params.test||"没有"}
+    	{"没有"}
     	<button onClick={this.testClick.bind(this)}>GotoSame</button>
       <button onClick={this.replaceGo.bind(this)}>replaceGo</button>
     	<button onClick={this.clickHandle.bind(this)}>GoTwo</button></div>);

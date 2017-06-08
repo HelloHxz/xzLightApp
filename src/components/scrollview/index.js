@@ -40,7 +40,6 @@ class ScrollView extends React.Component {
           e.preventDefault();
           e.stopPropagation();
           var pullOffsetY = (diff- this.startScrollTop)/3;
-          console.log(pullOffsetY+" "+this.pullLimitHeight);
           if(pullOffsetY> this.pullLimitHeight){
             // _this.pullMesLabel.html("释放更新");
             // _this.pullToRefreshWrapper[0].className = "yy-pull-wrapper yy-release-refresh";
@@ -64,7 +63,6 @@ class ScrollView extends React.Component {
     this.wrapperDom.style["overflow-y"] = "auto";
     if(this.isInLoading){return;}
     if(this.canRefresh){
-      console.log(this.pullLimitHeight);
       this.isInLoading = true;
       this.setState({offset:this.pullLimitHeight,animate:true});
       setTimeout(()=>{
@@ -79,10 +77,10 @@ class ScrollView extends React.Component {
 
 
   render() {
-  	var refreshHeight = Style.px2rem(500);
+  	var refreshHeight = Style.px2rem(Style.screen.height/3);
   	var refreshStyle = {
   		height:refreshHeight+"rem",
-  		background:"red",
+  		background:"#c5955d",
   		marginTop:(0-refreshHeight)+"rem"
   	};
     var toucheEvent = {};
