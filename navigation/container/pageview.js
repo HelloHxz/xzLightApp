@@ -92,10 +92,7 @@ class PageView extends React.Component {
 
   componentWillUnmount(){
     console.log(this.props.pkey+"     unmount>>>");
-
-    if(this.props.pagemanager.pageInstanceDict[this.props.pkey]){
-      delete this.props.pagemanager.pageInstanceDict[this.props.pkey];
-    }
+    this.props.pagemanager.pageUnmount(this);
   }
 
   componentDidMount(){

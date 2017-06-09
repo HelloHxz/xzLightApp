@@ -77,6 +77,7 @@ class Navigation extends React.Component {
     //浏览器并不会为第一个url记录hash记录 所以想禁止第一个页面离开 需要在第一次加载根路径的时候增加一个hash记录
     this.firstLoadToChangeHash = false;
     this.isInit = true;
+    this.hashEvents ={};
     if(!this.props.config.root){
       console.error("没有指定root页面");
     }
@@ -496,8 +497,56 @@ class Navigation extends React.Component {
     this.callLeave(this.prePath,ppstr||"",ppprePath||"");
 
 
-   
+   this._triggerHashChange();
 
+  }
+
+
+  pageUnmount(pageInstance){
+    //页面销毁的时候清除相关资源
+    if(pageInstance.props.pagemanager.pageInstanceDict[pageInstance.props.pkey]){
+      delete pageInstance.props.pagemanager.pageInstanceDict[pageInstance.props.pkey];
+    }
+
+    if(this.hashEvents[pageInstance.props.pkey]){
+      delete this.hashEvents[pageInstance.props.pkey];
+    }
+  }
+
+  watchHashChange(pageInstance,callBack){
+    if(this.hashEvents[pageInstance.props.basekey]){
+      console.error("同一个页面请勿重复注册watchHashChange！");
+    }
+    this.hashEvents[pageInstance.props.basekey] = {method:callBack,precalltime:new Date().valueOf()};
+    callBack(this.getUrlInfo());
+  }
+
+  _triggerHashChange(){
+    var urlInfo = this.getUrlInfo();
+    var crKey = "";
+    var curPathArr = urlInfo.pathArr;
+    for(var i=0,j=curPathArr.length;i<j;i++){
+      if(i===0){
+        crKey = curPathArr[0]+"_"+urlInfo.seed;
+      }else{
+        crKey = crKey + "_" +curPathArr[i];
+      }
+      try{
+        var eventInfo = this.hashEvents[crKey];
+        if(eventInfo){
+          var now = new Date().valueOf();
+          var diffTime  = now-eventInfo.precalltime;
+          if(diffTime>80){
+            eventInfo.precalltime = now;
+            eventInfo.method(urlInfo);
+          }
+        }
+      }catch(e){
+
+      }
+
+    }
+    
   }
 
  

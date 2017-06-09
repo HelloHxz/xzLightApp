@@ -31,6 +31,13 @@ class PageView extends React.Component {
     this.props.pagemanager.replaceGo(params.selectedKey);
   }
 
+  componentDidMount(){
+    this.props.pagemanager.watchHashChange(this,(urlinfo)=>{
+      this.props.store.tabSelectedKey =urlinfo.pathArr.splice(0,2).join("/");
+    });
+  }
+
+
 
 
   render() {

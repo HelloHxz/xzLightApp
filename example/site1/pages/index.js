@@ -32,6 +32,8 @@ class PageView extends React.Component {
     );
   }
 
+
+
   clickHandle(params){
     if(params===1){
      this.props.pagemanager.go("lazyload");
@@ -76,6 +78,7 @@ class PageView extends React.Component {
       animateType:"fromLeft"
     });
   }
+
 
   render() {
     return (<div className='full-screen'>
