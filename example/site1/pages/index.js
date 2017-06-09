@@ -66,7 +66,7 @@ class PageView extends React.Component {
   showSearchPage(){
     this.props.base.showPage({
       pageKey:"search",
-      animateType:"none"
+      animateType:"fadeIn"
     });
   }
 
