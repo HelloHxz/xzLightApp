@@ -48,7 +48,7 @@ class PageView extends React.Component {
     }
   }
   gotoTabbar(){
-    this.props.pagemanager.go("tabbarpage/segmentdemo",{x:111});
+    this.props.pagemanager.go("tabbarpage/segmentdemo/horizontalsegment",{x:111});
   }
 
   onPageResume(){

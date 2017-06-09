@@ -538,7 +538,8 @@ class Navigation extends React.Component {
           var diffTime  = now-eventInfo.precalltime;
           if(diffTime>80){
             eventInfo.precalltime = now;
-            eventInfo.method(urlInfo);
+            var urlInfoStr = JSON.stringify(urlInfo)
+            eventInfo.method(JSON.parse(urlInfoStr));
           }
         }
       }catch(e){

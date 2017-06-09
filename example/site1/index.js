@@ -12,6 +12,9 @@ Navigation.start({
 		dpdcdemo:require("./pages/dpdcdemo").default,
 		threelevelroute:require("./pages/threelevelroute").default,
 		segmentdemo:require("./pages/segmentdemo").default,
+		verticalsegment:require("./pages/verticalsegment").default,
+		horizontalsegment:require("./pages/horizontalsegment").default,
+		segmentdemo:require("./pages/segmentdemo").default,
 		one:require("./pages/one").default,
 		two:function(callback) {
 			require.ensure([], function(require) {

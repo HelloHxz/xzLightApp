@@ -223,6 +223,7 @@ class Segment extends React.Component {
       indicator = this.props.renderIndicator({
         itemInstance:selectedItemInstance,
         scrollOffset:this.state.offset,
+        itemCount:itemCount,
         curIndex:selectedItemInstance.props.index,
         preIndex:this.preIndex,
         rect:selectedItemInstance.Dom.getBoundingClientRect()
