@@ -9,13 +9,8 @@ import {observer} from 'mobx-react'
 @observer
 class PageView extends React.Component {
 
-  static connectStore(params){
-    return {globalStore:globalStore};
-  }
-
   constructor(props) {
     super(props)
-    console.log(props.globalStore);
   }
   
   onPageResume(){

@@ -1,4 +1,5 @@
 import React from "react";
+import LazyLoadPage from "./lazyLoadPage";
 
 var showAnimateConfig = {
   fromBottom:{
@@ -20,6 +21,13 @@ var showAnimateConfig = {
       show:"xz-basepage-fromleft-show",
       hide:"xz-basepage-fromleft-hide"
     }
+  },
+  fadeIn:{
+    showPage:{
+      show:"xz-showpage-fadein-show",
+      hide:"xz-showpage-fadein-hide"
+    },
+    showBackCover:false
   },
 
   fromTop:{
@@ -55,6 +63,10 @@ class PageView extends React.Component {
       showPages:[]
     };
     this.repaireUrlWhenRepalceGo = this.repaireUrlWhenRepalceGo.bind(this);
+
+    if(props.lazyowner){
+      props.lazyowner.realPage = this;
+    }
   }
 
 
@@ -124,13 +136,23 @@ class PageView extends React.Component {
             return false;
           }
       }
-      if(this.curShowPageInfo.page._close()){
-        var hideClassName = "xz-showpage "+this.curShowPageInfo.animateConfig.showPage.hide;
+
+      var curShowPage = this.curShowPageInfo.page;
+      if(this.curShowPageInfo.page.type==="LazyPageView"){
+        curShowPage =  this.curShowPageInfo.page.realPage ;
+      }
+
+      if(curShowPage._close()){
+        var animateConfig = this.curShowPageInfo.animateConfig;
+        var hideClassName = "xz-showpage "+animateConfig.showPage.hide;
         this.curShowPageInfo.showPage.className = hideClassName;
-        this.basePage.className = "xz-page-base-page "+this.curShowPageInfo.animateConfig.basePage.hide;
+        this.basePage.className = "xz-page-base-page "+animateConfig.basePage.hide;
+        if(animateConfig.showBackCover!==false){
+          this.bkCover.className = "xz-showpage-bk xz-showpage-bk-hide";
+        }
+        
         if(!this.curShowPageInfo.cache){
           var pageKey = this.curShowPageInfo.pageKey;
-          this.bkCover.className = "xz-showpage-bk xz-showpage-bk-hide";
           setTimeout(()=>{
             delete this.showPageDict[pageKey];
             this.setState({showPages:null});
@@ -200,8 +222,9 @@ class PageView extends React.Component {
       this.curShowPageInfo.showPage.className = showClassName;
       var showpageinfo = this.props.pagemanager.pageInstanceDict[this.curShowPageInfo.key];
       showpageinfo.instance.onPageResume && showpageinfo.instance.onPageResume();
-      
-      this.bkCover.className = "xz-showpage-bk xz-showpage-bk-hide";
+      if(animateConfig.showBackCover!==false){
+       this.bkCover.className = "xz-showpage-bk xz-showpage-bk-show";
+      }
       return;
     }
     animateConfig = showAnimateConfig[params.animateType];
@@ -223,10 +246,17 @@ class PageView extends React.Component {
     var key = this.props.pkey+'_show_'+pageKey;
     this.curShowPageInfo={cache:cachePage,pageKey:pageKey,animateConfig:animateConfig,key:key};
     this.showPageDict[pageKey] = this.curShowPageInfo;
+
+    //this.props.pagemanager
+    var P = PageView;
+    var ToPageInstance = this.props.pagemanager.props.config.pages[pageKey.split("_")[0]];  
+    if(!ToPageInstance.prototype.__proto__.forceUpdate){
+      P = LazyLoadPage;
+    }
     this.curShowPageInfo.instance = (<div ref={(showPage)=>{
       if(showPage){this.showPageDict[pageKey].showPage = showPage;}
     }} className={showClassName} key={key+"_wrapper"} >
-        <PageView 
+        <P 
           ref={(page)=>{
               if(page){
                 this.showPageDict[pageKey].page = page;
@@ -237,12 +267,14 @@ class PageView extends React.Component {
           pagename={pageKey} 
           owner={this.pageInstance}
           pagemanager={this.props.pagemanager} 
-          key={key} pkey={key}></PageView>
+          key={key} pkey={key}></P>
       </div>);
     for(var key in this.showPageDict){
       showpages.push(this.showPageDict[key].instance);
     }
-    this.bkCover.className = "xz-showpage-bk xz-showpage-bk-show";
+    if(animateConfig.showBackCover!==false){
+      this.bkCover.className = "xz-showpage-bk xz-showpage-bk-show";
+    }
     this.setState({showPages:showpages,basePageClassName:animateConfig.basePage.show});
   }
 

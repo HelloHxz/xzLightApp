@@ -6,9 +6,15 @@ import PageView from "./pageview"
 class LazyPageView extends React.Component {
   constructor(props) {
     super(props)
+    this.type="LazyPageView"
+
     this.state={innerChild:null};
     this.load();
   }
+
+
+
+
 
   load(){
     var pagename = this.props.pagename||"";
@@ -16,7 +22,7 @@ class LazyPageView extends React.Component {
     var Fuc = this.props.pagemanager.props.config.pages[realpagename];
     Fuc((Com)=>{
       this.props.pagemanager.props.config.pages[realpagename] = Com;
-      this.setState({innerChild:<PageView {...this.props}/>});
+      this.setState({innerChild:<PageView lazyowner = {this} {...this.props}/>});
     });
   
   }

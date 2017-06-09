@@ -24,7 +24,7 @@ class PageView extends React.Component {
 
   render() {
     return (<div className='full-screen'>
-    	two</div>);
+    	slide</div>);
   }
 }
 export default PageView;

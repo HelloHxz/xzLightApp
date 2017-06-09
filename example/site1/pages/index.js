@@ -60,12 +60,19 @@ class PageView extends React.Component {
   }
 
   onRefresh(){
-    
+
+  }
+
+  showSearchPage(){
+    this.props.base.showPage({
+      pageKey:"search",
+      animateType:"fadeIn"
+    });
   }
 
   showPage(){
     this.props.base.showPage({
-      pageKey:"index",
+      pageKey:"slidepage",
       animateType:"fromLeft"
     });
   }
@@ -74,7 +81,7 @@ class PageView extends React.Component {
     return (<div className='full-screen'>
       <div className='app-header iconfont icon-selection'></div>
         <xz.ScrollView onRefresh={this.onRefresh.bind(this)} className='full-screen'>
-         <br/>
+         <div className='search-bar' onClick={this.showSearchPage.bind(this)}></div>
           <xz.Button onClick={this.gotoTabbar.bind(this)} type="plat">goto tabbar</xz.Button><br/>
               <div className='btn-wrap'>
                 <xz.Button onClick={this.clickHandle.bind(this,1)} type="primary">primary Button</xz.Button>

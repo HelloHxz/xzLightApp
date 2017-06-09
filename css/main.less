@@ -220,6 +220,39 @@ body{
     }
 }
 
+.xz-showpage-fadein-show{
+   animation: showpagefadeinshow .4s ease;
+   visibility:visible;
+   opacity:1;
+}
+@keyframes showpagefadeinshow {
+    0% {
+        visibility:hidden;
+        opacity:0;
+    }
+    100% {
+        visibility:visible;
+         opacity:1;
+    }
+}
+
+.xz-showpage-fadein-hide{
+  animation: showpagefadeinhide .3s ease;
+  visibility:hidden; 
+  opacity:0;
+}
+
+@keyframes showpagefadeinhide {
+    0% {
+     visibility:visible;
+     opacity:1;
+    }
+    100% {
+      visibility:hidden;
+      opacity:0;
+    }
+}
+
 
 
 .xz-pageview-outer{
