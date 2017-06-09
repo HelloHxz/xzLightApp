@@ -104,6 +104,9 @@ class PageView extends React.Component {
     };
   }
 
+   componentWillUpdate(nextProps,nextState){
+    return false;
+  }
 
   refresh(){
     

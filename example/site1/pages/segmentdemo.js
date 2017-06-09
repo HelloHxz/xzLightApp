@@ -1,17 +1,24 @@
 import React from "react"
 import "../css/segmentdemo.less"
 import {xz,style,shallowEqual,Navigation} from "../../../index"
+import SegmentDemoStore from "../stores/segmentdemo"
+import {observer} from 'mobx-react'
 
+@observer
 class PageView extends React.Component {
+
+  static connectStore(){
+    return {store:new SegmentDemoStore}
+  }
+
   constructor(props) {
     super(props)
-    this.state={
-      seletctTabKey :"tabbarpage/segmentdemo/horizontalsegment"
-    }
+  
+
+    props.store.tabSelectedKey = "tabbarpage/segmentdemo/horizontalsegment";
   }
 
   renderIndicator(params){
-    console.log(params.curIndex);
     var rect = params.rect;
     var indicatorStyle = {
       position:"absolute",
@@ -20,31 +27,32 @@ class PageView extends React.Component {
       left:((params.curIndex)/params.itemCount*100+"%"),
       width:style.px2rem(rect.width)+"rem",
     };
-    var arr = ["segment-switch-indi","segment-indi-nomal-ani"];
+
+    var arr = ["segment-switch-indi"];
+    if(params.curIndex!=params.preIndex){
+      arr.push("segment-indi-nomal-ani");
+    }
     return <div className={arr.join(" ")} style={indicatorStyle}></div>
   }
   onChange(params){
     var key = params.selectedKey;
-    this.setState({
-      seletctTabKey:key
-    });
+
     this.props.pagemanager.replaceGo(key);
   }
 
   componentDidMount(){
     this.props.pagemanager.watchHashChange(this,(urlinfo)=>{
       var key  = urlinfo.pathArr.splice(0,3).join("/");
-      this.setState({
-        seletctTabKey:key
-      });
+      this.props.store.tabSelectedKey = key;
     });
   }
 
 
   render() {
+    console.log("render segmentdemo");
     return (<div className='full-screen'>
       <div className='app-header segment-header'>
-        <xz.Segment className='segment-switch' onChange={this.onChange.bind(this)} renderIndicator={this.renderIndicator.bind(this)} selectedKey={this.state.seletctTabKey}>
+        <xz.Segment changeByUrl={true} className='segment-switch' onChange={this.onChange.bind(this)} renderIndicator={this.renderIndicator.bind(this)} selectedKey={this.props.store.tabSelectedKey}>
           <xz.Segment.Item key='tabbarpage/segmentdemo/horizontalsegment'>水平</xz.Segment.Item>
           <xz.Segment.Item key='tabbarpage/segmentdemo/verticalsegment'>垂直</xz.Segment.Item> 
          </xz.Segment>

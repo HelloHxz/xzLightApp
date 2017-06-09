@@ -31,22 +31,32 @@ class Segment extends React.Component {
       }
     }
     if(this.state.selectedKey!==key){
-      this.setState({
-        selectedKey:key
-      },()=>{
-        if(this.props.onChange){
-          this.props.onChange({
-            selectedKey:this.state.selectedKey,
-            itemInstance:itemInstance,
-            segmentInstance:this
-          })
-        }
-      });
+      if(this.props.changeByUrl){
+        this._change(key,itemInstance);
+      }else{
+        this.setState({
+          selectedKey:key
+        },()=>{
+          this._change(key,itemInstance);
+        });
+      }
+      
 
     }
+  }
 
-    
+  componentWillUpdate(nextProps,nextState){
+    return this.state.selectedKey!==nextState.selectedKey;
+  }
 
+  _change(selectedKey,itemInstance){
+    if(this.props.onChange){
+            this.props.onChange({
+              selectedKey:selectedKey,
+              itemInstance:itemInstance,
+              segmentInstance:this
+            })
+      }
   }
 
   itemComponentDidMount(itemKey,itemInstance){
@@ -187,7 +197,6 @@ class Segment extends React.Component {
   render() {
 
     var indicator = null;
-   
     var scroll = this.props.scroll === true;
     var toucheEvent = {};
     if(scroll){

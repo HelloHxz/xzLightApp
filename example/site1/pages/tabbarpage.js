@@ -28,7 +28,6 @@ class PageView extends React.Component {
 
   tabbarChange(params){
     var key = params.itemInstance.props.url||params.selectedKey;
-     this.props.store.tabSelectedKey =  key;
     this.props.pagemanager.replaceGo(key);
   }
 
@@ -44,7 +43,7 @@ class PageView extends React.Component {
   render() {
     return (<div className='full-screen'>
        <Navigation.PageContainer {...this.props}  className='tabbarpage-content'  owner={this}/>
-        <xz.Segment onChange={this.tabbarChange.bind(this)} className="tabbarpage-tabbar" selectedKey={this.props.store.tabSelectedKey}>
+        <xz.Segment changeByUrl={true} onChange={this.tabbarChange.bind(this)} className="tabbarpage-tabbar" selectedKey={this.props.store.tabSelectedKey}>
           <xz.Segment.Item key='tabbarpage/segmentdemo' url='tabbarpage/segmentdemo/horizontalsegment'>首页</xz.Segment.Item>
           <xz.Segment.Item key='tabbarpage/dpdcdemo'>商城</xz.Segment.Item> 
           <xz.Segment.Item key='3'>应用</xz.Segment.Item>  

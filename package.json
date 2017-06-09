@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --host 10.21.2.234 --port 8080",
+    "start": "webpack-dev-server --host 192.168.0.103 --port 8080",
     "build": "webpack -p --progress --config  webpack.config.js  --env.prod=true"
   },
   "author": "",
