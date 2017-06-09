@@ -34,9 +34,10 @@ var showAnimateConfig = {
 
   },
   none:{
+        showBackCover:false,
         showPage:{
-          show:"",
-          hide:""
+          show:"xz-showpage-none-show",
+          hide:"xz-showpage-none-hide"
         },
         basePage:{
           show:"",

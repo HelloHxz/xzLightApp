@@ -20,11 +20,17 @@ class PageView extends React.Component {
     return true;
   }
 
+  componentDidMount(){
+    this.input.focus();
+  }
+
   
 
   render() {
     return (<div className='full-screen'>
-    	search</div>);
+    	search
+      <input type="search" ref={(input)=>{this.input = input;}}/>
+      </div>);
   }
 }
 export default PageView;

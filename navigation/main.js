@@ -379,7 +379,7 @@ class Navigation extends React.Component {
         });
       }else{
         if(!this.preUrlParams[systemseedname]){
-          
+           action = '后退';
         }else{
           if(curSeedObj.__pr===this.preSeedObj.__r){
             action = '前进';
@@ -489,7 +489,7 @@ class Navigation extends React.Component {
         isWantToPreventRoute = true;
         setTimeout(()=>{
           this.go(this.appConfig.root,p);
-        },100);
+        },300);
     }
 
     this.callResume(this.prePath,ppstr||"",ppprePath||"");
