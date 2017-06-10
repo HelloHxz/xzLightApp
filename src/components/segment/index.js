@@ -68,7 +68,7 @@ class Segment extends React.Component {
       if(this.props.renderIndicator){
         setTimeout(()=>{
           this.setState({renderKey:this.state.renderKey+1});
-        },300)
+        },330)
       }
     }
   }
