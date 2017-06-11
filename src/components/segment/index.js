@@ -17,6 +17,12 @@ class Segment extends React.Component {
       offset:0
     }
 
+    this.curStartValue=0;
+
+    this.diff=0;
+
+    this.starttime=0;
+
   }
 
   itemClick(key,itemInstance){
@@ -31,17 +37,7 @@ class Segment extends React.Component {
       }
     }
     if(this.state.selectedKey!==key){
-      if(this.props.changeByUrl){
-        this._change(key,itemInstance);
-      }else{
-        this.setState({
-          selectedKey:key
-        },()=>{
-          this._change(key,itemInstance);
-        });
-      }
-      
-
+      this._change(key,itemInstance);
     }
   }
 
@@ -50,13 +46,11 @@ class Segment extends React.Component {
   }
 
   _change(selectedKey,itemInstance){
-    if(this.props.onChange){
-            this.props.onChange({
-              selectedKey:selectedKey,
-              itemInstance:itemInstance,
-              segmentInstance:this
-            })
-      }
+      this.props.onChange&&this.props.onChange({
+        selectedKey:selectedKey,
+        itemInstance:itemInstance,
+        segmentInstance:this
+      })
   }
 
   itemComponentDidMount(itemKey,itemInstance){
@@ -91,11 +85,7 @@ class Segment extends React.Component {
     }
   }
 
-  curStartValue:0
-
-  diff:0
-
-  starttime:0
+ 
 
   onTouchStart(e){
 

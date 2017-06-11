@@ -80,6 +80,11 @@ class PageView extends React.Component {
   }
 
 
+  renderSwiperItem(itemdata){
+
+  }
+
+
   render() {
     return (<div className='full-screen'>
       <div className='app-header iconfont icon-selection'></div>
@@ -97,6 +102,8 @@ class PageView extends React.Component {
                <xz.Button onClick={this.clickHandle.bind(this,3)}>去二级</xz.Button>
                <xz.Button onClick={this.clickHandle.bind(this,4)}>GoSame</xz.Button>
                <xz.Button onClick={this.showPage.bind(this,3)}>我已审批</xz.Button></div>
+
+               <xz.Swiper loop={true} interval={1000} cache={true} datasource={[]} renderItem = {this.renderSwiperItem.bind(this)}></xz.Swiper>
         </xz.ScrollView>
        </div>);
   }
