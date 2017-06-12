@@ -80,8 +80,8 @@ class PageView extends React.Component {
   }
 
 
-  renderSwiperItem(itemdata){
-
+  renderSwiperItem(params){
+    return <div>sss</div>;
   }
 
 

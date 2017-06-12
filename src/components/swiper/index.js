@@ -13,6 +13,7 @@ class Swiper extends React.Component {
     this.ScreenWidth = Style.screen.width;
     this.wrapperArr = [2,0,1];
     this.sourceArr = [-1,-1,-1];
+    this.isIntransition = false;
 
     this.getNextSourceArr();
     
@@ -65,7 +66,7 @@ class Swiper extends React.Component {
 
 
   onTouchStart(e){
-
+  	if(this.isIntransition){return;}
     this.starttime = new Date().valueOf();
     this.touchStartValue = e.nativeEvent.touches[0].pageX;
     // e.preventDefault();
@@ -77,6 +78,7 @@ class Swiper extends React.Component {
   }
 
   onTouchMove(e){
+  	if(this.isIntransition){return;}
     e.preventDefault();
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
@@ -86,11 +88,8 @@ class Swiper extends React.Component {
     var offset = this.offsetValue+this.diff;
     this.setState({offset:offset,animate:false});
   }
-
-  ScrollTo(index){
-
-  }
   onTouchEnd(){
+  	if(this.isIntransition){return;}
   	if(this.diff>0){
   		console.log("gopre");
   		this.setState({offset:(this.ScreenWidth),animate:true});
@@ -98,14 +97,14 @@ class Swiper extends React.Component {
   		console.log("gonext");
   		this.setState({offset:(0-this.ScreenWidth),animate:true});
   	}
-
+  	this.isIntransition = true;
   	setTimeout(()=>{
   		if(this.diff>0){
   			this.getPreWraperArr();
   		}else{
   			this.getNextWraperArr();
   		}
-
+  		this.isIntransition = false;
   		this.setState({offset:0,animate:false});
   	},310)
   }
@@ -142,7 +141,14 @@ class Swiper extends React.Component {
    		}else{
    			itemStyle[this.tranDict.transition] = "none";
    		}
-   		children.push(<div style={itemStyle} className="xz-swiper-item" key={key}>{wrapIndex}</div>);
+   		var childrenItem = null;
+   		if(this.props.renderItem){
+   			childrenItem = this.props.renderItem({wraperIndex:wrapIndex});
+   		}
+   		children.push(<div style={itemStyle} className="xz-swiper-item" key={key}><div className='xz-swiper-inneritem'>
+   			<span className='test'>{wrapIndex}</span>
+   			{childrenItem}
+   		</div></div>);
     }
     return (<div {...toucheEvent} className={classNameArr.join(" ")}>{children}</div>);
   }
