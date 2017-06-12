@@ -1,5 +1,6 @@
 import React from "react"
 import "./index.less"
+import Style from "../../../utils/style"
 
 
 
@@ -8,14 +9,16 @@ import "./index.less"
 class Swiper extends React.Component {
   constructor(props) {
     super(props)
-
+    this.tranDict = Style.getTransitionKeys();
+    this.ScreenWidth = Style.screen.width;
     this.wrapperArr = [2,0,1];
     this.sourceArr = [-1,-1,-1];
 
     this.getNextSourceArr();
     
     this.state = {
-    	offset:0
+    	offset:0,
+    	animate:false
     };
 
   }
@@ -52,11 +55,11 @@ class Swiper extends React.Component {
 
 
   getNextWraperArr(){
-    this.wrapperArr.unshift(this.wrapperArr.pop());
+    this.wrapperArr.push(this.wrapperArr.shift());
   }
 
   getPreWraperArr(){
-    this.wrapperArr.push(this.wrapperArr.shift());
+    this.wrapperArr.unshift(this.wrapperArr.pop());
   }
 
 
@@ -81,14 +84,30 @@ class Swiper extends React.Component {
     var curTouchX = e.nativeEvent.touches[0].pageX;
     this.diff =  curTouchX - this.touchStartValue;
     var offset = this.offsetValue+this.diff;
-    this.setState({offset:offset});
+    this.setState({offset:offset,animate:false});
   }
 
   ScrollTo(index){
 
   }
   onTouchEnd(){
+  	if(this.diff>0){
+  		console.log("gopre");
+  		this.setState({offset:(this.ScreenWidth),animate:true});
+  	}else{
+  		console.log("gonext");
+  		this.setState({offset:(0-this.ScreenWidth),animate:true});
+  	}
 
+  	setTimeout(()=>{
+  		if(this.diff>0){
+  			this.getPreWraperArr();
+  		}else{
+  			this.getNextWraperArr();
+  		}
+
+  		this.setState({offset:0,animate:false});
+  	},310)
   }
 
 	componentWillReceiveProps(nextProps){	
@@ -112,9 +131,19 @@ class Swiper extends React.Component {
     toucheEvent.onTouchStart = this.onTouchStart.bind(this);
     toucheEvent.onTouchMove = this.onTouchMove.bind(this);
     toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
-    children.push(<div className="xz-swiper-item" key='xz-swiper-item-0'>1</div>);
-    children.push(<div className="xz-swiper-item" key='xz-swiper-item-1'>2</div>);
-    children.push(<div className="xz-swiper-item" key='xz-swiper-item-2'>3</div>);
+
+    for(var i=0;i<3;i++){
+    	var wrapIndex = this.wrapperArr[i];
+    	var key = 'xz-swiper-item-'+i;
+    	var itemStyle = {};
+    	itemStyle[this.tranDict.transform] = "translate3d("+((i-1)*this.ScreenWidth+this.state.offset)+"px,0,0)"
+   		if(this.state.animate){
+   			itemStyle[this.tranDict.transition] = this.tranDict.cssTransform+" .3s ease";
+   		}else{
+   			itemStyle[this.tranDict.transition] = "none";
+   		}
+   		children.push(<div style={itemStyle} className="xz-swiper-item" key={key}>{wrapIndex}</div>);
+    }
     return (<div {...toucheEvent} className={classNameArr.join(" ")}>{children}</div>);
   }
 }

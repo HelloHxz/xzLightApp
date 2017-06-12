@@ -71,11 +71,13 @@ export default {
         if ("-webkit-transform" in testStyle) {
             me.transitionend = "webkitTransitionEnd";
             me.transform = "WebkitTransform";
+            me.cssTransform = "-webkit-transform";
             me.transition = "WebkitTransition";
         }
         else {
             me.transitionend = "transitionend";
             me.transform = "transform";
+            me.cssTransform = "transform";
             me.transition = "transition";
         }
         this.translateKeys = me;
