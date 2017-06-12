@@ -9,15 +9,54 @@ class Swiper extends React.Component {
   constructor(props) {
     super(props)
 
-    this.wraperIndex = 0;
-    this.sourceIndex = 0;
-
     this.wrapperArr = [2,0,1];
+    this.sourceArr = [-1,-1,-1];
 
+    this.getNextSourceArr();
+    
     this.state = {
     	offset:0
     };
 
+  }
+
+  getNextSourceArr(){
+    var len = this.props.datasource.length;
+    var mid = this.sourceArr[1];
+    mid += 1;
+    if(mid>len-1){
+      if(this.props.loop){
+        mid = 0;
+      }else{
+        mid -=1;
+      }
+    }
+    var right = mid + 1;
+    if(right>len-1){
+      if(this.props.loop){
+        right = 0;
+      }else{
+        right = -1;
+      }
+    }
+    var left = mid - 1;
+    if(left<0){
+      if(this.props.loop){
+        left = len-1;
+      }else{
+        left = -1;
+      }
+    }
+    
+  }
+
+
+  getNextWraperArr(){
+    this.wrapperArr.unshift(this.wrapperArr.pop());
+  }
+
+  getPreWraperArr(){
+    this.wrapperArr.push(this.wrapperArr.shift());
   }
 
 
@@ -57,6 +96,10 @@ class Swiper extends React.Component {
 	}
 
   render() {
+    // var datasource = this.props.datasource||[];
+    // if(datasource.length===0||datasource.length===1){
+
+    // }
   	var classNameArr = ["xz-swiper"];
   	if(this.props.className){
   		classNameArr.push(classNameArr);
@@ -66,12 +109,12 @@ class Swiper extends React.Component {
   	var children= [];
 
   	var toucheEvent = {};
-	toucheEvent.onTouchStart = this.onTouchStart.bind(this);
-	toucheEvent.onTouchMove = this.onTouchMove.bind(this);
-	toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
-  	children.push(<div className="xz-swiper-item" key='xz-swiper-item-0'>1</div>);
-  	children.push(<div className="xz-swiper-item" key='xz-swiper-item-1'>2</div>);
-  	children.push(<div className="xz-swiper-item" key='xz-swiper-item-2'>3</div>);
+    toucheEvent.onTouchStart = this.onTouchStart.bind(this);
+    toucheEvent.onTouchMove = this.onTouchMove.bind(this);
+    toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
+    children.push(<div className="xz-swiper-item" key='xz-swiper-item-0'>1</div>);
+    children.push(<div className="xz-swiper-item" key='xz-swiper-item-1'>2</div>);
+    children.push(<div className="xz-swiper-item" key='xz-swiper-item-2'>3</div>);
     return (<div {...toucheEvent} className={classNameArr.join(" ")}>{children}</div>);
   }
 }
