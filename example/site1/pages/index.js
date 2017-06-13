@@ -23,6 +23,7 @@ class PageView extends React.Component {
     this.state={
       refreshing:"sss"
     };
+    this.seed = 0;
     props.globalStore.selectedIndex = "huxiaozhong";
   }
 
@@ -81,7 +82,7 @@ class PageView extends React.Component {
 
 
   renderSwiperItem(params){
-    return <div><br/>{params.data}</div>;
+    return <div key={"xx"+params.index}><div key={"xxxx"+params.index}><br/>{params.index}<br/>{params.data}</div></div>;
   }
 
 
@@ -103,7 +104,7 @@ class PageView extends React.Component {
                <xz.Button onClick={this.clickHandle.bind(this,4)}>GoSame</xz.Button>
                <xz.Button onClick={this.showPage.bind(this,3)}>我已审批</xz.Button></div>
 
-               <xz.Swiper loop={false} interval={1000} cache={true} datasource={["d-s","d-1s"]} renderItem = {this.renderSwiperItem.bind(this)}></xz.Swiper>
+               <xz.Swiper lazyrender={true} loop={true} interval={1000} cache={true} datasource={["d-s","d-1s","d-2s","d-3s","d-4s"]} renderItem = {this.renderSwiperItem.bind(this)}></xz.Swiper>
         </xz.ScrollView>
        </div>);
   }
