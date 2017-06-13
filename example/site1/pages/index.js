@@ -95,8 +95,8 @@ class PageView extends React.Component {
      {
        src:"http://img04.tooopen.com/images/20130701/tooopen_10055061.jpg",title:"xxx",
       },
-      // {src:"http://img06.tooopen.com/images/20170514/tooopen_sy_210126153448.jpg",title:"xxx"},
-      // {src:"http://img06.tooopen.com/images/20170514/tooopen_sy_210122159348.jpg",title:"xxx"}
+      {src:"http://img06.tooopen.com/images/20170514/tooopen_sy_210126153448.jpg",title:"xxx"},
+      {src:"http://img06.tooopen.com/images/20170514/tooopen_sy_210122159348.jpg",title:"xxx"}
     ];
     return (<div className='full-screen'>
       <div className='app-header iconfont icon-selection'></div>
@@ -115,7 +115,7 @@ class PageView extends React.Component {
                <xz.Button onClick={this.clickHandle.bind(this,4)}>GoSame</xz.Button>
                <xz.Button onClick={this.showPage.bind(this,3)}>我已审批</xz.Button></div>
 
-               <xz.Swiper lazyrender={false} loop={true} interval={1000} cache={false} datasource={siwperData} renderItem = {this.renderSwiperItem.bind(this)}></xz.Swiper>
+               <xz.Swiper space={30} lazyrender={false} loop={true} interval={1000} cache={false} datasource={siwperData} renderItem = {this.renderSwiperItem.bind(this)}></xz.Swiper>
         </xz.ScrollView>
        </div>);
   }

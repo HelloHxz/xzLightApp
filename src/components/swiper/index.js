@@ -11,12 +11,13 @@ class Swiper extends React.Component {
     super(props)
     this.tranDict = Style.getTransitionKeys();
     this.ScreenWidth = Style.screen.width;
-   
+    this.space =  this.props.space || 0;
+    
     this.touchoffset = this.props.touchoffset || Style.px2px(120);
     this.init();
+    this.animate = false;
     this.state = {
       offset:0,
-      animate:false
     };
   }
 
@@ -111,6 +112,7 @@ class Swiper extends React.Component {
     // e.stopPropagation();
     // e.nativeEvent.stopImmediatePropagation();
     this.diff = 0;
+     this.animate = false;  
     this.offsetValue = this.state.offset;
     this.resetPos = false;
     
@@ -121,7 +123,7 @@ class Swiper extends React.Component {
     e.preventDefault();
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
-
+    this.animate = false;  
     var curTouchX = e.nativeEvent.touches[0].pageX;
     this.diff =  curTouchX - this.touchStartValue;
     var offset = this.offsetValue;
@@ -139,13 +141,15 @@ class Swiper extends React.Component {
       }
     }
     offset = offset+this.diff;
-    this.setState({offset:offset,animate:false});
+    this.setState({offset:offset});
   }
   onTouchEnd(){
     if(this.isIntransition){return;}
 
     if(Math.abs(this.diff)<this.touchoffset||this.resetPos){
-      this.setState({offset:(0-this.offsetValue),animate:true});
+
+      this.animate = true;
+      this.setState({offset:(0-this.offsetValue)});
       return;
     }
 
@@ -159,22 +163,25 @@ class Swiper extends React.Component {
   }
 
   goNext(){
-    this.setState({offset:(0-this.ScreenWidth),animate:true});
+
+    this.animate = true;  
+    this.setState({offset:(0-this.ScreenWidth-this.space)});
     setTimeout(()=>{
       this.getNextWraperArr();
       this.getNextSourceArr();
       this.isIntransition = false;
-      this.setState({offset:0,animate:false});
+      this.setState({offset:0});
     },310)
   }
 
   goPre(){
-    this.setState({offset:(this.ScreenWidth),animate:true});
+    this.animate = true;  
+    this.setState({offset:(this.ScreenWidth+this.space)});
     setTimeout(()=>{
       this.getPreWraperArr();
       this.getPreSourceArr();
       this.isIntransition = false;
-      this.setState({offset:0,animate:false});
+      this.setState({offset:0});
     },310)
   }
 
@@ -252,8 +259,8 @@ class Swiper extends React.Component {
       }
       
       var itemStyle = {};
-      itemStyle[this.tranDict.transform] = "translate3d("+((i-1)*this.ScreenWidth+this.state.offset)+"px,0,0)"
-      if(this.state.animate){
+      itemStyle[this.tranDict.transform] = "translate3d("+((i-1)*this.space+(i-1)*this.ScreenWidth+this.state.offset)+"px,0,0)"
+      if(this.animate){
         itemStyle[this.tranDict.transition] = this.tranDict.cssTransform+" .3s ease";
       }else{
         itemStyle[this.tranDict.transition] = "none";
