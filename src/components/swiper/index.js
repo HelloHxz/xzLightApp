@@ -14,18 +14,24 @@ class Swiper extends React.Component {
     this.space =  this.props.space || 0;
     
     this.touchoffset = this.props.touchoffset || Style.px2px(120);
-    this.init();
+    this.init(props);
     this.animate = false;
     this.state = {
       offset:0,
     };
+
+    // setTimeout(()=>{
+    //   this.goNext();
+    // },1000);
   }
 
-  init(){
+  init(props){
     this.wrapperArr = [2,0,1];
     this.cacheDict = {};
     this.sourceArr = [-1,-1,-1];
     this.isIntransition = false;
+    this.isLoop = props.loop;
+
     this.getNextSourceArr();
   }
   getPreSourceArr(){
@@ -34,7 +40,7 @@ class Swiper extends React.Component {
     var mid = this.sourceArr[1];
     mid -= 1;
     if(mid<0){
-      if(this.props.loop){
+      if(this.isLoop){
         mid =len===1?0:len-1;
       }else{
         mid +=1;
@@ -52,7 +58,7 @@ class Swiper extends React.Component {
     var mid = this.sourceArr[1];
     mid += 1;
     if(mid>len-1){
-      if(this.props.loop){
+      if(this.isLoop){
         mid =len ===0?-1:0;
       }else{
         mid -=1;
@@ -72,7 +78,7 @@ class Swiper extends React.Component {
     }else{
       right = mid + 1;
       if(right>len-1){
-        if(this.props.loop){
+        if(this.isLoop){
           right = len ===1?-1:0;
         }else{
           right = -1;
@@ -82,7 +88,7 @@ class Swiper extends React.Component {
 
     var left = mid - 1;
     if(left<0){
-      if(this.props.loop){
+      if(this.isLoop){
         left =len ===1?-1:len-1;
       }else{
         left = -1;
@@ -120,12 +126,15 @@ class Swiper extends React.Component {
 
   onTouchMove(e){
     if(this.isIntransition){return;}
-    e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-    this.animate = false;  
     var curTouchX = e.nativeEvent.touches[0].pageX;
     this.diff =  curTouchX - this.touchStartValue;
+    if(Math.abs(this.diff)>40){
+      e.preventDefault();
+      e.stopPropagation();
+      e.nativeEvent.stopImmediatePropagation();
+    }
+  
+    this.animate = false;  
     var offset = this.offsetValue;
     if(this.diff>0){
       //gopre
@@ -146,6 +155,7 @@ class Swiper extends React.Component {
   onTouchEnd(){
     if(this.isIntransition){return;}
 
+    console.log(this.diff);
     if(Math.abs(this.diff)<this.touchoffset||this.resetPos){
 
       this.animate = true;
@@ -163,7 +173,6 @@ class Swiper extends React.Component {
   }
 
   goNext(){
-
     this.animate = true;  
     this.setState({offset:(0-this.ScreenWidth-this.space)});
     setTimeout(()=>{
@@ -186,7 +195,7 @@ class Swiper extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){ 
-    this.init();
+    this.init(nextProps);
   }
 
 
@@ -225,6 +234,17 @@ class Swiper extends React.Component {
     return childrenItem;
   }
 
+  _renderIndicator(){
+    var datasource  =this.props.datasource||[];
+    var len = datasource.length;
+    var curIndex = this.sourceArr[1];
+    var point = [];
+    for(var i=0;i<len;i++){
+      point.push(<span>&nbsp;{i===curIndex?"o":"-"}</span>);
+    }
+    return <div style={{position:"absolute",bottom:"0",zIndex:11}}>{point}</div>;
+  }
+
   render() {
 
     var classNameArr = ["xz-swiper"];
@@ -246,7 +266,6 @@ class Swiper extends React.Component {
     toucheEvent.onTouchMove = this.onTouchMove.bind(this);
     toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
 
-    console.log( this.sourceArr);
     for(var i=0;i<3;i++){
       var wrapIndex = this.wrapperArr[i];
       var sourceIndex = this.sourceArr[i];
@@ -269,10 +288,10 @@ class Swiper extends React.Component {
         {this._renderItem({index:i})}
       </div></div>);
     }
-    var cacheChild = [];
-    var cacheStyle = {};
-    cacheStyle[this.tranDict.transform] = "translate3d("+((-1)*this.ScreenWidth-100)+"px,0,0)"
+   
     if(this.props.cache){
+       var cacheStyle = {};
+       cacheStyle[this.tranDict.transform] = "translate3d("+((-1)*this.ScreenWidth-100)+"px,0,0)"
        for(var key in this.cacheDict){
         var cacheIndex = this.sourceArr.indexOf(parseInt(key));
         if(cacheIndex<0){
@@ -284,6 +303,7 @@ class Swiper extends React.Component {
       }
     }
     return (<div {...toucheEvent} className={classNameArr.join(" ")}>{children}
+      {this._renderIndicator()}
       </div>);
   }
 }
