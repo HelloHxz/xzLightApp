@@ -239,10 +239,18 @@ class Swiper extends React.Component {
     toucheEvent.onTouchMove = this.onTouchMove.bind(this);
     toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
 
+    console.log( this.sourceArr);
     for(var i=0;i<3;i++){
       var wrapIndex = this.wrapperArr[i];
       var sourceIndex = this.sourceArr[i];
+      if(sourceIndex===-1){
+        continue;
+      }
       var key = 'xz-swiper-item-'+sourceIndex;
+      if(this.sourceArr[0]===this.sourceArr[2]&&i!==1){
+        key+="_"+wrapIndex;
+      }
+      
       var itemStyle = {};
       itemStyle[this.tranDict.transform] = "translate3d("+((i-1)*this.ScreenWidth+this.state.offset)+"px,0,0)"
       if(this.state.animate){
@@ -261,7 +269,8 @@ class Swiper extends React.Component {
        for(var key in this.cacheDict){
         var cacheIndex = this.sourceArr.indexOf(parseInt(key));
         if(cacheIndex<0){
-          children.push(<div style={cacheStyle} className="xz-swiper-item" key={'xz-swiper-item-'+key}><div className='xz-swiper-inneritem'>
+          var itemKey = 'xz-swiper-item-'+key;
+          children.push(<div style={cacheStyle} className="xz-swiper-item" key={itemKey}><div className='xz-swiper-inneritem'>
            { this.cacheDict[key]}
           </div></div>);
         }

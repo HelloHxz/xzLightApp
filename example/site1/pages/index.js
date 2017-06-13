@@ -82,11 +82,22 @@ class PageView extends React.Component {
 
 
   renderSwiperItem(params){
-    return <div key={"xx"+params.index}><div key={"xxxx"+params.index}><br/>{params.index}<br/>{params.data}</div></div>;
+    return <div key={"xx"+params.index}>
+      <img src={params.data.src}/>
+    </div>;
   }
 
 
   render() {
+
+    var siwperData = [
+     {src:"http://img05.tooopen.com/images/20150202/sy_80219211654.jpg",title:"xxx"},
+     {
+       src:"http://img04.tooopen.com/images/20130701/tooopen_10055061.jpg",title:"xxx",
+      },
+      // {src:"http://img06.tooopen.com/images/20170514/tooopen_sy_210126153448.jpg",title:"xxx"},
+      // {src:"http://img06.tooopen.com/images/20170514/tooopen_sy_210122159348.jpg",title:"xxx"}
+    ];
     return (<div className='full-screen'>
       <div className='app-header iconfont icon-selection'></div>
         <xz.ScrollView onRefresh={this.onRefresh.bind(this)} className='full-screen'>
@@ -104,7 +115,7 @@ class PageView extends React.Component {
                <xz.Button onClick={this.clickHandle.bind(this,4)}>GoSame</xz.Button>
                <xz.Button onClick={this.showPage.bind(this,3)}>我已审批</xz.Button></div>
 
-               <xz.Swiper lazyrender={true} loop={true} interval={1000} cache={true} datasource={["d-s","d-1s","d-2s","d-3s","d-4s"]} renderItem = {this.renderSwiperItem.bind(this)}></xz.Swiper>
+               <xz.Swiper lazyrender={false} loop={true} interval={1000} cache={false} datasource={siwperData} renderItem = {this.renderSwiperItem.bind(this)}></xz.Swiper>
         </xz.ScrollView>
        </div>);
   }
