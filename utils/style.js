@@ -31,6 +31,7 @@ export default {
 		this.screen.height = docClientHeight*this.dpr;
 
 		var scale = 1 / this.dpr;
+        console.log(this.dpr);
 		var fontEl = document.createElement('style');
 		var metaEl = document.querySelector('meta[name="viewport"]');
 		metaEl.setAttribute('content', 'width=' + this.dpr * docEl.clientWidth + ',initial-scale=' + scale + ',maximum-scale=' + scale + ', minimum-scale=' + scale + ',user-scalable=no');
@@ -58,6 +59,9 @@ export default {
 		v = parseFloat(v);
 		return v / this.rem;
 	},
+    px2px(v){
+        return Math.round(v*this.dpr/2);
+    },
 	createSheet(styles){
 		alert(styles);
 	},

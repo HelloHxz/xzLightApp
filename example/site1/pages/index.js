@@ -81,7 +81,7 @@ class PageView extends React.Component {
 
 
   renderSwiperItem(params){
-    return <div>sss</div>;
+    return <div><br/>{params.data}</div>;
   }
 
 
@@ -103,7 +103,7 @@ class PageView extends React.Component {
                <xz.Button onClick={this.clickHandle.bind(this,4)}>GoSame</xz.Button>
                <xz.Button onClick={this.showPage.bind(this,3)}>我已审批</xz.Button></div>
 
-               <xz.Swiper loop={true} interval={1000} cache={true} datasource={[]} renderItem = {this.renderSwiperItem.bind(this)}></xz.Swiper>
+               <xz.Swiper loop={false} interval={1000} cache={true} datasource={["d-s","d-1s"]} renderItem = {this.renderSwiperItem.bind(this)}></xz.Swiper>
         </xz.ScrollView>
        </div>);
   }

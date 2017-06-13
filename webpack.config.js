@@ -171,6 +171,24 @@ function writeCommonless(){
          @themecolor:rgb(10,96,254);
          @bordercolor:rgb(194,192,198);
          .px2rem(@name, @px){ @{name}: @px / ${rem} * 1rem;}
+         .px2px(@name, @px){
+            @{name}: round(@px / 2) * 1px;
+            [data-dpr="2"] & {
+                @{name}: @px * 1px;
+            }
+            [data-dpr="2.5"] & {
+                @{name}: round(@px * 2.5 / 2) * 1px;
+            }
+            [data-dpr="2.75"] & {
+                @{name}: round(@px * 2.75 / 2) * 1px;
+            }
+            [data-dpr="3"] & {
+                @{name}: round(@px / 2 * 3) * 1px
+            }
+            [data-dpr="4"] & {
+                @{name}: @px * 2px;
+            }
+        }
          .px2remtransfrom(@x,@y){
             transform: translate3d( @x / ${rem} * 1rem,  @y / ${rem} * 1rem, 0);
             -webkit-transform: translate3d( @x / ${rem} * 1rem,  @y / ${rem} * 1rem, 0);
