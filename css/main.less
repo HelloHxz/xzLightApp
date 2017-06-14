@@ -6,6 +6,11 @@ html,body{
   height:100%;
   overflow: hidden;
 }
+ul,li{
+  margin:0;
+  padding:0;
+  list-style:none;
+}
 .xz-app-wrapper{
   position:relative;
   width:100%;
@@ -218,7 +223,7 @@ body{
     }
 }
 
-.xz-showpage-fadein-show{
+.xz-showpage-fadein-show,.xz-fadein-show{
    animation: showpagefadeinshow .4s ease;
    opacity:1;
 }
@@ -238,7 +243,7 @@ body{
   display:none;
 }
 
-.xz-showpage-fadein-hide{
+.xz-showpage-fadein-hide,.xz-fadein-hide{
   animation: showpagefadeinhide .3s ease;
   visibility:hidden; 
   opacity:0;

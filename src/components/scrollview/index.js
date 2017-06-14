@@ -32,6 +32,8 @@ class ScrollView extends React.Component {
       var curY = touch.pageY;
       var diff = curY-this.startY;
 
+      this.props.onRefreshMove&&this.props.onRefreshMove({diff:diff});
+
       if(diff>0){
         
         var scrollTop = this.wrapperDom.scrollTop;
@@ -68,10 +70,11 @@ class ScrollView extends React.Component {
       setTimeout(()=>{
         this.isInLoading = false;
         this.setState({offset:-1,animate:true});
+        this.props.onRefreshClose&&this.props.onRefreshClose();
       },2000);
     }else{
       this.setState({offset:-1,animate:true});
-
+      this.props.onRefreshClose&&this.props.onRefreshClose();
     }
   }
 

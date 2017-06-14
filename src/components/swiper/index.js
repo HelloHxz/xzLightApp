@@ -240,7 +240,7 @@ class Swiper extends React.Component {
     var curIndex = this.sourceArr[1];
     var point = [];
     for(var i=0;i<len;i++){
-      point.push(<span>&nbsp;{i===curIndex?"o":"-"}</span>);
+      point.push(<span key={i}>&nbsp;{i===curIndex?"o":"-"}</span>);
     }
     return <div style={{position:"absolute",bottom:"0",zIndex:11}}>{point}</div>;
   }
@@ -249,7 +249,7 @@ class Swiper extends React.Component {
 
     var classNameArr = ["xz-swiper"];
     if(this.props.className){
-      classNameArr.push(classNameArr);
+      classNameArr.push(this.props.className);
     }else{
       classNameArr.push("xz-default-swiper");
     }
