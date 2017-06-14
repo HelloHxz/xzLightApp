@@ -10,7 +10,6 @@ class Swiper extends React.Component {
   constructor(props) {
     super(props)
     this.tranDict = Style.getTransitionKeys();
-    this.ScreenWidth = Style.screen.width;
     this.space =  this.props.space || 0;
     
     this.touchoffset = this.props.touchoffset || Style.px2px(120);
@@ -27,6 +26,16 @@ class Swiper extends React.Component {
 
   init(props){
     this.wrapperArr = [2,0,1];
+    var direction = this.props.direction||"horizontal";
+    this.isHorizontal = direction.toLowerCase()==="horizontal";
+    this.config = {
+      touchkey:"pageX"
+    };
+    if(!this.isHorizontal){
+      this.config = {
+        touchkey:"pageY"
+      };
+    }
     this.cacheDict = {};
     this.sourceArr = [-1,-1,-1];
     this.isIntransition = false;
@@ -112,13 +121,16 @@ class Swiper extends React.Component {
 
   onTouchStart(e){
     if(this.isIntransition){return;}
+    // if(!this.WrapperSizeValue){
+    //  this.WrapperSizeValue = Style.screen.width;
+    // }
     this.starttime = new Date().valueOf();
-    this.touchStartValue = e.nativeEvent.touches[0].pageX;
+    this.touchStartValue = e.nativeEvent.touches[0][this.config.touchkey];
     // e.preventDefault();
     // e.stopPropagation();
     // e.nativeEvent.stopImmediatePropagation();
     this.diff = 0;
-     this.animate = false;  
+    this.animate = false;  
     this.offsetValue = this.state.offset;
     this.resetPos = false;
     
@@ -126,7 +138,7 @@ class Swiper extends React.Component {
 
   onTouchMove(e){
     if(this.isIntransition){return;}
-    var curTouchX = e.nativeEvent.touches[0].pageX;
+    var curTouchX = e.nativeEvent.touches[0][this.config.touchkey];
     this.diff =  curTouchX - this.touchStartValue;
     if(Math.abs(this.diff)>40){
       e.preventDefault();
@@ -174,7 +186,7 @@ class Swiper extends React.Component {
 
   goNext(){
     this.animate = true;  
-    this.setState({offset:(0-this.ScreenWidth-this.space)});
+    this.setState({offset:(0-this.WrapperSizeValue-this.space)});
     setTimeout(()=>{
       this.getNextWraperArr();
       this.getNextSourceArr();
@@ -185,7 +197,7 @@ class Swiper extends React.Component {
 
   goPre(){
     this.animate = true;  
-    this.setState({offset:(this.ScreenWidth+this.space)});
+    this.setState({offset:(this.WrapperSizeValue+this.space)});
     setTimeout(()=>{
       this.getPreWraperArr();
       this.getPreSourceArr();
@@ -226,7 +238,7 @@ class Swiper extends React.Component {
             }
           }
         }else{
-          console.log(sourceIndex+">>>>>>>>>>");
+
         }
       }
     }
@@ -245,15 +257,25 @@ class Swiper extends React.Component {
     return <div style={{position:"absolute",bottom:"0",zIndex:11}}>{point}</div>;
   }
 
-  render() {
+  wrapInit(outerWrapper){
+    this.outerWrapper = outerWrapper;
+    if(this.outerWrapper&&!this.WrapperSizeValue){
+      if(this.isHorizontal){
+        this.WrapperSizeValue = this.outerWrapper.offsetWidth;
+      }else{
+        this.WrapperSizeValue = this.outerWrapper.offsetHeight;
+      }
+      this.setState({offset:0});
+    }
+  }
 
+  render() {
     var classNameArr = ["xz-swiper"];
     if(this.props.className){
       classNameArr.push(this.props.className);
     }else{
       classNameArr.push("xz-default-swiper");
     }
-
 
     var datasource = this.props.datasource||[];
     if(datasource.length===0){
@@ -265,44 +287,50 @@ class Swiper extends React.Component {
     toucheEvent.onTouchStart = this.onTouchStart.bind(this);
     toucheEvent.onTouchMove = this.onTouchMove.bind(this);
     toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
+    if(this.WrapperSizeValue){
+      for(var i=0;i<3;i++){
+        var wrapIndex = this.wrapperArr[i];
+        var sourceIndex = this.sourceArr[i];
+        if(sourceIndex===-1){
+          continue;
+        }
+        var key = 'xz-swiper-item-'+sourceIndex;
+        if(this.sourceArr[0]===this.sourceArr[2]&&i!==1){
+          key+="_"+wrapIndex;
+        }
+        
+        var itemStyle = {};
+        var v = ((i-1)*this.space+(i-1)*this.WrapperSizeValue+this.state.offset);
+        var vstr = this.isHorizontal? v +"px,0,0":"0,"+v+"px,0";
+        itemStyle[this.tranDict.transform] = "translate3d("+vstr+")"
+        if(this.animate){
+          itemStyle[this.tranDict.transition] = this.tranDict.cssTransform+" .3s ease";
+        }else{
+          itemStyle[this.tranDict.transition] = "none";
+        }
+        children.push(<div style={itemStyle} className="xz-swiper-item" key={key}><div className='xz-swiper-inneritem'>
+          {this._renderItem({index:i})}
+        </div></div>);
+      }
+     
+      if(this.props.cache){
+         var cacheStyle = {};
+         var cv = ((-1)*this.WrapperSizeValue-100);
+         var cvstr = this.isHorizontal? cv +"px,0,0":"0,"+cv+"px,0";
 
-    for(var i=0;i<3;i++){
-      var wrapIndex = this.wrapperArr[i];
-      var sourceIndex = this.sourceArr[i];
-      if(sourceIndex===-1){
-        continue;
-      }
-      var key = 'xz-swiper-item-'+sourceIndex;
-      if(this.sourceArr[0]===this.sourceArr[2]&&i!==1){
-        key+="_"+wrapIndex;
-      }
-      
-      var itemStyle = {};
-      itemStyle[this.tranDict.transform] = "translate3d("+((i-1)*this.space+(i-1)*this.ScreenWidth+this.state.offset)+"px,0,0)"
-      if(this.animate){
-        itemStyle[this.tranDict.transition] = this.tranDict.cssTransform+" .3s ease";
-      }else{
-        itemStyle[this.tranDict.transition] = "none";
-      }
-      children.push(<div style={itemStyle} className="xz-swiper-item" key={key}><div className='xz-swiper-inneritem'>
-        {this._renderItem({index:i})}
-      </div></div>);
-    }
-   
-    if(this.props.cache){
-       var cacheStyle = {};
-       cacheStyle[this.tranDict.transform] = "translate3d("+((-1)*this.ScreenWidth-100)+"px,0,0)"
-       for(var key in this.cacheDict){
-        var cacheIndex = this.sourceArr.indexOf(parseInt(key));
-        if(cacheIndex<0){
-          var itemKey = 'xz-swiper-item-'+key;
-          children.push(<div style={cacheStyle} className="xz-swiper-item" key={itemKey}><div className='xz-swiper-inneritem'>
-           { this.cacheDict[key]}
-          </div></div>);
+         cacheStyle[this.tranDict.transform] = "translate3d("+cvstr+"px,0,0)"
+         for(var key in this.cacheDict){
+          var cacheIndex = this.sourceArr.indexOf(parseInt(key));
+          if(cacheIndex<0){
+            var itemKey = 'xz-swiper-item-'+key;
+            children.push(<div style={cacheStyle} className="xz-swiper-item" key={itemKey}><div className='xz-swiper-inneritem'>
+             { this.cacheDict[key]}
+            </div></div>);
+          }
         }
       }
     }
-    return (<div {...toucheEvent} className={classNameArr.join(" ")}>{children}
+    return (<div ref={(outerWrapper)=>{this.wrapInit(outerWrapper)}} {...toucheEvent} className={classNameArr.join(" ")}>{children}
       {this._renderIndicator()}
       </div>);
   }

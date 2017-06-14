@@ -157,7 +157,7 @@ class PageView extends React.Component {
             datasource={siwperData} 
             renderItem = {this.renderSwiperItem.bind(this)}>
           </xz.Swiper>
-          <xz.Swiper className='app-swiper' cache={true} datasource={appSwiperData} renderItem={this.renderAppSwiper.bind(this)}/>
+          <xz.Swiper direction='vertical' className='app-swiper' cache={true} datasource={appSwiperData} renderItem={this.renderAppSwiper.bind(this)}/>
           <xz.Button onClick={this.gotoTabbar.bind(this)} type="plat">goto tabbar</xz.Button><br/>
           <div className='btn-wrap'>
             <xz.Button onClick={this.clickHandle.bind(this,1)} type="primary">primary Button</xz.Button>
