@@ -7,6 +7,7 @@ import globalStore from "../stores/global"
 import indexStore from "../stores/index"
 
 import SearchBar from '../components/index/searchbar'
+import List from '../components/index/list'
 import {observer} from 'mobx-react'
 
 import '../fonts/iconfont.css'
@@ -23,11 +24,11 @@ var siwperData = [
 ];
 var appSwiperData = [
   [
-    {"key":"","title":"xx超市"},
-    {"key":"","title":"xx超市"},
-    {"key":"","title":"xx超市"},
-    {"key":"","title":"xx超市"},
-    {"key":"","title":"xx超市"},
+    {"key":"","title":"segment",url:"tabbarpage/segmentdemo/horizontalsegment"},
+    {"key":"","title":"one3",url:"threelevelroute/twolevelroute/one"},
+    {"key":"","title":"one",url:"twolevelroute/one"},
+    {"key":"","title":"index",url:"index"},
+    {"key":"","title":"lazyload",url:"lazyload"},
     {"key":"","title":"xx超市"},
     {"key":"","title":"xx超市"},
     {"key":"","title":"xx超市"},
@@ -71,38 +72,13 @@ class PageView extends React.Component {
     );
   }
 
-
-
-  clickHandle(params){
-    if(params===1){
-     this.props.pagemanager.go("lazyload");
-     // this.props.pagemanager.refreshApp();
-    }else if(params===2){
-      this.props.pagemanager.go("threelevelroute/twolevelroute/one");
-    }else if(params===3){
-      this.props.base.close();
-      this.props.pagemanager.go("twolevelroute/one");
-    }else{
-       this.props.pagemanager.go("index",{x:111});
-    }
-  }
-  gotoTabbar(){
-    this.props.pagemanager.go("tabbarpage/segmentdemo/horizontalsegment",{x:111});
-  }
-
   onPageResume(){
   }
 
-
-
   onPageBeforeLeave(){
-
     return true;
   }
 
-  onRefresh(){
-
-  }
 
   showPage(){
     this.props.base.showPage({
@@ -118,11 +94,18 @@ class PageView extends React.Component {
     </div>;
   }
 
+  SwiperAppItemClick(itemdata){
+    var url = itemdata.url;
+    if(url){
+      this.props.pagemanager.go(url,{someparam:1});
+    }
+  }
+
   renderAppSwiper(params){
     console.log(params.data);
     var child = [];
     for(var i=0,j=params.data.length;i<j;i++){
-      child.push(<li key={i}><div className='swiper-app-icon'></div><span className='swiper-app-title'>{params.data[i].title}</span></li>);
+      child.push(<li onClick={this.SwiperAppItemClick.bind(this,params.data[i])} key={i}><div className='swiper-app-icon'></div><span className='swiper-app-title'>{params.data[i].title}</span></li>);
     }
     return <ul className='appswiper-ul' key={"xxx"+params.index}>{child}</ul>
 
@@ -133,22 +116,53 @@ class PageView extends React.Component {
   }
 
   onRefreshMove(params){
-    if(this.props.indexStore.searchBarStatus!=="hide"&&params.diff>100){
+    var scrollTop = params.wrapperdom.scrollTop;
+    if(this.props.indexStore.searchBarStatus!=="hide"&&params.diff>100&&scrollTop===0){
       this.props.indexStore.searchBarStatus = "hide";
     }
   }
 
+  onRefresh(){
+
+  }
+
+  onLoadMore(){
+
+  }
+
+  onRefreshHor(){
+
+  }
+
+  onLoadMoreHor(){
+
+  }
+
+  onScroll(params){
+    if(params.wrapperdom.scrollTop<80&&!this.props.indexStore.searchBarIsOpacity){
+      this.props.indexStore.searchBarIsOpacity = true;
+    }
+
+    if(params.wrapperdom.scrollTop>200&&this.props.indexStore.searchBarIsOpacity){
+      this.props.indexStore.searchBarIsOpacity = false;
+    }
+  }
+
+
 
   render() {
     return (<div className='full-screen'>
-        <SearchBar store={this.props.indexStore} pageview={this}/>
+        <SearchBar  store={this.props.indexStore} pageview={this}/>
         <xz.ScrollView 
           onRefreshClose={this.onRefreshClose.bind(this)} 
           onRefreshMove={this.onRefreshMove.bind(this)} 
+          onLoadMore ={this.onLoadMore.bind(this)}
           onRefresh={this.onRefresh.bind(this)} 
+          onScroll={this.onScroll.bind(this)}
           className='full-screen'>
           <xz.Swiper ref={(instance)=>{this.topswiper = instance;}} 
             space={30} 
+            className="top-swiper"
             lazyrender={false} 
             loop={true} 
             interval={1000} 
@@ -157,18 +171,15 @@ class PageView extends React.Component {
             renderItem = {this.renderSwiperItem.bind(this)}>
           </xz.Swiper>
           <xz.Swiper className='app-swiper' cache={true} datasource={appSwiperData} renderItem={this.renderAppSwiper.bind(this)}/>
-          <xz.Button onClick={this.gotoTabbar.bind(this)} type="plat">goto tabbar</xz.Button><br/>
-          <div className='btn-wrap'>
-            <xz.Button onClick={this.clickHandle.bind(this,1)} type="primary">primary Button</xz.Button>
-            <xz.Button>default button</xz.Button>
-            <xz.Button type="none">none button</xz.Button>
-          </div>
-          <br/>
-          <div><xz.Button onClick={this.clickHandle.bind(this,1)}>跳转</xz.Button>
-          <xz.Button type='primary' onClick={this.clickHandle.bind(this,2)}>去三级</xz.Button>
-          <xz.Button onClick={this.clickHandle.bind(this,3)}>去二级</xz.Button>
-          <xz.Button onClick={this.clickHandle.bind(this,4)}>GoSame</xz.Button>
-          <xz.Button onClick={this.showPage.bind(this,3)}>我已审批</xz.Button></div>
+          
+          <xz.ScrollView 
+          onRefresh={this.onRefreshHor.bind(this)}
+          onLoadMore ={this.onLoadMoreHor.bind(this)}
+          direction='horizontal' className='app-horizon-scroll'>
+              xxxxxxx
+          </xz.ScrollView>  
+
+          <List store={this.props.indexStore}/>
         </xz.ScrollView>
        </div>);
   }

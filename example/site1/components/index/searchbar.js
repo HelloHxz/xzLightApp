@@ -3,7 +3,7 @@ import {observer} from 'mobx-react'
 import {xz,style,shallowEqual,Navigation} from "../../../../index"
 
 @observer
-class PageView extends React.Component {
+class SearchBar extends React.Component {
 
   constructor(props) {
     super(props)
@@ -26,11 +26,18 @@ class PageView extends React.Component {
     }else if(state==="hide"){
       classNameArr.push("xz-fadein-hide");
     }
+    var searchBarIsOpacity = this.props.store.searchBarIsOpacity;
+    var bkClassNameArr = ["search-bar-bk"];
+    if(searchBarIsOpacity){
+      bkClassNameArr.push("searchbar-opacity-none");
+    }else{
+      bkClassNameArr.push("searchbar-opacity-show");
+    }
     return (
       <div className={classNameArr.join(" ")} onClick={this.showSearchPage.bind(this)}>
-          <div className='search-input'></div><span>消息</span>
+          <div  className='search-bar-inner'><div className={bkClassNameArr.join(" ")}></div><div className='search-input'></div><span>消息</span></div>
         </div>
     	);
   }
 }
-export default PageView;
+export default SearchBar;

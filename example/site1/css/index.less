@@ -13,18 +13,44 @@
 	 top:0;
 	 width:100%;
 	 z-index:10;
+	
+}
+.search-bar-inner{
+	position:relative;
+	width:100%;
+	height:100%;
 	 display:flex;
 	 flex-direction:row;
 	 justify-content:center;
 	 align-items:center;
+}
+.search-bar-bk{
+	position:absolute;
+	top:0;
+	z-index:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background-color:red;
+	transition:opacity .6s ease;
 }
 .search-bar .search-input{
 	 .px2rem(height, 60);
 	 background-color:#fff;
 	 .px2rem(border-radius, 30);
 	 .px2rem(width, 600);
+	 z-index:1;
+}
+.search-bar span{
+	 z-index:1;
+}
+.searchbar-opacity-none{
+	opacity:0;
 }
 
+.searchbar-opacity-show{
+	opacity:0.9;
+}
 .btn-wrap{
 	 .px2rem(padding-left, 20);
 }
@@ -54,7 +80,11 @@
 	.px2rem(border-top-left-radius,20);
 	.px2rem(border-top-right-radius,20);
 	.px2rem(margin-top,-20);
-	z-index:10;
+	z-index:3;
+}
+.top-swiper{
+	z-index:1;
+	.px2rem(height,300)
 }
 
 .swiper-app-title{
@@ -70,6 +100,63 @@
 	.px2rem(height,80);
 	border-radius:100%;
 	background-color:orange;
+}
+
+.good-list{
+	overflow:hidden;
+	position:relative;
+	.px2rem(margin-top,6);
+}
+
+.good-list li{
+	float:left;
+	width:50%;
+	box-sizing: border-box;
+	.px2rem(padding-bottom,8);
+}
+
+.good-list li img{
+	position:relative;
+	.px2rem(width,371);
+	.px2rem(height,371);
+}
+
+.good-list .good-text{
+	.px2rem(height,60);
+	.px2rem(font-size,28);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+    color: #232326;
+	.px2rem(line-height,31);
+	.px2rem(margin-bottom,3);
+	.px2rem(padding-left,6);
+	.px2rem(padding-right,6);
+}
+
+.app-horizon-scroll{
+	.px2rem(height,190);
+	.px2rem(margin-bottom,10);
+	.px2rem(margin-top,10);
+	background-color:white;
+}
+
+
+
+.good-list li .rowinner{ 
+	background-color:#fff;
+	.px2rem(border-radius,6);
+	.px2rem(padding-bottom,8);
+	overflow:hidden;
+}
+.good-list li:nth-child(2n) {
+    .px2rem(padding-left,4);
+}
+.good-list li:nth-child(2n+1) {
+    .px2rem(padding-right,4);
 }
 
 

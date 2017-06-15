@@ -1,7 +1,31 @@
-.xz-refresh-control{
+@import url('../../../css/common.less');
+
+.xz-refresh-control-h{
+	position:absolute;
+	background-color:#c5955d;
+	height:100%;
+	.px2rem(width,600);
+	.px2rem(margin-left,-600);
+	top:0;
+}
+.xz-scrollview-inner-h{
+	height:100%;
+}
+.xz-refresh-control-v{
 	position:relative;
+	background-color:#c5955d;
+	.px2rem(height,600);
+	.px2rem(margin-top,-600);
 }
 .xz-scrollview{
 	position:relative;
-	overflow:auto;
+	-webkit-overflow-scrolling:touch;
+}
+.xz-scrollview-h{
+	overflow-x:auto !important;
+	overflow-y:hidden;
+}
+.xz-scrollview-v{
+	overflow-x:hidden;
+	overflow-y:auto !important;
 }

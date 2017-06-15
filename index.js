@@ -11,6 +11,7 @@ var Navigation = {
 			style._shipei();
 			N.start(config);
 			document.addEventListener('touchstart',function (event) {  
+				// event.preventDefault();
 	            if(event.touches.length>1){  
 	                event.preventDefault();  
 	            }  

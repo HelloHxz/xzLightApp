@@ -4,7 +4,7 @@ import {observer} from 'mobx-react'
 import {xz,style,shallowEqual,Navigation} from "../../../../index"
 
 @observer
-class PageView extends React.Component {
+class TabBar extends React.Component {
 
   constructor(props) {
     super(props)
@@ -29,4 +29,4 @@ class PageView extends React.Component {
          </xz.Segment>);
   }
 }
-export default PageView;
+export default TabBar;
