@@ -23,6 +23,7 @@ class ScrollView extends React.Component {
       this.canRefresh = false;
       var touch = e.nativeEvent.touches[0];
       this.startY = touch.pageY;
+      this.startX = touch.pageX;
       this.startScrollTop = this.wrapperDom.scrollTop;
   }
 
@@ -30,7 +31,12 @@ class ScrollView extends React.Component {
     if(this.isInLoading){return;}
       var touch = e.nativeEvent.touches[0];
       var curY = touch.pageY;
+      var curX = touch.pageX;
       var diff = curY-this.startY;
+      var diffX = curX - this.startX ;
+      if(Math.abs(diffX)>80){
+        return;
+      }
 
       this.props.onRefreshMove&&this.props.onRefreshMove({diff:diff});
 

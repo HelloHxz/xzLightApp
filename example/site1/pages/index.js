@@ -114,7 +114,7 @@ class PageView extends React.Component {
 
   renderSwiperItem(params){
     return <div key={"xx"+params.index}>
-      <img src={params.data.src}/>
+      <img style={{width:"100%"}} src={params.data.src}/>
     </div>;
   }
 
@@ -140,7 +140,6 @@ class PageView extends React.Component {
 
 
   render() {
-    console.log("render>>>>>>index");
     return (<div className='full-screen'>
         <SearchBar store={this.props.indexStore} pageview={this}/>
         <xz.ScrollView 
@@ -157,7 +156,7 @@ class PageView extends React.Component {
             datasource={siwperData} 
             renderItem = {this.renderSwiperItem.bind(this)}>
           </xz.Swiper>
-          <xz.Swiper direction='vertical' className='app-swiper' cache={true} datasource={appSwiperData} renderItem={this.renderAppSwiper.bind(this)}/>
+          <xz.Swiper className='app-swiper' cache={true} datasource={appSwiperData} renderItem={this.renderAppSwiper.bind(this)}/>
           <xz.Button onClick={this.gotoTabbar.bind(this)} type="plat">goto tabbar</xz.Button><br/>
           <div className='btn-wrap'>
             <xz.Button onClick={this.clickHandle.bind(this,1)} type="primary">primary Button</xz.Button>

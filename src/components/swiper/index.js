@@ -19,9 +19,6 @@ class Swiper extends React.Component {
       offset:0,
     };
 
-    // setTimeout(()=>{
-    //   this.goNext();
-    // },1000);
   }
 
   init(props){
@@ -29,11 +26,13 @@ class Swiper extends React.Component {
     var direction = this.props.direction||"horizontal";
     this.isHorizontal = direction.toLowerCase()==="horizontal";
     this.config = {
-      touchkey:"pageX"
+      touchkey:"pageX",
+      othertouchkey:"pageY"
     };
     if(!this.isHorizontal){
       this.config = {
-        touchkey:"pageY"
+        touchkey:"pageY",
+        othertouchkey:"pageX"
       };
     }
     this.cacheDict = {};
@@ -121,11 +120,9 @@ class Swiper extends React.Component {
 
   onTouchStart(e){
     if(this.isIntransition){return;}
-    // if(!this.WrapperSizeValue){
-    //  this.WrapperSizeValue = Style.screen.width;
-    // }
     this.starttime = new Date().valueOf();
     this.touchStartValue = e.nativeEvent.touches[0][this.config.touchkey];
+    this.touchOtherStartValue =  e.nativeEvent.touches[0][this.config.othertouchkey];
     // e.preventDefault();
     // e.stopPropagation();
     // e.nativeEvent.stopImmediatePropagation();
@@ -139,7 +136,14 @@ class Swiper extends React.Component {
   onTouchMove(e){
     if(this.isIntransition){return;}
     var curTouchX = e.nativeEvent.touches[0][this.config.touchkey];
+    var touchOtherValue =  e.nativeEvent.touches[0][this.config.othertouchkey];
     this.diff =  curTouchX - this.touchStartValue;
+    
+
+    if(Math.abs(touchOtherValue-this.touchOtherStartValue)>20){
+      return;
+    }
+
     if(Math.abs(this.diff)>40){
       e.preventDefault();
       e.stopPropagation();
@@ -284,9 +288,12 @@ class Swiper extends React.Component {
     var children= [];
 
     var toucheEvent = {};
-    toucheEvent.onTouchStart = this.onTouchStart.bind(this);
-    toucheEvent.onTouchMove = this.onTouchMove.bind(this);
-    toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
+    if(this.props.touchenable!==false){
+      toucheEvent.onTouchStart = this.onTouchStart.bind(this);
+      toucheEvent.onTouchMove = this.onTouchMove.bind(this);
+      toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
+    }
+    
     if(this.WrapperSizeValue){
       for(var i=0;i<3;i++){
         var wrapIndex = this.wrapperArr[i];

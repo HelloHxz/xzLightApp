@@ -58,8 +58,8 @@ class Segment extends React.Component {
     this.itemDict[itemKey] = itemInstance;
     this.initItemCount+=1;
     if(this.initItemCount===this.itemCount){
-     
       if(this.props.renderIndicator){
+        this.setState({renderKey:this.state.renderKey+1});
         setTimeout(()=>{
           this.setState({renderKey:this.state.renderKey+1});
         },330)
