@@ -19,6 +19,8 @@ class Swiper extends React.Component {
       offset:0,
     };
 
+
+
   }
 
   init(props){
@@ -41,7 +43,36 @@ class Swiper extends React.Component {
     this.isLoop = props.loop;
 
     this.getNextSourceArr();
+
+    this.startInterval();
   }
+  stopInterval(){
+  	if(this.intervalID){
+	    	window.clearInterval(this.intervalID);
+	    	this.intervalID = null;
+	}
+  }
+	startInterval(){
+		if(!this.props.interval){
+			return;
+		}
+		this.stopInterval();
+		var interval = 0;
+	    if(this.props.interval){
+	    	if(isNaN(this.props.interval)){
+	    		interval = 800;
+	    	}else{
+	    		interval = parseInt(this.props.interval);
+	    	}
+	    }
+	    
+	    if(interval>0){
+	    	this.intervalID = window.setInterval(()=>{
+	    		this.goNext();
+	    	},interval)
+	    }
+	}
+
   getPreSourceArr(){
     var len = this.props.datasource.length;
   
@@ -57,7 +88,6 @@ class Swiper extends React.Component {
     var lr = this.getLeftRightIndexByMid(mid,len);
     var arr = [lr.left,mid,lr.right];
     this.sourceArr = arr;
-    console.log(arr);
   }
 
   getNextSourceArr(){
@@ -75,7 +105,6 @@ class Swiper extends React.Component {
     var lr = this.getLeftRightIndexByMid(mid,len);
     var arr = [lr.left,mid,lr.right];
     this.sourceArr = arr;
-    console.log(arr);
   }
 
 
@@ -120,6 +149,7 @@ class Swiper extends React.Component {
 
   onTouchStart(e){
     if(this.isIntransition){return;}
+    this.stopInterval();
     this.starttime = new Date().valueOf();
     this.touchStartValue = e.nativeEvent.touches[0][this.config.touchkey];
     this.touchOtherStartValue =  e.nativeEvent.touches[0][this.config.othertouchkey];
@@ -171,11 +201,11 @@ class Swiper extends React.Component {
   onTouchEnd(){
     if(this.isIntransition){return;}
 
-    console.log(this.diff);
     if(Math.abs(this.diff)<this.touchoffset||this.resetPos){
 
       this.animate = true;
       this.setState({offset:(0-this.offsetValue)});
+      this.startInterval();
       return;
     }
 
@@ -196,6 +226,7 @@ class Swiper extends React.Component {
       this.getNextSourceArr();
       this.isIntransition = false;
       this.setState({offset:0});
+      this.startInterval();
     },310)
   }
 
@@ -207,6 +238,7 @@ class Swiper extends React.Component {
       this.getPreSourceArr();
       this.isIntransition = false;
       this.setState({offset:0});
+      this.startInterval();
     },310)
   }
 

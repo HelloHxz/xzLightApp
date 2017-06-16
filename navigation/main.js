@@ -648,7 +648,7 @@ class Navigation extends React.Component {
                   var  pageLeaveR= instanceInfo.instance.onPageBeforeLeave();
                   if(i===j-1){
                   //只有最末级的页面才能在onPageBeforeLeave阻止离开 其他页面只会走onPageBeforeLeave方法而不能阻止
-                    s = pageLeaveR;
+                    s = (pageLeaveR!==false||pageLeaveR)?true:false;
                   }
                 }else{
                   s = true;
@@ -661,7 +661,7 @@ class Navigation extends React.Component {
                 var pageLeaveR = instanceInfo.instance.onPageBeforeLeave();
                 if(i===j-1){
                   //只有最末级的页面才能在onPageBeforeLeave阻止离开 其他页面只会走onPageBeforeLeave方法而不能阻止
-                  s  = pageLeaveR;
+                  s  = (pageLeaveR!==false||pageLeaveR)?true:false;
                 }
               }
             }

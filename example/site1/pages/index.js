@@ -73,12 +73,8 @@ class PageView extends React.Component {
     );
   }
 
-  onPageResume(){
-  }
+ 
 
-  onPageBeforeLeave(){
-    return true;
-  }
 
 
   showPage(){
@@ -149,6 +145,16 @@ class PageView extends React.Component {
     }
   }
 
+  onPageBeforeLeave(){
+    this.topswiper.stopInterval();
+    return true;
+  }
+
+  onPageResume(){
+    this.topswiper.startInterval();
+  }
+
+
 
 
   render() {
@@ -168,7 +174,7 @@ class PageView extends React.Component {
             className="top-swiper"
             lazyrender={false} 
             loop={true} 
-            interval={1000} 
+            interval={3000} 
             cache={false} 
             datasource={siwperData} 
             renderItem = {this.renderSwiperItem.bind(this)}>
