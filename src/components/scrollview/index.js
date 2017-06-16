@@ -62,19 +62,18 @@ class ScrollView extends React.Component {
       });
 
       if(diff>0){
-        
         var scrollValue = this.isHorizontal? this.wrapperDom.scrollLeft:this.wrapperDom.scrollTop;
         if(scrollValue <=0){
-          this.wrapperDom.style["overflow"] = "hidden";
           e.preventDefault();
           e.stopPropagation();
+          this.wrapperDom.style["overflow"] = "hidden";
           var pullOffsetY = (diff- this.startScrollValue)/3;
           if(pullOffsetY> this.limitOffset){
-            // _this.pullMesLabel.html("释放更新");
+            // _this.pullMesLabel.html("");
             // _this.pullToRefreshWrapper[0].className = "yy-pull-wrapper yy-release-refresh";
             this.canRefresh = true;
           }else{
-            // _this.pullMesLabel.html("下拉刷新");
+            // _this.pullMesLabel.html("");
             // _this.pullToRefreshWrapper[0].className = "yy-pull-wrapper yy-push-refresh";
             this.canRefresh = false;
           }
@@ -108,6 +107,12 @@ class ScrollView extends React.Component {
       wrapperdom:this.wrapperDom,
       e:e
     });
+  }
+
+  _renderRefreshIndicator(){
+    var wrapperClassName = this.isHorizontal?"xz-refresh-control-inner-h":"xz-refresh-control-inner-v";
+    var text = this.canRefresh?"释放更新":"下拉刷新";
+    return <div className={wrapperClassName}><span>{text}</span></div>;
   }
 
 
@@ -144,13 +149,19 @@ class ScrollView extends React.Component {
 
     var innerClassName = this.isHorizontal?"xz-scrollview-inner-h":"xz-scrollview-inner-v";
 
+    var refreshControl = null;
+    if(this.props.onRefresh){
+      refreshControl =  <div className={refreshControlClassName}>
+          {this._renderRefreshIndicator()}
+        </div>;
+    }
     return (<div {...scrollEvent} ref={(wrapper)=>{
       this.wrapperDom = wrapper;
     }} {...toucheEvent} className={classNameArr.join(" ")}>
     	<div className={innerClassName} style={moveStyle} ref={(wrapper)=>{
         this.innerWrapperDom = wrapper;
       }}>
-        <div className={refreshControlClassName}></div>
+        {refreshControl}
         {this.props.children}
       </div></div>);
   }

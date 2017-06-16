@@ -155,6 +155,7 @@ class PageView extends React.Component {
     return (<div className='full-screen'>
         <SearchBar  store={this.props.indexStore} pageview={this}/>
         <xz.ScrollView 
+          scrollkey="mainscroll"
           onRefreshClose={this.onRefreshClose.bind(this)} 
           onRefreshMove={this.onRefreshMove.bind(this)} 
           onLoadMore ={this.onLoadMore.bind(this)}

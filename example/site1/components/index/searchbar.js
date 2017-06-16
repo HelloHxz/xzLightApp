@@ -29,13 +29,13 @@ class SearchBar extends React.Component {
     var searchBarIsOpacity = this.props.store.searchBarIsOpacity;
     var bkClassNameArr = ["search-bar-bk"];
     if(searchBarIsOpacity){
-      bkClassNameArr.push("searchbar-opacity-none");
+      classNameArr.push("searchbar-opacity-none");
     }else{
-      bkClassNameArr.push("searchbar-opacity-show");
+      classNameArr.push("searchbar-opacity-show");
     }
     return (
       <div className={classNameArr.join(" ")} onClick={this.showSearchPage.bind(this)}>
-          <div  className='search-bar-inner'><div className={bkClassNameArr.join(" ")}></div><div className='search-input'></div><span>消息</span></div>
+          <div className='search-bar-inner'><div className='search-bar-bk'></div><div className='search-input'></div><span className='messiconspan'>消息</span></div>
         </div>
     	);
   }

@@ -42,7 +42,7 @@ class PageView extends React.Component {
          <Segment store={this.props.store}/>
       </div>
        <xz.Swiper 
-          space={30} 
+          space={10} 
           className="detail-swiper"
           lazyrender={false} 
           loop={true} 

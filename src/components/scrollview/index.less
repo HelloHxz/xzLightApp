@@ -21,11 +21,32 @@
 	position:relative;
 	-webkit-overflow-scrolling:touch;
 }
+
 .xz-scrollview-h{
-	overflow-x:auto !important;
+	overflow-x:auto;
 	overflow-y:hidden;
 }
 .xz-scrollview-v{
 	overflow-x:hidden;
-	overflow-y:auto !important;
+	overflow-y:auto;
 }
+.xz-refresh-control-inner-h{
+	position:absolute;
+	height:100%;
+	right:0;
+	.px2rem(width,134);
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+.xz-refresh-control-inner-v{
+	position:absolute;
+	bottom:0;
+	width:100%;
+	.px2rem(height,94);
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
