@@ -13,7 +13,7 @@ class List extends React.Component {
   render() {
     var rows = [];
     for(var i=0,j=this.props.store.ListDataSource.length;i<j;i++){
-      rows.push(<Row key={i}/>);
+      rows.push(<Row pageview={this.props.pageview} key={i}/>);
     }
     return (
       <ul className='good-list'>
@@ -30,10 +30,14 @@ class Row extends React.Component {
     super(props)
   }
 
+  goDetail(){
+    this.props.pageview.props.pagemanager.go("detail",{id:"x"});
+  }
+
 
   render() {
     return (
-      <li>
+      <li onClick={this.goDetail.bind(this)}>
         <div className='rowinner'><img src='./imgs/6.jpg' className='img'/>
         <span className='good-text'>【中粮我买网】Hoegaarden/福佳 比利时原装进口 福佳白啤酒 330ml*24</span>
         </div>

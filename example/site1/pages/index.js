@@ -180,7 +180,7 @@ class PageView extends React.Component {
               xxxxxxx
           </xz.ScrollView>  
 
-          <List store={this.props.indexStore}/>
+          <List pageview={this} store={this.props.indexStore}/>
         </xz.ScrollView>
        </div>);
   }

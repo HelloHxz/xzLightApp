@@ -293,6 +293,7 @@ class Swiper extends React.Component {
       toucheEvent.onTouchMove = this.onTouchMove.bind(this);
       toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
     }
+
     
     if(this.WrapperSizeValue){
       for(var i=0;i<3;i++){
@@ -319,6 +320,8 @@ class Swiper extends React.Component {
           {this._renderItem({index:i})}
         </div></div>);
       }
+   
+      
      
       if(this.props.cache){
          var cacheStyle = {};

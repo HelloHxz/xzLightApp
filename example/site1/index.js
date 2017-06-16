@@ -16,6 +16,7 @@ Navigation.start({
 		horizontalsegment:require("./pages/horizontalsegment").default,
 		segmentdemo:require("./pages/segmentdemo").default,
 		one:require("./pages/one").default,
+		detail:require("./pages/detail").default,
 		two:function(callback) {
 			require.ensure([], function(require) {
 		  		callback(require("./pages/two").default);
