@@ -24,6 +24,10 @@ module.exports = function (env) {
       new webpack.LoaderOptionsPlugin({
           minimize: true
       }),
+      //这个静态文件 拷贝到dist的imgs下  其他的js boundle也是拷贝至dist下 所以在js通过变量引用图片的时候直接 ./imgs/xxx.jpg就可以
+      new CopyWebpackPlugin([
+        {from:"./site1/imgs",to:"imgs"}
+        ]),
       new HtmlWebpackPlugin({
         filename: 'index.html',
         template: './site1/index.html', 
@@ -103,7 +107,7 @@ return {
       },
       { 
         test: /\.(png|jpg|jpeg|gif|woff)$/, 
-        loader: 'url-loader?limit=6144&name=imgs/[path][name].[ext]'
+        loader: 'url-loader?limit=6144&name=images/[path][name].[ext]'
       },
        {
           test: /\.(eot|svg|ttf|woff|woff2)$/,

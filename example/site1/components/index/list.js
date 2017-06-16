@@ -34,7 +34,7 @@ class Row extends React.Component {
   render() {
     return (
       <li>
-        <div className='rowinner'><img src='https://m.360buyimg.com//mobilecms/s276x276_jfs/t2713/10/1346087182/158456/e089af0d/573c1bc8Neb67108c.jpg!q70.jpg' className='img'/>
+        <div className='rowinner'><img src='./imgs/6.jpg' className='img'/>
         <span className='good-text'>【中粮我买网】Hoegaarden/福佳 比利时原装进口 福佳白啤酒 330ml*24</span>
         </div>
       </li>

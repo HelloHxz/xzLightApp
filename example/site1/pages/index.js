@@ -14,13 +14,14 @@ import '../fonts/iconfont.css'
 
 
 
+
 var siwperData = [
- {src:"http://img05.tooopen.com/images/20150202/sy_80219211654.jpg",title:"xxx"},
+ {src:"./imgs/1.jpg",title:"xxx"},
  {
-   src:"http://img04.tooopen.com/images/20130701/tooopen_10055061.jpg",title:"xxx",
+   src:"./imgs/2.jpg",title:"xxx",
   },
-  {src:"http://img06.tooopen.com/images/20170514/tooopen_sy_210126153448.jpg",title:"xxx"},
-  {src:"http://img06.tooopen.com/images/20170514/tooopen_sy_210122159348.jpg",title:"xxx"}
+  {src:"./imgs/3.jpg",title:"xxx"},
+  {src:"./imgs/4.jpg",title:"xxx"}
 ];
 var appSwiperData = [
   [
