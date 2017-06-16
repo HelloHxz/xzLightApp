@@ -156,6 +156,7 @@ class PageView extends React.Component {
         <SearchBar  store={this.props.indexStore} pageview={this}/>
         <xz.ScrollView 
           scrollkey="mainscroll"
+          pkey='ver'
           onRefreshClose={this.onRefreshClose.bind(this)} 
           onRefreshMove={this.onRefreshMove.bind(this)} 
           onLoadMore ={this.onLoadMore.bind(this)}
@@ -175,6 +176,7 @@ class PageView extends React.Component {
           <xz.Swiper className='app-swiper' cache={true} datasource={appSwiperData} renderItem={this.renderAppSwiper.bind(this)}/>
           
           <xz.ScrollView 
+          pkey="hor"
           onRefresh={this.onRefreshHor.bind(this)}
           onLoadMore ={this.onLoadMoreHor.bind(this)}
           direction='horizontal' className='app-horizon-scroll'>

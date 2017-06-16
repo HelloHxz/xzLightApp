@@ -45,14 +45,14 @@ class ScrollView extends React.Component {
       var curX = touch[this.config.otherToucKey];
 
       var diff = curY-this.startY;
+
       var diffOtherDirection = curX - this.startX ;
 
-
-      if(Math.abs(diffOtherDirection)>120){
-        e.preventDefault();
-        e.stopPropagation();
-        return;
-      }
+      // if(Math.abs(diffOtherDirection)>Math.abs(diff)){
+      //   e.preventDefault();
+      //   e.stopPropagation();
+      //   return;
+      // }
 
       this.props.onRefreshMove&&this.props.onRefreshMove({
         diff:diff,
@@ -60,7 +60,10 @@ class ScrollView extends React.Component {
         wrapperdom:this.wrapperDom,
         e:e
       });
-
+       if(!this.isHorizontal){
+            console.log(this.config.touchkey)
+        }else{
+        }
       if(diff>0){
         var scrollValue = this.isHorizontal? this.wrapperDom.scrollLeft:this.wrapperDom.scrollTop;
         if(scrollValue <=0){
@@ -68,14 +71,9 @@ class ScrollView extends React.Component {
           e.stopPropagation();
           this.wrapperDom.style["overflow"] = "hidden";
           var pullOffsetY = (diff- this.startScrollValue)/3;
-          if(pullOffsetY> this.limitOffset){
-            // _this.pullMesLabel.html("");
-            // _this.pullToRefreshWrapper[0].className = "yy-pull-wrapper yy-release-refresh";
-            this.canRefresh = true;
-          }else{
-            // _this.pullMesLabel.html("");
-            // _this.pullToRefreshWrapper[0].className = "yy-pull-wrapper yy-push-refresh";
-            this.canRefresh = false;
+          this.canRefresh = pullOffsetY> this.limitOffset;
+          if(!this.isHorizontal){
+            console.log(pullOffsetY)
           }
           this.setState({offset:pullOffsetY,animate:false});
         }

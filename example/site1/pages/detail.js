@@ -30,7 +30,7 @@ class PageView extends React.Component {
   }
 
   renderSwiperItem(params){
-    return <div key={"xx"+params.index}>
+    return <div key={"xx"+params.index} style={{height:"100%"}}>
       <img style={{height:"100%"}} src={params.data.src}/>
     </div>;
   }
