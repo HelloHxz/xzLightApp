@@ -46,7 +46,6 @@ class PageView extends React.Component {
           className="detail-swiper"
           lazyrender={false} 
           loop={true} 
-          interval={1000} 
           cache={false} 
           datasource={siwperData} 
           renderItem = {this.renderSwiperItem.bind(this)}>
