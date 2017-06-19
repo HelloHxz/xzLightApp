@@ -201,7 +201,9 @@ class ScrollView extends React.Component {
       }}>
         {refreshControl}
         {this.props.children}
-      </div></div>);
+        <div style={{height:0}}>{loadMoreControl}</div>
+      </div>
+     </div>);
   }
 }
 
