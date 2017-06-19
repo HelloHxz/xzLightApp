@@ -167,6 +167,14 @@ class PageView extends React.Component {
     return true;
   }
 
+  onTouchStart(){
+    this.topswiper.stopInterval();
+  }
+
+  onTouchEnd(){
+    this.topswiper.startInterval();
+  }
+
   onPageResume(){
     this.topswiper.startInterval();
     this.verSwiper.startInterval();
@@ -181,6 +189,8 @@ class PageView extends React.Component {
         <xz.ScrollView 
           scrollkey="mainscroll"
           pkey='ver'
+          onTouchEnd = {this.onTouchEnd.bind(this)}
+          onTouchStart={this.onTouchStart.bind(this)}
           onRefreshClose={this.onRefreshClose.bind(this)} 
           onRefreshMove={this.onRefreshMove.bind(this)} 
           onLoadMore ={this.onLoadMore.bind(this)}

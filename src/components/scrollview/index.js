@@ -40,6 +40,8 @@ class ScrollView extends React.Component {
       if(this.props.onLoadMore){
         this.wrapperSize = this.isHorizontal? this.wrapperDom.offsetWidth:this.wrapperDom.offsetHeight;
       }
+      this.props.onTouchStart&&this.props.onTouchStart();
+
   }
 
   onTouchMove(e){
@@ -64,7 +66,7 @@ class ScrollView extends React.Component {
         wrapperdom:this.wrapperDom,
         e:e
       });
-      
+      this.touchAction = "xxxx";
       this.scrollValue = this.isHorizontal? this.wrapperDom.scrollLeft:this.wrapperDom.scrollTop;
       if(diff>0&&this.props.onRefresh){
         if(this.scrollValue <=0){
@@ -79,11 +81,11 @@ class ScrollView extends React.Component {
       }
 
       if(diff<0&&this.props.onLoadMore){
-        var scrollHeightSize =this.isHorizontal? this.wrapperDom.scrollWidth: this.wrapperDom.scrollHeight;
-        if(scrollHeightSize===this.wrapperSize+this.scrollValue){
+        this.scrollHeightSize =this.isHorizontal? this.wrapperDom.scrollWidth: this.wrapperDom.scrollHeight;
+        if(this.scrollHeightSize<=this.wrapperSize+this.scrollValue+20){
+          this.wrapperDom.style["overflow"] = "hidden";
           e.preventDefault();
           e.stopPropagation();
-          this.wrapperDom.style["overflow"] = "hidden";
           this.touchAction = "loadmore";
           var pullOffset = (diff)/3;
           this.canLoadMore = Math.abs(pullOffset)>this.limitOffset;
@@ -95,6 +97,8 @@ class ScrollView extends React.Component {
   onTouchEnd(){
     var scrollKey =this.isHorizontal?"overflow-x":"overflow-y";
     this.wrapperDom.style[scrollKey] = "auto";
+      this.props.onTouchEnd&&this.props.onTouchEnd();
+    
     if(this.isInLoading){return;}
     if(this.touchAction==="refresh"){
       if(this.canRefresh){
@@ -146,7 +150,7 @@ class ScrollView extends React.Component {
   _renderLoadMoreIndicator(){
     var wrapperClassName = this.isHorizontal?"xz-loadmore-control-inner-h":"xz-loadmore-control-inner-v";
     var text = this.canLoadMore?"释放加载":"上拉加载更多";
-    return <div className={wrapperClassName}><span>{text}</span></div>;
+    return <div className={wrapperClassName}><span>{this.state.offset}</span></div>;
   }
 
 
@@ -158,6 +162,7 @@ class ScrollView extends React.Component {
       toucheEvent.onTouchMove = this.onTouchMove.bind(this);
       toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
     }
+
 
     
     var classNameArr = ['xz-scrollview'];
