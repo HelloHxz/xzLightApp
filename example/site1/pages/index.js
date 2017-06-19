@@ -23,6 +23,11 @@ var siwperData = [
   {src:"./imgs/3.jpg",title:"xxx"},
   {src:"./imgs/4.jpg",title:"xxx"}
 ];
+var verSwiperData = [
+  ["618打折打促销","笔记本大甩卖"],
+  ["鞋子化妆品大甩卖","买一送一"],
+  ["电器家电半价～","包邮包送家电！！"]
+];
 var appSwiperData = [
   [
     {"key":"","title":"segment",url:"tabbarpage/segmentdemo/horizontalsegment"},
@@ -108,6 +113,17 @@ class PageView extends React.Component {
 
   }
 
+  renderVerSwiperItem(params){
+    var child = [];
+   for(var i=0,j=params.data.length;i<j;i++){
+      child.push(<div className='swiper-ver-item' key={"xx"+i}>{params.data[i]}</div>);
+   }
+    return <div>{child}</div>;
+  }
+  renderIndicatorVer(params){
+    return null;
+  }
+
   onRefreshClose(){
     this.props.indexStore.searchBarStatus = "show";
   }
@@ -147,11 +163,13 @@ class PageView extends React.Component {
 
   onPageBeforeLeave(){
     this.topswiper.stopInterval();
+    this.verSwiper.stopInterval();
     return true;
   }
 
   onPageResume(){
     this.topswiper.startInterval();
+    this.verSwiper.startInterval();
   }
 
 
@@ -181,6 +199,19 @@ class PageView extends React.Component {
           </xz.Swiper>
           <xz.Swiper className='app-swiper' cache={true} datasource={appSwiperData} renderItem={this.renderAppSwiper.bind(this)}/>
           
+          <div className='index-ver-siwper-wrapper'>
+            <xz.Swiper className='index-ver-swiper' datasource={verSwiperData}
+              renderItem={this.renderVerSwiperItem.bind(this)}
+              ref={(instance)=>{this.verSwiper = instance;}}
+              direction="vertical"
+              touchenable={false}
+              loop={true}
+              renderIndicator={this.renderIndicatorVer.bind(this)}
+              interval={2000}
+            ></xz.Swiper>
+
+          </div>
+
           <xz.ScrollView 
           pkey="hor"
           onRefresh={this.onRefreshHor.bind(this)}

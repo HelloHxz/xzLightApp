@@ -32,10 +32,14 @@ class ScrollView extends React.Component {
      if(this.isInLoading){return;}
       this.isInLoading = false;
       this.canRefresh = false;
+      this.touchAction = "";
       var touch = e.nativeEvent.touches[0];
       this.startY = touch[this.config.touchkey];
       this.startX = touch[this.config.otherToucKey];
-      this.startScrollValue =this.isHorizontal? this.wrapperDom.scrollLeft:this.wrapperDom.scrollTop;
+      this.startScrollValue = this.isHorizontal? this.wrapperDom.scrollLeft:this.wrapperDom.scrollTop;
+      if(this.props.onLoadMore){
+        this.wrapperSize = this.isHorizontal? this.wrapperDom.offsetWidth:this.wrapperDom.offsetHeight;
+      }
   }
 
   onTouchMove(e){
@@ -60,22 +64,27 @@ class ScrollView extends React.Component {
         wrapperdom:this.wrapperDom,
         e:e
       });
-       if(!this.isHorizontal){
-            console.log(this.config.touchkey)
-        }else{
-        }
-      if(diff>0){
-        var scrollValue = this.isHorizontal? this.wrapperDom.scrollLeft:this.wrapperDom.scrollTop;
-        if(scrollValue <=0){
+      
+      this.scrollValue = this.isHorizontal? this.wrapperDom.scrollLeft:this.wrapperDom.scrollTop;
+      if(diff>0&&this.props.onRefresh){
+        if(this.scrollValue <=0){
           e.preventDefault();
           e.stopPropagation();
           this.wrapperDom.style["overflow"] = "hidden";
           var pullOffsetY = (diff- this.startScrollValue)/3;
           this.canRefresh = pullOffsetY> this.limitOffset;
-          if(!this.isHorizontal){
-            console.log(pullOffsetY)
-          }
+          this.touchAction = "refresh";
           this.setState({offset:pullOffsetY,animate:false});
+        }
+      }
+
+      if(diff<0&&this.props.onLoadMore){
+        var scrollHeight = this.wrapperDom.scrollHeight;
+        if(scrollHeight===this.wrapperSize+this.scrollValue){
+          this.touchAction = "loadmore";
+          var pullOffset = diff/3;
+          this.canLoadMore = Math.abs(pullOffset)>this.limitOffset;
+          this.setState({offset:pullOffset,animate:false});
         }
       }
   }
@@ -84,18 +93,36 @@ class ScrollView extends React.Component {
     var scrollKey =this.isHorizontal?"overflow-x":"overflow-y";
     this.wrapperDom.style[scrollKey] = "auto";
     if(this.isInLoading){return;}
-    if(this.canRefresh){
-      this.isInLoading = true;
-      this.setState({offset:this.limitOffset,animate:true});
-      setTimeout(()=>{
-        this.isInLoading = false;
+    if(this.touchAction==="refresh"){
+      if(this.canRefresh){
+        this.isInLoading = true;
+        this.setState({offset:this.limitOffset,animate:true});
+        setTimeout(()=>{
+          this.isInLoading = false;
+          this.setState({offset:-1,animate:true});
+          this.props.onRefreshClose&&this.props.onRefreshClose();
+        },2000);
+      }else{
         this.setState({offset:-1,animate:true});
         this.props.onRefreshClose&&this.props.onRefreshClose();
-      },2000);
-    }else{
-      this.setState({offset:-1,animate:true});
-      this.props.onRefreshClose&&this.props.onRefreshClose();
+      }
     }
+
+    if(this.touchAction==="loadmore"){
+      if(this.canLoadMore){
+        this.isInLoading = true;
+        this.setState({offset:0-this.limitOffset,animate:true});
+        setTimeout(()=>{
+          this.isInLoading = false;
+          this.setState({offset:-1,animate:true});
+          this.props.onLoadMoreClose&&this.props.onLoadMoreClose();
+        },2000);
+      }else{
+        this.setState({offset:-1,animate:true});
+        this.props.onLoadMoreClose&&this.props.onLoadMoreClose(); 
+      }
+    }
+    
   }
 
 
@@ -139,20 +166,30 @@ class ScrollView extends React.Component {
       moveStyle[this.tranDict.transition] = "none";
     }
 
-    var refreshControlClassName = this.isHorizontal?"xz-refresh-control-h":"xz-refresh-control-v";
     var scrollEvent = {};
     if(this.props.onScroll){
       scrollEvent.onScroll = this._onScroll.bind(this);
     }
 
-    var innerClassName = this.isHorizontal?"xz-scrollview-inner-h":"xz-scrollview-inner-v";
 
     var refreshControl = null;
     if(this.props.onRefresh){
+      var refreshControlClassName = this.isHorizontal?"xz-refresh-control-h":"xz-refresh-control-v";
       refreshControl =  <div className={refreshControlClassName}>
           {this._renderRefreshIndicator()}
         </div>;
     }
+    var loadMoreControl = null;
+    if(this.props.onLoadMore){
+      var loadMoreClassName = this.isHorizontal?"xz-loadmore-control-h":"xz-loadmore-control-v";
+      loadMoreControl =  <div className={loadMoreClassName}>
+
+        </div>;
+    }
+
+
+    var innerClassName = this.isHorizontal?"xz-scrollview-inner-h":"xz-scrollview-inner-v";
+
     return (<div {...scrollEvent} ref={(wrapper)=>{
       this.wrapperDom = wrapper;
     }} {...toucheEvent} className={classNameArr.join(" ")}>

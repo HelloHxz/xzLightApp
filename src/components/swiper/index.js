@@ -287,9 +287,16 @@ class Swiper extends React.Component {
   }
 
   _renderIndicator(){
+    var curIndex = this.sourceArr[1];
     var datasource  =this.props.datasource||[];
     var len = datasource.length;
-    var curIndex = this.sourceArr[1];
+    if(this.props.renderIndicator){
+      return this.props.renderIndicator({
+        length:len,
+        curIndex:curIndex
+      });
+    }
+ 
     var point = [];
     for(var i=0;i<len;i++){
       point.push(<span key={i}>&nbsp;{i===curIndex?"o":"-"}</span>);
