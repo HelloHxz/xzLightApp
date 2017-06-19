@@ -79,8 +79,8 @@ class ScrollView extends React.Component {
       }
 
       if(diff<0&&this.props.onLoadMore){
-        var scrollHeight = this.wrapperDom.scrollHeight;
-        if(scrollHeight===this.wrapperSize+this.scrollValue){
+        var scrollHeightSize =this.isHorizontal? this.wrapperDom.scrollWidth: this.wrapperDom.scrollHeight;
+        if(scrollHeightSize===this.wrapperSize+this.scrollValue){
           e.preventDefault();
           e.stopPropagation();
           this.wrapperDom.style["overflow"] = "hidden";

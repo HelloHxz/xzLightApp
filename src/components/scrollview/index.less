@@ -3,13 +3,21 @@
 .xz-refresh-control-h{
 	position:absolute;
 	background-color:#c5955d;
+	overflow:hidden;
 	height:100%;
 	.px2rem(width,600);
 	.px2rem(margin-left,-600);
 	top:0;
 }
 .xz-loadmore-control-h{
-	
+	position:absolute;
+	height:100%;
+	.px2rem(width,600);
+	.px2rem(margin-right,-600);
+	.px2rem(right,-1);
+	overflow:hidden;
+	background-color:#c5955d;
+	top:0;
 }
 .xz-loadmore-control-v{
 	position:absolute;
@@ -20,9 +28,7 @@
 	overflow:hidden;
 	background-color:#c5955d;
 }
-.xz-scrollview-inner-h{
-	height:100%;
-}
+
 .xz-refresh-control-v{
 	position:relative;
 	background-color:#c5955d;
@@ -33,6 +39,12 @@
 	position:relative;
 	display:flex;
 	-webkit-overflow-scrolling:touch;
+}
+
+.xz-scrollview-inner-h{
+	position:relative;
+	min-width:100%;
+	height:100%;
 }
 .xz-scrollview-inner-v{
 	position:relative;
