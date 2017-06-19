@@ -143,6 +143,12 @@ class ScrollView extends React.Component {
     return <div className={wrapperClassName}><span>{text}</span></div>;
   }
 
+  _renderLoadMoreIndicator(){
+    var wrapperClassName = this.isHorizontal?"xz-loadmore-control-inner-h":"xz-loadmore-control-inner-v";
+    var text = this.canLoadMore?"释放加载":"上拉加载更多";
+    return <div className={wrapperClassName}><span>{text}</span></div>;
+  }
+
 
   render() {
 
@@ -186,7 +192,7 @@ class ScrollView extends React.Component {
     if(this.props.onLoadMore){
       var loadMoreClassName = this.isHorizontal?"xz-loadmore-control-h":"xz-loadmore-control-v";
       loadMoreControl =  <div className={loadMoreClassName}>
-
+        {this._renderLoadMoreIndicator()}
         </div>;
     }
 
@@ -201,7 +207,7 @@ class ScrollView extends React.Component {
       }}>
         {refreshControl}
         {this.props.children}
-        <div style={{height:0}}>{loadMoreControl}</div>
+        {loadMoreControl}
       </div>
      </div>);
   }

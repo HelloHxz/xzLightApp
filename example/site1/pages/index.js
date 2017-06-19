@@ -186,7 +186,7 @@ class PageView extends React.Component {
           onLoadMore ={this.onLoadMore.bind(this)}
           onRefresh={this.onRefresh.bind(this)} 
           onScroll={this.onScroll.bind(this)}
-          className='full-screen'>
+          className={"main-scroll"}>
           <xz.Swiper ref={(instance)=>{this.topswiper = instance;}} 
             space={30} 
             className="top-swiper"
