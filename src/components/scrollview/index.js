@@ -81,8 +81,11 @@ class ScrollView extends React.Component {
       if(diff<0&&this.props.onLoadMore){
         var scrollHeight = this.wrapperDom.scrollHeight;
         if(scrollHeight===this.wrapperSize+this.scrollValue){
+          e.preventDefault();
+          e.stopPropagation();
+          this.wrapperDom.style["overflow"] = "hidden";
           this.touchAction = "loadmore";
-          var pullOffset = diff/3;
+          var pullOffset = (diff)/3;
           this.canLoadMore = Math.abs(pullOffset)>this.limitOffset;
           this.setState({offset:pullOffset,animate:false});
         }
