@@ -129,7 +129,7 @@ class PageView extends React.Component {
   }
 
   onRefreshMove(params){
-    var scrollTop = params.wrapperdom.scrollTop;
+    var scrollTop = params.scroller.scrollTop;
     if(this.props.indexStore.searchBarStatus!=="hide"&&params.diff>100&&scrollTop===0){
       this.props.indexStore.searchBarStatus = "hide";
     }
@@ -160,11 +160,11 @@ class PageView extends React.Component {
   }
 
   onScroll(params){
-    if(params.wrapperdom.scrollTop<80&&!this.props.indexStore.searchBarIsOpacity){
+    if(params.scroller.scrollTop<80&&!this.props.indexStore.searchBarIsOpacity){
       this.props.indexStore.searchBarIsOpacity = true;
     }
 
-    if(params.wrapperdom.scrollTop>200&&this.props.indexStore.searchBarIsOpacity){
+    if(params.scroller.scrollTop>200&&this.props.indexStore.searchBarIsOpacity){
       this.props.indexStore.searchBarIsOpacity = false;
     }
   }
@@ -176,13 +176,13 @@ class PageView extends React.Component {
   }
 
   onTouchStart(){
-    this.topswiper.stopInterval();
-    this.verSwiper.stopInterval();
+    // this.topswiper.stopInterval();
+    // this.verSwiper.stopInterval();
   }
 
   onTouchEnd(){
-     this.topswiper.startInterval();
-    this.verSwiper.startInterval();
+    //  this.topswiper.startInterval();
+    // this.verSwiper.startInterval();
   }
 
   onPageResume(){
@@ -199,8 +199,6 @@ class PageView extends React.Component {
         <xz.ScrollView 
           scrollkey="mainscroll"
           pkey='ver'
-          onTouchEnd = {this.onTouchEnd.bind(this)}
-          onTouchStart={this.onTouchStart.bind(this)}
           onRefreshClose={this.onRefreshClose.bind(this)} 
           onRefreshMove={this.onRefreshMove.bind(this)} 
           onLoadMore ={this.onLoadMore.bind(this)}

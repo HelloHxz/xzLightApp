@@ -64,7 +64,7 @@ class ScrollView extends React.Component {
       this.props.onRefreshMove&&this.props.onRefreshMove({
         diff:diff,
         instance:this,
-        wrapperdom:this.wrapperDom,
+        scroller:this.scrollarea,
         e:e
       });
       this.scrollValue = this.isHorizontal? this.scrollarea.scrollLeft:this.scrollarea.scrollTop;
@@ -150,7 +150,7 @@ class ScrollView extends React.Component {
   _onScroll(e){
     this.props.onScroll({
       instance:this,
-      wrapperdom:this.scrollarea,
+      scroller:this.scrollarea,
       e:e
     });
   }
