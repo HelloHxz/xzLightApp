@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --host 10.21.2.168 --port 8080",
+    "start": "webpack-dev-server --host localhost --port 8080",
     "build": "webpack -p --progress --config  webpack.config.js  --env.prod=true"
   },
   "author": "",
@@ -39,6 +39,8 @@
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
+    "es6-promise": "^4.1.0",
+    "isomorphic-fetch": "^2.2.1",
     "mobx": "^3.1.9",
     "mobx-react": "^4.1.8",
     "react": "^15.5.4",
