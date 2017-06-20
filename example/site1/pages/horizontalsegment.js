@@ -67,7 +67,7 @@ class PageView extends React.Component {
 
 
   render() {
-    return (<div className='full-screen'>
+    return (<div>
         <xz.Segment  selectedKey="1" scroll={true}>
           <xz.Segment.Item key='1'>首页</xz.Segment.Item>
           <xz.Segment.Item key='2'>商城</xz.Segment.Item> 

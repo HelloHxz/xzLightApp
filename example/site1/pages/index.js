@@ -175,15 +175,6 @@ class PageView extends React.Component {
     return true;
   }
 
-  onTouchStart(){
-    // this.topswiper.stopInterval();
-    // this.verSwiper.stopInterval();
-  }
-
-  onTouchEnd(){
-    //  this.topswiper.startInterval();
-    // this.verSwiper.startInterval();
-  }
 
   onPageResume(){
     this.topswiper.startInterval();
@@ -194,7 +185,7 @@ class PageView extends React.Component {
 
 
   render() {
-    return (<div className='main-wrapper'>
+    return (<div>
         <SearchBar  store={this.props.indexStore} pageview={this}/>
         <xz.ScrollView 
           scrollkey="mainscroll"

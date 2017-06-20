@@ -27,14 +27,16 @@ ul,li{
   height:100%;
   overflow: hidden;
 }
-.xz-pfull{
-  position:relative;
-  width:100%;
-  height:100%;
-  flex-direction: column;
-  justify-content: flex-start;
-  overflow:hidden;
+.xz-pfull,.xz-pfull>div{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  top:0;
+}
+.xz-pfull>div{
   display:flex;
+  flex-direction:column;
 }
 
 .xz-page-inner{

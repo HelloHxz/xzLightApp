@@ -29,7 +29,7 @@ class PageView extends React.Component {
 
   render() {
     console.log("render segmentdemo");
-    return (<div className='full-screen'>
+    return (<div>
       <div className='app-header segment-header'>
            <TabBar store={this.props.store} pagemanager={this.props.pagemanager}/>
       </div>
