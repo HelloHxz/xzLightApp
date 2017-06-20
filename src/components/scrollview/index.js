@@ -36,12 +36,13 @@ class ScrollView extends React.Component {
       var touch = e.nativeEvent.touches[0];
       this.startY = touch[this.config.touchkey];
       this.startX = touch[this.config.otherToucKey];
-      this.startScrollValue = this.isHorizontal? this.wrapperDom.scrollLeft:this.wrapperDom.scrollTop;
+      this.startScrollValue = this.isHorizontal? this.scrollarea.scrollLeft:this.scrollarea.scrollTop;
       if(this.props.onLoadMore){
-        this.wrapperSize = this.isHorizontal? this.wrapperDom.offsetWidth:this.wrapperDom.offsetHeight;
+        this.wrapperSize = this.isHorizontal? this.scrollarea.offsetWidth:this.scrollarea.offsetHeight;
       }
       this.props.onTouchStart&&this.props.onTouchStart();
       this.startOffset = this.state.offset;
+      document.title = this.scrollarea.offsetHeight;
   }
 
   onTouchMove(e){
@@ -66,15 +67,13 @@ class ScrollView extends React.Component {
         wrapperdom:this.wrapperDom,
         e:e
       });
-      this.scrollValue = this.isHorizontal? this.wrapperDom.scrollLeft:this.wrapperDom.scrollTop;
+      this.scrollValue = this.isHorizontal? this.scrollarea.scrollLeft:this.scrollarea.scrollTop;
       if(diff>0&&this.props.onRefresh){
         if(this.scrollValue <=0){
           var l = this.isHorizontal?0:Style.px2px(20);
-          if(diff>l){
             e.preventDefault();
             e.stopPropagation();
-            this.wrapperDom.style["overflow"] = "hidden";
-          }
+            this.scrollarea.style["overflow"] = "hidden";
           
           var pullOffsetY = (diff- this.startScrollValue)/3;
           this.canRefresh = pullOffsetY> this.limitOffset;
@@ -83,10 +82,10 @@ class ScrollView extends React.Component {
         }
       }
       if(diff<0&&this.props.onLoadMore){
-        this.scrollHeightSize = this.isHorizontal? this.innerWrapperDom.offsetWidth: this.wrapperDom.scrollHeight;
-        // var dv = this.isHorizontal?0-this.state.offset:0;
-        if(this.scrollHeightSize<=this.wrapperSize+this.scrollValue+20){
-          this.wrapperDom.style["overflow"] = "hidden";
+        this.scrollHeightSize = this.isHorizontal? this.scrollarea.scrollWidth: this.scrollarea.scrollHeight;
+      
+        if(this.scrollHeightSize<=this.wrapperSize+this.scrollValue+Style.px2px(30)){
+          this.scrollarea.style["overflow"] = "hidden";
           e.preventDefault();
           e.stopPropagation();
           this.touchAction = "loadmore";
@@ -109,12 +108,12 @@ class ScrollView extends React.Component {
         setTimeout(()=>{
           this.isInLoading = false;
           this.setState({offset:-1,animate:true});
-          this.wrapperDom.style[scrollKey] = "auto";
+          this.scrollarea.style[scrollKey] = "auto";
 
           this.props.onRefreshClose&&this.props.onRefreshClose();
         },2000);
       }else{
-        this.wrapperDom.style[scrollKey] = "auto";
+        this.scrollarea.style[scrollKey] = "auto";
 
         this.setState({offset:-1,animate:true});
         this.props.onRefreshClose&&this.props.onRefreshClose();
@@ -127,27 +126,17 @@ class ScrollView extends React.Component {
         this.setState({offset:0-this.limitOffset,animate:true});
         setTimeout(()=>{
           this.isInLoading = false;
-          this.wrapperDom.style[scrollKey] = "auto";
+          this.scrollarea.style[scrollKey] = "auto";
 
           this.setState({offset:-1,animate:true});
           this.props.onLoadMoreClose&&this.props.onLoadMoreClose();
-          if(this.isHorizontal){
-            setTimeout(()=>{
-            this.wrapperDom.scrollLeft = this.innerWrapperDom.offsetWidth;
-            console.log(this.innerWrapperDom.offsetWidth);
-            },100)
-          }
-
-
         },2000);
       }else{
 
-        this.wrapperDom.style[scrollKey] = "auto";
+        this.scrollarea.style[scrollKey] = "auto";
 
         this.setState({offset:-1,animate:true});
-        if(this.isHorizontal){
-          this.wrapperDom.scrollLeft = this.wrapperDom.scrollLeft+1000;
-        }
+       
         this.props.onLoadMoreClose&&this.props.onLoadMoreClose(); 
       }
     }
@@ -158,7 +147,7 @@ class ScrollView extends React.Component {
   _onScroll(e){
     this.props.onScroll({
       instance:this,
-      wrapperdom:this.wrapperDom,
+      wrapperdom:this.scrollarea,
       e:e
     });
   }
@@ -226,14 +215,20 @@ class ScrollView extends React.Component {
 
     var innerClassName = this.isHorizontal?"xz-scrollview-inner-h":"xz-scrollview-inner-v";
 
-    return (<div {...scrollEvent} ref={(wrapper)=>{
+    var scrollAreaClassName = this.isHorizontal?"xz-sv-scrollarea-h":"xz-sv-scrollarea-v";
+
+    return (<div ref={(wrapper)=>{
       this.wrapperDom = wrapper;
     }} {...toucheEvent} className={classNameArr.join(" ")}>
     	<div className={innerClassName} style={moveStyle} ref={(wrapper)=>{
         this.innerWrapperDom = wrapper;
       }}>
         {refreshControl}
-        {this.props.children}
+        <div {...scrollEvent} className={scrollAreaClassName}
+          ref={(instance)=>{this.scrollarea=instance;}}
+        >
+          {this.props.children}
+        </div>
         {loadMoreControl}
       </div>
      </div>);

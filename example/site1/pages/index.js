@@ -156,7 +156,7 @@ class PageView extends React.Component {
     for(var i=0;i<10;i++){
       re.push(<div key={"x"+i} className='hor-s-item'>x{i}</div>);
     }
-    return re;
+    return <div className="hor-s-item-wrapper">{re}</div>;
   }
 
   onScroll(params){
@@ -194,7 +194,7 @@ class PageView extends React.Component {
 
 
   render() {
-    return (<div className='full-screen'>
+    return (<div className='main-wrapper'>
         <SearchBar  store={this.props.indexStore} pageview={this}/>
         <xz.ScrollView 
           scrollkey="mainscroll"
@@ -230,16 +230,17 @@ class PageView extends React.Component {
             ></xz.Swiper>
 
           </div>
-
-          <xz.ScrollView 
+            <xz.ScrollView 
           pkey="hor"
             onLoadMore ={this.onLoadMoreHor.bind(this)}
           onRefresh={this.onRefreshHor.bind(this)} 
           direction='horizontal' className='app-horizon-scroll'>
               {this.renderHorScrollChild()}
-          </xz.ScrollView>  
+          </xz.ScrollView> 
+       
           <List pageview={this} store={this.props.indexStore}/>
         </xz.ScrollView>
+       
        </div>);
   }
 }

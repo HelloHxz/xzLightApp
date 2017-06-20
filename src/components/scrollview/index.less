@@ -9,6 +9,35 @@
 	.px2rem(margin-left,-600);
 	top:0;
 }
+.xz-sv-scrollarea-h,.xz-sv-scrollarea-v{
+	position:relative;
+	width:100%;
+	height:100%;
+}
+.xz-sv-scrollarea-v{
+}
+.xz-sv-scrollarea-h{
+	overflow-x:auto;
+	overflow-y:hidden;
+	width:100%;
+}
+.xz-sv-scrollarea-v{
+	overflow-x:hidden;
+	overflow-y:auto;
+	height:100%;
+}
+.xz-scrollview-v{
+	overflow:hidden;
+}
+.xz-scrollview-inner-v{
+	position:absolute;
+	height:100%;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+}
+
 .xz-loadmore-control-h{
 	position:fixed;
 	height:100%;
@@ -37,29 +66,20 @@
 }
 .xz-scrollview{
 	position:relative;
-	display:flex;
 	-webkit-overflow-scrolling:touch;
 }
 
 .xz-scrollview-inner-h{
 	position:relative;
-	min-width:100%;
+	width:100%;
 	height:100%;
 }
-.xz-scrollview-inner-v{
-	position:relative;
-	min-height:100%;
-}
+
 .xz-scrollview-h{
-	overflow-x:auto;
-	overflow-y:hidden;
+	overflow:hidden;
 	flex-direction:row;
 }
-.xz-scrollview-v{
-	overflow-x:hidden;
-	overflow-y:auto;
-	flex-direction:column;
-}
+
 .xz-refresh-control-inner-h{
 	position:absolute;
 	height:100%;
