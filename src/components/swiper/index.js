@@ -51,10 +51,15 @@ class Swiper extends React.Component {
     this.stopInterval();
   }
   stopInterval(){
+    if( this.goNextTimeoutID){
+      this.isIntransition = false;
+      this.goNextTimeoutID = null;
+      window.clearTimeout(this.goNextTimeoutID);
+    }
   	if(this.intervalID){
 	    	window.clearInterval(this.intervalID);
 	    	this.intervalID = null;
-	}
+  	}
   }
 	startInterval(){
 		if(!this.props.interval){
@@ -223,9 +228,14 @@ class Swiper extends React.Component {
   }
 
   goNext(){
+    if( this.goNextTimeoutID){
+      this.isIntransition = false;
+      this.goNextTimeoutID = null;
+      window.clearTimeout(this.goNextTimeoutID);
+    }
     this.animate = true;  
     this.setState({offset:(0-this.WrapperSizeValue-this.space)});
-    setTimeout(()=>{
+    this.goNextTimeoutID = setTimeout(()=>{
       this.getNextWraperArr();
       this.getNextSourceArr();
       this.isIntransition = false;

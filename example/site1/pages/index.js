@@ -151,6 +151,14 @@ class PageView extends React.Component {
 
   }
 
+  renderHorScrollChild(){
+    var re = [];
+    for(var i=0;i<10;i++){
+      re.push(<div key={"x"+i} className='hor-s-item'>x{i}</div>);
+    }
+    return re;
+  }
+
   onScroll(params){
     if(params.wrapperdom.scrollTop<80&&!this.props.indexStore.searchBarIsOpacity){
       this.props.indexStore.searchBarIsOpacity = true;
@@ -169,10 +177,12 @@ class PageView extends React.Component {
 
   onTouchStart(){
     this.topswiper.stopInterval();
+    this.verSwiper.stopInterval();
   }
 
   onTouchEnd(){
-    this.topswiper.startInterval();
+     this.topswiper.startInterval();
+    this.verSwiper.startInterval();
   }
 
   onPageResume(){
@@ -198,7 +208,6 @@ class PageView extends React.Component {
           onScroll={this.onScroll.bind(this)}
           className={"main-scroll"}>
           <xz.Swiper ref={(instance)=>{this.topswiper = instance;}} 
-            space={30} 
             className="top-swiper"
             lazyrender={false} 
             loop={true} 
@@ -224,12 +233,11 @@ class PageView extends React.Component {
 
           <xz.ScrollView 
           pkey="hor"
-          onRefresh={this.onRefreshHor.bind(this)}
-          onLoadMore ={this.onLoadMoreHor.bind(this)}
+            onLoadMore ={this.onLoadMoreHor.bind(this)}
+          onRefresh={this.onRefreshHor.bind(this)} 
           direction='horizontal' className='app-horizon-scroll'>
-              xxxxxxx
+              {this.renderHorScrollChild()}
           </xz.ScrollView>  
-
           <List pageview={this} store={this.props.indexStore}/>
         </xz.ScrollView>
        </div>);

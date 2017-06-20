@@ -41,7 +41,7 @@ class ScrollView extends React.Component {
         this.wrapperSize = this.isHorizontal? this.wrapperDom.offsetWidth:this.wrapperDom.offsetHeight;
       }
       this.props.onTouchStart&&this.props.onTouchStart();
-
+      this.startOffset = this.state.offset;
   }
 
   onTouchMove(e){
@@ -66,29 +66,32 @@ class ScrollView extends React.Component {
         wrapperdom:this.wrapperDom,
         e:e
       });
-      this.touchAction = "xxxx";
       this.scrollValue = this.isHorizontal? this.wrapperDom.scrollLeft:this.wrapperDom.scrollTop;
       if(diff>0&&this.props.onRefresh){
         if(this.scrollValue <=0){
-          e.preventDefault();
-          e.stopPropagation();
-          this.wrapperDom.style["overflow"] = "hidden";
+          var l = this.isHorizontal?0:Style.px2px(20);
+          if(diff>l){
+            e.preventDefault();
+            e.stopPropagation();
+            this.wrapperDom.style["overflow"] = "hidden";
+          }
+          
           var pullOffsetY = (diff- this.startScrollValue)/3;
           this.canRefresh = pullOffsetY> this.limitOffset;
           this.touchAction = "refresh";
           this.setState({offset:pullOffsetY,animate:false});
         }
       }
-
       if(diff<0&&this.props.onLoadMore){
-        this.scrollHeightSize =this.isHorizontal? this.wrapperDom.scrollWidth: this.wrapperDom.scrollHeight;
+        this.scrollHeightSize = this.isHorizontal? this.innerWrapperDom.offsetWidth: this.wrapperDom.scrollHeight;
+        // var dv = this.isHorizontal?0-this.state.offset:0;
         if(this.scrollHeightSize<=this.wrapperSize+this.scrollValue+20){
           this.wrapperDom.style["overflow"] = "hidden";
           e.preventDefault();
           e.stopPropagation();
           this.touchAction = "loadmore";
           var pullOffset = (diff)/3;
-          this.canLoadMore = Math.abs(pullOffset)>this.limitOffset;
+          this.canLoadMore = Math.abs(pullOffset)>(this.limitOffset);
           this.setState({offset:pullOffset,animate:false});
         }
       }
@@ -96,7 +99,6 @@ class ScrollView extends React.Component {
 
   onTouchEnd(){
     var scrollKey =this.isHorizontal?"overflow-x":"overflow-y";
-    this.wrapperDom.style[scrollKey] = "auto";
       this.props.onTouchEnd&&this.props.onTouchEnd();
     
     if(this.isInLoading){return;}
@@ -107,9 +109,13 @@ class ScrollView extends React.Component {
         setTimeout(()=>{
           this.isInLoading = false;
           this.setState({offset:-1,animate:true});
+          this.wrapperDom.style[scrollKey] = "auto";
+
           this.props.onRefreshClose&&this.props.onRefreshClose();
         },2000);
       }else{
+        this.wrapperDom.style[scrollKey] = "auto";
+
         this.setState({offset:-1,animate:true});
         this.props.onRefreshClose&&this.props.onRefreshClose();
       }
@@ -121,11 +127,27 @@ class ScrollView extends React.Component {
         this.setState({offset:0-this.limitOffset,animate:true});
         setTimeout(()=>{
           this.isInLoading = false;
+          this.wrapperDom.style[scrollKey] = "auto";
+
           this.setState({offset:-1,animate:true});
           this.props.onLoadMoreClose&&this.props.onLoadMoreClose();
+          if(this.isHorizontal){
+            setTimeout(()=>{
+            this.wrapperDom.scrollLeft = this.innerWrapperDom.offsetWidth;
+            console.log(this.innerWrapperDom.offsetWidth);
+            },100)
+          }
+
+
         },2000);
       }else{
+
+        this.wrapperDom.style[scrollKey] = "auto";
+
         this.setState({offset:-1,animate:true});
+        if(this.isHorizontal){
+          this.wrapperDom.scrollLeft = this.wrapperDom.scrollLeft+1000;
+        }
         this.props.onLoadMoreClose&&this.props.onLoadMoreClose(); 
       }
     }
