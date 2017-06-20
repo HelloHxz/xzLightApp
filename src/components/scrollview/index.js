@@ -71,9 +71,12 @@ class ScrollView extends React.Component {
       if(diff>0&&this.props.onRefresh){
         if(this.scrollValue <=0){
           var l = this.isHorizontal?0:Style.px2px(20);
+          if(diff>20)
+           { 
             e.preventDefault();
             e.stopPropagation();
             this.scrollarea.style["overflow"] = "hidden";
+          }
           
           var pullOffsetY = (diff- this.startScrollValue)/3;
           this.canRefresh = pullOffsetY> this.limitOffset;
