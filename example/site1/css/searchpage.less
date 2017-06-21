@@ -1,0 +1,48 @@
+@import url('../../../node_modules/xz-lightapp/css/common.less');
+.search-header{
+	.px2rem(height,90);
+	display:flex;
+	flex-direction:row;
+	position:relative;
+	align-items:center;
+	justify-content:center;
+	background-color:#fff;
+	border-bottom:1px solid @headerbordercolor;
+}
+
+.search-header .cancel-btn{
+	.px2rem(width,110);
+	display:block;
+	text-align:center;
+	height:100%;
+	.px2rem(line-height,90);
+	position:relative;
+	color:gray;
+}
+.search-header .input-area{
+	flex:1;
+	.px2rem(margin-left,30);
+	position:relative;
+	.px2rem(height,70);
+	.px2rem(border-radius,35);
+	background-color:#f1f1f1;
+	text-align:center;
+	.px2rem(padding-top,2);
+	.px2rem(padding-bottom,2);
+}
+
+.search-header .input-area input{
+	border:none;
+	background-color:#f1f1f1;
+	.px2rem(font-size,30);
+	height:100%;
+	width:90%;
+}
+
+.search-main-scroll{
+	flex:1;
+	position:relative;
+	flex-direction:column;
+	overflow-y:auto;
+	display:flex;
+}

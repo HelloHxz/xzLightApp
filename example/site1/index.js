@@ -10,6 +10,7 @@ Navigation.start({
 		search:require("./pages/searchpage").default,
 		slidepage:require("./pages/slidepage").default,
 		dpdcdemo:require("./pages/dpdcdemo").default,
+		goodlist:require("./pages/goodlist").default,
 		threelevelroute:require("./pages/threelevelroute").default,
 		segmentdemo:require("./pages/segmentdemo").default,
 		verticalsegment:require("./pages/verticalsegment").default,

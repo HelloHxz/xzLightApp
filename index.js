@@ -4,6 +4,7 @@ import style from './utils/style'
 import shallowEqual from './utils/shallowEqual' 
 import './css/main.less';
 import React from 'react';
+import fetch from  './utils/fetch' 
 
 var init = false;
 var Navigation = {
@@ -35,6 +36,6 @@ export {
 	style,
 	Navigation,
 	xz,
-	shallowEqual
-
+	shallowEqual,
+	fetch
 };

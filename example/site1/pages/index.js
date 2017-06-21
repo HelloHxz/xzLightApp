@@ -128,7 +128,7 @@ class PageView extends React.Component {
     this.props.indexStore.searchBarStatus = "show";
   }
 
-  onRefreshMove(params){
+  onTouchMove(params){
     var scrollTop = params.scroller.scrollTop;
     if(this.props.indexStore.searchBarStatus!=="hide"&&params.diff>100&&scrollTop===0){
       this.props.indexStore.searchBarStatus = "hide";
@@ -189,9 +189,8 @@ class PageView extends React.Component {
         <SearchBar  store={this.props.indexStore} pageview={this}/>
         <xz.ScrollView 
           scrollkey="mainscroll"
-          pkey='ver'
           onRefreshClose={this.onRefreshClose.bind(this)} 
-          onRefreshMove={this.onRefreshMove.bind(this)} 
+          onTouchMove={this.onTouchMove.bind(this)} 
           onLoadMore ={this.onLoadMore.bind(this)}
           onRefresh={this.onRefresh.bind(this)} 
           onScroll={this.onScroll.bind(this)}

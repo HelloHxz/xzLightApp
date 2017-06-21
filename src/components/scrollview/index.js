@@ -29,20 +29,24 @@ class ScrollView extends React.Component {
     // e.preventDefault();
     // e.stopPropagation();
     // e.nativeEvent.stopImmediatePropagation();
-     if(this.isInLoading){return;}
-      this.isInLoading = false;
-      this.canRefresh = false;
-      this.touchAction = "";
-      var touch = e.nativeEvent.touches[0];
-      this.startY = touch[this.config.touchkey];
-      this.startX = touch[this.config.otherToucKey];
-      this.startScrollValue = this.isHorizontal? this.scrollarea.scrollLeft:this.scrollarea.scrollTop;
-      if(this.props.onLoadMore){
-        this.wrapperSize = this.isHorizontal? this.scrollarea.offsetWidth:this.scrollarea.offsetHeight;
-      }
-      this.props.onTouchStart&&this.props.onTouchStart();
-      this.startOffset = this.state.offset;
-      document.title = this.scrollarea.offsetHeight;
+    if(this.isInLoading){return;}
+    this.isInLoading = false;
+    this.canRefresh = false;
+    this.touchAction = "";
+    this.diff = 0;
+    var touch = e.nativeEvent.touches[0];
+    this.startY = touch[this.config.touchkey];
+    this.startX = touch[this.config.otherToucKey];
+    this.startScrollValue = this.isHorizontal? this.scrollarea.scrollLeft:this.scrollarea.scrollTop;
+    if(this.props.onLoadMore){
+      this.wrapperSize = this.isHorizontal? this.scrollarea.offsetWidth:this.scrollarea.offsetHeight;
+    }
+    this.props.onTouchStart&&this.props.onTouchStart({
+      instance:this,
+      scroller:this.scrollarea,
+      e:e
+    });
+    this.startOffset = this.state.offset;
   }
 
   onTouchMove(e){
@@ -51,7 +55,7 @@ class ScrollView extends React.Component {
       var curY = touch[this.config.touchkey];
       var curX = touch[this.config.otherToucKey];
 
-      var diff = curY-this.startY;
+      this.diff = curY-this.startY;
 
       var diffOtherDirection = curX - this.startX ;
 
@@ -61,30 +65,30 @@ class ScrollView extends React.Component {
       //   return;
       // }
 
-      this.props.onRefreshMove&&this.props.onRefreshMove({
-        diff:diff,
+
+      this.props.onTouchMove&&this.props.onTouchMove({
+        diff:this.diff,
         instance:this,
         scroller:this.scrollarea,
         e:e
       });
       this.scrollValue = this.isHorizontal? this.scrollarea.scrollLeft:this.scrollarea.scrollTop;
-      if(diff>0&&this.props.onRefresh){
+      if(this.diff>0&&this.props.onRefresh){
         if(this.scrollValue <=0){
           var l = this.isHorizontal?0:Style.px2px(20);
-          if(diff>20)
-           { 
+          if(this.diff>20){ 
             e.preventDefault();
             e.stopPropagation();
             this.scrollarea.style["overflow"] = "hidden";
           }
           
-          var pullOffsetY = (diff- this.startScrollValue)/3;
+          var pullOffsetY = (this.diff- this.startScrollValue)/3;
           this.canRefresh = pullOffsetY> this.limitOffset;
           this.touchAction = "refresh";
           this.setState({offset:pullOffsetY,animate:false});
         }
       }
-      if(diff<0&&this.props.onLoadMore){
+      if(this.diff<0&&this.props.onLoadMore){
         this.scrollHeightSize = this.isHorizontal? this.scrollarea.scrollWidth: this.scrollarea.scrollHeight;
       
         if(this.scrollHeightSize<=this.wrapperSize+this.scrollValue+Style.px2px(30)){
@@ -92,7 +96,7 @@ class ScrollView extends React.Component {
           e.preventDefault();
           e.stopPropagation();
           this.touchAction = "loadmore";
-          var pullOffset = (diff)/3;
+          var pullOffset = (this.diff)/3;
           this.canLoadMore = Math.abs(pullOffset)>(this.limitOffset);
           this.setState({offset:pullOffset,animate:false});
         }
@@ -101,7 +105,12 @@ class ScrollView extends React.Component {
 
   onTouchEnd(){
     var scrollKey =this.isHorizontal?"overflow-x":"overflow-y";
-      this.props.onTouchEnd&&this.props.onTouchEnd();
+    this.props.onTouchEnd&&this.props.onTouchEnd({
+      instance:this,
+      diff:this.diff,
+      scroller:this.scrollarea,
+      e:e
+    });
     
     if(this.isInLoading){return;}
     if(this.touchAction==="refresh"){
