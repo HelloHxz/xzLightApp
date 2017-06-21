@@ -265,6 +265,7 @@ class PageView extends React.Component {
             }
           } 
           leftroute={[]} 
+          showpageparams = {params.params||{}}
           pagename={pageKey} 
           owner={this.pageInstance}
           pagemanager={this.props.pagemanager} 
@@ -332,6 +333,7 @@ class PageView extends React.Component {
               this.pageInstance = instance;
             }}
             owner = {this.props.owner}
+            showpageparams={this.props.showpageparams}
             urlinfo={this.props.pagemanager.getUrlInfo()}
             pagename={this.state.pagename}
             leftroute = {this.state.leftroute}

@@ -1,6 +1,9 @@
 @import url('../../../node_modules/xz-lightapp/css/common.less');
+
+@headerheight:88;
+
 .search-header{
-	.px2rem(height,90);
+	.px2rem(height,@headerheight);
 	display:flex;
 	flex-direction:row;
 	position:relative;
@@ -15,7 +18,7 @@
 	display:block;
 	text-align:center;
 	height:100%;
-	.px2rem(line-height,90);
+	.px2rem(line-height,@headerheight);
 	position:relative;
 	color:gray;
 }
@@ -23,7 +26,7 @@
 	flex:1;
 	.px2rem(margin-left,30);
 	position:relative;
-	.px2rem(height,70);
+	.px2rem(height,60);
 	.px2rem(border-radius,35);
 	background-color:#f1f1f1;
 	text-align:center;

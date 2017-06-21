@@ -96,13 +96,17 @@ return {
       },
       {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader',{
+       
+        use: [ 'style-loader', 
+            {
+                loader: "css-loader",
+              
+            },{
               loader:"postcss-loader",
                options: {
                 plugins: (loader) => [
                   require('postcss-import')({ root: loader.resourcePath }),
                   require('autoprefixer')(),
-                  require('cssnano')()
                 ]
               }
             } ],
@@ -117,10 +121,14 @@ return {
       },
       {
             test: /\.less$/,
+           
             use: [{
                 loader: "style-loader" 
             }, {
-                loader: "css-loader" 
+                loader: "css-loader" ,
+                 options:{
+                   minimize:true
+                },
             }, 
             {
               loader:"postcss-loader",
@@ -128,7 +136,6 @@ return {
                 plugins: (loader) => [
                   require('postcss-import')({ root: loader.resourcePath }),
                   require('autoprefixer')(),
-                  require('cssnano')()
                 ]
               }
             },

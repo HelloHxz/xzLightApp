@@ -36,9 +36,9 @@ class Segment extends React.Component {
         return;
       }
     }
-    if(this.state.selectedKey!==key){
+    // if(this.state.selectedKey!==key){
       this._change(key,itemInstance);
-    }
+    // }
   }
 
   componentWillUpdate(nextProps,nextState){

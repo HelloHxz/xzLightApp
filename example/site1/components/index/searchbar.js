@@ -13,7 +13,10 @@ class SearchBar extends React.Component {
   showSearchPage(){
     this.props.pageview.props.base.showPage({
       pageKey:"search",
-      animateType:"fadeIn"
+      animateType:"fadeIn",
+      params:{
+        from:"home"
+      }
     });
   }
 
