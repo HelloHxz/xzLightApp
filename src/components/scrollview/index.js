@@ -184,7 +184,18 @@ class ScrollView extends React.Component {
       toucheEvent.onTouchStart = this.onTouchStart.bind(this);
       toucheEvent.onTouchMove = this.onTouchMove.bind(this);
       toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
+    }else{
+      if(this.props.onTouchMove){
+        toucheEvent.onTouchMove = this.onTouchMove.bind(this);
+      }
+      if(this.props.onTouchStart){
+        toucheEvent.onTouchStart = this.onTouchStart.bind(this);
+      }
+      if(this.props.onTouchEnd){
+        toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
+      }
     }
+
 
 
     

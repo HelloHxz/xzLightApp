@@ -10,9 +10,11 @@ class TopArea extends React.Component {
   }
 
   render() {
-   
+    var status = this.props.store.topAreaStatus;
+    var classNameArr = ["goodlis-top-area"];
+    classNameArr.push(status==="min"?"goodlis-top-area-min":"")
     return (
-      <div className="goodlis-top-area">
+      <div className={classNameArr.join(" ")}>
       </div>
     );
   }

@@ -28,9 +28,18 @@ class PageView extends React.Component {
       this.bkHeight = this.coverInstance.offsetHeight;
     }
     if(this.bkHeight){
-     console.log(params.scroller.scrollTop+" "+this.bkHeight);
+      if(params.scroller.scrollTop>=this.bkHeight&&this.props.store.topAreaStatus!=="min"){
+        this.props.store.topAreaStatus="min"
+      }
+
+      if(params.scroller.scrollTop<=this.bkHeight&&this.props.store.topAreaStatus!=="max"){
+        this.props.store.topAreaStatus="max"
+      }
+    
     }
   }
+
+
 
  
   
@@ -41,10 +50,9 @@ class PageView extends React.Component {
       list.push(<div key={i} className='testitem'>{"row_"+i}</div>);
     }
     return (<div>
-        <TopArea store={goodListStore} pageview={this}/>
+        <TopArea store={this.props.store} pageview={this}/>
         <xz.ScrollView className="goodlis-scroll"
-          onScroll={this.onScroll.bind(this)}
-        >
+          onScroll={this.onScroll.bind(this)}>
           <div ref={(bk)=>{this.coverInstance = bk;}} className="goddlis-top-bk"></div>
               {list}
         </xz.ScrollView>
