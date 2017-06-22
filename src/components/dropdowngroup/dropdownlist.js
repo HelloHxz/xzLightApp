@@ -6,18 +6,20 @@ class DropDownGroupList extends React.Component {
     super(props)
     this.itemDict = {};
     this.isInit = true;
-   
-
-    this.preSelectedKey = this.props.selectedKey;
-    
   }
 
   componentDidMount(){
-    document.body.appendChild(this.list);
+    var wrapper = document.body;
+    if(this.props.pageview){
+      wrapper = this.props.pageview.props.base.wrapper;
+    }
+    wrapper.appendChild(this.list);
   }
 
   componentWillUnmount(){
-    document.body.removeChild(this.list);
+    if(!this.props.pageview){
+      document.body.removeChild(this.list);
+    }
   }
 
 
@@ -36,10 +38,11 @@ class DropDownGroupList extends React.Component {
       }
       var classArr = ["xz-dropdown-item"];
       if(key===this.props.selectedKey){
-        var showClassName = (!this.preSelectedKey||this.preSelectedKey==="")?"xz-dd-item-show-ani":"xz-dd-item-show";
+        var showClassName = (!this.props.preSelectedKey||this.props.preSelectedKey==="")?"xz-dd-item-show-ani":"xz-dd-item-show";
         classArr.push(showClassName);
+        this.lastSelectedKey = key;
       }else{
-        var hideClassName = ((!this.props.selectedKey||this.props.selectedKey===""))?"xz-dd-item-hide-ani":"xz-dd-item-hide";
+        var hideClassName = (this.lastSelectedKey===this.props.selectedKey&&(!this.props.selectedKey||this.props.selectedKey===""))?"xz-dd-item-hide-ani":"xz-dd-item-hide";
         classArr.push(hideClassName);
       }
       child.push(<div key={"dd_"+key} className={classArr.join(" ")}>{this.itemDict[key]}</div>);

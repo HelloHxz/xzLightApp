@@ -315,7 +315,9 @@ class PageView extends React.Component {
     
     //this.props.pkey
     var basePageClassName = "xz-page-base-page "+this.state.basePageClassName;
-    return (<div className='xz-page-inner' key={this.props.pkey+"_outer"}>
+    return (<div
+        ref={(wrapper)=>{this.wrapper = wrapper;}}
+       className='xz-page-inner' key={this.props.pkey+"_outer"}>
         {this.state.showPages}
         <div 
         ref={(bkCover)=>{

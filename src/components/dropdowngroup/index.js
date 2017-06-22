@@ -10,6 +10,7 @@ class DropDownGroup extends React.Component {
       selectedKey:this.props.selectedKey
     }
     this.preSelectedKey = this.state.selectedKey;
+
   }
 
   componentWillReceiveProps(nextPros){
@@ -37,7 +38,7 @@ class DropDownGroup extends React.Component {
 
     var dropDonwListClassArr = ["xz-dropdown-list"];
     if(!this.state.selectedKey||this.state.selectedKey===""||!this.wrapper){
-      // dropDonwListClassArr.push("xz-displaynone");
+      dropDonwListClassArr.push("xz-displaynone");
     }
     var bkStyle = {};
     if(this.wrapper){
@@ -45,7 +46,7 @@ class DropDownGroup extends React.Component {
     }
     var list = null;
     if(this.wrapper){
-      list = <DropDownList renderItem={this.props.renderItem} selectedKey={this.state.selectedKey} style={bkStyle} className={dropDonwListClassArr.join(" ")}/>;
+      list = <DropDownList preSelectedKey={this.preSelectedKey} pageview={this.props.pageview} renderItem={this.props.renderItem} selectedKey={this.state.selectedKey} style={bkStyle} className={dropDonwListClassArr.join(" ")}/>;
     }
     return (
       <div 

@@ -29,7 +29,7 @@
 }
 
 .xz-dd-item-hide-ani>div{
-	animation: itemhide .4s cubic-bezier(.05, .69, .14, 1);
+	animation: itemhide .3s cubic-bezier(.05, .69, .14, 1);
 	transform:translate3d(0,-103%,0);
 }
 
@@ -48,7 +48,7 @@
 }
 
 .xz-dd-item-show-ani>div{
-	animation: itemshow .4s cubic-bezier(.05, .69, .14, 1);
+	animation: itemshow .3s cubic-bezier(.05, .69, .14, 1);
 	transform:translate3d(0,0,0);
 }
 
@@ -62,7 +62,9 @@
 }
 
 .xz-displaynone{
-	display:none;
+	transition:visibility .4s ease, opacity 1s ease;
+	visibility: hidden;
+	opacity:0;
 }
 .xz-dropdown-inner{
 	position:relative;

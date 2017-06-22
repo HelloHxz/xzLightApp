@@ -10,7 +10,17 @@ class ConditionBar extends React.Component {
   }
 
   renderItem(key){
-  	return <div className="goodlis-condition-dd-1">{key}</div>
+  	var _style={};
+  	if(key==="condition2"){
+  		_style.height = style.px2rem(400)+"rem";
+  	}else if(key==="condition1"){
+  		_style.height = style.px2rem(200)+"rem";
+  	}else if(key==="condition3"){
+  		_style["maxHeight"] = style.px2rem(300)+"rem";
+  	}else{
+  		_style.height = "100%";
+  	}
+  	return <div style={_style} className="goodlis-condition-dd-1">{key}</div>
   }
 
   segmentChange(params){
@@ -23,6 +33,7 @@ class ConditionBar extends React.Component {
   render() {
     return (
       <xz.DropDownGroup className="goodlis-condition-area"
+      	pageview={this.props.pageview}
       	selectedKey={this.props.store.conditionSelectedKey}
       	renderItem = {this.renderItem.bind(this)}
       >
