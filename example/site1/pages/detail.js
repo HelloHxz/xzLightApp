@@ -18,6 +18,12 @@ var siwperData = [
   {src:"./imgs/4.jpg",title:"xxx"}
 ];
 
+var pagedata = [
+  "goodinfo",
+  "desc",
+  "comment"
+];
+
 @observer
 class PageView extends React.Component {
 
@@ -29,6 +35,8 @@ class PageView extends React.Component {
     super(props)
   }
 
+
+
   renderSwiperItem(params){
     return <div key={"xx"+params.index} style={{height:"100%"}}>
       <img style={{height:"100%"}} src={params.data.src}/>
@@ -36,20 +44,37 @@ class PageView extends React.Component {
   }
 
  
+  renderSwiperPage(params){
+    console.log(params);
+    if(params.data==="goodinfo"){
+      return ( <xz.Swiper 
+          space={10} 
+          className="detail-swiper"
+          lazyrender={false} 
+          loop={false} 
+          cache={false} 
+          datasource={siwperData} 
+          renderItem = {this.renderSwiperItem.bind(this)}>
+        </xz.Swiper>
+      );
+    }
+    return <span>111</span>;
+  }
+ 
   render() {
     return (<div className='full-screen'>
       <div className='detail-header'>
          <Segment store={this.props.store}/>
       </div>
-       <xz.Swiper 
-          space={10} 
-          className="detail-swiper"
-          lazyrender={false} 
-          loop={true} 
-          cache={false} 
-          datasource={siwperData} 
-          renderItem = {this.renderSwiperItem.bind(this)}>
-        </xz.Swiper>
+      <xz.Swiper
+        className="detail-content-swiper"
+        loop={false}
+        renderItem={this.renderSwiperPage.bind(this)}
+        cache={true}
+        lazyrender={true}
+        datasource={pagedata}
+      >
+      </xz.Swiper>
     	</div>);
   }
 }

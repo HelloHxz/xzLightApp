@@ -11,9 +11,7 @@ class HeaderSegment extends React.Component {
 
   
   renderIndicatorThree(params){
-    // var rect = params.itemInstance.Dom.children[0].getBoundingClientRect();
     var rect = params.rect;
-    console.log();
     var indicatorStyle = {
       position:"absolute",
       bottom:"0",
@@ -34,9 +32,6 @@ class HeaderSegment extends React.Component {
  
   onChange(params){
     this.props.store.segmentSelectedKey  = params.selectedKey;
-    // var key = params.selectedKey;
-
-    // this.props.pagemanager.replaceGo(key);
   }
 
 

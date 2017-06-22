@@ -11,9 +11,8 @@ class Swiper extends React.Component {
     super(props)
     this.tranDict = Style.getTransitionKeys();
     this.space =  this.props.space || 0;
-    
     this.touchoffset = this.props.touchoffset || Style.px2px(120);
-    this.init(props);
+    this.init(props,false);
     this.animate = false;
     this.state = {
       offset:0,
@@ -23,8 +22,11 @@ class Swiper extends React.Component {
 
   }
 
-  init(props){
+  init(props,isReciveProps){
+
     this.wrapperArr = [2,0,1];
+    this.cacheDict = {};
+
     var direction = this.props.direction||"horizontal";
     this.isHorizontal = direction.toLowerCase()==="horizontal";
     this.config = {
@@ -37,7 +39,11 @@ class Swiper extends React.Component {
         othertouchkey:"pageX"
       };
     }
-    this.cacheDict = {};
+
+    var selectedIndex = props.selectedIndex||0;
+    if(!isReciveProps){
+
+    }
     this.sourceArr = [-1,-1,-1];
     this.isIntransition = false;
     this.isLoop = props.loop;
@@ -180,6 +186,9 @@ class Swiper extends React.Component {
     
 
     if(Math.abs(touchOtherValue-this.touchOtherStartValue)>20){
+      e.preventDefault();
+      e.stopPropagation();
+      e.nativeEvent.stopImmediatePropagation();
       return;
     }
 
@@ -257,7 +266,7 @@ class Swiper extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){ 
-    this.init(nextProps);
+    this.init(nextProps,true);
   }
 
 
