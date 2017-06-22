@@ -30,8 +30,8 @@ class TopArea extends React.Component {
         <div className="goodlis-search-area">
           <div onClick={this.searchBarClick.bind(this)} className='goodlis-input-area'></div>
         </div>
-        <FilterBar/>
-        <ConditionBar store={this.props.store}/>
+        <FilterBar pageview={this.props.pageview} store={this.props.store}/>
+        <ConditionBar pageview={this.props.pageview} store={this.props.store}/>
       </div>
     );
   }

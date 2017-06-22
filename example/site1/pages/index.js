@@ -104,7 +104,6 @@ class PageView extends React.Component {
   }
 
   renderAppSwiper(params){
-    console.log(params.data);
     var child = [];
     for(var i=0,j=params.data.length;i<j;i++){
       child.push(<li onClick={this.SwiperAppItemClick.bind(this,params.data[i])} key={i}><div className='swiper-app-icon'></div><span className='swiper-app-title'>{params.data[i].title}</span></li>);

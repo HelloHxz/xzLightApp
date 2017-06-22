@@ -6,18 +6,25 @@ class DropDownGroupList extends React.Component {
     super(props)
     this.itemDict = {};
     this.isInit = true;
-   
-
-    this.preSelectedKey = this.props.selectedKey;
-    
   }
 
   componentDidMount(){
-    document.body.appendChild(this.list);
+    var wrapper = document.body;
+    if(this.props.pageview){
+      wrapper = this.props.pageview.props.base.wrapper;
+    }
+    wrapper.appendChild(this.list);
   }
 
   componentWillUnmount(){
-    document.body.removeChild(this.list);
+    if(!this.props.pageview){
+      document.body.removeChild(this.list);
+    }
+  }
+
+  onBkClick(){
+    alert("s");
+    this.props.onBkClick();
   }
 
 
@@ -31,30 +38,41 @@ class DropDownGroupList extends React.Component {
     }
     var child = [];
     for(var key in this.itemDict){
-      if(key==="null"){
+      if(key==="null"||key===""||!key){
         continue;
       }
       var classArr = ["xz-dropdown-item"];
+      var bk = null;
       if(key===this.props.selectedKey){
-        var showClassName = (!this.preSelectedKey||this.preSelectedKey==="")?"xz-dd-item-show-ani":"xz-dd-item-show";
+        var showClassName = (!this.props.preSelectedKey||this.props.preSelectedKey==="")?"xz-dd-item-show-ani":"xz-dd-item-show";
         classArr.push(showClassName);
+        this.lastSelectedKey = key;
       }else{
-        var hideClassName = ((!this.props.selectedKey||this.props.selectedKey===""))?"xz-dd-item-hide-ani":"xz-dd-item-hide";
+        var hideClassName = (this.lastSelectedKey===key&&(!this.props.selectedKey||this.props.selectedKey===""))?"xz-dd-item-hide-ani":"xz-dd-item-hide";
         classArr.push(hideClassName);
       }
-      child.push(<div key={"dd_"+key} className={classArr.join(" ")}>{this.itemDict[key]}</div>);
+      child.push(<div onClick={this.itemClick.bind(this)} role='xx' key={"dd_"+key} className={classArr.join(" ")}>
+        {this.itemDict[key]}</div>);
     }
     return <div className="xz-dropdown-inner">
       {child}
     </div>;
   }
 
+  itemClick(e){
+    if(e.target.getAttribute("role")==="xx"){
+      this.props.onBkClick();
+    }
+  }
+
   render() {
+   
     return (
        <div ref={(list)=>{
         this.list = list;
        }} style={this.props.style} className={this.props.className}>
           {this.renderDropDownChildren()}
+          
         </div>
     );
   }
