@@ -67,6 +67,7 @@ class PageView extends React.Component {
          <Segment store={this.props.store}/>
       </div>
       <xz.Swiper
+        pkey="xx"
         className="detail-content-swiper"
         loop={false}
         renderItem={this.renderSwiperPage.bind(this)}

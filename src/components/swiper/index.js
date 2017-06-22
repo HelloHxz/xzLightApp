@@ -227,9 +227,13 @@ class Swiper extends React.Component {
     }
 
     if(this.diff>0){
-      this.goPre();
+      if(this.sourceArr[0]!==-1){
+        this.goPre();
+      }
     }else{
-      this.goNext();
+      if(this.sourceArr[2]!==-1){
+       this.goNext();
+      }
     }
     
   }
