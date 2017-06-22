@@ -33,7 +33,7 @@ class DropDownGroupList extends React.Component {
     }
     var child = [];
     for(var key in this.itemDict){
-      if(key==="null"){
+      if(key==="null"||key===""||!key){
         continue;
       }
       var classArr = ["xz-dropdown-item"];
@@ -42,7 +42,7 @@ class DropDownGroupList extends React.Component {
         classArr.push(showClassName);
         this.lastSelectedKey = key;
       }else{
-        var hideClassName = (this.lastSelectedKey===this.props.selectedKey&&(!this.props.selectedKey||this.props.selectedKey===""))?"xz-dd-item-hide-ani":"xz-dd-item-hide";
+        var hideClassName = (this.lastSelectedKey===key&&(!this.props.selectedKey||this.props.selectedKey===""))?"xz-dd-item-hide-ani":"xz-dd-item-hide";
         classArr.push(hideClassName);
       }
       child.push(<div key={"dd_"+key} className={classArr.join(" ")}>{this.itemDict[key]}</div>);
