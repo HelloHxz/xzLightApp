@@ -22,6 +22,11 @@ class DropDownGroupList extends React.Component {
     }
   }
 
+  onBkClick(){
+    alert("s");
+    this.props.onBkClick();
+  }
+
 
   renderDropDownChildren(){
     if(!this.itemDict[this.props.selectedKey]){
@@ -37,6 +42,7 @@ class DropDownGroupList extends React.Component {
         continue;
       }
       var classArr = ["xz-dropdown-item"];
+      var bk = null;
       if(key===this.props.selectedKey){
         var showClassName = (!this.props.preSelectedKey||this.props.preSelectedKey==="")?"xz-dd-item-show-ani":"xz-dd-item-show";
         classArr.push(showClassName);
@@ -45,19 +51,28 @@ class DropDownGroupList extends React.Component {
         var hideClassName = (this.lastSelectedKey===key&&(!this.props.selectedKey||this.props.selectedKey===""))?"xz-dd-item-hide-ani":"xz-dd-item-hide";
         classArr.push(hideClassName);
       }
-      child.push(<div key={"dd_"+key} className={classArr.join(" ")}>{this.itemDict[key]}</div>);
+      child.push(<div onClick={this.itemClick.bind(this)} role='xx' key={"dd_"+key} className={classArr.join(" ")}>
+        {this.itemDict[key]}</div>);
     }
     return <div className="xz-dropdown-inner">
       {child}
     </div>;
   }
 
+  itemClick(e){
+    if(e.target.getAttribute("role")==="xx"){
+      this.props.onBkClick();
+    }
+  }
+
   render() {
+   
     return (
        <div ref={(list)=>{
         this.list = list;
        }} style={this.props.style} className={this.props.className}>
           {this.renderDropDownChildren()}
+          
         </div>
     );
   }

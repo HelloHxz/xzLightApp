@@ -30,10 +30,15 @@ class ConditionBar extends React.Component {
   	this.props.store.conditionSelectedKey = params.selectedKey;
   }
 
+  onBackLayerClick(){
+  	this.props.store.conditionSelectedKey="";
+  }
+
   render() {
     return (
       <xz.DropDownGroup className="goodlis-condition-area"
       	pageview={this.props.pageview}
+      	onBackLayerClick={this.onBackLayerClick.bind(this)}
       	selectedKey={this.props.store.conditionSelectedKey}
       	renderItem = {this.renderItem.bind(this)}
       >

@@ -15,14 +15,33 @@
 .xz-dropdown-item{
 	position:absolute;
 	top:0;
+	z-index:30;
 	left:0;
 	right:0;
+	background-color:rgba(0,0,0,.4);
 	bottom:0;
 }
 
-.xz-dropdown-item-hide{
+.xz-dd-item-hide{
 	transform:translate3d(0,-103%,0);
+	
 }
+
+.xz-dd-item-hide-ani{
+	opacity:0;
+	animation: itemwraphide .3s cubic-bezier(.05, .69, .14, 1);
+}
+
+@keyframes itemwraphide {
+    0% {
+        opacity:1;
+    }
+
+    100% {
+        opacity:0;
+    }
+}
+
 
 .xz-dd-item-hide>div{
 	transform:translate3d(0,-103%,0);
@@ -68,6 +87,7 @@
 .xz-dropdown-inner{
 	position:relative;
 	width:100%;
+	z-index:10;
 	height:100%;
 	overflow:hidden;
 }

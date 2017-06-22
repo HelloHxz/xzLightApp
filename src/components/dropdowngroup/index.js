@@ -29,6 +29,11 @@ class DropDownGroup extends React.Component {
   }
 
 
+  onBkClick(){
+    this.props.onBackLayerClick&&this.props.onBackLayerClick();
+  }
+
+
 
   render() {
     var classNameArr = ["xz-dropdpwn-group"];
@@ -46,7 +51,7 @@ class DropDownGroup extends React.Component {
     }
     var list = null;
     if(this.wrapper){
-      list = <DropDownList preSelectedKey={this.preSelectedKey} pageview={this.props.pageview} renderItem={this.props.renderItem} selectedKey={this.state.selectedKey} style={bkStyle} className={dropDonwListClassArr.join(" ")}/>;
+      list = <DropDownList onBkClick={this.onBkClick.bind(this)} preSelectedKey={this.preSelectedKey} pageview={this.props.pageview} renderItem={this.props.renderItem} selectedKey={this.state.selectedKey} style={bkStyle} className={dropDonwListClassArr.join(" ")}/>;
     }
     return (
       <div 
