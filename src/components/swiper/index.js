@@ -179,16 +179,15 @@ class Swiper extends React.Component {
   }
 
   onTouchMove(e){
+   
+
     if(this.isIntransition){return;}
     var curTouchX = e.nativeEvent.touches[0][this.config.touchkey];
     var touchOtherValue =  e.nativeEvent.touches[0][this.config.othertouchkey];
     this.diff =  curTouchX - this.touchStartValue;
-    
+    this.otherdiff = touchOtherValue - this.touchOtherStartValue;
 
-    if(Math.abs(touchOtherValue-this.touchOtherStartValue)>20){
-      e.preventDefault();
-      e.stopPropagation();
-      e.nativeEvent.stopImmediatePropagation();
+    if(Math.abs(this.otherdiff)-Math.abs(this.diff)>20){
       return;
     }
 
@@ -218,12 +217,12 @@ class Swiper extends React.Component {
   }
   onTouchEnd(){
     if(this.isIntransition){return;}
-
+    this.isIntransition = true;
     if(Math.abs(this.diff)<this.touchoffset||this.resetPos){
-
       this.animate = true;
       this.setState({offset:(0-this.offsetValue)});
       this.startInterval();
+      setTimeout(()=>{this.isIntransition = false;},30);
       return;
     }
 
@@ -232,13 +231,11 @@ class Swiper extends React.Component {
     }else{
       this.goNext();
     }
-    this.isIntransition = true;
     
   }
 
   goNext(){
     if( this.goNextTimeoutID){
-      this.isIntransition = false;
       this.goNextTimeoutID = null;
       window.clearTimeout(this.goNextTimeoutID);
     }

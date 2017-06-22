@@ -59,11 +59,9 @@ class ScrollView extends React.Component {
 
       var diffOtherDirection = curX - this.startX ;
 
-      // if(Math.abs(diffOtherDirection)>Math.abs(diff)){
-      //   e.preventDefault();
-      //   e.stopPropagation();
-      //   return;
-      // }
+      if(Math.abs(diffOtherDirection)-Math.abs(this.diff)>20){
+        return;
+      }
 
 
       this.props.onTouchMove&&this.props.onTouchMove({
