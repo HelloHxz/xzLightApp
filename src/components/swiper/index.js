@@ -215,6 +215,10 @@ class Swiper extends React.Component {
     offset = offset+this.diff;
     this.setState({offset:offset});
   }
+
+  setEnable(){
+      setTimeout(()=>{this.isIntransition = false;},30);
+  }
   onTouchEnd(){
     if(this.isIntransition){return;}
     this.isIntransition = true;
@@ -222,17 +226,21 @@ class Swiper extends React.Component {
       this.animate = true;
       this.setState({offset:(0-this.offsetValue)});
       this.startInterval();
-      setTimeout(()=>{this.isIntransition = false;},30);
+      this.setEnable();
       return;
     }
 
     if(this.diff>0){
       if(this.sourceArr[0]!==-1){
         this.goPre();
+      }else{
+        this.setEnable();
       }
     }else{
       if(this.sourceArr[2]!==-1){
        this.goNext();
+      }else{
+        this.setEnable();
       }
     }
     
