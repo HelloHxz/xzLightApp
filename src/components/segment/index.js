@@ -30,6 +30,7 @@ class Segment extends React.Component {
       if(this.props.onItemClickChange({
         nextKey:key,
         selectedKey:this.state.selectedKey,
+
         itemInstance:itemInstance,
         segmentInstance:this
       })===false){
@@ -49,6 +50,7 @@ class Segment extends React.Component {
       this.props.onChange&&this.props.onChange({
         selectedKey:selectedKey,
         itemInstance:itemInstance,
+        selectedIndex:itemInstance.props.index,  
         segmentInstance:this
       })
   }
