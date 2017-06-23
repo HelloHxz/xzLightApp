@@ -37,11 +37,17 @@ class GoodInfo extends React.Component {
     this.props.store.verticalSwiperSelectedIndex = 1;
   }
 
+  renderLoadMoreIndicator(){
+    return null;
+  }
+
 
   render() {
     return ( 
       <xz.ScrollView className="goodinfo-scrollview"
         onLoadMore={this.onLoadMore.bind(this)}
+        limitOffset = {style.px2px(100)}
+        renderLoadMoreIndicator = {this.renderLoadMoreIndicator.bind(this)}
       >
         <xz.Swiper 
             space={10} 
@@ -53,6 +59,8 @@ class GoodInfo extends React.Component {
             datasource={siwperData} 
             renderItem = {this.renderSwiperItem.bind(this)}>
           </xz.Swiper>
+          <div style={{height:"20rem"}}></div>
+          <div>上拉查看图片详情</div>
         </xz.ScrollView>
       )
   }

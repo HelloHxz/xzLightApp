@@ -1,6 +1,6 @@
 import React from "react"
 import {observer} from 'mobx-react'
-import Segment from './headersegment'
+import GoodDetailPage from './gooddetail'
 import GoodInfoPage from './goodinfo'
 
 
@@ -8,7 +8,7 @@ import {xz,style,shallowEqual,Navigation} from "../../../../index"
 
 var pagedata = [
   "goodinfo",
-  "desc",
+  "detail",
   "comment"
 ];
 
@@ -27,16 +27,15 @@ class Main extends React.Component {
   renderSwiperPage(params){
     if(params.data==="goodinfo"){
       return <GoodInfoPage store={this.props.store}/>;
+    }else if(params.data==="detail"){
+       return <GoodDetailPage canpull={true} store={this.props.store}/>;
     }
     return <span>111</span>;
   }
  
 
   render() {
-    return ( <div className="good-detai-main-wrapper">
-          <div className='detail-header'>
-             <Segment store={this.props.store}/>
-          </div>
+    return ( 
           <xz.Swiper
             touchenable={false}
             renderIndicator={this.renderPageIndicator.bind(this)}
@@ -48,7 +47,7 @@ class Main extends React.Component {
             lazyrender={true}
             datasource={pagedata}
           >
-          </xz.Swiper></div>
+          </xz.Swiper>
       )
   }
 }

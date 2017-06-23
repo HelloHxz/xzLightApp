@@ -7,7 +7,7 @@ class ScrollView extends React.Component {
     super(props)
     this.tranDict = Style.getTransitionKeys();
     this.state = {offset:-1,animate:false};
-    this.limitOffset = Style.screen.height*.1;
+    this.limitOffset = this.props.limitOffset||Style.screen.height*.1;
     this.startScrollValue = 0;
     this.startY = 0;
     this.isInLoading = 0;
@@ -174,7 +174,13 @@ class ScrollView extends React.Component {
   _renderLoadMoreIndicator(){
     var wrapperClassName = this.isHorizontal?"xz-loadmore-control-inner-h":"xz-loadmore-control-inner-v";
     var text = this.canLoadMore?"释放加载":"上拉加载更多";
-    return <div className={wrapperClassName}><span>{this.state.offset}</span></div>;
+    var child ;
+    if(this.props.renderLoadMoreIndicator){
+      child = this.props.renderLoadMoreIndicator();
+    }else{
+      child = <span>{this.state.offset}</span>;
+    }
+    return <div className={wrapperClassName}>{child}</div>;
   }
 
 

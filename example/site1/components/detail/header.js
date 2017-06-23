@@ -3,7 +3,7 @@ import {observer} from 'mobx-react'
 import {xz,style,shallowEqual,Navigation} from "../../../../index"
 
 @observer
-class HeaderSegment extends React.Component {
+class Header extends React.Component {
 
   constructor(props) {
     super(props)
@@ -36,16 +36,25 @@ class HeaderSegment extends React.Component {
 
 
   render() {
+    var SegmentclassNameArr = ["detail-segment"];
+    var detailTitleClassNameArr = ["detail-de-title"];
+    if(this.props.store.verticalSwiperSelectedIndex===0){
+      detailTitleClassNameArr.push("displaynone");
+    }else{
+       SegmentclassNameArr.push("displaynone");
+    }
     return (
+      <div className='detail-header'>
+      <span className={detailTitleClassNameArr.join(" ")}>商品详情</span>
     	 <xz.Segment
        onChange={this.onChange.bind(this)}
-        className="detail-segment" 
+        className={SegmentclassNameArr.join(" ")}
        renderIndicator={this.renderIndicatorThree.bind(this)} 
         selectedIndex={this.props.store.segmentSelectedIndex}>
           <xz.Segment.Item key='1'><span>商品</span></xz.Segment.Item>
           <xz.Segment.Item key='2'><span>详情</span></xz.Segment.Item> 
           <xz.Segment.Item key='3'><span>评价</span></xz.Segment.Item>  
-         </xz.Segment>);
+         </xz.Segment></div>);
   }
 }
-export default HeaderSegment;
+export default Header;
