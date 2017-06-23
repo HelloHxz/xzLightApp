@@ -258,7 +258,6 @@ class Swiper extends React.Component {
 
   onTouchMove(e){
     if(this.isIntransition){return;}
-     this.stopInterval();
     var curTouchX = e.nativeEvent.touches[0][this.config.touchkey];
     var touchOtherValue =  e.nativeEvent.touches[0][this.config.othertouchkey];
     this.diff =  curTouchX - this.touchStartValue;
