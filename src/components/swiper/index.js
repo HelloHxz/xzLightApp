@@ -442,18 +442,17 @@ class Swiper extends React.Component {
           {this._renderItem({index:i})}
         </div></div>);
       }
-   
-      
      
       if(this.props.cache){
+         var midSourceIndex = this.sourceArr[1];
          var cacheStyle = {};
-         var cv = ((-1)*this.WrapperSizeValue-100);
-         var cvstr = this.isHorizontal? cv +"px,0,0":"0,"+cv+"px,0";
-
-         cacheStyle[this.tranDict.transform] = "translate3d("+cvstr+"px,0,0)"
          for(var key in this.cacheDict){
           var cacheIndex = this.sourceArr.indexOf(parseInt(key));
           if(cacheIndex<0){
+            var sourceIndex_int = parseInt(key);
+            var cv = ((sourceIndex_int-midSourceIndex)*(this.space+this.WrapperSizeValue));
+            var cvstr = this.isHorizontal? cv +"px,0,0":"0,"+cv+"px,0";
+            cacheStyle[this.tranDict.transform] = "translate3d("+cvstr+"px,0,0)"
             var itemKey = 'xz-swiper-item-'+key;
             children.push(<div style={cacheStyle} className="xz-swiper-item" key={itemKey}><div className='xz-swiper-inneritem'>
              { this.cacheDict[key]}

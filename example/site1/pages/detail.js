@@ -45,7 +45,6 @@ class PageView extends React.Component {
 
  
   renderSwiperPage(params){
-    console.log(params);
     if(params.data==="goodinfo"){
       return ( <xz.Swiper 
           space={10} 

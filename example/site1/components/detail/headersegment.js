@@ -31,7 +31,7 @@ class HeaderSegment extends React.Component {
 
  
   onChange(params){
-    this.props.store.segmentSelectedKey  = params.selectedKey;
+    this.props.store.segmentSelectedIndex  = params.selectedIndex;
   }
 
 
@@ -41,7 +41,7 @@ class HeaderSegment extends React.Component {
        onChange={this.onChange.bind(this)}
         className="detail-segment" 
        renderIndicator={this.renderIndicatorThree.bind(this)} 
-        selectedKey={this.props.store.segmentSelectedKey}>
+        selectedIndex={this.props.store.segmentSelectedIndex}>
           <xz.Segment.Item key='1'><span>商品</span></xz.Segment.Item>
           <xz.Segment.Item key='2'><span>详情</span></xz.Segment.Item> 
           <xz.Segment.Item key='3'><span>评价</span></xz.Segment.Item>  

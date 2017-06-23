@@ -12,7 +12,8 @@ class Segment extends React.Component {
     this.scrollInnerWidth = 0;
     this.tranDict = Style.getTransitionKeys();
     this.state = {
-      selectedKey:props.selectedKey||props.defaultSelectedKey,
+      selectedKey:props.selectedKey,
+      selectedIndex:props.selectedIndex,
       renderKey:0,
       offset:0
     }
@@ -42,9 +43,9 @@ class Segment extends React.Component {
     // }
   }
 
-  componentWillUpdate(nextProps,nextState){
-    return this.state.selectedKey!==nextState.selectedKey;
-  }
+  // componentWillUpdate(nextProps,nextState){
+  //   return this.state.selectedKey!==nextState.selectedKey;
+  // }
 
   _change(selectedKey,itemInstance){
       this.props.onChange&&this.props.onChange({
@@ -70,29 +71,28 @@ class Segment extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-   if(this.state.selectedKey!==nextProps.selectedKey){
-        this.setState({
-          selectedKey:nextProps.selectedKey
-        },()=>{
-
-          //  if(this.props.onChange){
-          //   this.props.onChange({
-          //     selectedKey:this.state.selectedKey,
-          //     itemInstance:this.itemDict[this.state.selectedKey],
-          //     segmentInstance:this
-          //   })
-          // }
-        });
-       
+   if(this.state.selectedIndex===0||this.state.selectedIndex){
+    //selectedIndex 优先
+    if(this.state.selectedIndex!==nextProps.selectedIndex){
+      this.setState({
+        selectedIndex:nextProps.selectedIndex
+      });
     }
+   } else{
+    if(this.state.selectedKey!==nextProps.selectedKey){
+      this.setState({
+        selectedKey:nextProps.selectedKey
+      });
+    }
+   }
+   
   }
 
  
 
   onTouchStart(e){
-
     if(!this.scrollInnerWidth){
-       var rect  =this.scrollInner.getBoundingClientRect();
+       var rect = this.scrollInner.getBoundingClientRect();
           this.scrollInnerWidth=rect.width;
     }
     this.starttime = new Date().valueOf();
@@ -207,8 +207,8 @@ class Segment extends React.Component {
             itemKey:child.key,
             index:index,
             parent:this,
-
             selectedKey:this.state.selectedKey,
+            selectedIndex:this.state.selectedIndex,
             itemClick:this.itemClick.bind(this)
           });
         }else{
@@ -293,9 +293,17 @@ class Item extends React.Component {
     if(this.props.className){
       classNameArr.push(this.props.className);
     }
-    if(this.props.selectedKey === this.props.itemKey){
-      classNameArr.push(this.props.selectedClassName);
+    if(this.props.selectedIndex===0||this.props.selectedIndex){
+      //selectedIndex优先级高
+      if(this.props.selectedIndex===this.props.index){
+        classNameArr.push(this.props.selectedClassName);
+      }
+    }else{
+      if(this.props.selectedKey === this.props.itemKey){
+        classNameArr.push(this.props.selectedClassName);
+      }
     }
+    
   return (<li key={"item_"+this.props.itemKey} ref={(instance)=>{this.Dom = instance;}} onClick={this.onClick.bind(this)} className={classNameArr.join(" ")}>
     {children}
       </li>);
