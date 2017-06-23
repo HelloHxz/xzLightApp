@@ -87,13 +87,14 @@ class Swiper extends React.Component {
       window.clearTimeout(this.goNextTimeoutID);
     }
     this.animate = true;  
+    this.isIntransition = true;
     this.setState({offset:step*(0-this.WrapperSizeValue-this.space)});
     this.goNextTimeoutID = setTimeout(()=>{
       for(var i=0;i<step;i++){
         this.getNextWraperArr();
         this.getNextSourceArr();
       }
-      this.isIntransition = false;
+      this.setIsInTransitionFalse();
       this.setState({offset:0});
       this.startInterval();
     },310)
@@ -101,13 +102,14 @@ class Swiper extends React.Component {
 
   goPreByStep(step){
     this.animate = true;  
+    this.isIntransition = true;
     this.setState({offset:step*(this.WrapperSizeValue+this.space)});
     setTimeout(()=>{
       for(var i=0;i<step;i++){
         this.getPreWraperArr();
         this.getPreSourceArr();
       }
-      this.isIntransition = false;
+      this.setIsInTransitionFalse();
       this.setState({offset:0});
       this.startInterval();
     },310)
@@ -135,7 +137,7 @@ class Swiper extends React.Component {
   }
   stopInterval(){
     if( this.goNextTimeoutID){
-      this.isIntransition = false;
+      this.setIsInTransitionFalse();
       this.goNextTimeoutID = null;
       window.clearTimeout(this.goNextTimeoutID);
     }
@@ -256,8 +258,6 @@ class Swiper extends React.Component {
   }
 
   onTouchMove(e){
-   
-
     if(this.isIntransition){return;}
     var curTouchX = e.nativeEvent.touches[0][this.config.touchkey];
     var touchOtherValue =  e.nativeEvent.touches[0][this.config.othertouchkey];
@@ -298,8 +298,14 @@ class Swiper extends React.Component {
     this.setState({offset:offset});
   }
 
+  setIsInTransitionFalse(){
+    setTimeout(()=>{
+       this.isIntransition = false;
+    },100);
+  }
   setEnable(){
-      setTimeout(()=>{this.isIntransition = false;
+      setTimeout(()=>{
+        this.setIsInTransitionFalse();
        this.startInterval();
       },300);
   }
