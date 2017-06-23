@@ -6,17 +6,10 @@ import {xz,style,shallowEqual} from "../../../index"
 import "../css/detail.less"
 
 import Segment from '../components/detail/headersegment'
+import GoodInfoPage from '../components/detail/goodinfo'
 import DetailStore from "../stores/detail"
 
 
-var siwperData = [
- {src:"./imgs/1.jpg",title:"xxx"},
- {
-   src:"./imgs/2.jpg",title:"xxx",
-  },
-  {src:"./imgs/3.jpg",title:"xxx"},
-  {src:"./imgs/4.jpg",title:"xxx"}
-];
 
 var pagedata = [
   "goodinfo",
@@ -35,27 +28,13 @@ class PageView extends React.Component {
     super(props)
   }
 
-
-
-  renderSwiperItem(params){
-    return <div key={"xx"+params.index} style={{height:"100%"}}>
-      <img style={{height:"100%"}} src={params.data.src}/>
-    </div>;
+  renderPageIndicator(){
+    return null;
   }
-
  
   renderSwiperPage(params){
     if(params.data==="goodinfo"){
-      return ( <xz.Swiper 
-          space={10} 
-          className="detail-swiper"
-          lazyrender={false} 
-          loop={false} 
-          cache={false} 
-          datasource={siwperData} 
-          renderItem = {this.renderSwiperItem.bind(this)}>
-        </xz.Swiper>
-      );
+      return <GoodInfoPage/>;
     }
     return <span>111</span>;
   }
@@ -66,8 +45,9 @@ class PageView extends React.Component {
          <Segment store={this.props.store}/>
       </div>
       <xz.Swiper
-        pkey="xx"
-        selectedIndex={0}
+        touchenable={false}
+        renderIndicator={this.renderPageIndicator.bind(this)}
+        selectedIndex={this.props.store.segmentSelectedIndex}
         className="detail-content-swiper"
         loop={false}
         renderItem={this.renderSwiperPage.bind(this)}

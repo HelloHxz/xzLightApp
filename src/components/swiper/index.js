@@ -268,11 +268,16 @@ class Swiper extends React.Component {
       return;
     }
 
-    if(Math.abs(this.diff)>40){
       e.preventDefault();
       e.stopPropagation();
       e.nativeEvent.stopImmediatePropagation();
-    }
+
+    // if(Math.abs(this.diff)>40){
+    //   e.preventDefault();
+    //   e.stopPropagation();
+    //   e.nativeEvent.stopImmediatePropagation();
+    //   return;
+    // }
   
     this.animate = false;  
     var offset = this.offsetValue;
