@@ -242,23 +242,23 @@ class Swiper extends React.Component {
 
 
   onTouchStart(e){
+    this.touchStartValue = e.nativeEvent.touches[0][this.config.touchkey];
+    this.touchOtherStartValue =  e.nativeEvent.touches[0][this.config.othertouchkey];
     if(this.isIntransition){return;}
     this.stopInterval();
     this.starttime = new Date().valueOf();
-    this.touchStartValue = e.nativeEvent.touches[0][this.config.touchkey];
-    this.touchOtherStartValue =  e.nativeEvent.touches[0][this.config.othertouchkey];
-    // e.preventDefault();
-    // e.stopPropagation();
-    // e.nativeEvent.stopImmediatePropagation();
+
     this.diff = 0;
     this.animate = false;  
     this.offsetValue = this.state.offset;
     this.resetPos = false;
+
     
   }
 
   onTouchMove(e){
     if(this.isIntransition){return;}
+     this.stopInterval();
     var curTouchX = e.nativeEvent.touches[0][this.config.touchkey];
     var touchOtherValue =  e.nativeEvent.touches[0][this.config.othertouchkey];
     this.diff =  curTouchX - this.touchStartValue;
@@ -268,16 +268,9 @@ class Swiper extends React.Component {
       return;
     }
 
-      e.preventDefault();
-      e.stopPropagation();
-      e.nativeEvent.stopImmediatePropagation();
-
-    // if(Math.abs(this.diff)>40){
-    //   e.preventDefault();
-    //   e.stopPropagation();
-    //   e.nativeEvent.stopImmediatePropagation();
-    //   return;
-    // }
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
   
     this.animate = false;  
     var offset = this.offsetValue;
@@ -294,24 +287,29 @@ class Swiper extends React.Component {
         this.resetPos = true;
       }
     }
+
     offset = offset+this.diff;
     this.setState({offset:offset});
   }
 
   setIsInTransitionFalse(){
-    setTimeout(()=>{
        this.isIntransition = false;
-    },100);
   }
   setEnable(){
       setTimeout(()=>{
         this.setIsInTransitionFalse();
-       this.startInterval();
+        this.startInterval();
       },300);
   }
   onTouchEnd(){
+
     if(this.isIntransition){return;}
     this.isIntransition = true;
+
+    if(this.diff===0){
+      this.setEnable();
+      return;
+    }
     if(Math.abs(this.diff)<this.touchoffset||this.resetPos){
       this.animate = true;
       this.setState({offset:(0-this.offsetValue)});
