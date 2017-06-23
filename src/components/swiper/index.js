@@ -22,12 +22,27 @@ class Swiper extends React.Component {
 
   }
 
+  parseSelectedInt(selectedIndex,props){
+      selectedIndex = selectedIndex||0;
+      selectedIndex = isNaN(selectedIndex)?0:parseInt(selectedIndex);
+      selectedIndex = selectedIndex>=props.datasource.length?props.datasource.length-1:selectedIndex;
+      selectedIndex = selectedIndex<0?0:selectedIndex;
+      return selectedIndex;
+  }
+
   init(props,isReciveProps){
+    this.needRebind= true;
+    if(isReciveProps){
+      if(JSON.stringify(this.props.datasource)===JSON.stringify(props.datasource)){
+        this.needRebind = false;
+      }
+    }
+    this.isIntransition = false;
 
-    this.wrapperArr = [2,0,1];
-    this.cacheDict = {};
+    
+   
 
-    var direction = this.props.direction||"horizontal";
+    var direction = props.direction||"horizontal";
     this.isHorizontal = direction.toLowerCase()==="horizontal";
     this.config = {
       touchkey:"pageX",
@@ -40,17 +55,79 @@ class Swiper extends React.Component {
       };
     }
 
-    var selectedIndex = props.selectedIndex||0;
-    if(!isReciveProps){
+
+
+    this.isLoop = props.loop;
+    if(this.needRebind){
+      var selectedIndex = this.parseSelectedInt(props.selectedIndex,props);
+
+      this.wrapperArr = [2,0,1];
+      this.cacheDict = {};
+      this.sourceArr = [-1,selectedIndex-1,-1];
+      this.getNextSourceArr();
+    }else{
+      //如果selectedIndex变化 则跳转props.selectedIndex
+      var from = this.parseSelectedInt(this.props.selectedIndex,this.props);
+      var to = this.parseSelectedInt(props.selectedIndex,props);
+      if(from!==to){
+        this.swipeFromTo(from,to);
+      } 
 
     }
-    this.sourceArr = [-1,-1,-1];
-    this.isIntransition = false;
-    this.isLoop = props.loop;
 
-    this.getNextSourceArr();
+ 
+    
 
     this.startInterval();
+  }
+
+  goNextByStep(step){
+    if(this.goNextTimeoutID){
+      this.goNextTimeoutID = null;
+      window.clearTimeout(this.goNextTimeoutID);
+    }
+    this.animate = true;  
+    this.setState({offset:step*(0-this.WrapperSizeValue-this.space)});
+    this.goNextTimeoutID = setTimeout(()=>{
+      for(var i=0;i<step;i++){
+        this.getNextWraperArr();
+        this.getNextSourceArr();
+      }
+      this.isIntransition = false;
+      this.setState({offset:0});
+      this.startInterval();
+    },310)
+  }
+
+  goPreByStep(step){
+    this.animate = true;  
+    this.setState({offset:step*(this.WrapperSizeValue+this.space)});
+    setTimeout(()=>{
+      for(var i=0;i<step;i++){
+        this.getPreWraperArr();
+        this.getPreSourceArr();
+      }
+      this.isIntransition = false;
+      this.setState({offset:0});
+      this.startInterval();
+    },310)
+  }
+
+  swipeFromTo(from,to){
+    var diff = to-from;
+    if(diff<0){
+      this.goPreByStep(Math.abs(diff));
+    }else{
+      this.goNextByStep(Math.abs(diff));
+    }
+  }
+
+  goNext(){
+    this.goNextByStep(1);
+  }
+
+  goPre(){
+    this.goPreByStep(1);
   }
 
   componentWillUnmount(){
@@ -246,33 +323,7 @@ class Swiper extends React.Component {
     
   }
 
-  goNext(){
-    if( this.goNextTimeoutID){
-      this.goNextTimeoutID = null;
-      window.clearTimeout(this.goNextTimeoutID);
-    }
-    this.animate = true;  
-    this.setState({offset:(0-this.WrapperSizeValue-this.space)});
-    this.goNextTimeoutID = setTimeout(()=>{
-      this.getNextWraperArr();
-      this.getNextSourceArr();
-      this.isIntransition = false;
-      this.setState({offset:0});
-      this.startInterval();
-    },310)
-  }
 
-  goPre(){
-    this.animate = true;  
-    this.setState({offset:(this.WrapperSizeValue+this.space)});
-    setTimeout(()=>{
-      this.getPreWraperArr();
-      this.getPreSourceArr();
-      this.isIntransition = false;
-      this.setState({offset:0});
-      this.startInterval();
-    },310)
-  }
 
   componentWillReceiveProps(nextProps){ 
     this.init(nextProps,true);
