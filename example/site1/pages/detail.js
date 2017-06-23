@@ -38,7 +38,7 @@ class PageView extends React.Component {
     if(params.data==="main"){
       return (<MainPage store={this.props.store}/>)
     }
-    return <GoodDetailPage canpull={false} store={this.props.store}/>;
+    return <GoodDetailPage canpull={true} store={this.props.store}/>;
   }
 
   render() {

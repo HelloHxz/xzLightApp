@@ -28,7 +28,7 @@ class Main extends React.Component {
     if(params.data==="goodinfo"){
       return <GoodInfoPage store={this.props.store}/>;
     }else if(params.data==="detail"){
-       return <GoodDetailPage canpull={true} store={this.props.store}/>;
+       return <GoodDetailPage canpull={false} store={this.props.store}/>;
     }
     return <span>111</span>;
   }
