@@ -134,23 +134,26 @@ class ScrollView extends React.Component {
       if(this.canLoadMore){
         this.isInLoading = true;
         this.setState({offset:0-this.limitOffset,animate:true});
-        setTimeout(()=>{
-          this.isInLoading = false;
-          this.scrollarea.style[scrollKey] = "auto";
+        this.props.onLoadMore();
 
-          this.setState({offset:-1,animate:true});
-          this.props.onLoadMoreClose&&this.props.onLoadMoreClose();
-        },2000);
+        this.loadMoreEnd();
+
+        // setTimeout(()=>{
+        //   this.loadMoreEnd();
+        // },2000);
       }else{
-
-        this.scrollarea.style[scrollKey] = "auto";
-
-        this.setState({offset:-1,animate:true});
-       
-        this.props.onLoadMoreClose&&this.props.onLoadMoreClose(); 
+        this.loadMoreEnd();
       }
     }
     
+  }
+
+  loadMoreEnd(){
+     var scrollKey =this.isHorizontal?"overflow-x":"overflow-y";
+     this.isInLoading = false;
+     this.scrollarea.style[scrollKey] = "auto";
+     this.setState({offset:-1,animate:true});
+     this.props.onLoadMoreClose&&this.props.onLoadMoreClose();
   }
 
 

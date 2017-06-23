@@ -5,17 +5,14 @@ import {observer} from 'mobx-react'
 import {xz,style,shallowEqual} from "../../../index"
 import "../css/detail.less"
 
-import Segment from '../components/detail/headersegment'
-import GoodInfoPage from '../components/detail/goodinfo'
+import MainPage from '../components/detail/main'
 import DetailStore from "../stores/detail"
 
 
 
-var pagedata = [
-  "goodinfo",
-  "desc",
-  "comment"
-];
+
+
+var verticalpagedata=["main","desc"]
 
 @observer
 class PageView extends React.Component {
@@ -28,34 +25,32 @@ class PageView extends React.Component {
     super(props)
   }
 
-  renderPageIndicator(){
+ 
+  renderVerticalPageIndicator(){
     return null;
   }
- 
-  renderSwiperPage(params){
-    if(params.data==="goodinfo"){
-      return <GoodInfoPage/>;
+
+
+  renderVerticalSwiperPage(params){
+    if(params.data==="main"){
+      return (<MainPage store={this.props.store}/>)
     }
-    return <span>111</span>;
+    return <span>detail</span>;
   }
- 
+
   render() {
-    return (<div className='full-screen'>
-      <div className='detail-header'>
-         <Segment store={this.props.store}/>
-      </div>
-      <xz.Swiper
+    return (<div>
+      <xz.Swiper direction="row" className='good-detail-ver-swiper'
         touchenable={false}
-        renderIndicator={this.renderPageIndicator.bind(this)}
-        selectedIndex={this.props.store.segmentSelectedIndex}
-        className="detail-content-swiper"
-        loop={false}
-        renderItem={this.renderSwiperPage.bind(this)}
-        cache={true}
         lazyrender={true}
-        datasource={pagedata}
-      >
-      </xz.Swiper>
+        cache={true}
+        selectedIndex={this.props.store.verticalSwiperSelectedIndex}
+        renderItem={this.renderVerticalSwiperPage.bind(this)}
+         renderIndicator={this.renderVerticalPageIndicator.bind(this)}
+        datasource={verticalpagedata}
+        loop={false}
+        >
+        </xz.Swiper>
     	</div>);
   }
 }

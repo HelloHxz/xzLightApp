@@ -34,7 +34,7 @@ class GoodInfo extends React.Component {
 
 
   onLoadMore(){
-    
+    this.props.store.verticalSwiperSelectedIndex = 1;
   }
 
 
