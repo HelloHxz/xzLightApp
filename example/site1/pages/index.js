@@ -98,9 +98,10 @@ class PageView extends React.Component {
 
 
   renderSwiperItem(params){
-    return <div key={"xx"+params.index}>
-      <img style={{width:"100%"}} src={params.data.src}/>
-    </div>;
+    return (<xz.Image className="index-top-swipe-image" src={params.data.src} key={"xx"+params.index}></xz.Image>);
+    // return <div key={"xx"+params.index}>
+    //   <img style={{width:"100%"}} src={params.data.src}/>
+    // </div>;
   }
 
   SwiperAppItemClick(itemdata){
