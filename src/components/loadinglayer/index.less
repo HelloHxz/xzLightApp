@@ -1,0 +1,31 @@
+@import url('../../../css/common.less');
+
+
+.xz-loadinglayer{
+	position:absolute;
+	.px2rem(min-height,100);
+	top:0;
+	left:0;
+	right:0;
+	z-index:100000;
+	background-color:#fff;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+
+.xz-loadinglayer-done{
+	visibility:hidden;
+	opacity:0;
+	animation:hideloading .5s ease;
+}
+@keyframes hideloading{
+	0%{
+		opacity:1;
+		visibility:visible;
+	}
+	100%{
+		opacity:0;
+		visibility:hidden;
+	}
+}

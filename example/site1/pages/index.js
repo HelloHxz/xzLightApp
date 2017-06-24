@@ -72,6 +72,13 @@ class PageView extends React.Component {
     props.globalStore.selectedIndex = "huxiaozhong";
   }
 
+
+  componentDidMount(){
+    setTimeout(()=>{
+      this.props.indexStore.mainLoadingStatus = "done";
+    },1000)
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     return (
       !shallowEqual(this.state, nextState)
@@ -185,7 +192,8 @@ class PageView extends React.Component {
 
   render() {
     return (<div>
-        <SearchBar  store={this.props.indexStore} pageview={this}/>
+        <xz.LoadingLayer  type="android" className="main-loading" status={this.props.indexStore.mainLoadingStatus}/>
+        <SearchBar store={this.props.indexStore} pageview={this}/>
         <xz.ScrollView 
           scrollkey="mainscroll"
           onRefreshClose={this.onRefreshClose.bind(this)} 
@@ -204,7 +212,6 @@ class PageView extends React.Component {
             renderItem = {this.renderSwiperItem.bind(this)}>
           </xz.Swiper>
           <xz.Swiper className='app-swiper' cache={true} datasource={appSwiperData} renderItem={this.renderAppSwiper.bind(this)}/>
-          
           <div className='index-ver-siwper-wrapper'>
             <xz.Swiper className='index-ver-swiper' datasource={verSwiperData}
               renderItem={this.renderVerSwiperItem.bind(this)}
