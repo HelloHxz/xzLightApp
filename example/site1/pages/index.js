@@ -191,6 +191,7 @@ class PageView extends React.Component {
   }
 
   onScrollEnd(){
+    this.props.indexStore.loadMoreData();
   }
 
 
@@ -244,6 +245,7 @@ class PageView extends React.Component {
           </xz.ScrollView> 
        
           <List pageview={this} store={this.props.indexStore}/>
+          <xz.LoadingLayer status="loading"  type="android" className="list-loading"/>
         </xz.ScrollView>
        
        </div>);
