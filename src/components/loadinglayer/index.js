@@ -6,7 +6,7 @@ class loadingLayer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      status:props.status||"loading" // or error  or done or success
+      status:props.status||"loading" // or error  or done or success or none
     };
   }
 
@@ -19,6 +19,10 @@ class loadingLayer extends React.Component {
     if(this.props.successAutoHide!==false){
 
     }
+    return null;
+  }
+
+  renderDone(){
     return null;
   }
 
@@ -44,8 +48,10 @@ class loadingLayer extends React.Component {
     var child =null;
     if(status==="error"){
       child = this.renderError();
+    }else if(status==="none"){
+      classNameArr.push("xz-loadinglayer-none");
     }else if(status==="done"){
-      classNameArr.push("xz-loadinglayer-done");
+      child = this.renderDone();
     }else if(status==="success"){
       child = this.renderSuccess();
     }else{

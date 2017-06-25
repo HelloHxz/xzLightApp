@@ -5,6 +5,7 @@ class IndexStore {
     @observable searchBarStatus = 'init';// show hide
     @observable searchBarIsOpacity = true;
     @observable mainLoadingStatus = "loading";
+    @observable listLoadingStatus = "loading";
     @observable ListDataSource = [{},{},{},{},{},{},{},{},{},{},{},{},{},{}];
     isInLoading = false;
 

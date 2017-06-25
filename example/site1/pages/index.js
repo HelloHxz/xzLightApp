@@ -75,7 +75,7 @@ class PageView extends React.Component {
 
   componentDidMount(){
     setTimeout(()=>{
-      this.props.indexStore.mainLoadingStatus = "done";
+      this.props.indexStore.mainLoadingStatus = "none";
     },1000)
   }
 
@@ -245,7 +245,7 @@ class PageView extends React.Component {
           </xz.ScrollView> 
        
           <List pageview={this} store={this.props.indexStore}/>
-          <xz.LoadingLayer status="loading"  type="android" className="list-loading"/>
+          <xz.LoadingLayer status={this.props.indexStore.listLoadingStatus}  type="android" className="list-loading"/>
         </xz.ScrollView>
        
        </div>);
