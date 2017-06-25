@@ -34,11 +34,15 @@ class Row extends React.Component {
     this.props.pageview.props.pagemanager.go("detail",{id:"x"});
   }
 
+  onRenderDefault(){
+    return <span>默认图片</span>;
+  }
+
 
   render() {
     return (
       <li onClick={this.goDetail.bind(this)}>
-        <div className='rowinner'><img src='./imgs/6.jpg' className='img'/>
+        <div className='rowinner'><xz.Image onRenderDefault={this.onRenderDefault.bind(this)} scrollKey="mainscroll" pageview={this.props.pageview} src='./imgs/6.jpg' className='img'/>
         <span className='good-text'>【中粮我买网】Hoegaarden/福佳 比利时原装进口 福佳白啤酒 330ml*24</span>
         </div>
       </li>

@@ -139,11 +139,13 @@
 	.px2rem(padding-bottom,8);
 }
 
-.good-list li img{
+.good-list .img{
 	position:relative;
 	.px2rem(width,371);
+	background-color:#fff;
 	.px2rem(height,371);
 }
+
 
 .good-list .good-text{
 	.px2rem(height,60);
@@ -177,10 +179,16 @@
 }
 .hor-s-item{
 	display:inline-block;
-	.px2rem(width,100);
+	.px2rem(width,200);
 	 background-color:#fff;
-	hieght:100%;
+	height:100%;
 	white-space:nowrap;
+}
+.hor-s-item .default-img{
+	position:absolute;
+	transform:translate3d(-50%,-50%,0);
+	top:50%;
+	left:50%;
 }
 
 .app-horizon-scroll{

@@ -23,6 +23,9 @@ class ScrollView extends React.Component {
          otherToucKey:"pageX"
       }
     }
+    if(props.scrollKey&&!props.pageview){
+      console.error("ScrollView 组件使用scrollKey去按需加载的时候 必须指定pageview={xxx} xxx指的是所在页面的页面引用");
+    }
   }
 
   onTouchStart(e){
@@ -161,11 +164,43 @@ class ScrollView extends React.Component {
 
 
   _onScroll(e){
-    this.props.onScroll({
+    e.stopPropagation();
+    this.props.onScroll&&this.props.onScroll({
       instance:this,
       scroller:this.scrollarea,
       e:e
     });
+
+    if(this.props.scrollKey||this.props.onScrollEnd){
+      if(this.scrollEndTimeoutId){
+        window.clearTimeout(this.scrollEndTimeoutId);
+        this.scrollEndTimeoutId  = null;
+      }
+      this.scrollEndTimeoutId = setTimeout(()=>{
+        this.props.onScrollEnd&&this.props.onScrollEnd({
+          instance:this,
+          scroller:this.scrollarea,
+          e:e
+        });
+        if(this.props.scrollKey){
+          try{
+
+             var scrollArr = this.props.pageview.onScrollIntoViewDict[this.props.scrollKey];
+             for(var i=scrollArr.length-1;i>=0;i--){
+                var curItem = scrollArr[i];
+                if(curItem.hasLazyLoadDone){
+                  scrollArr.splice(i,1);
+                  continue;
+                }else{
+                  curItem.onScrollIntoView&&curItem.onScrollIntoView();
+                }
+              }
+          }catch(e){}
+        }
+      },800)
+    }
+  
+
   }
 
   _renderRefreshIndicator(){
@@ -225,7 +260,7 @@ class ScrollView extends React.Component {
     }
 
     var scrollEvent = {};
-    if(this.props.onScroll){
+    if(this.props.onScroll||this.props.scrollKey){
       scrollEvent.onScroll = this._onScroll.bind(this);
     }
 

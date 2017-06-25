@@ -99,9 +99,6 @@ class PageView extends React.Component {
 
   renderSwiperItem(params){
     return (<xz.Image className="index-top-swipe-image" src={params.data.src} key={"xx"+params.index}></xz.Image>);
-    // return <div key={"xx"+params.index}>
-    //   <img style={{width:"100%"}} src={params.data.src}/>
-    // </div>;
   }
 
   SwiperAppItemClick(itemdata){
@@ -158,10 +155,15 @@ class PageView extends React.Component {
 
   }
 
+
+  onRenderDefault(){
+    return <span className="default-img">默认图</span>
+  }
   renderHorScrollChild(){
     var re = [];
     for(var i=0;i<10;i++){
-      re.push(<div key={"x"+i} className='hor-s-item'>x{i}</div>);
+      re.push(<xz.Image  scrollKey="mainhorscroll"
+            pageview={this} onRenderDefault={this.onRenderDefault.bind(this)} className="hor-s-item" src="./imgs/6.jpg" key={"xx"+i}></xz.Image>);
     }
     return <div className="hor-s-item-wrapper">{re}</div>;
   }
@@ -188,6 +190,10 @@ class PageView extends React.Component {
     this.verSwiper.startInterval();
   }
 
+  onScrollEnd(){
+    console.log("scrollend");
+  }
+
 
 
 
@@ -196,7 +202,9 @@ class PageView extends React.Component {
         <xz.LoadingLayer  type="android" className="main-loading" status={this.props.indexStore.mainLoadingStatus}/>
         <SearchBar store={this.props.indexStore} pageview={this}/>
         <xz.ScrollView 
-          scrollkey="mainscroll"
+          scrollKey="mainscroll"
+          pageview={this}
+          onScrollEnd={this.onScrollEnd.bind(this)}
           onRefreshClose={this.onRefreshClose.bind(this)} 
           onTouchMove={this.onTouchMove.bind(this)} 
           onLoadMore ={this.onLoadMore.bind(this)}
@@ -226,7 +234,8 @@ class PageView extends React.Component {
 
           </div>
             <xz.ScrollView 
-          pkey="hor"
+            scrollKey="mainhorscroll"
+            pageview={this}
             onLoadMore ={this.onLoadMoreHor.bind(this)}
           onRefresh={this.onRefreshHor.bind(this)} 
           direction='horizontal' className='app-horizon-scroll'>
