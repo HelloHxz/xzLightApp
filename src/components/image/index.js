@@ -119,8 +119,8 @@ class ImageCom extends React.Component {
 
   isInView(){
     var rect =  this.wrapper.getBoundingClientRect();
-    var verInView = (rect.top>=-1&&rect.top<=Style.screen.height)||(rect.bottom>=-1&&rect.bottom<=Style.screen.height);
-    var horInView = (rect.left>=-1&&rect.left<=Style.screen.width)||(rect.right>=-1&&rect.right<=Style.screen.width);
+    var verInView = (rect.top>=0&&rect.top<=Style.screen.height)||(rect.bottom>=0&&rect.bottom<=Style.screen.height);
+    var horInView = (rect.left>=0&&rect.left<=Style.screen.width)||(rect.right>=0&&rect.right<=Style.screen.width);
     if(verInView&&horInView){
       return true;
     }

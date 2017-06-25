@@ -163,7 +163,7 @@ class PageView extends React.Component {
     var re = [];
     for(var i=0;i<10;i++){
       re.push(<xz.Image  scrollKey="mainhorscroll"
-            pageview={this} onRenderDefault={this.onRenderDefault.bind(this)} className="hor-s-item" src="./imgs/6.jpg" key={"xx"+i}></xz.Image>);
+            pageview={this} backgroundSize="cover" onRenderDefault={this.onRenderDefault.bind(this)} className="hor-s-item" src="./imgs/2.jpg" key={"xx"+i}></xz.Image>);
     }
     return <div className="hor-s-item-wrapper">{re}</div>;
   }
@@ -191,11 +191,12 @@ class PageView extends React.Component {
   }
 
   onScrollEnd(){
-    console.log("scrollend");
   }
 
 
-
+  renderAppIndicator(){
+    return null;
+  }
 
   render() {
     return (<div>
@@ -220,7 +221,7 @@ class PageView extends React.Component {
             datasource={siwperData} 
             renderItem = {this.renderSwiperItem.bind(this)}>
           </xz.Swiper>
-          <xz.Swiper className='app-swiper' cache={true} datasource={appSwiperData} renderItem={this.renderAppSwiper.bind(this)}/>
+          <xz.Swiper renderIndicator={this.renderAppIndicator.bind(this)} className='app-swiper' cache={true} datasource={appSwiperData} renderItem={this.renderAppSwiper.bind(this)}/>
           <div className='index-ver-siwper-wrapper'>
             <xz.Swiper className='index-ver-swiper' datasource={verSwiperData}
               renderItem={this.renderVerSwiperItem.bind(this)}

@@ -387,9 +387,9 @@ class Swiper extends React.Component {
  
     var point = [];
     for(var i=0;i<len;i++){
-      point.push(<span key={i}>&nbsp;{i===curIndex?"o":"-"}</span>);
+      point.push(<span className={i===curIndex?"xz-swipe-selin":"xz-swipe-in"} key={i}></span>);
     }
-    return <div style={{position:"absolute",bottom:"0",zIndex:11}}>{point}</div>;
+    return <div className="xz-swipe-default-indwrap">{point}</div>;
   }
 
   wrapInit(outerWrapper){

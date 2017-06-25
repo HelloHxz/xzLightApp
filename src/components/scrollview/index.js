@@ -197,7 +197,7 @@ class ScrollView extends React.Component {
               }
           }catch(e){}
         }
-      },800)
+      },this.props.scrollEndDelayTime||600)
     }
   
 
