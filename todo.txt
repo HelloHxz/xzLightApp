@@ -12,4 +12,3 @@ https://github.com/airbnb/enzyme
 
 ##跨电脑调试的时候修改
 ##"start": "webpack-dev-server --host 机子ip --port 8080"
-如：webpack-dev-server --host 192.168.2.101 --port 8080

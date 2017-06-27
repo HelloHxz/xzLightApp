@@ -105,7 +105,13 @@ class PageView extends React.Component {
     var url = itemdata.url;
     if(url){
       this.props.pagemanager.go(url,{someparam:1});
+    }else{
+      this.props.indexStore.drawLayoutConfig ={"key":"right","direction":"right"};
     }
+  }
+
+  drawLayoutBKClick(){
+    this.props.indexStore.drawLayoutConfig ={};
   }
 
   renderAppSwiper(params){
@@ -194,6 +200,20 @@ class PageView extends React.Component {
     this.props.indexStore.loadMoreData();
   }
 
+  drawLayoutRenderItem(params){
+    console.log(params);
+    if(params.key==="top"){
+      return <div style={{height:style.px2rem(300)+"rem"}}>x</div>;
+    }else if(params.key==="bottom"){
+      return <div style={{height:style.px2rem(300)+"rem"}}>x</div>;
+    }else if(params.key==="left"){
+      return <div style={{width:style.px2rem(300)+"rem"}}>x</div>;
+    }else if(params.key==="right"){
+      return <div style={{width:style.px2rem(300)+"rem"}}>x</div>;
+    }
+    
+  }
+
 
   renderAppIndicator(){
     return null;
@@ -201,7 +221,11 @@ class PageView extends React.Component {
 
   render() {
     return (<div>
-        <xz.LoadingLayer  type="android" className="main-loading" status={this.props.indexStore.mainLoadingStatus}/>
+        <xz.DrawLayout 
+        onBackLayerClick = {this.drawLayoutBKClick.bind(this)}
+        renderItem={this.drawLayoutRenderItem.bind(this)}
+        config={this.props.indexStore.drawLayoutConfig}/>
+        <xz.LoadingLayer type="android" className="main-loading" status={this.props.indexStore.mainLoadingStatus}/>
         <SearchBar store={this.props.indexStore} pageview={this}/>
         <xz.ScrollView 
           scrollKey="mainscroll"

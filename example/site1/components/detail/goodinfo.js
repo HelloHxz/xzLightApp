@@ -50,7 +50,6 @@ class GoodInfo extends React.Component {
         renderLoadMoreIndicator = {this.renderLoadMoreIndicator.bind(this)}
       >
         <xz.Swiper 
-            space={10} 
             className="detail-swiper"
             lazyrender={false} 
             loop={false} 

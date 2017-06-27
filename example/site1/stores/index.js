@@ -1,11 +1,12 @@
 import {observable, autorun} from 'mobx';
-
+import {fetch} from "../../../index"
 class IndexStore {
 	
     @observable searchBarStatus = 'init';// show hide
     @observable searchBarIsOpacity = true;
     @observable mainLoadingStatus = "loading";
     @observable listLoadingStatus = "loading";
+    @observable drawLayoutConfig = {};
     @observable ListDataSource = [{},{},{},{},{},{},{},{},{},{},{},{},{},{}];
     isInLoading = false;
 

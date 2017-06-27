@@ -146,6 +146,9 @@ class ImageCom extends React.Component {
         this.props.pageview.onScrollIntoViewDict[props.scrollKey].push(this);
 
       });
+      setTimeout(()=>{
+        this.loadImageWhenInView();
+      },280);
     }else{
       this.loadImage();
     }

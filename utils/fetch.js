@@ -1,6 +1,6 @@
-export default {
-	fetch(params){
-		
-	}
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
 
+export default ()=>{
+	alert("s");
 }
