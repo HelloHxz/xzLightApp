@@ -32,7 +32,7 @@ class PageView extends React.Component {
 
   render() {
     return (<div>
-        <xz.Button type="plat">goto tabbar</xz.Button><br/>
+        <xz.Button type="flat">goto tabbar</xz.Button><br/>
           <div className='btn-wrap'>
             <xz.Button type="primary">primary Button</xz.Button>
             <xz.Button>default button</xz.Button>

@@ -12,11 +12,11 @@ class ConditionBar extends React.Component {
   renderItem(key){
   	var _style={};
   	if(key==="condition2"){
-  		_style.height = style.px2rem(400)+"rem";
+  		_style.height = "3rem";
   	}else if(key==="condition1"){
-  		_style.height = style.px2rem(200)+"rem";
+  		_style.height = "4rem";
   	}else if(key==="condition3"){
-  		_style["maxHeight"] = style.px2rem(300)+"rem";
+  		_style["maxHeight"] = "3rem";
   	}else{
   		_style.height = "100%";
   	}

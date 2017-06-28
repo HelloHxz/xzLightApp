@@ -7,6 +7,7 @@ import globalStore from "../stores/global"
 import indexStore from "../stores/index"
 
 import SearchBar from '../components/index/searchbar'
+
 import List from '../components/index/list'
 import {observer} from 'mobx-react'
 
@@ -35,7 +36,7 @@ var appSwiperData = [
     {"key":"","title":"one",url:"twolevelroute/one"},
     {"key":"","title":"index",url:"index"},
     {"key":"","title":"lazyload",url:"lazyload"},
-    {"key":"","title":"xx超市"},
+    {"key":"","title":"drawlayout",url:"drawlayoutdemo"},
     {"key":"","title":"xx超市"},
     {"key":"","title":"xx超市"},
     {"key":"","title":"xx超市"},
@@ -106,13 +107,9 @@ class PageView extends React.Component {
     if(url){
       this.props.pagemanager.go(url,{someparam:1});
     }else{
-      this.props.indexStore.drawLayoutConfig ={"key":"right","direction":"right"};
     }
   }
 
-  drawLayoutBKClick(){
-    this.props.indexStore.drawLayoutConfig ={};
-  }
 
   renderAppSwiper(params){
     var child = [];
@@ -200,19 +197,6 @@ class PageView extends React.Component {
     this.props.indexStore.loadMoreData();
   }
 
-  drawLayoutRenderItem(params){
-    console.log(params);
-    if(params.key==="top"){
-      return <div style={{height:style.px2rem(300)+"rem"}}>x</div>;
-    }else if(params.key==="bottom"){
-      return <div style={{height:style.px2rem(300)+"rem"}}>x</div>;
-    }else if(params.key==="left"){
-      return <div style={{width:style.px2rem(300)+"rem"}}>x</div>;
-    }else if(params.key==="right"){
-      return <div style={{width:style.px2rem(300)+"rem"}}>x</div>;
-    }
-    
-  }
 
 
   renderAppIndicator(){
@@ -221,10 +205,7 @@ class PageView extends React.Component {
 
   render() {
     return (<div>
-        <xz.DrawLayout 
-        onBackLayerClick = {this.drawLayoutBKClick.bind(this)}
-        renderItem={this.drawLayoutRenderItem.bind(this)}
-        config={this.props.indexStore.drawLayoutConfig}/>
+       
         <xz.LoadingLayer type="android" className="main-loading" status={this.props.indexStore.mainLoadingStatus}/>
         <SearchBar store={this.props.indexStore} pageview={this}/>
         <xz.ScrollView 

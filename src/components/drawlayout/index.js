@@ -66,13 +66,22 @@ class DrawLayout extends React.Component {
         itemClassArr.push("xz-drawlayout-"+direction+"-hide");
       }else{
         itemClassArr.push("xz-drawlayout-"+direction+"-show");
-        bk = <div onClick={this.bkClick.bind(this)} className="xz-drawlayout-bk"></div>;
+        
       }
       children.push(
           <div className={itemClassArr.join(" ")} key={key+"_inner"}>
            {this.childrenDict[key].instance}
         </div>);
     }
+
+    var bkArr = ["xz-drawlayout-bk"];
+    if(config&&config.key){
+      bkArr.push("xz-drawlayout-bk-show");
+    }else{
+      bkArr.push("xz-drawlayout-bk-hide");
+    }
+
+    bk = <div onClick={this.bkClick.bind(this)} className={bkArr.join(" ")}></div>;
 
    
     return (<div className="xz-drawlayout">

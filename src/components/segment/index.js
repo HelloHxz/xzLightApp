@@ -95,6 +95,9 @@ class Segment extends React.Component {
        var rect = this.scrollInner.getBoundingClientRect();
           this.scrollInnerWidth=rect.width;
     }
+    if(!this.wrapperWidth){
+      this.wrapperWidth = this.wrapper.offsetWidth;
+    }
     this.starttime = new Date().valueOf();
     this.touchStartValue = e.nativeEvent.touches[0].pageX;
     // e.preventDefault();
@@ -131,7 +134,7 @@ class Segment extends React.Component {
     var abs_diff = Math.abs(this.diff);
 
     var abs_offset = Math.abs(this.state.offset);
-    var rightlimit = this.scrollInnerWidth-Style.screen.width;
+    var rightlimit = this.scrollInnerWidth-this.wrapperWidth;
 
     if(this.state.offset>0||rightlimit<0){
       var l = this.state.offset; 
@@ -152,11 +155,11 @@ class Segment extends React.Component {
       return;
     }
     else if(abs_diff>17&&diffTime<300){
-      var l = Style.screen.width-this.state.offset; 
-      d = 60;
+      var l = this.wrapperWidth-this.state.offset; 
+      d = 50;
       if(abs_diff<270){
         l = abs_diff/270*l;
-        d = 40;
+        d = 30;
       }
       var fun = null;
       
@@ -248,8 +251,15 @@ class Segment extends React.Component {
         classArr.push(this.props.className);
     }
     var moveStyle = {};
+
     moveStyle[this.tranDict.transform] ="translate3d("+this.state.offset+"px,0,0)";
-    return (<div {...toucheEvent} className={classArr.join(" ")}>
+
+    var wrapperStyle = this.props.style||{};
+    return (<div 
+        ref={(wrapper)=>{this.wrapper = wrapper;}}
+        {...toucheEvent} 
+        style={wrapperStyle} 
+        className={classArr.join(" ")}>
        <ul style={moveStyle} 
           ref={(scrollInner)=>{this.scrollInner = scrollInner;}}
             className='xz-segment-ul'>

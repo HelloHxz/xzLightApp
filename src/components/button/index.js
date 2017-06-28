@@ -11,7 +11,7 @@ import "./index.less"
 
 var classNameDict= {
 	primary:"xz-btn-primary",
-	plat:"xz-btn-plat",
+	flat:"xz-btn-flat",
 	"default":"xz-btn-default",
 	"none":"xz-btn-none"
 };

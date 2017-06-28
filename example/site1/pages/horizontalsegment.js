@@ -81,6 +81,20 @@ class PageView extends React.Component {
           <xz.Segment.Item key='62'>我的</xz.Segment.Item>
           <xz.Segment.Item key='73'>更多</xz.Segment.Item>
          </xz.Segment>
+         <br/>
+          <xz.Segment style={{width:"80%"}} selectedKey="1" scroll={true}>
+          <xz.Segment.Item key='1'>首页</xz.Segment.Item>
+          <xz.Segment.Item key='2'>商城</xz.Segment.Item> 
+          <xz.Segment.Item key='3'>应用</xz.Segment.Item>  
+          <xz.Segment.Item key='4'>设计</xz.Segment.Item>
+          <xz.Segment.Item key='5'>设置</xz.Segment.Item>
+          <xz.Segment.Item key='6'>我的</xz.Segment.Item>
+          <xz.Segment.Item key='7'>更多</xz.Segment.Item>
+          <xz.Segment.Item key='61'>我的</xz.Segment.Item>
+          <xz.Segment.Item key='71'>更多</xz.Segment.Item>
+          <xz.Segment.Item key='62'>我的</xz.Segment.Item>
+          <xz.Segment.Item key='73'>更多</xz.Segment.Item>
+         </xz.Segment>
 <br/>
         <xz.Segment selectedKey="1">
           <xz.Segment.Item key='1'>首页</xz.Segment.Item>
