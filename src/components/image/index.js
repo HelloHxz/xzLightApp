@@ -132,19 +132,40 @@ class ImageCom extends React.Component {
   }
 
   init(props){
+    
+
     this.backgroundSize = this.props.backgroundSize||"contain";
     if(props.scrollKey){
+
+      if(!this.props.pageview.lazyLoadImageSeed){
+        this.props.pageview.lazyLoadImageSeed = 1;
+      }
+      
+      this.props.pageview.lazyLoadImageSeed+=1;
+      this.imageSeed = this.props.pageview.lazyLoadImageSeed.toString();
+
       this.loadImageWhenInView(()=>{
         this.renderDefault();
+
+        var keyArr = props.scrollKey.split(",");
+        if(!this.props.pageview.lazyLoadImageDict){
+          this.props.pageview.lazyLoadImageDict = {};
+        }
+
+        this.props.pageview.lazyLoadImageDict[this.imageSeed] = this;
+
+
         if(!this.props.pageview.onScrollIntoViewDict){
           this.props.pageview.onScrollIntoViewDict = {};
         }
 
-        if(!this.props.pageview.onScrollIntoViewDict[props.scrollKey]){
-          this.props.pageview.onScrollIntoViewDict[props.scrollKey]=[];
+        for(var i=0,j=keyArr.length;i<j;i++){
+          var sinScrollKey = keyArr[i];
+          if(!this.props.pageview.onScrollIntoViewDict[sinScrollKey]){
+            this.props.pageview.onScrollIntoViewDict[sinScrollKey]=[];
+          }
+          this.props.pageview.onScrollIntoViewDict[sinScrollKey].push(this.imageSeed);
         }
-        this.props.pageview.onScrollIntoViewDict[props.scrollKey].push(this);
-
       });
       setTimeout(()=>{
         this.loadImageWhenInView();

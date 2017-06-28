@@ -44,6 +44,7 @@ class ScrollView extends React.Component {
     if(this.props.onLoadMore){
       this.wrapperSize = this.isHorizontal? this.scrollarea.offsetWidth:this.scrollarea.offsetHeight;
     }
+    this.scrollHeightSize = this.isHorizontal? this.scrollarea.scrollWidth: this.scrollarea.scrollHeight;
     this.props.onTouchStart&&this.props.onTouchStart({
       instance:this,
       scroller:this.scrollarea,
@@ -90,7 +91,6 @@ class ScrollView extends React.Component {
         }
       }
       if(this.diff<0&&this.props.onLoadMore){
-        this.scrollHeightSize = this.isHorizontal? this.scrollarea.scrollWidth: this.scrollarea.scrollHeight;
       
         if(this.scrollHeightSize<=this.wrapperSize+this.scrollValue+Style.px2px(10)){
           this.scrollarea.style["overflow"] = "hidden";
@@ -171,7 +171,7 @@ class ScrollView extends React.Component {
       e:e
     });
 
-    if(this.props.scrollKey||this.props.onScrollEnd){
+    if(this.props.scrollKey||this.props.onScrollEnd||this.props.onScrollToTail){
       if(this.scrollEndTimeoutId){
         window.clearTimeout(this.scrollEndTimeoutId);
         this.scrollEndTimeoutId  = null;
@@ -182,13 +182,28 @@ class ScrollView extends React.Component {
           scroller:this.scrollarea,
           e:e
         });
+        if(this.props.onScrollToTail){
+            if(!this.wrapperSize){
+              this.wrapperSize = this.isHorizontal? this.scrollarea.offsetWidth:this.scrollarea.offsetHeight;
+            }
+            var scrollHeightSize = this.isHorizontal? this.scrollarea.scrollWidth: this.scrollarea.scrollHeight;
+            var scrollValue = this.isHorizontal? this.scrollarea.scrollLeft:this.scrollarea.scrollTop;
+            if(scrollHeightSize<=this.wrapperSize+scrollValue+Style.px2px(10)){
+              this.props.onScrollToTail({instance:this,
+                scroller:this.scrollarea,
+                e:e});
+            }
+        }
         if(this.props.scrollKey){
           try{
-
              var scrollArr = this.props.pageview.onScrollIntoViewDict[this.props.scrollKey];
              for(var i=scrollArr.length-1;i>=0;i--){
-                var curItem = scrollArr[i];
-                if(curItem.hasLazyLoadDone){
+                var curImageKey = scrollArr[i];
+                var curItem = this.props.pageview.lazyLoadImageDict[curImageKey];
+                if(!curItem||curItem.hasLazyLoadDone){
+                  if(curItem){
+                    delete this.props.pageview.lazyLoadImageDict[curImageKey];
+                  }
                   scrollArr.splice(i,1);
                   continue;
                 }else{

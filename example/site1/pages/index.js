@@ -193,7 +193,7 @@ class PageView extends React.Component {
     this.verSwiper.startInterval();
   }
 
-  onScrollEnd(){
+  onScrollToTail(){ 
     this.props.indexStore.loadMoreData();
   }
 
@@ -211,7 +211,7 @@ class PageView extends React.Component {
         <xz.ScrollView 
           scrollKey="mainscroll"
           pageview={this}
-          onScrollEnd={this.onScrollEnd.bind(this)}
+          onScrollToTail={this.onScrollToTail.bind(this)}
           onRefreshClose={this.onRefreshClose.bind(this)} 
           onTouchMove={this.onTouchMove.bind(this)} 
           onLoadMore ={this.onLoadMore.bind(this)}
@@ -227,7 +227,9 @@ class PageView extends React.Component {
             datasource={siwperData} 
             renderItem = {this.renderSwiperItem.bind(this)}>
           </xz.Swiper>
+
           <xz.Swiper renderIndicator={this.renderAppIndicator.bind(this)} className='app-swiper' cache={true} datasource={appSwiperData} renderItem={this.renderAppSwiper.bind(this)}/>
+         
           <div className='index-ver-siwper-wrapper'>
             <xz.Swiper className='index-ver-swiper' datasource={verSwiperData}
               renderItem={this.renderVerSwiperItem.bind(this)}
@@ -238,18 +240,19 @@ class PageView extends React.Component {
               renderIndicator={this.renderIndicatorVer.bind(this)}
               interval={2000}
             ></xz.Swiper>
-
           </div>
-            <xz.ScrollView 
+           <xz.ScrollView 
             scrollKey="mainhorscroll"
             pageview={this}
             onLoadMore ={this.onLoadMoreHor.bind(this)}
-          onRefresh={this.onRefreshHor.bind(this)} 
-          direction='horizontal' className='app-horizon-scroll'>
+            onRefresh={this.onRefreshHor.bind(this)} 
+            direction='horizontal' className='app-horizon-scroll'>
               {this.renderHorScrollChild()}
           </xz.ScrollView> 
        
+       
           <List pageview={this} store={this.props.indexStore}/>
+         
           <xz.LoadingLayer status={this.props.indexStore.listLoadingStatus}  type="android" className="list-loading"/>
         </xz.ScrollView>
        
