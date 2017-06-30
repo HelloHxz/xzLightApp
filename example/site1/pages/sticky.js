@@ -14,6 +14,10 @@ class PageView extends React.Component {
     super(props)
   }
   
+
+  test(){
+  	alert("s");
+  }
  
 
   render() {
@@ -24,14 +28,14 @@ class PageView extends React.Component {
     	 <br/>
     	 <div>3</div>
     	 <xz.StickyView scrollKey="StickyViewScroll" pageview={this}>
-    	 	<div className="test-sticky-header">asdasdasdasdasds</div>
+    	 	<div  className="test-sticky-header">asdasdasdasdasds</div>
     	 </xz.StickyView>
     	 <br/>
     	 <div>4</div>
     	 <br/>
     	 <div>5</div>
     	 <xz.StickyView scrollKey="StickyViewScroll" pageview={this}>
-    	 	<div className="test-sticky-header">hahhah</div></xz.StickyView>
+    	 	<div onClick={this.test.bind(this)} className="test-sticky-header">hahhah</div></xz.StickyView>
     	 <br/>
     	 <div>6</div>
     	 <br/>

@@ -11,8 +11,7 @@ export default {
 				}
 		}
 		ReactDOM.render(<div className='xz-app-wrapper'>
-			<div ref={(instance)=>{config.extendArea = instance;}} style={{position:"absolute",width:"0px",height:"0px"}}>
-			</div><Navigation 
+			<Navigation 
 			config={config}/></div>,
    		 document.getElementById('xz-lightapp-root'));
 	},
