@@ -21,7 +21,10 @@ class PageView extends React.Component {
  
 
   render() {
-    return (<xz.ScrollView scrollKey="StickyViewScroll" pageview={this}>
+    return (
+    	<div>
+    	<div className='detail-header'>sticky</div>
+    	<xz.ScrollView className="sticky-scrollview" scrollKey="StickyViewScroll" pageview={this}>
     	 <div>1</div>
     	 <br/>
     	 <div>2</div>
@@ -103,7 +106,7 @@ class PageView extends React.Component {
     	 <br/>
     	 <div>16</div>
     	 <br/>
-      </xz.ScrollView>);
+      </xz.ScrollView></div>);
   }
 }
 export default PageView;
