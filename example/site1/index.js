@@ -1,16 +1,20 @@
 import {Navigation} from "../../index"
 
 
+
+
+try{
 Navigation.start({
 	root:"index",
 	pages:{
 		index:require("./pages/index").default,
-		tabbarpage:require("./pages/tabbarpage").default,
+		 tabbarpage:require("./pages/tabbarpage").default,
 		twolevelroute:require("./pages/twolevelroute").default,
 		search:require("./pages/searchpage").default,
 		slidepage:require("./pages/slidepage").default,
 		dpdcdemo:require("./pages/dpdcdemo").default,
 		goodlist:require("./pages/goodlist").default,
+		sticky:require("./pages/sticky").default,
 		drawlayoutdemo:require("./pages/drawlayoutdemo").default,
 		threelevelroute:require("./pages/threelevelroute").default,
 		segmentdemo:require("./pages/segmentdemo").default,
@@ -36,5 +40,9 @@ Navigation.start({
 		}
 	}
 });
+}catch(e){
+	alert(e);
+}
+
 
 

@@ -49,17 +49,30 @@ class ImageCom extends React.Component {
   }
 
   loadDone(){
-
     this.hasLazyLoadDone = true;
+    this.destory();
+  }
+
+  destory(){
     if(this.props.scrollKey){
-      var scrollArr = this.props.pageview.onScrollIntoViewDict[this.props.scrollKey]||[];
-      for(var i=scrollArr.length-1;i>=0;i--){
-        if(scrollArr[i]===this){
-          scrollArr.splice(i,1);
-          break;
+      var keyArr = this.props.scrollKey.split(",");
+      for(var n=0,m=keyArr.length;n<m;n++){
+        var scrollKey = keyArr[n];
+        var scrollArr = this.props.pageview.onScrollIntoViewDict[scrollKey]||[];
+        for(var i=scrollArr.length-1;i>=0;i--){
+          if(scrollArr[i]===this.imageSeed){
+            scrollArr.splice(i,1);
+            delete this.props.pageview.lazyLoadImageDict[this.imageSeed];
+            break;
+          }
         }
       }
+      
     }
+  }
+
+  componentWillUnmount(){
+    this.destory();
   }
 
   loadImageWhenInView(noInViewCallBack){

@@ -13,7 +13,6 @@ var Navigation = {
 			N.start(config);
 			var startY = 0;
 			document.addEventListener('touchstart',function (event) {  
-				console.log();
 				startY = event.touches[0].pageY;
 	            if(event.touches.length>1){  
 	                event.preventDefault();  

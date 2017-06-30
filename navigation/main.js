@@ -34,8 +34,11 @@ function GoPreOrNext(isGoNext,lastClass,preClass,routeStack,pages,isReplaceGo,go
   for(var i=routeStack.length-1,j=routeStack.length;i>=0;i--){
     var _key = routeStack[i]._key+"_wrapper";
     var instance = routeStack[i].page;
+
     if(i===j-1){
-        pages.push(<div className={lastClass} key={_key}>{instance}</div>);
+        pages.push(<div id={_key} ref={(pageout)=>{
+        removeAnimateClass(pageout)
+      }}  className={lastClass} key={_key}>{instance}</div>);
     }else if(i===j-2||i===realIndex){
       if(!isGoNext){
         if(goPageKey!==routeStack[i]._key){
@@ -48,16 +51,23 @@ function GoPreOrNext(isGoNext,lastClass,preClass,routeStack,pages,isReplaceGo,go
           continue;
         }
       }
-      pages.push(<div className={preClass} key={_key}>{instance}</div>);
+      pages.push(<div id={_key} className={preClass} key={_key}>{instance}</div>);
     }else{
-      pages.push(<div className='xz-page-route-wrapper' key={_key} style={{left:"-120%",visibility:"hidden"}}>{instance}</div>);
+      pages.push(<div id={_key} className='xz-page-route-wrapper' key={_key} style={{left:"-120%",visibility:"hidden"}}>{instance}</div>);
     }
   }
   if(deleteIndex!==-1){
     routeStack.splice(deleteIndex,1);
   }
 }
-
+function removeAnimateClass(dom){
+    setTimeout(()=>{
+      if(dom){
+        dom.className = "xz-page-route-wrapper";
+      }
+    },400);
+  
+}
 /*
   路由需要支持：
     1. 多级路由
@@ -300,6 +310,7 @@ class Navigation extends React.Component {
       this.firstLoadToChangeHash = false;
       return;
     }
+
 
 
    

@@ -9,9 +9,8 @@ import indexStore from "../stores/index"
 import SearchBar from '../components/index/searchbar'
 
 import List from '../components/index/list'
-import {observer} from 'mobx-react'
-
 import '../fonts/iconfont.css'
+import {observer} from 'mobx-react'
 
 
 
@@ -37,7 +36,7 @@ var appSwiperData = [
     {"key":"","title":"index",url:"index"},
     {"key":"","title":"lazyload",url:"lazyload"},
     {"key":"","title":"drawlayout",url:"drawlayoutdemo"},
-    {"key":"","title":"xx超市"},
+    {"key":"","title":"sticky",url:"sticky"},
     {"key":"","title":"xx超市"},
     {"key":"","title":"xx超市"},
     {"key":"","title":"xx超市"}

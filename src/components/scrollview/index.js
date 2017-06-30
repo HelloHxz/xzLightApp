@@ -5,6 +5,7 @@ import "./index.less"
 class ScrollView extends React.Component {
   constructor(props) {
     super(props)
+    this.seed  = 0;
     this.tranDict = Style.getTransitionKeys();
     this.state = {offset:-1,animate:false};
     this.limitOffset = this.props.limitOffset||Style.screen.height*.1;
@@ -25,6 +26,16 @@ class ScrollView extends React.Component {
     }
     if(props.scrollKey&&!props.pageview){
       console.error("ScrollView 组件使用scrollKey去按需加载的时候 必须指定pageview={xxx} xxx指的是所在页面的页面引用");
+    }
+    if(props.scrollKey){
+      if(!props.pageview.scrollViewDict){
+        props.pageview.scrollViewDict = {};
+      }
+      if(props.pageview.scrollViewDict[props.scrollKey]){
+        console.error("当前页面ScrollView组件又重复的scrollKey！！")
+      }else{
+        props.pageview.scrollViewDict[props.scrollKey] = this;
+      }
     }
   }
 
@@ -163,6 +174,24 @@ class ScrollView extends React.Component {
   }
 
 
+  checkSticky(){
+    this.seed+=1;
+    if(this.seed>1000){
+      this.seed = 0 ;
+    }
+     if(this.seed%3!==0){
+      return;
+     }
+     if(!this.isHorizontal&&this.props.pageview&&this.props.pageview.stickviewDict){
+        var stickyArr = this.props.pageview.stickviewDict[this.props.scrollKey];
+        if(stickyArr&&stickyArr.length>0){
+          for(var i=0,j=stickyArr.length;i<j;i++){
+            stickyArr[i].checkSticky();
+          }
+        }
+      }
+  }
+
   _onScroll(e){
     e.stopPropagation();
     this.props.onScroll&&this.props.onScroll({
@@ -172,6 +201,7 @@ class ScrollView extends React.Component {
     });
 
     if(this.props.scrollKey||this.props.onScrollEnd||this.props.onScrollToTail){
+      this.checkSticky();
       if(this.scrollEndTimeoutId){
         window.clearTimeout(this.scrollEndTimeoutId);
         this.scrollEndTimeoutId  = null;
@@ -212,10 +242,8 @@ class ScrollView extends React.Component {
               }
           }catch(e){}
         }
-      },this.props.scrollEndDelayTime||600)
+      },this.props.scrollEndDelayTime||200)
     }
-  
-
   }
 
   _renderRefreshIndicator(){
@@ -240,10 +268,12 @@ class ScrollView extends React.Component {
   render() {
 
     var toucheEvent = {};
+    var needTranslate = false;
     if(this.props.onRefresh||this.props.onLoadMore){
       toucheEvent.onTouchStart = this.onTouchStart.bind(this);
       toucheEvent.onTouchMove = this.onTouchMove.bind(this);
       toucheEvent.onTouchEnd = this.onTouchEnd.bind(this);
+      needTranslate = true;
     }else{
       if(this.props.onTouchMove){
         toucheEvent.onTouchMove = this.onTouchMove.bind(this);
@@ -266,13 +296,17 @@ class ScrollView extends React.Component {
     }
 
     var moveStyle = {};
-    var valueStr = this.isHorizontal?this.state.offset+"px,0,0":"0,"+this.state.offset+"px,0";
-    moveStyle[this.tranDict.transform] ="translate3d("+valueStr+")";
-    if(this.state.animate){
-       moveStyle[this.tranDict.transition] = "all .3s ease";
-    }else{
-      moveStyle[this.tranDict.transition] = "none";
+    if(needTranslate){
+      var valueStr = this.isHorizontal?this.state.offset+"px,0,0":"0,"+this.state.offset+"px,0";
+      moveStyle[this.tranDict.transform] ="translate3d("+valueStr+")";
+
+      if(this.state.animate){
+         moveStyle[this.tranDict.transition] = "all .3s ease";
+      }else{
+        moveStyle[this.tranDict.transition] = "none";
+      }
     }
+ 
 
     var scrollEvent = {};
     if(this.props.onScroll||this.props.scrollKey){

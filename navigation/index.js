@@ -3,7 +3,6 @@ import React from 'react';
 import Navigation from './main';
 
 
-
 export default {
 	start(config){
 		for(var key in config.pages){
