@@ -8,9 +8,11 @@ import spin from './spin'
 import loadinglayer from './loadinglayer' 
 import stickyview from './stickyview' 
 import dropdowngroup from './dropdowngroup' 
+import selector from './selector' 
 
 export default {
 	"Button":button,
+	"Selector":selector,
 	"DrawLayout":drawlayout,
 	"ScrollView":scrollview,
 	"StickyView":stickyview,

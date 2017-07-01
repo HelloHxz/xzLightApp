@@ -202,9 +202,19 @@ class PageView extends React.Component {
     return null;
   }
 
+
+  seGetColumnData(params){
+    var columnKey = params.key;
+    var datasource = params.datasource;
+  }
+
   render() {
     return (<div>
-       
+        <xz.Selector 
+        datasource={[]}
+        loadData={[]}
+        getColumnData={this.seGetColumnData.bind(this)}
+        columnKeys={["country","province"]}></xz.Selector>
         <xz.LoadingLayer type="android" className="main-loading" status={this.props.indexStore.mainLoadingStatus}/>
         <SearchBar store={this.props.indexStore} pageview={this}/>
         <xz.ScrollView 

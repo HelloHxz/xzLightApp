@@ -1,9 +1,6 @@
 import {Navigation} from "../../index"
 
 
-
-
-try{
 Navigation.start({
 	root:"index",
 	pages:{
@@ -40,9 +37,7 @@ Navigation.start({
 		}
 	}
 });
-}catch(e){
-	alert(e);
-}
+
 
 
 

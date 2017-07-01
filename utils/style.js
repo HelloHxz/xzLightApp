@@ -99,7 +99,7 @@ export default {
     			var curval = 0;
     			var timeoutID;
     			var re = {
-        			start:function(callback,method){
+        			start:function(callback,method,endCallBack){
         				if(isStop){
         					return;
         				}
@@ -109,9 +109,11 @@ export default {
         				if (_t < _d) {
 			                _t++;
 			                timeoutID = requestAnimationFrame(()=>{
-	        					re.start(callback);
+	        					re.start(callback,method,endCallBack);
 	        				});
-			            }
+			            }else{
+                            endCallBack&&endCallBack();
+                        }
         				
         			},
         			stop:function(){
