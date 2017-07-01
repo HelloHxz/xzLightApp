@@ -24,16 +24,21 @@ class SelectorColumn extends React.Component{
       offset:0,
       data:data
     };
-    this.bottomLimit = 0-this.props.itemHeight*(this.state.data.length-1);
+    this.scrollHeight =this.props.itemHeight*(this.state.data.length-1);
+
+    this.bottomLimit = 0-this.scrollHeight;
+    this.wrapperHeight = this.props.itemHeight*5;
   }
 
   onTouchStart(e){
     this.diff = 0;
+    this.startTime = (new Date()).valueOf();
     this.startY = e.touches[0].pageY;
     this.curOffset = this.state.offset;
     if(this.scrollEngine){
        this.setState({offset:this.scrollEngine.stop()});
     }
+    
   }
 
   onTouchMove(e){
@@ -52,8 +57,10 @@ class SelectorColumn extends React.Component{
     if(this.diff===0){
       return;
     }
-    var t=0,b=this.state.offset,d=30;
-      this.scrollEngine=  Style.run(t, b, this.getCanScrollDistance(), d);
+    this.diffTime = (new Date()).valueOf()-this.startTime;
+    var t=0,b=this.state.offset;
+    var tad = this.getCanScrollDistance();
+      this.scrollEngine=  Style.run(t, b,tad.len , tad.d);
       this.scrollEngine.start((val)=>{
         this.setState({offset:val});
       },null,()=>{
@@ -62,12 +69,13 @@ class SelectorColumn extends React.Component{
   }
 
   getCanScrollDistance(){
-    var maxLen = 600;
+    var dAndd = this.getDistanceAndDurtion();
+    var maxLen =dAndd.value;
     if(this.state.offset>0){
-      return 0-this.state.offset;
+      return {len:0-this.state.offset,d:dAndd.duration};
     }
     if(this.state.offset<this.bottomLimit){
-      return this.bottomLimit-this.state.offset;
+      return {len:this.bottomLimit-this.state.offset,d:dAndd.duration};
     }
     var len = 0 ;
     if(this.diff>0){
@@ -76,9 +84,32 @@ class SelectorColumn extends React.Component{
     if(this.diff<0){
       len = (this.bottomLimit-this.state.offset)<(0-maxLen)?(0-maxLen):(this.bottomLimit-this.state.offset);
     }
-    return len;
+
+    return {len:len,d:dAndd.duration};
   }
 
+
+  getDistanceAndDurtion() {
+      var diff_abs = Math.abs(this.diff);
+      var duration = 30;
+      var value = this.props.itemHeight * 3;
+      if (diff_abs > this.wrapperHeight * 3 / 5) {
+          value= this.scrollHeight ;
+      }
+      else if (diff_abs <= this.wrapperHeight * 3 / 5 && diff_abs >this.wrapperHeight* 2 / 5) {
+          value= this.scrollHeight  * 0.7;
+          duration =30;
+      }
+      else if (diff_abs <= this.wrapperHeight * 2 / 5 &&diff_abs > this.wrapperHeight * 1 / 5) {
+          value= this.scrollHeight  * 0.6;
+          duration = 35;
+      }
+      else {
+          value= this.props.itemHeight * 3 ;
+          duration = 50;
+      }
+      return {value:value,duration:duration};
+  }
  
 
 
@@ -136,6 +167,7 @@ class Selector extends React.Component {
     return (<div className='xz-selector xz-selector-show'>
         {this.renderHeader()}
         <div 
+        ref={(wrapper)=>{this.wrapper = wrapper;}}
         onTouchStart={this.onTouchStart.bind(this)}
         onTouchMove={this.onTouchMove.bind(this)}
         onTouchEnd={this.onTouchEnd.bind(this)}
