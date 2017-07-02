@@ -7,6 +7,7 @@ import globalStore from "../stores/global"
 import indexStore from "../stores/index"
 
 import SearchBar from '../components/index/searchbar'
+import LoadingLayer from '../components/index/loadinglayer'
 
 import List from '../components/index/list'
 import '../fonts/iconfont.css'
@@ -205,7 +206,27 @@ class PageView extends React.Component {
 
   seGetColumnData(params){
     var columnKey = params.key;
+    var seed  =params.seed;
     var datasource = params.datasource;
+    if(columnKey==="country"){
+      return [
+        {key:"11",value:"China"+seed,pkey:"0"},
+        {key:"11",value:"USA"+seed,pkey:"0"},
+      ];
+    }
+    return  [
+        {key:"11",value:"zhon"+seed,pkey:"0"},
+        {key:"11",value:"x1xx",pkey:"0"},
+        {key:"11",value:"xxx",pkey:"0"},
+        {key:"11",value:"xxx",pkey:"0"},
+        {key:"11",value:"xxx",pkey:"0"},
+        {key:"11",value:"xxx",pkey:"0"},
+        {key:"11",value:"xxx",pkey:"0"},
+        {key:"11",value:"xxx",pkey:"0"},
+        {key:"11",value:"xxx",pkey:"0"},
+        {key:"11",value:"xxx",pkey:"0"},
+        {key:"11",value:"xxx",pkey:"0"}
+      ];
   }
 
   render() {
@@ -215,8 +236,8 @@ class PageView extends React.Component {
         loadData={[]}
         getColumnData={this.seGetColumnData.bind(this)}
         columnKeys={["country","province"]}></xz.Selector>
-        <xz.LoadingLayer type="android" className="main-loading" status={this.props.indexStore.mainLoadingStatus}/>
         <SearchBar store={this.props.indexStore} pageview={this}/>
+        <LoadingLayer store={this.props.indexStore}/>
         <xz.ScrollView 
           scrollKey="mainscroll"
           pageview={this}

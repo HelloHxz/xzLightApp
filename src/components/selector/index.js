@@ -3,18 +3,6 @@ import "./index.less"
 import Style from "../../../utils/style"
 
 
-var data = [
-  {key:"11",value:"zhon",pkey:"0"},
-  {key:"11",value:"xxx",pkey:"0"},
-  {key:"11",value:"xxx",pkey:"0"},
-  {key:"11",value:"xxx",pkey:"0"},
-  {key:"11",value:"xxx",pkey:"0"},
-  {key:"11",value:"xxx",pkey:"0"},
-  {key:"11",value:"xxx",pkey:"0"},
-  {key:"11",value:"xxx",pkey:"0"},
-  {key:"11",value:"xxx",pkey:"0"},
-  {key:"11",value:"xxx",pkey:"0"}
-];
 class SelectorColumn extends React.Component{
    constructor(props) {
     super(props)
@@ -22,7 +10,7 @@ class SelectorColumn extends React.Component{
     this.tranDict = Style.getTransitionKeys();
     this.state={
       offset:0,
-      data:data
+      data:props.data
     };
     this.scrollHeight =this.props.itemHeight*(this.state.data.length-1);
 
@@ -31,6 +19,9 @@ class SelectorColumn extends React.Component{
   }
 
   onTouchStart(e){
+     e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
     this.diff = 0;
     this.startTime = (new Date()).valueOf();
     this.startY = e.touches[0].pageY;
@@ -38,34 +29,55 @@ class SelectorColumn extends React.Component{
     if(this.scrollEngine){
        this.setState({offset:this.scrollEngine.stop()});
     }
+
+    this.scrollEngine = null; 
     
   }
 
   onTouchMove(e){
+     e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
     this.curY = e.touches[0].pageY;
     this.diff = this.curY - this.startY;
     var offset = this.curOffset+this.diff;
-    if(offset>0||this.state.offset<this.bottomLimit ){
-      offset = this.curOffset+this.diff/3;
-    }
     this.setState({
       offset:offset
     });
   }
 
   onTouchEnd(e){
+
     if(this.diff===0){
+      this.repairDistance();
       return;
     }
     this.diffTime = (new Date()).valueOf()-this.startTime;
+    if(this.diffTime>500){
+      this.repairDistance();
+      return;
+    }
     var t=0,b=this.state.offset;
     var tad = this.getCanScrollDistance();
       this.scrollEngine=  Style.run(t, b,tad.len , tad.d);
       this.scrollEngine.start((val)=>{
         this.setState({offset:val});
       },null,()=>{
+
+        this.repairDistance();
+        this.scrollEngine = null;
         console.log(">>>");
       });
+  }
+
+  repairDistance(){
+
+  }
+
+  componentWillReceiveProps(props){
+    this.setState({
+      data:props.data
+    });
   }
 
   getCanScrollDistance(){
@@ -98,15 +110,15 @@ class SelectorColumn extends React.Component{
       }
       else if (diff_abs <= this.wrapperHeight * 3 / 5 && diff_abs >this.wrapperHeight* 2 / 5) {
           value= this.scrollHeight  * 0.7;
-          duration =30;
+          duration =25;
       }
       else if (diff_abs <= this.wrapperHeight * 2 / 5 &&diff_abs > this.wrapperHeight * 1 / 5) {
           value= this.scrollHeight  * 0.6;
-          duration = 35;
+          duration = 30;
       }
       else {
           value= this.props.itemHeight * 3 ;
-          duration = 50;
+          duration = 35;
       }
       return {value:value,duration:duration};
   }
@@ -127,18 +139,26 @@ class SelectorColumn extends React.Component{
   }
 }
 
-
+//cascade
 class Selector extends React.Component {
   constructor(props) {
     super(props)
     this.itemHeight = Style.rem2px(1);
     this.instanceDict = {};
     this.itemWidth = Style.screen.width/props.columnKeys.length;
+    this.state = {
+      seed:1
+    }
   }
 
+  testClick(){
+    this.setState({
+      seed:2
+    });
+  }
 
   renderHeader(){
-    return <div>xx</div>
+    return <div onClick={this.testClick.bind(this)}>xx</div>
   }
 
   onTouchStart(e){
@@ -162,7 +182,12 @@ class Selector extends React.Component {
     var columns =[];
     for(var i=0,j=this.props.columnKeys.length;i<j;i++){
       var curkey = this.props.columnKeys[i];
-      columns.push(<SelectorColumn parent={this} pkey={curkey} itemHeight={this.itemHeight} key={curkey}/>);
+      var data = this.props.getColumnData({
+        key:curkey,
+        datasource:this.props.datasource,
+        seed:this.state.seed
+      });
+      columns.push(<SelectorColumn data={data} parent={this} pkey={curkey} itemHeight={this.itemHeight} key={curkey}/>);
     }
     return (<div className='xz-selector xz-selector-show'>
         {this.renderHeader()}
