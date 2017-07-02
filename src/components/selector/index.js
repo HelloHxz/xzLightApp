@@ -57,21 +57,32 @@ class SelectorColumn extends React.Component{
       this.repairDistance();
       return;
     }
-    var t=0,b=this.state.offset;
     var tad = this.getCanScrollDistance();
-      this.scrollEngine=  Style.run(t, b,tad.len , tad.d);
+    this.goAuto(tad.len,tad.d);
+  }
+
+  goAuto(distance,time){
+    var t=0,b=this.state.offset;
+      this.scrollEngine=  Style.run(t, b,distance , time);
       this.scrollEngine.start((val)=>{
         this.setState({offset:val});
       },null,()=>{
 
-        this.repairDistance();
+        //this.repairDistance();
         this.scrollEngine = null;
         console.log(">>>");
       });
   }
 
   repairDistance(){
-
+      var len = 0;
+       if(this.state.offset>0){
+        len = 0-this.state.offset;
+      }
+      if(this.state.offset<this.bottomLimit){
+        len = this.bottomLimit-this.state.offset;
+      }
+      this.goAuto(len,20);
   }
 
   componentWillReceiveProps(props){
