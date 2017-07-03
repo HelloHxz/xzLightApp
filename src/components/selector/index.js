@@ -81,17 +81,44 @@ class SelectorColumn extends React.Component{
         len = this.bottomLimit-this.state.offset;
       }
       var index  =this.state.offset/this.props.itemHeight;
-      index = this.diff>0?(0- Math.ceil(index)):(0-Math.floor(index));
+      index = (0- Math.round(index));
       index = index<0?0:index;
       index = index>this.state.data.length-1?this.state.data.length-1:index;
       var t=0,b=this.state.offset;
-      this.scrollEngine = Style.run(t, b,0-index*this.props.itemHeight-this.state.offset,15);
+      this.scrollEngine = Style.run(t, b,0-index*this.props.itemHeight-this.state.offset,10);
       this.scrollEngine.start((val)=>{
         this.setState({offset:val});
       },null,()=>{
         this.scrollEngine = null;
+
+        if(this.props.parent.isCascade){
+          this.bindNextChildData(index);
+        }
          console.log("end1");
       });
+  }
+
+  bindNextChildData(curSelectedIndex){
+    if(this.props.columnIndex>=this.props.parent.columnsCount-1){
+      return;
+    }
+    var data = this.state.data[curSelectedIndex].children||[];
+    var nextKey ="column_"+(this.props.columnIndex+1);
+    var nextInstance= this.props.parent.instanceDict[nextKey];
+    if(nextInstance){
+      nextInstance.bindData(data);
+    }
+  }
+
+  bindData(data){
+    this.setState({
+      data:data,
+      offset:0
+    },()=>{
+      this.bindNextChildData(0);
+    });
+    
+
   }
 
   componentWillReceiveProps(props){
@@ -123,7 +150,7 @@ class SelectorColumn extends React.Component{
 
   getDistanceAndDurtion() {
       var diff_abs = Math.abs(this.diff);
-      var duration = 30;
+      var duration = 20;
       var value = this.props.itemHeight * 3;
       if (diff_abs > this.wrapperHeight * 3 / 5) {
           value= this.scrollHeight ;
@@ -150,7 +177,7 @@ class SelectorColumn extends React.Component{
     var child = [];
     for(var i=0,j=this.state.data.length;i<j;i++){
       var itemdata = this.state.data[i];
-      child.push(<li key={i}>{itemdata.value}</li>);
+      child.push(<li key={i}>{itemdata.label}</li>);
     }
     ty[this.tranDict.transform] = "translate3d(0,"+(this.props.itemHeight*2+this.state.offset)+"px,0)";
     return (<ul style={ty} className='xz-selector-col'>
@@ -165,10 +192,23 @@ class Selector extends React.Component {
     super(props)
     this.itemHeight = Style.rem2px(1);
     this.instanceDict = {};
-    this.itemWidth = Style.screen.width/props.columnKeys.length;
+    this.isCascade = false;
+    if(this.props.cascadeCount){
+      if(isNaN(this.props.cascadeCount)){
+        console.error("cascadeCount 必须为数字");
+      }else{
+        this.isCascade = true;
+        this.cascadeCount = parseInt(this.props.cascadeCount);
+      }
+    }
+    this.columnsCount = this.cascadeCount||this.props.datasource.length;
+
+    this.colLength = this.cascadeCount||this.props.datasource.length;
+    this.itemWidth = Style.screen.width/this.colLength;
     this.state = {
       seed:1
     }
+  
   }
 
   testClick(){
@@ -183,7 +223,7 @@ class Selector extends React.Component {
 
   onTouchStart(e){
     var columnIndex = Math.floor(e.touches[0].pageX/this.itemWidth);
-    this.curColumnKey = this.props.columnKeys[columnIndex];
+    this.curColumnKey = "column_"+columnIndex;
     this.curColumn = this.instanceDict[this.curColumnKey];
     this.curColumn.onTouchStart(e);
   }
@@ -195,20 +235,42 @@ class Selector extends React.Component {
   onTouchEnd(){
     this.curColumn.onTouchEnd();
   }
+
+
+  getSelectedIndexs(){
+    var selectedIndexs= this.props.selectedIndexs||[0,0,0];
+    return selectedIndexs;
+  }
  
 
 
   render() {
     var columns =[];
-    for(var i=0,j=this.props.columnKeys.length;i<j;i++){
-      var curkey = this.props.columnKeys[i];
-      var data = this.props.getColumnData({
-        key:curkey,
-        datasource:this.props.datasource,
-        seed:this.state.seed
-      });
-      columns.push(<SelectorColumn data={data} parent={this} pkey={curkey} itemHeight={this.itemHeight} key={curkey}/>);
+
+    var selectedIndexs = this.getSelectedIndexs();
+
+    if(this.isCascade){
+      var preSelectedItemData = null;
+      for(var i=0;i<this.columnsCount;i++){
+        var curkey = "column_"+i;
+        var data = [];
+        if(i===0){
+          data = this.props.datasource[0];
+          preSelectedItemData = data[selectedIndexs[i]].children||[];
+        }else{
+          data = preSelectedItemData;
+          preSelectedItemData = preSelectedItemData[selectedIndexs[i]].children||[];
+        }
+        columns.push(<SelectorColumn columnIndex={i} data={data} parent={this} pkey={curkey} itemHeight={this.itemHeight} key={curkey}/>);
+      }
+    }else{
+      for(var i=0;i<this.columnsCount;i++){
+        var curkey = "column_"+i;
+        var data = this.props.datasource[i];
+        columns.push(<SelectorColumn data={data} parent={this} pkey={curkey} itemHeight={this.itemHeight} key={curkey}/>);
+      }
     }
+   
     return (<div className='xz-selector xz-selector-show'>
         {this.renderHeader()}
         <div 

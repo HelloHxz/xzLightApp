@@ -56,6 +56,81 @@ var appSwiperData = [
   ]
 ];
 
+var selectorData=[[
+  {
+    label:"China",
+    value:"0",
+    children:[
+      {label:"C",value:"2",
+        children:[
+          {label:"CC",value:"2"},
+          {label:"CC",value:"2"},
+          {label:"CC",value:"2"}
+        ]
+      },
+      {label:"C",value:"2",
+        children:[
+          {label:"CC",value:"2"},
+          {label:"CC",value:"2"},
+          {label:"CC",value:"2"}
+        ]},
+      {label:"C",value:"2",
+        children:[
+          {label:"CC",value:"2"},
+          {label:"CC",value:"2"},
+          {label:"CC",value:"2"}
+        ]},
+      {label:"C",value:"2",
+        children:[
+          {label:"CC",value:"2"},
+          {label:"CC",value:"2"},
+          {label:"CC",value:"2"}
+        ]},
+    ]
+  },
+  {
+    label:"USA",
+    value:"1",
+    children:[
+      {label:"C1",value:"2",
+        children:[
+          {label:"CC1",value:"2"},
+          {label:"CC",value:"2"},
+          {label:"CC",value:"2"}
+        ]},
+      {label:"C1",value:"2",
+        children:[
+          {label:"CC1",value:"2"},
+          {label:"CC1",value:"2"},
+          {label:"CC1",value:"2"}
+        ]},
+      {label:"C1",value:"2",
+        children:[
+          {label:"CC1",value:"2"},
+          {label:"CC1",value:"2"},
+          {label:"CC1",value:"2"}
+        ]},
+      {label:"C1",value:"2",
+        children:[
+          {label:"CC1",value:"2"},
+          {label:"CC1",value:"2"},
+          {label:"CC1",value:"2"}
+        ]},
+    ]
+  }
+
+],[
+  {
+    label:"xxx",
+    value:"xxx"
+  },
+   {
+    label:"x11xx",
+    value:"xxx"
+  },
+
+]];
+
 @observer
 class PageView extends React.Component {
 
@@ -70,7 +145,6 @@ class PageView extends React.Component {
       refreshing:"sss"
     };
     this.seed = 0;
-    props.globalStore.selectedIndex = "huxiaozhong";
   }
 
 
@@ -204,38 +278,12 @@ class PageView extends React.Component {
   }
 
 
-  seGetColumnData(params){
-    var columnKey = params.key;
-    var seed  =params.seed;
-    var datasource = params.datasource;
-    if(columnKey==="country"){
-      return [
-        {key:"11",value:"China"+seed,pkey:"0"},
-        {key:"11",value:"USA"+seed,pkey:"0"},
-      ];
-    }
-    return  [
-        {key:"11",value:"zhon"+seed,pkey:"0"},
-        {key:"11",value:"x1xx",pkey:"0"},
-        {key:"11",value:"xxx",pkey:"0"},
-        {key:"11",value:"xxx",pkey:"0"},
-        {key:"11",value:"xxx",pkey:"0"},
-        {key:"11",value:"xxx",pkey:"0"},
-        {key:"11",value:"xxx",pkey:"0"},
-        {key:"11",value:"xxx",pkey:"0"},
-        {key:"11",value:"xxx",pkey:"0"},
-        {key:"11",value:"xxx",pkey:"0"},
-        {key:"11",value:"xxx",pkey:"0"}
-      ];
-  }
-
   render() {
     return (<div>
         <xz.Selector 
-        datasource={[]}
-        loadData={[]}
-        getColumnData={this.seGetColumnData.bind(this)}
-        columnKeys={["country","province"]}></xz.Selector>
+        datasource={selectorData}
+        cascadeCount={3}
+        loadData={[]}></xz.Selector>
         <SearchBar store={this.props.indexStore} pageview={this}/>
         <LoadingLayer store={this.props.indexStore}/>
         <xz.ScrollView 
