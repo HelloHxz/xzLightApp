@@ -53,7 +53,7 @@ class SelectorColumn extends React.Component{
       return;
     }
     this.diffTime = (new Date()).valueOf()-this.startTime;
-    if(this.diffTime>500){
+    if(this.diffTime>300){
       this.repairDistance();
       return;
     }
@@ -61,16 +61,14 @@ class SelectorColumn extends React.Component{
     this.goAuto(tad.len,tad.d);
   }
 
-  goAuto(distance,time){
+  goAuto(distance,time,){
     var t=0,b=this.state.offset;
-      this.scrollEngine=  Style.run(t, b,distance , time);
+      this.scrollEngine = Style.run(t, b,distance , time);
       this.scrollEngine.start((val)=>{
         this.setState({offset:val});
       },null,()=>{
-
-        //this.repairDistance();
+        this.repairDistance();
         this.scrollEngine = null;
-        console.log(">>>");
       });
   }
 
@@ -82,7 +80,18 @@ class SelectorColumn extends React.Component{
       if(this.state.offset<this.bottomLimit){
         len = this.bottomLimit-this.state.offset;
       }
-      this.goAuto(len,20);
+      var index  =this.state.offset/this.props.itemHeight;
+      index = this.diff>0?(0- Math.ceil(index)):(0-Math.floor(index));
+      index = index<0?0:index;
+      index = index>this.state.data.length-1?this.state.data.length-1:index;
+      var t=0,b=this.state.offset;
+      this.scrollEngine = Style.run(t, b,0-index*this.props.itemHeight-this.state.offset,15);
+      this.scrollEngine.start((val)=>{
+        this.setState({offset:val});
+      },null,()=>{
+        this.scrollEngine = null;
+         console.log("end1");
+      });
   }
 
   componentWillReceiveProps(props){
@@ -120,11 +129,11 @@ class SelectorColumn extends React.Component{
           value= this.scrollHeight ;
       }
       else if (diff_abs <= this.wrapperHeight * 3 / 5 && diff_abs >this.wrapperHeight* 2 / 5) {
-          value= this.scrollHeight  * 0.7;
+          value= this.scrollHeight  * 0.8;
           duration =25;
       }
       else if (diff_abs <= this.wrapperHeight * 2 / 5 &&diff_abs > this.wrapperHeight * 1 / 5) {
-          value= this.scrollHeight  * 0.6;
+          value = this.scrollHeight  * 0.6;
           duration = 30;
       }
       else {
@@ -208,6 +217,8 @@ class Selector extends React.Component {
         onTouchMove={this.onTouchMove.bind(this)}
         onTouchEnd={this.onTouchEnd.bind(this)}
         className="xz-selector-content">
+        <div className="xz-selector-midarea"/>
+        <div className="xz-se-gradient-layer"/>
           {columns}
         </div>
       </div>);
