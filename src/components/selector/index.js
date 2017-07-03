@@ -59,6 +59,7 @@ class SelectorColumn extends React.Component{
       this.repairDistance();
       return;
     }
+
     var tad = this.getCanScrollDistance();
     this.goAuto(tad.len,tad.d);
   }
@@ -75,33 +76,31 @@ class SelectorColumn extends React.Component{
   }
 
   repairDistance(){
-      var len = 0;
-       if(this.state.offset>0){
-        len = 0-this.state.offset;
-      }
-      if(this.state.offset<this.bottomLimit){
-        len = this.bottomLimit-this.state.offset;
-      }
       var index  =this.state.offset/this.props.itemHeight;
       index = (0- Math.round(index));
       index = index<0?0:index;
       index = index>this.state.data.length-1?this.state.data.length-1:index;
       var t=0,b=this.state.offset;
-      this.scrollEngine = Style.run(t, b,0-index*this.props.itemHeight-this.state.offset,10);
+      var len = 0-index*this.props.itemHeight-this.state.offset;
+      if(Math.abs(len)<=2){
+        this.bindNextChildData(index);
+        return;
+      }
+      this.scrollEngine = Style.run(t, b,len,10);
       this.scrollEngine.start((val)=>{
         this.setState({offset:val});
       },null,()=>{
         this.scrollEngine = null;
-
-        if(this.props.parent.isCascade&&this.selectedIndex!==index){
-          this.bindNextChildData(index);
-        }
-        this.selectedIndex = index;
+        this.bindNextChildData(index);
         console.log("end1");
       });
   }
 
   bindNextChildData(curSelectedIndex){
+    this.selectedIndex = curSelectedIndex;
+    if(!this.props.parent.isCascade||this.selectedIndex!==curSelectedIndex){
+      return;
+    }
     if(this.props.columnIndex>=this.props.parent.columnsCount-1){
       return;
     }
