@@ -61,29 +61,29 @@ var selectorData=[[
     label:"China",
     value:"0",
     children:[
-      {label:"C",value:"2",
+      {label:"Cf2",value:"2",
         children:[
           {label:"CC",value:"2"},
           {label:"CC",value:"2"},
           {label:"CC",value:"2"}
         ]
       },
-      {label:"C",value:"2",
+      {label:"C4",value:"2",
         children:[
-          {label:"CC",value:"2"},
-          {label:"CC",value:"2"},
-          {label:"CC",value:"2"}
+          {label:"CC2",value:"2"},
+          {label:"CC3",value:"2"},
+          {label:"CC1",value:"2"}
         ]},
-      {label:"C",value:"2",
+      {label:"Cs",value:"2",
         children:[
-          {label:"CC",value:"2"},
-          {label:"CC",value:"2"},
-          {label:"CC",value:"2"}
+          {label:"CC2",value:"2"},
+          {label:"CC4",value:"2"},
+          {label:"CC5",value:"2"}
         ]},
-      {label:"C",value:"2",
+      {label:"Cds",value:"2",
         children:[
-          {label:"CC",value:"2"},
-          {label:"CC",value:"2"},
+          {label:"CC6",value:"2"},
+          {label:"CC3",value:"2"},
           {label:"CC",value:"2"}
         ]},
     ]
@@ -181,6 +181,7 @@ class PageView extends React.Component {
     if(url){
       this.props.pagemanager.go(url,{someparam:1});
     }else{
+      this.props.indexStore.isShowSelector = true;
     }
   }
 
@@ -277,12 +278,18 @@ class PageView extends React.Component {
     return null;
   }
 
+  selBackLayerClick(){
+    this.props.indexStore.isShowSelector = false;
+  }
+
 
   render() {
     return (<div>
         <xz.Selector 
+        onBackLayerClick={this.selBackLayerClick.bind(this)}
         datasource={selectorData}
         cascadeCount={3}
+        show={this.props.indexStore.isShowSelector}
         loadData={[]}></xz.Selector>
         <SearchBar store={this.props.indexStore} pageview={this}/>
         <LoadingLayer store={this.props.indexStore}/>

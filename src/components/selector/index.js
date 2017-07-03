@@ -12,6 +12,7 @@ class SelectorColumn extends React.Component{
       offset:0,
       data:props.data
     };
+    this.selectedIndex = props.selectedIndex||0;
     this.scrollHeight =this.props.itemHeight*(this.state.data.length-1);
 
     this.bottomLimit = 0-this.scrollHeight;
@@ -41,6 +42,7 @@ class SelectorColumn extends React.Component{
     this.curY = e.touches[0].pageY;
     this.diff = this.curY - this.startY;
     var offset = this.curOffset+this.diff;
+
     this.setState({
       offset:offset
     });
@@ -91,10 +93,11 @@ class SelectorColumn extends React.Component{
       },null,()=>{
         this.scrollEngine = null;
 
-        if(this.props.parent.isCascade){
+        if(this.props.parent.isCascade&&this.selectedIndex!==index){
           this.bindNextChildData(index);
         }
-         console.log("end1");
+        this.selectedIndex = index;
+        console.log("end1");
       });
   }
 
@@ -111,6 +114,7 @@ class SelectorColumn extends React.Component{
   }
 
   bindData(data){
+    this.selectedIndex = 0;
     this.setState({
       data:data,
       offset:0
@@ -152,20 +156,24 @@ class SelectorColumn extends React.Component{
       var diff_abs = Math.abs(this.diff);
       var duration = 20;
       var value = this.props.itemHeight * 3;
-      if (diff_abs > this.wrapperHeight * 3 / 5) {
+      if (diff_abs >= this.wrapperHeight * 4 / 5) {
           value= this.scrollHeight ;
       }
-      else if (diff_abs <= this.wrapperHeight * 3 / 5 && diff_abs >this.wrapperHeight* 2 / 5) {
+      else if (diff_abs <= this.wrapperHeight * 4 / 6 && diff_abs >this.wrapperHeight* 3 / 6) {
           value= this.scrollHeight  * 0.8;
-          duration =25;
+          duration =30;
       }
-      else if (diff_abs <= this.wrapperHeight * 2 / 5 &&diff_abs > this.wrapperHeight * 1 / 5) {
+      else if (diff_abs <= this.wrapperHeight * 3 / 6 &&diff_abs > this.wrapperHeight * 2 / 6) {
           value = this.scrollHeight  * 0.6;
           duration = 30;
       }
+      else if (diff_abs <= this.wrapperHeight * 2 / 6 &&diff_abs > this.wrapperHeight * 1 / 6) {
+          value = this.scrollHeight  * 3 ;
+          duration = 20;
+      }
       else {
-          value= this.props.itemHeight * 3 ;
-          duration = 35;
+          value= this.props.itemHeight*2/3 ;
+          duration = 8;
       }
       return {value:value,duration:duration};
   }
@@ -241,6 +249,18 @@ class Selector extends React.Component {
     var selectedIndexs= this.props.selectedIndexs||[0,0,0];
     return selectedIndexs;
   }
+
+  bkClick(){
+    this.props.onBackLayerClick&&this.props.onBackLayerClick();
+  }
+
+  componentWillReceiveProps(nextPros){
+    if(nextPros.show!==this.state.show){
+      this.setState({
+        show:nextPros.show
+      });
+    }
+  }
  
 
 
@@ -270,8 +290,24 @@ class Selector extends React.Component {
         columns.push(<SelectorColumn data={data} parent={this} pkey={curkey} itemHeight={this.itemHeight} key={curkey}/>);
       }
     }
+
+    var bkArr = ["xz-drawlayout-bk"];
+    var classArr = ["xz-selector"];
+    if(this.state.show){
+      this.hasShow = true;
+      bkArr.push("xz-drawlayout-bk-show");
+      classArr.push("xz-drawlayout-bottom-show");
+    }else{
+      bkArr.push("xz-drawlayout-bk-hide");
+      classArr.push(this.hasShow?"xz-drawlayout-bottom-hide":"xz-drawlayout-bottom-hide-n");
+    }
    
-    return (<div className='xz-selector xz-selector-show'>
+   var bk = <div onClick={this.bkClick.bind(this)} className={bkArr.join(" ")}></div>;
+     // bkArr.push("xz-drawlayout-bk-hide");
+ 
+    return (<div className="xz-drawlayout">
+      {bk}
+      <div className={classArr.join(" ")}>
         {this.renderHeader()}
         <div 
         ref={(wrapper)=>{this.wrapper = wrapper;}}
@@ -283,7 +319,7 @@ class Selector extends React.Component {
         <div className="xz-se-gradient-layer"/>
           {columns}
         </div>
-      </div>);
+      </div></div>);
   }
 }
 
