@@ -98,7 +98,7 @@ class SelectorColumn extends React.Component{
 
   bindNextChildData(curSelectedIndex){
     this.selectedIndex = curSelectedIndex;
-    if(!this.props.parent.isCascade||this.selectedIndex!==curSelectedIndex){
+    if(!this.props.parent.isCascade||this.selectedIndex===curSelectedIndex){
       return;
     }
     if(this.props.columnIndex>=this.props.parent.columnsCount-1){
