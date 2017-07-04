@@ -14,6 +14,7 @@ class ScrollView extends React.Component {
     this.isInLoading = 0;
     var direction = this.props.direction||"vertical";
     this.isHorizontal = direction.toLowerCase()!=="vertical";
+    this.isBad = navigator.userAgent.indexOf("QYZone")>=0;
     this.config = {
       touchkey:"pageX",
       otherToucKey:"pageY"
@@ -202,7 +203,9 @@ class ScrollView extends React.Component {
     });
 
     if(this.props.scrollKey||this.props.onScrollEnd||this.props.onScrollToTail){
-      this.checkSticky();
+      if(!this.isBad){
+        this.checkSticky();
+      }
       if(this.scrollEndTimeoutId){
         window.clearTimeout(this.scrollEndTimeoutId);
         this.scrollEndTimeoutId  = null;

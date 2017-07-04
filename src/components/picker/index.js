@@ -192,7 +192,7 @@ class SelectorColumn extends React.Component{
       var itemdata = this.state.data[i];
       child.push(<li key={i}>{itemdata.label}</li>);
     }
-    ty[this.tranDict.transform] = "translate3d(0,"+(this.props.itemHeight*2+this.state.offset)+"px,0)";
+    ty[this.tranDict.transform] = "translateY("+(this.props.itemHeight*2+this.state.offset)+"px)";
     return (<ul style={ty} className='xz-selector-col'>
        {child}
       </ul>);

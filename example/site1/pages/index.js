@@ -74,6 +74,7 @@ class PageView extends React.Component {
       refreshing:"sss"
     };
     this.seed = 0;
+   
   }
 
 

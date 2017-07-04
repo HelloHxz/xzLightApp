@@ -243,6 +243,8 @@ class Navigation extends React.Component {
     },200);
 
   }
+
+
   replaceGo(pageKey, params) {
     isReplaceGo = true;
     var paramsArr = this.prepareGo(pageKey, params,false,true);
@@ -332,7 +334,11 @@ class Navigation extends React.Component {
 
 
 
+    if(ToPageName.indexOf("&")>=0){
+      ToPageName = ToPageName.split("&")[1];
+    }
     var realpagename = ToPageName.split("_")[0];
+
     var ToPageInstance = this.props.config.pages[realpagename];
     
     if(!ToPageInstance.prototype.__proto__.forceUpdate){
@@ -483,12 +489,13 @@ class Navigation extends React.Component {
       console.error("没有实现pagelayout！");
     }
 
-    if(!curParams[systemseedname]&&!this.isForward&&!this.isInit){
-      ////禁止离开应用 todo 事件插件机制
-      isWantToPreventRoute = true;
-      window.history.go(1);
-      return;
-    }
+    //if(!curParams[systemseedname]&&!this.isForward&&!this.isInit){
+      //禁止离开应用 todo 事件插件机制
+      // isWantToPreventRoute = true;
+      // window.history.go(1);
+
+      // return;
+    //}
 
     this.isForward = false;
     this.isInit = false;
