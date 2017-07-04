@@ -8,19 +8,29 @@ class SelectorColumn extends React.Component{
     super(props)
     props.parent.instanceDict[props.pkey] = this;
     this.tranDict = Style.getTransitionKeys();
+    this.selectedIndex = props.selectedIndex||0;
     this.state={
-      offset:0,
+      offset:0-this.selectedIndex*props.itemHeight,
       data:props.data
     };
-    this.selectedIndex = props.selectedIndex||0;
-    this.scrollHeight =this.props.itemHeight*(this.state.data.length-1);
 
+    this.scrollHeight =this.props.itemHeight*(this.state.data.length-1);
     this.bottomLimit = 0-this.scrollHeight;
     this.wrapperHeight = this.props.itemHeight*5;
   }
 
+  componentWillReceiveProps(nextPros){
+     this.selectedIndex = nextPros.selectedIndex||0;
+     console.log(this.selectedIndex);
+     this.state={
+      offset:0-this.selectedIndex*nextPros.itemHeight,
+      data:nextPros.data
+    };
+  }
+
+
   onTouchStart(e){
-     e.preventDefault();
+    e.preventDefault();
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
     this.diff = 0;
@@ -97,13 +107,13 @@ class SelectorColumn extends React.Component{
   }
 
   bindNextChildData(curSelectedIndex){
-    if(!this.props.parent.isCascade||this.selectedIndex===curSelectedIndex){
+    if(!this.props.parent.isCascade){
       return;
     }
-    this.selectedIndex = curSelectedIndex;
     if(this.props.columnIndex>=this.props.parent.columnsCount-1){
       return;
     }
+    this.selectedIndex = curSelectedIndex;
     var data = this.state.data[curSelectedIndex].children||[];
     var nextKey ="column_"+(this.props.columnIndex+1);
     var nextInstance= this.props.parent.instanceDict[nextKey];
@@ -124,12 +134,6 @@ class SelectorColumn extends React.Component{
 
   }
 
-  componentWillReceiveProps(props){
-    this.setState({
-      data:props.data,
-
-    });
-  }
 
   getCanScrollDistance(){
     var dAndd = this.getDistanceAndDurtion();
@@ -212,7 +216,7 @@ class Selector extends React.Component {
       }
     }
     this.columnsCount = this.cascadeCount||this.props.datasource.length;
-
+    this.selectedIndexs = this.getSelectedIndexs(props);
     this.colLength = this.cascadeCount||this.props.datasource.length;
     this.itemWidth = Style.screen.width/this.colLength;
     this.state = {
@@ -222,11 +226,15 @@ class Selector extends React.Component {
   }
 
 
+  okMethod(){
+    this.props.okMethod&&this.props.okMethod();
+  }
+
   renderHeader(){
     return <div className='xz-picker-header'>
       <div className='xz-picker-cancel'>取消</div>
       <div className='xz-picker-title'>{this.props.title}</div>
-      <div className='xz-picker-ok'>确定</div>
+      <div className='xz-picker-ok' onClick={this.okMethod.bind(this)}>确定</div>
     </div>
   }
 
@@ -246,9 +254,40 @@ class Selector extends React.Component {
   }
 
 
-  getSelectedIndexs(){
-    var selectedIndexs= this.props.selectedIndexs||[0,0,0];
-    return selectedIndexs;
+  getSelectedIndexs(props){
+    //this.columnsCount
+    var re = [];
+   
+    if(props.selectedValues){
+      if(this.isCascade){
+
+      }else{
+
+      }
+    }else if(props.selectedIndexs){
+      if(!(props.selectedIndexs instanceof Array)){
+         return this.getDefaultSelectedIndexs();
+      }
+      return this.getDefaultSelectedIndexs(props.selectedIndexs);
+    }else{
+      return this.getDefaultSelectedIndexs();
+    }
+    return this.getDefaultSelectedIndexs();
+  }
+
+  getDefaultSelectedIndexs(paramsArr){
+    var re=[];
+    paramsArr = paramsArr||[];
+    for(var i=0;i<this.columnsCount;i++){
+      var p = paramsArr[i]||0;
+      if(isNaN(p)){
+        p=0;
+      }else{
+        p=parseInt(p);
+      }
+      re.push(p);
+    }
+    return re;
   }
 
   bkClick(){
@@ -256,11 +295,32 @@ class Selector extends React.Component {
   }
 
   componentWillReceiveProps(nextPros){
-    if(nextPros.show!==this.state.show){
-      this.setState({
+
+      this.selectedIndexs = this.getSelectedIndexs(nextPros);
+      var newState = {
         show:nextPros.show
-      });
+      }
+      this.setState(newState);
+    
+  }
+
+
+  renderMidArea(){
+    if(this.props.renderMidArea){
+      return this.props.renderMidArea();
     }
+    return null;
+  }
+
+
+
+  repaireIndex(index,columData){
+  
+    if(index<0||index>=columData.length){
+      return 0;
+    }
+    return index;
+
   }
  
 
@@ -268,21 +328,26 @@ class Selector extends React.Component {
   render() {
     var columns =[];
 
-    var selectedIndexs = this.getSelectedIndexs();
-
     if(this.isCascade){
       var preSelectedItemData = null;
       for(var i=0;i<this.columnsCount;i++){
         var curkey = "column_"+i;
         var data = [];
+        var selectedIndexInCol = this.selectedIndexs[i];
         if(i===0){
           data = this.props.datasource[0];
-          preSelectedItemData = data[selectedIndexs[i]].children||[];
+          selectedIndexInCol = this.repaireIndex(selectedIndexInCol,data);
+          preSelectedItemData = data[selectedIndexInCol].children||[];
         }else{
           data = preSelectedItemData;
-          preSelectedItemData = preSelectedItemData[selectedIndexs[i]].children||[];
+          selectedIndexInCol = this.repaireIndex(selectedIndexInCol,data);
+          if(!preSelectedItemData[selectedIndexInCol]){
+            preSelectedItemData = [];
+          }else{
+           preSelectedItemData = preSelectedItemData[selectedIndexInCol].children||[];
+          }
         }
-        columns.push(<SelectorColumn columnIndex={i} data={data} parent={this} pkey={curkey} itemHeight={this.itemHeight} key={curkey}/>);
+        columns.push(<SelectorColumn selectedIndex={selectedIndexInCol} columnIndex={i} data={data} parent={this} pkey={curkey} itemHeight={this.itemHeight} key={curkey}/>);
       }
     }else{
       for(var i=0;i<this.columnsCount;i++){
@@ -316,7 +381,7 @@ class Selector extends React.Component {
         onTouchMove={this.onTouchMove.bind(this)}
         onTouchEnd={this.onTouchEnd.bind(this)}
         className="xz-selector-content">
-        <div className="xz-selector-midarea"/>
+        <div className="xz-selector-midarea">{this.renderMidArea()}</div>
         <div className="xz-se-gradient-layer"/>
           {columns}
         </div>

@@ -1,6 +1,7 @@
 import React from "react"
 import "./index.less"
 import Picker from '../picker'
+import Style from "../../../utils/style"
 
 class DatePicker extends React.Component {
   constructor(props) {
@@ -23,9 +24,18 @@ class DatePicker extends React.Component {
     }
   }
 
+  renderMidArea(){
+    var columnsCount = 3;
+    var columnsWidth = Style.screen.width/columnsCount;
+    return <div className='xz-datepicker-mid'>
+      <span style={{left:(columnsWidth-Style.px2px(55))+"px"}}>年</span>
+      <span style={{left:(columnsWidth*2-Style.px2px(80))+"px"}}>月</span>
+      <span style={{left:(columnsWidth*3-Style.px2px(80))+"px"}}>日</span></div>
+  }
 
 
-  render() {
+  getColumnsData(){
+    var fmart = this.props.formart||"yyyy-MM-dd";
     var data = [];
     var year = [];
     for(var i=1900;i<2100;i++){
@@ -42,7 +52,19 @@ class DatePicker extends React.Component {
     data.push(year);
     data.push(month);
     data.push(day);
-    return (<Picker onBackLayerClick={this.onBackLayerClick.bind(this)} show={this.state.show} datasource={data}></Picker>);
+    return data;
+  }
+
+
+
+  render() {
+  
+    return (<Picker 
+      renderMidArea={this.renderMidArea.bind(this)}
+      onBackLayerClick={this.onBackLayerClick.bind(this)} 
+      show={this.state.show} 
+      datasource={this.getColumnsData()}>
+      </Picker>);
   }
 }
 

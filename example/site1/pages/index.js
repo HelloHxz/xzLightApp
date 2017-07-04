@@ -92,27 +92,27 @@ var selectorData=[[
     label:"USA",
     value:"1",
     children:[
-      {label:"C1",value:"2",
+      {label:"USA1",value:"2",
         children:[
-          {label:"CC1",value:"2"},
+          {label:"USA1",value:"2"},
           {label:"CC",value:"2"},
           {label:"CC",value:"2"}
         ]},
-      {label:"C1",value:"2",
+      {label:"USA2",value:"2",
         children:[
-          {label:"CC1",value:"2"},
+          {label:"USA2",value:"2"},
           {label:"CC1",value:"2"},
           {label:"CC1",value:"2"}
         ]},
-      {label:"C1",value:"2",
+      {label:"USA3",value:"2",
         children:[
-          {label:"CC1",value:"2"},
+          {label:"USA3",value:"2"},
           {label:"CC1",value:"2"},
           {label:"CC1",value:"2"}
         ]},
-      {label:"C1",value:"2",
+      {label:"USA4",value:"2",
         children:[
-          {label:"CC1",value:"2"},
+          {label:"USA4",value:"2"},
           {label:"CC1",value:"2"},
           {label:"CC1",value:"2"}
         ]},
@@ -290,6 +290,9 @@ class PageView extends React.Component {
     this.props.indexStore.showDatePicer = false;
   }
 
+  pickerOk(){
+    this.props.indexStore.pickerSelectedIndexs = [1,1,1];
+  }
 
 
   render() {
@@ -301,6 +304,8 @@ class PageView extends React.Component {
         onBackLayerClick={this.selBackLayerClick.bind(this)}
         datasource={selectorData}
         cascadeCount={3}
+        okMethod={this.pickerOk.bind(this)}
+        selectedIndexs={this.props.indexStore.pickerSelectedIndexs}
         show={this.props.indexStore.isShowSelector}
         loadData={[]}></xz.Picker>
         <SearchBar store={this.props.indexStore} pageview={this}/>

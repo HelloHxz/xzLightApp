@@ -9,6 +9,8 @@ class IndexStore {
     @observable drawLayoutConfig = {};
     @observable isShowSelector =false;
     @observable showDatePicer =false;
+    @observable pickerSelectedIndexs =[0,0,0];
+
     
 
     @observable ListDataSource = [{},{},{},{},{},{},{},{},{},{},{},{},{},{}];
