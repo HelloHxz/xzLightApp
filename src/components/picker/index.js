@@ -380,8 +380,8 @@ class Selector extends React.Component {
         onTouchMove={this.onTouchMove.bind(this)}
         onTouchEnd={this.onTouchEnd.bind(this)}
         className="xz-selector-content">
-        <div className="xz-selector-midarea">{this.renderMidArea()}</div>
-        <div className="xz-se-gradient-layer"/>
+          <div className="xz-se-gradient-layer"/>
+          <div className="xz-selector-midarea">{this.renderMidArea()}</div>
           {columns}
         </div>
       </div></div>);

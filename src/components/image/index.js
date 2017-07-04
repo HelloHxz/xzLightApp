@@ -202,7 +202,7 @@ class ImageCom extends React.Component {
     }
     return (<div
       ref={(wrapper)=>{this.wrapper= wrapper;}}
-     className={classNameArr.join(" ")}>{this.state.child}</div>);
+     className={classNameArr.join(" ")}><a>{this.state.child}</a></div>);
   }
 }
 

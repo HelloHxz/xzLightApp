@@ -182,6 +182,7 @@ class ScrollView extends React.Component {
      if(this.seed%3!==0){
       return;
      }
+
      if(!this.isHorizontal&&this.props.pageview&&this.props.pageview.stickviewDict){
         var stickyArr = this.props.pageview.stickviewDict[this.props.scrollKey];
         if(stickyArr&&stickyArr.length>0){
