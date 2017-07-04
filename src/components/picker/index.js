@@ -21,7 +21,6 @@ class SelectorColumn extends React.Component{
 
   componentWillReceiveProps(nextPros){
      this.selectedIndex = nextPros.selectedIndex||0;
-     console.log(this.selectedIndex);
      this.state={
       offset:0-this.selectedIndex*nextPros.itemHeight,
       data:nextPros.data

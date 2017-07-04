@@ -8,6 +8,8 @@ import indexStore from "../stores/index"
 
 import SearchBar from '../components/index/searchbar'
 import LoadingLayer from '../components/index/loadinglayer'
+import DatePicker from '../components/index/datepicker'
+import Picker from '../components/index/picker'
 
 import List from '../components/index/list'
 import '../fonts/iconfont.css'
@@ -56,80 +58,7 @@ var appSwiperData = [
   ]
 ];
 
-var selectorData=[[
-  {
-    label:"China",
-    value:"0",
-    children:[
-      {label:"Cf2",value:"2",
-        children:[
-          {label:"CC",value:"2"},
-          {label:"CC",value:"2"},
-          {label:"CC",value:"2"}
-        ]
-      },
-      {label:"C4",value:"2",
-        children:[
-          {label:"CC2",value:"2"},
-          {label:"CC3",value:"2"},
-          {label:"CC1",value:"2"}
-        ]},
-      {label:"Cs",value:"2",
-        children:[
-          {label:"CC2",value:"2"},
-          {label:"CC4",value:"2"},
-          {label:"CC5",value:"2"}
-        ]},
-      {label:"Cds",value:"2",
-        children:[
-          {label:"CC6",value:"2"},
-          {label:"CC3",value:"2"},
-          {label:"CC",value:"2"}
-        ]},
-    ]
-  },
-  {
-    label:"USA",
-    value:"1",
-    children:[
-      {label:"USA1",value:"2",
-        children:[
-          {label:"USA1",value:"2"},
-          {label:"CC",value:"2"},
-          {label:"CC",value:"2"}
-        ]},
-      {label:"USA2",value:"2",
-        children:[
-          {label:"USA2",value:"2"},
-          {label:"CC1",value:"2"},
-          {label:"CC1",value:"2"}
-        ]},
-      {label:"USA3",value:"2",
-        children:[
-          {label:"USA3",value:"2"},
-          {label:"CC1",value:"2"},
-          {label:"CC1",value:"2"}
-        ]},
-      {label:"USA4",value:"2",
-        children:[
-          {label:"USA4",value:"2"},
-          {label:"CC1",value:"2"},
-          {label:"CC1",value:"2"}
-        ]},
-    ]
-  }
 
-],[
-  {
-    label:"xxx",
-    value:"xxx"
-  },
-   {
-    label:"x11xx",
-    value:"xxx"
-  },
-
-]];
 
 @observer
 class PageView extends React.Component {
@@ -282,32 +211,12 @@ class PageView extends React.Component {
     return null;
   }
 
-  selBackLayerClick(){
-    this.props.indexStore.isShowSelector = false;
-  }
-
-  hideDatePicker(){
-    this.props.indexStore.showDatePicer = false;
-  }
-
-  pickerOk(){
-    this.props.indexStore.pickerSelectedIndexs = [1,1,1];
-  }
 
 
   render() {
     return (<div>
-        <xz.DatePicker 
-         onBackLayerClick={this.hideDatePicker.bind(this)}
-        show={this.props.indexStore.showDatePicer}/>
-        <xz.Picker 
-        onBackLayerClick={this.selBackLayerClick.bind(this)}
-        datasource={selectorData}
-        cascadeCount={3}
-        okMethod={this.pickerOk.bind(this)}
-        selectedIndexs={this.props.indexStore.pickerSelectedIndexs}
-        show={this.props.indexStore.isShowSelector}
-        loadData={[]}></xz.Picker>
+        <DatePicker store={this.props.indexStore}></DatePicker>
+        <Picker store={this.props.indexStore}/>
         <SearchBar store={this.props.indexStore} pageview={this}/>
         <LoadingLayer store={this.props.indexStore}/>
         <xz.ScrollView 
