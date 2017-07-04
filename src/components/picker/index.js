@@ -82,7 +82,7 @@ class SelectorColumn extends React.Component{
       index = index>this.state.data.length-1?this.state.data.length-1:index;
       var t=0,b=this.state.offset;
       var len = 0-index*this.props.itemHeight-this.state.offset;
-      if(Math.abs(len)<=2){
+      if(Math.abs(len)<=1){
         this.bindNextChildData(index);
         return;
       }
@@ -97,10 +97,10 @@ class SelectorColumn extends React.Component{
   }
 
   bindNextChildData(curSelectedIndex){
-    this.selectedIndex = curSelectedIndex;
     if(!this.props.parent.isCascade||this.selectedIndex===curSelectedIndex){
       return;
     }
+    this.selectedIndex = curSelectedIndex;
     if(this.props.columnIndex>=this.props.parent.columnsCount-1){
       return;
     }
@@ -126,7 +126,8 @@ class SelectorColumn extends React.Component{
 
   componentWillReceiveProps(props){
     this.setState({
-      data:props.data
+      data:props.data,
+
     });
   }
 
@@ -153,10 +154,10 @@ class SelectorColumn extends React.Component{
 
   getDistanceAndDurtion() {
       var diff_abs = Math.abs(this.diff);
-      var duration = 20;
+      var duration = 30;
       var value = this.props.itemHeight * 3;
-      if (diff_abs >= this.wrapperHeight * 4 / 5) {
-          value= this.scrollHeight ;
+      if (diff_abs >= this.wrapperHeight * 4 / 6) {
+          value = this.scrollHeight ;
       }
       else if (diff_abs <= this.wrapperHeight * 4 / 6 && diff_abs >this.wrapperHeight* 3 / 6) {
           value= this.scrollHeight  * 0.8;
@@ -167,13 +168,15 @@ class SelectorColumn extends React.Component{
           duration = 30;
       }
       else if (diff_abs <= this.wrapperHeight * 2 / 6 &&diff_abs > this.wrapperHeight * 1 / 6) {
-          value = this.scrollHeight  * 3 ;
-          duration = 20;
+          value = this.props.itemHeight  * 3 ;
+          duration = 30;
       }
       else {
           value= this.props.itemHeight*2/3 ;
           duration = 8;
       }
+
+      value = value> this.props.itemHeight *10? this.props.itemHeight *10:value;
       return {value:value,duration:duration};
   }
  
@@ -218,14 +221,13 @@ class Selector extends React.Component {
   
   }
 
-  testClick(){
-    this.setState({
-      seed:2
-    });
-  }
 
   renderHeader(){
-    return <div onClick={this.testClick.bind(this)}>xx</div>
+    return <div className='xz-picker-header'>
+      <div className='xz-picker-cancel'>取消</div>
+      <div className='xz-picker-title'>{this.props.title}</div>
+      <div className='xz-picker-ok'>确定</div>
+    </div>
   }
 
   onTouchStart(e){

@@ -8,11 +8,14 @@ import spin from './spin'
 import loadinglayer from './loadinglayer' 
 import stickyview from './stickyview' 
 import dropdowngroup from './dropdowngroup' 
-import selector from './selector' 
+import picker from './picker' 
+import datepicker from './datepicker' 
+
 
 export default {
+	"DatePicker":datepicker,
 	"Button":button,
-	"Selector":selector,
+	"Picker":picker,
 	"DrawLayout":drawlayout,
 	"ScrollView":scrollview,
 	"StickyView":stickyview,

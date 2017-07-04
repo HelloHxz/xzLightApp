@@ -38,8 +38,8 @@ var appSwiperData = [
     {"key":"","title":"lazyload",url:"lazyload"},
     {"key":"","title":"drawlayout",url:"drawlayoutdemo"},
     {"key":"","title":"sticky",url:"sticky"},
-    {"key":"","title":"xx超市"},
-    {"key":"","title":"xx超市"},
+    {"key":"","title":"xx超市",type:"picker"},
+    {"key":"","title":"xx超市",type:"datepicker"},
     {"key":"","title":"xx超市"}
   ],
   [
@@ -181,7 +181,11 @@ class PageView extends React.Component {
     if(url){
       this.props.pagemanager.go(url,{someparam:1});
     }else{
-      this.props.indexStore.isShowSelector = true;
+      if(itemdata.type==="picker"){
+       this.props.indexStore.isShowSelector = true;
+      }else{
+        this.props.indexStore.showDatePicer = true;
+      }
     }
   }
 
@@ -282,15 +286,23 @@ class PageView extends React.Component {
     this.props.indexStore.isShowSelector = false;
   }
 
+  hideDatePicker(){
+    this.props.indexStore.showDatePicer = false;
+  }
+
+
 
   render() {
     return (<div>
-        <xz.Selector 
+        <xz.DatePicker 
+         onBackLayerClick={this.hideDatePicker.bind(this)}
+        show={this.props.indexStore.showDatePicer}/>
+        <xz.Picker 
         onBackLayerClick={this.selBackLayerClick.bind(this)}
         datasource={selectorData}
         cascadeCount={3}
         show={this.props.indexStore.isShowSelector}
-        loadData={[]}></xz.Selector>
+        loadData={[]}></xz.Picker>
         <SearchBar store={this.props.indexStore} pageview={this}/>
         <LoadingLayer store={this.props.indexStore}/>
         <xz.ScrollView 

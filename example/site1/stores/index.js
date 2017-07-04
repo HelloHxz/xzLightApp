@@ -8,6 +8,8 @@ class IndexStore {
     @observable listLoadingStatus = "loading";
     @observable drawLayoutConfig = {};
     @observable isShowSelector =false;
+    @observable showDatePicer =false;
+    
 
     @observable ListDataSource = [{},{},{},{},{},{},{},{},{},{},{},{},{},{}];
     isInLoading = false;
