@@ -8,12 +8,13 @@ class ScrollView extends React.Component {
     this.seed  = 0;
     this.tranDict = Style.getTransitionKeys();
     this.state = {offset:-1,animate:false};
-    this.limitOffset = this.props.limitOffset||Style.screen.height*.1;
     this.startScrollValue = 0;
     this.startY = 0;
     this.isInLoading = 0;
     var direction = this.props.direction||"vertical";
     this.isHorizontal = direction.toLowerCase()!=="vertical";
+    this.limitOffset = this.props.limitOffset||(!this.isHorizontal?Style.screen.height:Style.screen.width)*.1;
+
     this.isBad = navigator.userAgent.indexOf("QYZone")>=0;
     this.config = {
       touchkey:"pageX",

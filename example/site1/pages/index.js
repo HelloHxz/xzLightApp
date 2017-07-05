@@ -164,7 +164,7 @@ class PageView extends React.Component {
   }
 
   onLoadMoreHor(){
-
+    this.props.pagemanager.go("goodlist");
   }
 
 
@@ -177,6 +177,7 @@ class PageView extends React.Component {
       re.push(<xz.Image  scrollKey="mainhorscroll"
             pageview={this} backgroundSize="cover" onRenderDefault={this.onRenderDefault.bind(this)} className="hor-s-item" src="./imgs/2.jpg" key={"xx"+i}></xz.Image>);
     }
+    re.push(<div key="more_hs" className="hor-s-item-last"><span>查看更多</span></div>);
     return <div className="hor-s-item-wrapper">{re}</div>;
   }
 
@@ -209,6 +210,10 @@ class PageView extends React.Component {
 
 
   renderAppIndicator(){
+    return null;
+  }
+
+  hrRenderLoadMoreIndicator(){
     return null;
   }
 
@@ -256,6 +261,8 @@ class PageView extends React.Component {
            <xz.ScrollView 
             scrollKey="mainhorscroll"
             pageview={this}
+            limitOffset={style.px2px(60)}
+            renderLoadMoreIndicator={this.hrRenderLoadMoreIndicator.bind(this)}
             onLoadMore ={this.onLoadMoreHor.bind(this)}
             onRefresh={this.onRefreshHor.bind(this)} 
             direction='horizontal' className='app-horizon-scroll'>
