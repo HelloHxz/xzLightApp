@@ -6,6 +6,7 @@ import Style from "../../../utils/style"
 class SelectorColumn extends React.Component{
    constructor(props) {
     super(props)
+
     props.parent.instanceDict[props.pkey] = this;
     this.tranDict = Style.getTransitionKeys();
     this.selectedIndex = props.selectedIndex||0;
@@ -203,6 +204,8 @@ class SelectorColumn extends React.Component{
 class Selector extends React.Component {
   constructor(props) {
     super(props)
+    this.hasInit = false;
+
     this.itemHeight = Style.rem2px(1);
     this.instanceDict = {};
     this.isCascade = false;
@@ -216,12 +219,20 @@ class Selector extends React.Component {
     }
     this.columnsCount = this.cascadeCount||this.props.datasource.length;
     this.selectedIndexs = this.getSelectedIndexs(props);
-    this.colLength = this.cascadeCount||this.props.datasource.length;
-    this.itemWidth = Style.screen.width/this.colLength;
+    this.itemWidth = Style.screen.width/this.columnsCount;
     this.state = {
       seed:1
     }
   
+  }
+
+  componentWillReceiveProps(nextPros){
+      this.selectedIndexs = this.getSelectedIndexs(nextPros);
+      var newState = {
+        show:nextPros.show
+      }
+      this.setState(newState);
+    
   }
 
 
@@ -259,9 +270,9 @@ class Selector extends React.Component {
    
     if(props.selectedValues){
       if(this.isCascade){
-
+        return this.getSelecedIndexsByValueWhenIsCascade(props);
       }else{
-
+        return this.getSelectedIndexsByValue(props);
       }
     }else if(props.selectedIndexs){
       if(!(props.selectedIndexs instanceof Array)){
@@ -272,6 +283,59 @@ class Selector extends React.Component {
       return this.getDefaultSelectedIndexs();
     }
     return this.getDefaultSelectedIndexs();
+  }
+
+  getSelectedIndexsByValue(props){
+    var value = props.selectedValues||[];
+    if(!(value instanceof Array)){
+      value = [];
+    }
+    var selectedIndexs = [];
+    var index = 0;
+    for(var i=0;i<this.columnsCount;i++){
+      index = this._getIndexByValue(value[i],props.datasource[i]);
+      selectedIndexs.push(index);
+    }
+    return selectedIndexs;
+  }
+
+  getSelecedIndexsByValueWhenIsCascade(props){
+    var value = props.selectedValues||[];
+    if(!(value instanceof Array)){
+      value = [];
+    }
+    var curData = props.datasource[0];
+    var selectedIndexs = [];
+    var index = 0;
+    for(var i=0;i<this.columnsCount;i++){
+      if(i===0){
+        index = this._getIndexByValue(value[i],curData);
+        curData = curData[index].children||[];
+      }else{
+        index = this._getIndexByValue(value[i],curData||[]);
+        var c = curData[index]||{};
+        curData = c.children||[];
+      }
+      selectedIndexs.push(index);
+    }
+
+    return selectedIndexs;
+
+  }
+
+  _getIndexByValue(value,arr){
+    if(!value){
+      return 0;
+    }
+    arr = arr||[];
+    var index = 0;
+    for(var i=0,j=arr.length;i<j;i++){
+      if(arr[i].label===value){
+        index = i;
+        break;
+      }
+    }
+    return index;
   }
 
   getDefaultSelectedIndexs(paramsArr){
@@ -293,15 +357,7 @@ class Selector extends React.Component {
     this.props.onBackLayerClick&&this.props.onBackLayerClick();
   }
 
-  componentWillReceiveProps(nextPros){
 
-      this.selectedIndexs = this.getSelectedIndexs(nextPros);
-      var newState = {
-        show:nextPros.show
-      }
-      this.setState(newState);
-    
-  }
 
 
   renderMidArea(){
@@ -326,6 +382,11 @@ class Selector extends React.Component {
 
   render() {
     var columns =[];
+
+    if(!this.state.show&&!this.hasInit){
+      return null;
+    }
+    this.hasInit = true;
 
     if(this.isCascade){
       var preSelectedItemData = null;
@@ -352,7 +413,8 @@ class Selector extends React.Component {
       for(var i=0;i<this.columnsCount;i++){
         var curkey = "column_"+i;
         var data = this.props.datasource[i];
-        columns.push(<SelectorColumn data={data} parent={this} pkey={curkey} itemHeight={this.itemHeight} key={curkey}/>);
+         var selectedIndexInCol = this.selectedIndexs[i];
+        columns.push(<SelectorColumn selectedIndex={selectedIndexInCol} data={data} parent={this} pkey={curkey} itemHeight={this.itemHeight} key={curkey}/>);
       }
     }
 

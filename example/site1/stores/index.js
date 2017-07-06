@@ -10,6 +10,7 @@ class IndexStore {
     @observable isShowSelector =false;
     @observable showDatePicer =false;
     @observable pickerSelectedIndexs =[0,0,0];
+    @observable pickerSelectedValues = ["USA","x11xx"];
 
     
 

@@ -2,6 +2,8 @@ import React from "react"
 import {observer} from 'mobx-react'
 import {xz,style,shallowEqual,Navigation} from "../../../../index"
 
+
+
 var selectorData=[[
   {
     label:"China",
@@ -91,7 +93,9 @@ class Picker extends React.Component {
 
 
   pickerOk(){
-    this.props.store.pickerSelectedIndexs = [1,1,1];
+    //this.props.store.pickerSelectedIndexs = [1,1,1];
+    //
+    this.props.store.pickerSelectedValues = [1,1,1];
   }
 
 
@@ -102,6 +106,7 @@ class Picker extends React.Component {
         datasource={selectorData}
         cascadeCount={3}
         okMethod={this.pickerOk.bind(this)}
+        selectedValues = {this.props.store.pickerSelectedValues}
         selectedIndexs={this.props.store.pickerSelectedIndexs}
         show={this.props.store.isShowSelector}
         loadData={[]}></xz.Picker>
