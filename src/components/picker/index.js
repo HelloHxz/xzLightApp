@@ -41,6 +41,15 @@ class SelectorColumn extends React.Component{
        this.setState({offset:this.scrollEngine.stop()});
     }
 
+    this.props.parent.props.onTouchStart&&this.props.parent.props.onTouchStart(
+      {
+        e:e,
+        columnIndex:this.props.columnIndex,
+        columnInstance:this,
+        itemHeight:this.props.itemHeight,
+        itemIndex:this.getIndexByOffset(this.state.offset)
+      }
+    );
     this.scrollEngine = null; 
     
   }
@@ -51,6 +60,15 @@ class SelectorColumn extends React.Component{
     e.nativeEvent.stopImmediatePropagation();
     this.curY = e.touches[0].pageY;
     this.diff = this.curY - this.startY;
+    this.props.parent.props.onTouchMove&&this.props.parent.props.onTouchMove(
+      {
+        e:e,
+        columnIndex:this.props.columnIndex,
+        columnInstance:this,
+        itemHeight:this.props.itemHeight,
+        itemIndex:this.getIndexByOffset(this.state.offset)
+      }
+    );
     var offset = this.curOffset+this.diff;
 
     this.setState({
@@ -85,11 +103,16 @@ class SelectorColumn extends React.Component{
       });
   }
 
-  repairDistance(){
-      var index  =this.state.offset/this.props.itemHeight;
+  getIndexByOffset(offset){
+      var index  = offset/this.props.itemHeight;
       index = (0- Math.round(index));
       index = index<0?0:index;
       index = index>this.state.data.length-1?this.state.data.length-1:index;
+      return index;
+  }
+
+  repairDistance(){
+      var index  = this.getIndexByOffset(this.state.offset);
       var t=0,b=this.state.offset;
       var len = 0-index*this.props.itemHeight-this.state.offset;
       if(Math.abs(len)<=1){
@@ -111,7 +134,8 @@ class SelectorColumn extends React.Component{
     this.props.parent.props.onTansitionEnd&&this.props.parent.props.onTansitionEnd({
           columnIndex:this.props.columnIndex,
           columnInstance:this,
-          selectedIndex:index
+          itemHeight:this.props.itemHeight,
+          itemIndex:index
         });
   }
 

@@ -338,10 +338,12 @@ class ScrollView extends React.Component {
     var innerClassName = this.isHorizontal?"xz-scrollview-inner-h":"xz-scrollview-inner-v";
 
     var scrollAreaClassName = this.isHorizontal?"xz-sv-scrollarea-h":"xz-sv-scrollarea-v";
-
+    var outStyle = this.props.style||{};
     return (<div ref={(wrapper)=>{
       this.wrapperDom = wrapper;
-    }} {...toucheEvent} className={classNameArr.join(" ")}>
+    }} {...toucheEvent} 
+    style={outStyle}
+    className={classNameArr.join(" ")}>
     	<div className={innerClassName} style={moveStyle} ref={(wrapper)=>{
         this.innerWrapperDom = wrapper;
       }}>

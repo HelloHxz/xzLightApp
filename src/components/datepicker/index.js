@@ -2,10 +2,13 @@ import React from "react"
 import "./index.less"
 import Picker from '../picker'
 import Style from "../../../utils/style"
+import Time from "../../../utils/time"
 
 class DatePicker extends React.Component {
   constructor(props) {
     super(props)
+    this.halfYearCount = 40;
+    this.yearHasTouchEnd = false;
     this.state={
       show:props.show
     }
@@ -31,16 +34,18 @@ class DatePicker extends React.Component {
       <span style={{left:(columnsWidth*3-Style.px2px(80))+"px"}}>日</span></div>
   }
 
-  onTansitionEnd(params){
-    console.log(params);
-  }
 
 
-  getColumnsData(){
+
+  getColumnsDataAndSelectedValue(){
     var fmart = this.props.formart||"yyyy-MM-dd";
+    var value = this.props.value ;
+    var date = Time.getDateInfo(value);
     var data = [];
     var year = [];
-    for(var i=1900;i<2100;i++){
+    var yearStart = date.year-this.halfYearCount;
+    var yearEnd = date.year+this.halfYearCount;
+    for(var i=yearStart;i<=yearEnd;i++){
       year.push({label:i,value:i});
     }
     var month = [];
@@ -54,7 +59,42 @@ class DatePicker extends React.Component {
     data.push(year);
     data.push(month);
     data.push(day);
-    return data;
+    return {data:data,selectedValues:[date.year,0,0]};
+  }
+
+
+  onTansitionEnd(params){
+    if(params.columnIndex===0){
+      if(this.yearHasTouchEnd){
+        var itemData = params.columnInstance.state.data[params.itemIndex];
+        var startYear = params.columnInstance.state.data[0].value;
+        var curYear = itemData.value;
+        var topNeedAddCount = 0-(curYear-startYear-this.halfYearCount);
+        console.log(curYear);
+        var s = curYear-this.halfYearCount;
+        var e = curYear+this.halfYearCount;
+        this.year = [];
+        for(var i=s;i<=e;i++){
+          this.year.push({label:i,value:i});
+        }
+        console.log(params.columnInstance.state.offset-topNeedAddCount*params.itemHeight);
+        params.columnInstance.setState({
+          data:this.year,
+          offset:params.columnInstance.state.offset-topNeedAddCount*params.itemHeight
+        });
+      }
+
+      this.yearHasTouchEnd = true;
+    }
+  }
+  onTouchMove(params){
+    if(params.columnIndex===0){
+      if(this.year){
+        // params.columnInstance.setState({
+        //   data:this.year,
+        // });
+      }
+    }
   }
 
 
@@ -62,13 +102,15 @@ class DatePicker extends React.Component {
   render() {
     
     //selectedValues={this.state.selectedValues}
-
+    var dataAndS = this.getColumnsDataAndSelectedValue();
     return (<Picker 
+      onTouchMove={this.onTouchMove.bind(this)}
       onTansitionEnd={this.onTansitionEnd.bind(this)}
       renderMidArea={this.renderMidArea.bind(this)}
       onBackLayerClick={this.onBackLayerClick.bind(this)} 
       show={this.state.show} 
-      datasource={this.getColumnsData()}>
+      selectedValues={dataAndS.selectedValues}
+      datasource={dataAndS.data}>
       </Picker>);
   }
 }

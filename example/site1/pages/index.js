@@ -191,6 +191,11 @@ class PageView extends React.Component {
     }
   }
 
+  componentWillUnmount(){
+    this.topswiper.stopInterval();
+    this.verSwiper.stopInterval();
+  }
+
   onPageBeforeLeave(){
     this.topswiper.stopInterval();
     this.verSwiper.stopInterval();
