@@ -17,11 +17,9 @@ class DatePicker extends React.Component {
   }
 
   componentWillReceiveProps(nextPros){
-    if(nextPros.show!==this.state.show){
-      this.setState({
-        show:nextPros.show
-      });
-    }
+    this.setState({
+      show:nextPros.show
+    });
   }
 
   renderMidArea(){
@@ -31,6 +29,10 @@ class DatePicker extends React.Component {
       <span style={{left:(columnsWidth-Style.px2px(55))+"px"}}>年</span>
       <span style={{left:(columnsWidth*2-Style.px2px(80))+"px"}}>月</span>
       <span style={{left:(columnsWidth*3-Style.px2px(80))+"px"}}>日</span></div>
+  }
+
+  onTansitionEnd(params){
+    console.log(params);
   }
 
 
@@ -58,8 +60,11 @@ class DatePicker extends React.Component {
 
 
   render() {
-  
+    
+    //selectedValues={this.state.selectedValues}
+
     return (<Picker 
+      onTansitionEnd={this.onTansitionEnd.bind(this)}
       renderMidArea={this.renderMidArea.bind(this)}
       onBackLayerClick={this.onBackLayerClick.bind(this)} 
       show={this.state.show} 

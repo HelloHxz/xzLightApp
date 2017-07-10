@@ -10,18 +10,18 @@ class PageView extends React.Component {
     }
   }
 
-  demo2Select(){
-    this.setState({demo2SelectedKey:"2"});
+
+  demo2Change(params){
+     this.setState({demo2SelectedKey:params.selectedKey});
   }
   
 
   renderIndicatorThree(params){
-    var rect = params.itemInstance.Dom.children[0].getBoundingClientRect();
     var indicatorStyle = {
       position:"absolute",
       bottom:"0",
-      left:rect.left,
-      width:style.px2rem(rect.width)+"rem",
+      left:params.itemInstance.Dom.offsetLeft+"px",
+      width:params.itemInstance.Dom.offsetWidth+"px",
       height:style.px2rem(5)+"rem",
     };
     var arr = ["segment-indi-nomal"];
@@ -32,13 +32,15 @@ class PageView extends React.Component {
   }
 
 
+
+
   renderIndicatorTwo(params){
     var rect = params.rect;
     var indicatorStyle = {
       position:"absolute",
       bottom:"0",
-      left:rect.left,
-      width:style.px2rem(rect.width)+"rem",
+      left:params.itemInstance.Dom.offsetLeft+"px",
+      width:params.itemInstance.Dom.offsetWidth+"px",
       height:style.px2rem(5)+"rem",
     };
     var arr = ["segment-indi-nomal"];
@@ -50,10 +52,10 @@ class PageView extends React.Component {
 
   renderIndicatorOne(params){
     var rect = params.rect;
-
+    console.log(params.itemInstance.Dom.offsetLeft);
     var indicatorStyle = {
-      left:rect.left,//
-      right:style.screen.width-rect.right,//
+      left:params.itemInstance.Dom.offsetLeft+"px",
+      right:(params.itemInstance.Dom.parentNode.offsetWidth-params.itemInstance.Dom.offsetLeft-params.itemInstance.Dom.offsetWidth)+"px",
       height:style.px2rem(5)+"rem",
     };
     var indiClassArr = ["segement-indi"];
@@ -104,7 +106,7 @@ class PageView extends React.Component {
          </xz.Segment>
          <br/>
 
-         <xz.Segment className="segement-demo-2" renderIndicator={this.renderIndicatorOne.bind(this)} selectedKey={this.state.demo2SelectedKey} scroll={true}>
+         <xz.Segment className="segement-demo-2" onChange={this.demo2Change.bind(this)} renderIndicator={this.renderIndicatorOne.bind(this)} selectedKey={this.state.demo2SelectedKey} scroll={true}>
           <xz.Segment.Item key='1'>首页</xz.Segment.Item>
           <xz.Segment.Item key='2'>商城</xz.Segment.Item> 
           <xz.Segment.Item key='3'>应用</xz.Segment.Item>  
@@ -115,7 +117,6 @@ class PageView extends React.Component {
          </xz.Segment>
          <br/>
          <div>
-         <xz.Button onClick={this.demo2Select.bind(this)}>selected</xz.Button>
          </div>
          <br/>
         <div>

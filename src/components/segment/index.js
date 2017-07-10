@@ -8,7 +8,7 @@ class Segment extends React.Component {
     this.itemCount = 0;
     this.initItemCount = 0;
     this.preIndex = 0;
-    this.itemDict = {};
+    this.itemArr = [];
     this.scrollInnerWidth = 0;
     this.tranDict = Style.getTransitionKeys();
     this.state = {
@@ -57,15 +57,11 @@ class Segment extends React.Component {
   }
 
   itemComponentDidMount(itemKey,itemInstance){
-    
-    this.itemDict[itemKey] = itemInstance;
+    this.itemArr.push({key:itemKey,instance:itemInstance});
     this.initItemCount+=1;
     if(this.initItemCount===this.itemCount){
       if(this.props.renderIndicator){
         this.setState({renderKey:this.state.renderKey+1});
-        setTimeout(()=>{
-          this.setState({renderKey:this.state.renderKey+1});
-        },330)
       }
     }
   }
@@ -189,6 +185,22 @@ class Segment extends React.Component {
 
   }
 
+  findSelectedItem(){
+    if(this.state.selectedIndex===0||this.state.selectedIndex){
+      return this.itemArr[this.state.selectedIndex].instance;
+    }else{
+      //this.state.selectedKey
+      var item ;
+      for(var i=0,j=this.itemArr.length;i<j;i++){
+        if(this.itemArr[i].key === this.state.selectedKey){
+          item = this.itemArr[i].instance;
+          break;
+        }
+      }
+      return item||this.itemArr[0].instance;
+    }
+  }
+
   render() {
 
     var indicator = null;
@@ -222,8 +234,8 @@ class Segment extends React.Component {
       this.itemCount = itemCount;
     }
 
-    if(this.props.renderIndicator&&this.itemDict[this.state.selectedKey]){
-      var selectedItemInstance = this.itemDict[this.state.selectedKey];
+    if(this.props.renderIndicator&&this.itemArr.length>0){
+      var selectedItemInstance = this.findSelectedItem();
       indicator = this.props.renderIndicator({
         itemInstance:selectedItemInstance,
         scrollOffset:this.state.offset,
@@ -264,8 +276,8 @@ class Segment extends React.Component {
           ref={(scrollInner)=>{this.scrollInner = scrollInner;}}
             className='xz-segment-ul'>
        {children}
-    	</ul>
        {indicator}
+    	</ul>
       </div>);
   }
 }

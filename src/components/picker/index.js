@@ -94,6 +94,7 @@ class SelectorColumn extends React.Component{
       var len = 0-index*this.props.itemHeight-this.state.offset;
       if(Math.abs(len)<=1){
         this.bindNextChildData(index);
+        this.triggerTransitionEnd(index);
         return;
       }
       this.scrollEngine = Style.run(t, b,len,10);
@@ -102,8 +103,16 @@ class SelectorColumn extends React.Component{
       },null,()=>{
         this.scrollEngine = null;
         this.bindNextChildData(index);
-        console.log("end1");
+        this.triggerTransitionEnd(index);
       });
+  }
+
+  triggerTransitionEnd(index){
+    this.props.parent.props.onTansitionEnd&&this.props.parent.props.onTansitionEnd({
+          columnIndex:this.props.columnIndex,
+          columnInstance:this,
+          selectedIndex:index
+        });
   }
 
   bindNextChildData(curSelectedIndex){
@@ -414,7 +423,7 @@ class Selector extends React.Component {
         var curkey = "column_"+i;
         var data = this.props.datasource[i];
          var selectedIndexInCol = this.selectedIndexs[i];
-        columns.push(<SelectorColumn selectedIndex={selectedIndexInCol} data={data} parent={this} pkey={curkey} itemHeight={this.itemHeight} key={curkey}/>);
+        columns.push(<SelectorColumn columnIndex={i} selectedIndex={selectedIndexInCol} data={data} parent={this} pkey={curkey} itemHeight={this.itemHeight} key={curkey}/>);
       }
     }
 
@@ -430,8 +439,6 @@ class Selector extends React.Component {
     }
    
    var bk = <div onClick={this.bkClick.bind(this)} className={bkArr.join(" ")}></div>;
-     // bkArr.push("xz-drawlayout-bk-hide");
- 
     return (<div className="xz-drawlayout">
       {bk}
       <div className={classArr.join(" ")}>

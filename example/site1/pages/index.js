@@ -42,7 +42,7 @@ var appSwiperData = [
     {"key":"","title":"sticky",url:"sticky"},
     {"key":"","title":"xx超市",type:"picker"},
     {"key":"","title":"xx超市",type:"datepicker"},
-    {"key":"","title":"xx超市"}
+    {"key":"","title":"userinfo",url:"userinfo"},
   ],
   [
     {"key":"","title":"xx超市2"},

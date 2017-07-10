@@ -11,6 +11,7 @@ Navigation.start({
 		slidepage:require("./pages/slidepage").default,
 		dpdcdemo:require("./pages/dpdcdemo").default,
 		goodlist:require("./pages/goodlist").default,
+		userinfo:require("./pages/userinfo").default,
 		sticky:require("./pages/sticky").default,
 		drawlayoutdemo:require("./pages/drawlayoutdemo").default,
 		threelevelroute:require("./pages/threelevelroute").default,
