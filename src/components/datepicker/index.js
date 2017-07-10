@@ -35,31 +35,93 @@ class DatePicker extends React.Component {
   }
 
 
-
+  
+  
 
   getColumnsDataAndSelectedValue(){
-    var fmart = this.props.formart||"yyyy-MM-dd";
+    var format = (this.props.format||"yyyy-MM-dd");
+    if("yyyy-MM-dd hh:mm:ss".indexOf(format)<0){
+      format = "yyyy-mm-dd";
+      console.warn("时间格式必需为yyyy-MM-dd hh:mm:ss或者其中的部分截取");
+    }
+    var format_arr = format.split(" ");
+    var ymd = format_arr[0]||"";
+    var hms = format_arr[1]||"";
+    if(ymd.indexOf("-")<0){
+      if(ymd.indexOf(":")>0){
+        hms = ymd;
+      }else{
+        ymd = "yyyy-MM-dd";
+        hms = "";
+      }
+    }
+    var ymd_arr = ymd.split("-");
+    var hms_arr = hms.split(":");
+    this.formatArr = [];
+    for(var i=0,j=ymd_arr.length;i<j;i++){
+      var item = ymd_arr[i];
+      if(item.length===0){
+        continue;
+      }
+      if(["yyyy","MM","dd"].indexOf(item)<0){
+        console.error("格式错误 参考yyyy-MM-dd hh:mm:ss");
+      }
+      this.formatArr.push(item);
+    }
+
+    for(var i=0,j=hms_arr.length;i<j;i++){
+      var item = hms_arr[i];
+      if(item.length===0){
+        continue;
+      }
+      if(["hh","mm","ss"].indexOf(item)<0){
+        console.error("格式错误 参考yyyy-MM-dd hh:mm:ss");
+      }
+      this.formatArr.push(item);
+    }
+
     var value = this.props.value ;
     var date = Time.getDateInfo(value);
+    var daycount =Time.getMonthDayCount(date);
     var data = [];
-    var year = [];
-    var yearStart = date.year-this.halfYearCount;
-    var yearEnd = date.year+this.halfYearCount;
-    for(var i=yearStart;i<=yearEnd;i++){
-      year.push({label:i,value:i});
+    for(var n=0,m=this.formatArr.length;n<m;n++){
+      var key = this.formatArr[n];
+      if(key==="yyyy"){
+        var year = [];
+        var yearStart = date.year-this.halfYearCount;
+        var yearEnd = date.year+this.halfYearCount;
+        for(var i=yearStart;i<=yearEnd;i++){
+          year.push({label:i,value:i});
+        }
+        data.push(year);
+      }else if(key==="MM"){
+        var month = [];
+        for(var i=1;i<13;i++){
+          month.push({label:Time._processtime(i),value:i});
+        }
+        data.push(month);
+      }else if(key==="dd"){
+        var day = [];
+        for(var i=1;i<=daycount;i++){
+          day.push({label:Time._processtime(i),value:i});
+        }
+        data.push(day);
+      }else if(key==="hh"){
+        var hours = [];
+        for(var i=0;i<24;i++){
+          hours.push({label:Time._processtime(i),value:i});
+        }
+        data.push(hours);
+      }else if(key==="mm"||key==="ss"){
+        var mins = [];
+        for(var i=0;i<60;i++){
+          mins.push({label:Time._processtime(i),value:i});
+        }
+        data.push(mins);
+      }
     }
-    var month = [];
-    for(var i=1;i<13;i++){
-      month.push({label:i,value:i});
-    }
-    var day = [];
-     for(var i=1;i<30;i++){
-      day.push({label:i,value:i});
-    }
-    data.push(year);
-    data.push(month);
-    data.push(day);
-    return {data:data,selectedValues:[date.year,0,0]};
+  
+    return {data:data,selectedValues:[date.year,date.month,date.day]};
   }
 
 
@@ -70,14 +132,12 @@ class DatePicker extends React.Component {
         var startYear = params.columnInstance.state.data[0].value;
         var curYear = itemData.value;
         var topNeedAddCount = 0-(curYear-startYear-this.halfYearCount);
-        console.log(curYear);
         var s = curYear-this.halfYearCount;
         var e = curYear+this.halfYearCount;
         this.year = [];
         for(var i=s;i<=e;i++){
           this.year.push({label:i,value:i});
         }
-        console.log(params.columnInstance.state.offset-topNeedAddCount*params.itemHeight);
         params.columnInstance.setState({
           data:this.year,
           offset:params.columnInstance.state.offset-topNeedAddCount*params.itemHeight
@@ -87,24 +147,13 @@ class DatePicker extends React.Component {
       this.yearHasTouchEnd = true;
     }
   }
-  onTouchMove(params){
-    if(params.columnIndex===0){
-      if(this.year){
-        // params.columnInstance.setState({
-        //   data:this.year,
-        // });
-      }
-    }
-  }
-
+ 
 
 
   render() {
-    
-    //selectedValues={this.state.selectedValues}
     var dataAndS = this.getColumnsDataAndSelectedValue();
     return (<Picker 
-      onTouchMove={this.onTouchMove.bind(this)}
+      valueIsInt={true}
       onTansitionEnd={this.onTansitionEnd.bind(this)}
       renderMidArea={this.renderMidArea.bind(this)}
       onBackLayerClick={this.onBackLayerClick.bind(this)} 

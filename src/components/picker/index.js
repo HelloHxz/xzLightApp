@@ -76,8 +76,16 @@ class SelectorColumn extends React.Component{
     });
   }
 
-  onTouchEnd(e){
+  onTouchEnd(){
 
+    this.props.parent.props.onTouchEnd&&this.props.parent.props.onTouchEnd(
+      {
+        columnIndex:this.props.columnIndex,
+        columnInstance:this,
+        itemHeight:this.props.itemHeight,
+        itemIndex:this.getIndexByOffset(this.state.offset)
+      }
+    );
     if(this.diff===0){
       this.repairDistance();
       return;
@@ -366,6 +374,12 @@ class Selector extends React.Component {
       if(arr[i].label===value){
         index = i;
         break;
+      }
+      if(this.props.valueIsInt){
+        if(parseInt(arr[i].label)===parseInt(value)){
+          index = i;
+          break;
+        }
       }
     }
     return index;
