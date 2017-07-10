@@ -16,7 +16,7 @@ class DatePicker extends React.Component {
   render() {
     return (
        <xz.DatePicker 
-          format="yyyy-MM-dd hh:mm"
+          format="yyyy-MM-dd hh:mm:ss"
          onBackLayerClick={this.hideDatePicker.bind(this)}
          show={this.props.store.showDatePicer}/>
     	);

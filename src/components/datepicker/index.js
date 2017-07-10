@@ -26,12 +26,34 @@ class DatePicker extends React.Component {
   }
 
   renderMidArea(){
-    var columnsCount = 3;
+    var dict = {
+      "yyyy":'年',
+      "MM":'月',
+      "dd":'日',
+      "hh":'时',
+      "mm":'分',
+      "ss":'秒',
+    };
+    var arr = [
+      [0],
+      [270],
+      [100,100],
+      [50,60,60],
+      [40,50,50,50],
+      [25,40,40,40,40],
+      [10,30,30,30,30,30]
+    ];
+    var columnsCount = this.formatArr.length;
     var columnsWidth = Style.screen.width/columnsCount;
+    var child = [];
+    var diff = arr[columnsCount];
+    for(var i=0,j=this.formatArr.length;i<j;i++){
+      var item = this.formatArr[i];
+      var label = dict[item]||"";
+      child.push(<span key={item} style={{left:(columnsWidth*(i+1)-Style.px2px(diff[i]))+"px"}}>{label}</span>);
+    }
     return <div className='xz-datepicker-mid'>
-      <span style={{left:(columnsWidth-Style.px2px(55))+"px"}}>年</span>
-      <span style={{left:(columnsWidth*2-Style.px2px(80))+"px"}}>月</span>
-      <span style={{left:(columnsWidth*3-Style.px2px(80))+"px"}}>日</span></div>
+      {child}</div>
   }
 
 
@@ -47,7 +69,7 @@ class DatePicker extends React.Component {
     var format_arr = format.split(" ");
     var ymd = format_arr[0]||"";
     var hms = format_arr[1]||"";
-    if(ymd.indexOf("-")<0){
+    if(ymd.indexOf("-")<0&&ymd!=="yyyy"){
       if(ymd.indexOf(":")>0){
         hms = ymd;
       }else{
