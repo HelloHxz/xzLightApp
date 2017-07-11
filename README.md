@@ -13,5 +13,5 @@ npm start
 
 ```
 
-(https://github.com/HelloHxz/xzLightApp/Screenshots/2.gif)
+![Alt text](https://github.com/HelloHxz/xzLightApp/blob/master/Screenshots/2.gif)
 
