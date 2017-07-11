@@ -1,4 +1,4 @@
-import N from './navigation' 
+import N from './navigator' 
 import xz from './src/components' 
 import style from './utils/style' 
 import shallowEqual from './utils/shallowEqual' 
