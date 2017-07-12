@@ -1,6 +1,7 @@
 import React from "react"
 import Style from "../../../utils/style"
 import "./index.less"
+import Spin from '../spin'
 
 class ScrollView extends React.Component {
   constructor(props) {
@@ -134,7 +135,7 @@ class ScrollView extends React.Component {
         setTimeout(()=>{
           this.refreshEnd();
           this.props.onRefresh();
-        },200);
+        },1000);
       }else{
         this.refreshEnd();
       }
@@ -253,8 +254,14 @@ class ScrollView extends React.Component {
 
   _renderRefreshIndicator(){
     var wrapperClassName = this.isHorizontal?"xz-refresh-control-inner-h":"xz-refresh-control-inner-v";
-    var text = this.canRefresh?"释放更新":"下拉刷新";
-    return <div className={wrapperClassName}><span>{text}</span></div>;
+    var child = null;
+    if(this.isInLoading){
+      child = <span><Spin type='android'/></span>;
+    }else{
+      var text = this.canRefresh?"释放更新":"下拉刷新";
+      child = <span>{text}</span>;
+    }
+    return <div className={wrapperClassName}>{child}</div>;
   }
 
   _renderLoadMoreIndicator(){
