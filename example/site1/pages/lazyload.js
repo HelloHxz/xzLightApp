@@ -24,9 +24,6 @@ class PageView extends React.Component {
   }
 
   clickHandle(){
-    this.props.base.showPage({
-      pageKey:"one"
-    });
   }
 
 

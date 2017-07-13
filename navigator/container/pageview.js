@@ -103,7 +103,7 @@ class PageView extends React.Component {
             base={this} 
             {...this.store}
             ref={(instance)=>{
-              this.pageInstance = instance;
+               this.pageInstance = instance;
             }}
             owner = {this.props.owner}
             urlinfo={this.props.pagemanager.getUrlInfo()}

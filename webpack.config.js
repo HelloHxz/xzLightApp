@@ -180,7 +180,7 @@ function writeCommonless(){
     fs.writeFile(path.join(__dirname, '/node_modules/xz-lightapp/css/common.less'), 
         `@textcolor:#333;
          @headerbordercolor:rgb(171,171,173);
-         @backgroundcolor:rgb(235,235,241);
+         @backgroundcolor:#fff;
          @themecolor:rgb(10,96,254);
          @bordercolor:rgb(194,192,198);
          .px2rem(@name, @px){ @{name}: @px / ${rem} * 1rem;}

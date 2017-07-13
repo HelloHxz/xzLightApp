@@ -41,7 +41,9 @@ class DrawLayout extends React.Component {
       }
       pN = pN.parentNode;
     }
-    console.log(Re);
+    if(Re){
+      Re.insertBefore(this.root,null);
+    }
   }
 
   bkClick(){
