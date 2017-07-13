@@ -33,13 +33,15 @@ class DrawLayout extends React.Component {
   }
 
   componentDidMount(){
-    //xz-page-base-page
-    console.log(this.root);
-    var pN = this.root.parentNode;
+    var pN = this.root.parentNode,Re;
     while(pN&&pN.tagName&&pN.tagName.toLowerCase()!=="body"){
-      console.log(pN);
+      if(pN.className.indexOf("xz-page-route-wrapper")>=0){
+        Re = pN;
+        break;
+      }
       pN = pN.parentNode;
     }
+    console.log(Re);
   }
 
   bkClick(){
@@ -64,6 +66,7 @@ class DrawLayout extends React.Component {
       };
     }
     var children = [];
+     
     var bk = null;
     for(var key in this.childrenDict){
       var direction = (this.childrenDict[key].config.direction||"bottom").toLowerCase();
@@ -84,6 +87,18 @@ class DrawLayout extends React.Component {
         </div>);
     }
 
+    var needreRender = false;
+     if(!config.key||!config){
+        for(var key in this.childrenDict){
+          if(this.childrenDict[key].config.cache!==true){
+             delete this.childrenDict[key];
+             needreRender = true;
+          }
+        }
+    }
+    if(needreRender){
+      setTimeout(()=>{this.setState({seed:1});},260);
+    }
     var bkArr = ["xz-drawlayout-bk"];
     if(config&&config.key){
       bkArr.push("xz-drawlayout-bk-show");
@@ -93,9 +108,10 @@ class DrawLayout extends React.Component {
 
     bk = <div onClick={this.bkClick.bind(this)} className={bkArr.join(" ")}></div>;
 
-    if(config.key&&config.cache!==true){
-        delete this.childrenDict[config.key];
-    }
+
+    // if(config.key&&config.cache!==true){
+    //     delete this.childrenDict[config.key];
+    // }
     return (<div ref={(root)=>{this.root = root;}} className="xz-drawlayout">
       {children}
       {bk}

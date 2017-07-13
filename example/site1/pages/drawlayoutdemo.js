@@ -17,7 +17,7 @@ class PageView extends React.Component {
   }
 
   showDraw(direction){
-      this.props.store.drawLayoutConfig ={"key":"from"+direction,"direction":direction};
+      this.props.store.drawLayoutConfig ={"key":"from"+direction,"direction":direction,cache:false};
   }
   
 
