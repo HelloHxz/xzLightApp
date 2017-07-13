@@ -1,46 +1,37 @@
 import React from "react"
-import globalStore from "../stores/global"
 import {observer} from 'mobx-react'
-import "../css/searchpage.less"
-import {xz,style,shallowEqual} from "../../../index"
+import "../../css/searchpage.less"
+import {xz,style,shallowEqual} from "../../../../index"
 
 
 
 
-@observer
-class PageView extends React.Component {
+class SearchPage extends React.Component {
 
   constructor(props) {
     super(props)
-    console.log(props);
   }
   
-  onPageResume(){
-    // alert("one");
-  }
-  onPageBeforeLeave(){
-    return true;
-  }
 
   componentDidMount(){
     this.input.focus();
   }
 
   cancelSearch(){
-    this.props.base.close();
+    this.props.store.drawLayoutConfig  = {};
   }
 
   gotoGoodList(){
-    this.props.pagemanager.go("goodlist",{goodid:"xxx"});
+    this.props.pageview.props.pagemanager.go("goodlist",{goodid:"xxx"});
     setTimeout(()=>{
-     this.props.base.close();
+      this.props.store.drawLayoutConfig  = {};
     },300);
   }
 
   
 
   render() {
-    return (<div>
+    return (<div style={{width:"100%",height:"100%"}}>
         <div className="search-header">
           <div className='input-area'>
             <input placeholder="搜索热门商品" type="search" ref={(input)=>{this.input = input;}}/>
@@ -61,4 +52,4 @@ class PageView extends React.Component {
       </div>);
   }
 }
-export default PageView;
+export default SearchPage;

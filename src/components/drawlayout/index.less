@@ -277,4 +277,45 @@
     }
 }
 
+.xz-drawlayout-fadein-show{
+	bottom:0;
+	left:0;
+	right:0;
+	top:0;
+	width:100%;
+	animation:dlitemfadeinshow .25s ease;
+}
+
+@keyframes dlitemfadeinshow {
+    0% {
+        opacity:0;
+    }
+
+    100% {
+        opacity:1;
+    }
+}
+
+.xz-drawlayout-fadein-hide{
+	bottom:0;
+	left:0;
+	right:0;
+	opacity:0;
+	top:0;
+	visibility:hidden;
+	width:100%;
+	animation:dlitemfadeinhide .25s ease;
+}
+
+@keyframes dlitemfadeinhide {
+    0% {
+        opacity:1;
+        visibility:visible;
+    }
+
+    100% {
+        opacity:0;
+        visibility:hidden;
+    }
+}
 

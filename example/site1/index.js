@@ -7,7 +7,6 @@ Navigation.start({
 		index:require("./pages/index").default,
 		 tabbarpage:require("./pages/tabbarpage").default,
 		twolevelroute:require("./pages/twolevelroute").default,
-		search:require("./pages/searchpage").default,
 		slidepage:require("./pages/slidepage").default,
 		dpdcdemo:require("./pages/dpdcdemo").default,
 		goodlist:require("./pages/goodlist").default,

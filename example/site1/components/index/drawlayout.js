@@ -1,5 +1,6 @@
 import React from "react"
 import {observer} from 'mobx-react'
+import SearchPage from './searchpage'
 import {xz,style,shallowEqual,Navigation} from "../../../../index"
 
 @observer
@@ -25,6 +26,8 @@ class DrawLayout extends React.Component {
       return <div style={{width:"8rem"}}>x</div>;
     }else if(params.key==="frompop"){
        return <div style={{width:"6.25rem",height:"6.25rem"}}>x</div>;
+    }else if(params.key==="indexsearch"){
+      return <SearchPage pageview={this.props.pageview}  store={this.props.store}/>;
     }
     
   }

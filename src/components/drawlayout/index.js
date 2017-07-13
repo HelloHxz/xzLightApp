@@ -7,11 +7,11 @@ import "./index.less"
   config:{
     key:"xxx",
     direction:"bottom" //top left right  bottom  pop,
-    cache:false, //default true
+    cache:true, //default false
   }
 */
 
-var directionArr = ["bottom","top","right","left","pop"];
+var directionArr = ["bottom","top","right","left","pop","fadein"];
 
 class DrawLayout extends React.Component {
   constructor(props) {
@@ -32,6 +32,16 @@ class DrawLayout extends React.Component {
     }
   }
 
+  componentDidMount(){
+    //xz-page-base-page
+    console.log(this.root);
+    var pN = this.root.parentNode;
+    while(pN&&pN.tagName&&pN.tagName.toLowerCase()!=="body"){
+      console.log(pN);
+      pN = pN.parentNode;
+    }
+  }
+
   bkClick(){
     this.props.onBackLayerClick&&this.props.onBackLayerClick();
   }
@@ -44,8 +54,8 @@ class DrawLayout extends React.Component {
   }
 
   render() {
-    // var bk =this.state.config.key? <div className="xz-drawlayout-bk"/>:null;
     var config = this.state.config;
+    
     if(config.key&&!this.childrenDict[config.key]){
       this.childrenDict[config.key] = {
         key:config.key,
@@ -83,8 +93,10 @@ class DrawLayout extends React.Component {
 
     bk = <div onClick={this.bkClick.bind(this)} className={bkArr.join(" ")}></div>;
 
-   
-    return (<div className="xz-drawlayout">
+    if(config.key&&config.cache!==true){
+        delete this.childrenDict[config.key];
+    }
+    return (<div ref={(root)=>{this.root = root;}} className="xz-drawlayout">
       {children}
       {bk}
     </div>);

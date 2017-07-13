@@ -6,6 +6,8 @@ import {xz,style,shallowEqual} from "../../../index"
 import globalStore from "../stores/global"
 import indexStore from "../stores/index"
 
+import DrawLayout from '../components/index/drawlayout'
+
 import SearchBar from '../components/index/searchbar'
 import LoadingLayer from '../components/index/loadinglayer'
 import DatePicker from '../components/index/datepicker'
@@ -94,10 +96,11 @@ class PageView extends React.Component {
 
 
   showPage(){
-    this.props.base.showPage({
-      pageKey:"slidepage",
-      animateType:"fromLeft"
-    });
+    // this.props.base.showPage({
+    //   pageKey:"slidepage",
+    //   animateType:"fromLeft"
+    // });
+    
   }
 
 
@@ -195,7 +198,13 @@ class PageView extends React.Component {
     this.verSwiper.stopInterval();
   }
 
-  onPageBeforeLeave(){
+  onPageBeforeLeave(params){
+    if(params.action!=="前进"){
+      if(this.props.indexStore.drawLayoutConfig&&this.props.indexStore.drawLayoutConfig.key){
+        this.props.indexStore.drawLayoutConfig = {};
+        return false;
+      }
+    }
     this.topswiper.stopInterval();
     this.verSwiper.stopInterval();
     return true;
@@ -222,9 +231,9 @@ class PageView extends React.Component {
   }
 
 
-
   render() {
     return (<div>
+        <DrawLayout pageview={this} store={this.props.indexStore}/>
         <DatePicker store={this.props.indexStore}></DatePicker>
         <Picker store={this.props.indexStore}/>
         <SearchBar store={this.props.indexStore} pageview={this}/>
