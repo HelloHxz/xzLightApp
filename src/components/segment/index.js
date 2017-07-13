@@ -201,6 +201,13 @@ class Segment extends React.Component {
     }
   }
 
+  renderExtends(){
+    if(this.props.scroll === true){
+      return <div className="xz-segment-ex"></div>
+    }
+    return null;
+  }
+
   render() {
 
     var indicator = null;
@@ -278,6 +285,7 @@ class Segment extends React.Component {
        {children}
        {indicator}
     	</ul>
+      {this.renderExtends()}
       </div>);
   }
 }
