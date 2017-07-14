@@ -10,6 +10,7 @@ https://github.com/HelloHxz/xzLightAppVue 的React项目的Vue的移植版本，
 # 启动服务
 npm start
 
+http://localhost:8080/desktop.html
 
 
 ```
