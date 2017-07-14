@@ -11,7 +11,7 @@ class Avatar extends React.Component {
 
 
   onClick(){
-    this.props.homestore.showPageConfig = {key:"USERSLIDE",direction:"left"}
+    this.props.homestore.showPageConfig = {key:"USERSLIDE",direction:"left",cache:true}
   }
 
 
