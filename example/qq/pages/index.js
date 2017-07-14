@@ -13,7 +13,7 @@ class PageView extends React.Component {
 
 
   render() {
-    return (<div>asaasasasas</div>);
+    return (<div>QQ</div>);
   }
 }
 export default PageView;

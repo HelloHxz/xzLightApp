@@ -489,13 +489,12 @@ class Navigation extends React.Component {
       console.error("没有实现pagelayout！");
     }
 
-    //if(!curParams[systemseedname]&&!this.isForward&&!this.isInit){
-      //禁止离开应用 todo 事件插件机制
-      // isWantToPreventRoute = true;
-      // window.history.go(1);
+    if(!curParams[systemseedname]&&!this.isForward&&!this.isInit){
+     
+      window.history.go(-1);
 
-      // return;
-    //}
+      return;
+    }
 
     this.isForward = false;
     this.isInit = false;

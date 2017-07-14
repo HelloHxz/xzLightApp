@@ -1,0 +1,106 @@
+@import url('../../node_modules/xz-lightapp/css/common.less');
+
+
+html,body{
+	height:100%;
+	width:100%;
+}
+.desktop-inner{
+	height:100%;
+	position:relative;
+	overflow:hidden;
+}
+ul,li{
+	list-style:none;
+}
+.desktop-list{
+	.px2rem(margin-left,20);
+	.px2rem(margin-right,20);
+	.px2rem(padding-top,10);
+
+}
+.desktop-toolbar{
+	position:absolute;
+	.px2rem(height,(375)/2);
+	bottom:0;
+	width:100%;
+	background-color:rgba(255,255,255,.6);
+	
+}
+.desktop-toolbar-inner{
+	.px2rem(padding-left,20);
+	.px2rem(padding-right,20);
+	height:100%;
+	display:flex;
+	flex-direction:row;
+	justify-content: center;
+}
+
+.desktop-list-item{
+	float:left;
+	width:25%;
+	.px2rem(padding-top,20);
+	.px2rem(height,(375-40)/2);
+}
+.desktop-icon{
+	.px2rem(width,120);
+	.px2rem(border-radius,26);
+	margin: auto;
+	.px2rem(height,120);
+	background-color:#cacaca;
+	position:relative;
+}
+
+
+.desktop-name{
+	position:relative;
+	display:block;
+	color:#fff;
+	.px2rem(padding-top,5);
+	text-align:center;
+	.px2rem(font-size,25);
+}
+*{
+	margin:0;
+	padding:0;
+}
+#xz-lightapp-root{
+	height:100%;
+	overflow:hidden;
+	position:relative;
+}
+.desktop-swiper{
+	height:100%;
+	background:url("./imgs/bk.jpg") no-repeat 100% center;
+}
+.desktop-swiper-item{
+	height:100%;
+	position:relative;
+	width:100%;
+}
+
+.desktop-sel-indi,.desktop-indi{
+	.px2rem(height,16);
+	.px2rem(width,16);
+	position:relative;
+	border-radius:100%;
+	display:inline-block;
+	.px2rem(margin-bottom,30);
+	.px2rem(margin-left,15);
+}
+.desktop-sel-indi{
+	background-color:#fff;
+}
+.desktop-indi{
+	background-color:rgba(255,255,255,.7);
+	
+}
+.desktop-indwrap{
+	position:absolute;
+	.px2rem(bottom,(375-40)/2+20);
+	.px2rem(height,40);
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}

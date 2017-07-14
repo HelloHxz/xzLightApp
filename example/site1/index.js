@@ -30,11 +30,6 @@ Navigation.start({
 		  		callback(require("./pages/lazyload").default);
 		  	},"lazyload");
 		}
-	},
-	events:{
-		init:function(pageManager){
-
-		}
 	}
 });
 

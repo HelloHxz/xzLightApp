@@ -2,7 +2,26 @@ const path = require('path');
 const webpack = require('webpack');
 var fs= require('fs');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+
+
+function getEntryAndHtmlPlugin(){
+  var siteArr = ["site1","qq","calendar","desktop"];
+  var re = {entry:{},htmlplugins:[]};
+  for(var i=0,j=siteArr.length;i<j;i++){
+    var siteName = siteArr[i];
+    re.entry[siteName] = "./"+siteName+"/index.js";//js多入口字典对象
+    re.htmlplugins.push(new HtmlWebpackPlugin({
+        filename: siteName+'.html', //打包出来的html名字
+        template: './'+siteName+'/index.html', //模版路径
+        inject: 'body' ,
+        chunks:[siteName],//js注入的名字
+        hash:true
+      }));
+  }
+  return re;
+}
 
 module.exports = function (env) {
 
@@ -12,11 +31,8 @@ module.exports = function (env) {
 
   const nodeEnv = env && env.prod ? 'production' : 'development';
   const isProd = nodeEnv === 'production';
-
-  var entry = {
-    site1:'./site1/index.js',
-    site2:'./site2/index.js'
-  };
+  var entryAndHtmlPlugin = getEntryAndHtmlPlugin();
+  var entry = entryAndHtmlPlugin.entry;
   var plugins= [
       
       new webpack.NamedModulesPlugin(),
@@ -30,21 +46,9 @@ module.exports = function (env) {
       new CopyWebpackPlugin([
         {from:"./site1/imgs",to:"imgs"}
         ]),
-      new HtmlWebpackPlugin({
-        filename: 'index.html',
-        template: './site1/index.html', 
-        inject: 'body' ,
-        chunks:["site1"],
-        hash:true
-      }),
-      new HtmlWebpackPlugin({
-        filename: 'index1.html',
-        template: './site2/index.html', 
-        inject: 'body' ,
-        chunks:["site2"],
-        hash:true
-      })
   ];
+
+  plugins = plugins.concat(entryAndHtmlPlugin.htmlplugins);
 
   if(!isProd){
     plugins.push(new webpack.HotModuleReplacementPlugin());

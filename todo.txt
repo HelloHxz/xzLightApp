@@ -7,6 +7,9 @@ https://github.com/airbnb/enzyme
 ##2. 集成mobx
 ##3. 完善控件
 
+fetch 在page初始化的时候给this.pageview 或store  
+statusview
+
 如果实现一个没有路由的页面  则直接引入node_module里面的组件就好了
 
 
