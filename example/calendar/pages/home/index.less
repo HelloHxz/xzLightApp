@@ -1,0 +1,31 @@
+@import url('../../../../node_modules/xz-lightapp/css/common.less');
+
+body{
+	color:rgb(245,25,26);
+}
+.calendar-header,.calendar-footer{
+	.px2rem(height,90);
+	position:relative;
+	background-color:rgb(246,246,246);
+}
+.calendar-body{
+	flex:1;
+	position:relative;
+}
+
+.calendar-header{
+	border-bottom:1px solid rgb(171,171,173);
+}
+.calendar-footer{
+	display:flex;
+	flex-direction:center;
+	align-items:center;
+	border-top:1px solid rgb(171,171,173);
+	justify-content:space-between;
+}
+.calendar-footer .toolbar-btn{
+	.px2rem(width,140);
+	height:100%;
+	.px2rem(line-height,90);
+	text-align:center;
+}

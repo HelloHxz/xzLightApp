@@ -12,7 +12,6 @@ npm start
 
 http://localhost:8080/desktop.html
 
-
 ```
 
 ![Alt text](https://github.com/HelloHxz/xzLightApp/blob/master/Screenshots/2.gif)

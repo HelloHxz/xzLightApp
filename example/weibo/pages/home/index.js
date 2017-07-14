@@ -1,6 +1,6 @@
 import React from "react"
 import "./index.less"
-import {xz,Navigation} from "../../../index"
+import {xz,Navigation} from "../../../../index"
 
 
 class PageView extends React.Component {
@@ -14,7 +14,7 @@ class PageView extends React.Component {
 
 
   render() {
-    return (<div><div className='qq-header'></div>QQ</div>);
+    return (<div><div className='qq-header'></div>sss</div>);
   }
 }
 export default PageView;

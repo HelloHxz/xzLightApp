@@ -20,6 +20,25 @@ export default {
 	rem:0,
 	dpr:0,
 	_shipei(){
+
+        var startY = 0;
+        document.addEventListener('touchstart',function (event) {  
+            startY = event.touches[0].pageY;
+            if(event.touches.length>1){  
+                event.preventDefault();  
+            }  
+        })  
+        var lastTouchEnd=0;  
+        
+        document.addEventListener('touchend',function (event) {  
+            var now=(new Date()).getTime();  
+            if(now-lastTouchEnd<=300){  
+                event.preventDefault();  
+            }  
+            startY = 0;
+            lastTouchEnd=now;  
+        },false)  
+            
 		var docEl = document.documentElement;
 		this.dpr = window.devicePixelRatio || 1;
 		var docClientWidth =  docEl.clientWidth;
