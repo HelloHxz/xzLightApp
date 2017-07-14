@@ -68,9 +68,11 @@ class PageContainer extends React.Component {
 
   render() {
     var re = [];
-    var className = "";
+    var className = ["xz-pconatiner-default"];
     if(this.props.className){
-      className = this.props.className;
+      className.push(this.props.className);
+    }else{
+      className.push("xz-pconatiner");
     }
     for(var key in this.arr){
       if(key===this.curpagename){
@@ -79,7 +81,7 @@ class PageContainer extends React.Component {
         re.push(<div  className="full-screen"  key={key+"_containerwrapper"} style={{display:"none"}}>{this.arr[key]}</div>);
       }
     }
-    return (<div className={className}>{re}</div>);
+    return (<div className={className.join(" ")}>{re}</div>);
   }
 }
 export default  PageContainer;

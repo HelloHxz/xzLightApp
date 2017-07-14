@@ -1,9 +1,12 @@
 import {Navigation} from "../../index"
 
 Navigation.start({
-	root:"index",
+	root:"home/message",
 	pages:{
-		index:require("./pages/index").default,
+		home:require("./pages/home").default,
+		message:require("./pages/message").default,
+		friends:require("./pages/friends").default,
+		blogs:require("./pages/blogs").default,
 	},
 });
 

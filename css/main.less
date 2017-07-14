@@ -8,6 +8,12 @@ html,body{
   backface-visibility: hidden;
   transform-style: preserve-3d;
 }
+.xz-pconatiner{
+  flex:1;
+}
+.xz-pconatiner-default{
+  position:relative;
+}
 
 .xz-page-base-page{
   background-color:#fff;
@@ -46,7 +52,13 @@ ul,li{
   transform-style: preserve-3d;
   overflow: hidden;
 }
-.xz-pfull,.xz-pfull>div{
+
+.xz-pfull{
+  position:relative;
+  width:100%;
+  height:100%;
+}
+.xz-pfull>div{
   position:absolute;
   left:0;
   right:0;
@@ -68,12 +80,13 @@ ul,li{
 }
 
 .full-screen{
-  position:relative;
-  overflow:hidden;
-  flex:1;
-  display:flex;
-  flex-direction: column;
+  width:100%;
+  height: 100%;
+  position: absolute;
+  left:0;
+  top:0;
 }
+
 
 .xz-page-base-page{
   width:100%;

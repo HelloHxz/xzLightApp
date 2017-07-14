@@ -189,6 +189,12 @@ class ImageCom extends React.Component {
 
   }
 
+  onClick(){
+    if(this.props.onClick){
+      this.props.onClick();
+    }
+  }
+
   componentWillReceiveProps(nextPros){
     if(nextPros.src!==this.props.src){
       this.init(nextPros);
@@ -201,6 +207,7 @@ class ImageCom extends React.Component {
       classNameArr.push(this.props.className);
     }
     return (<div
+      onClick={this.onClick.bind(this)}
       ref={(wrapper)=>{this.wrapper= wrapper;}}
      className={classNameArr.join(" ")}>{this.state.child}</div>);
   }
