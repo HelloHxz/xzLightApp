@@ -33,7 +33,7 @@ class PageView extends React.Component {
       <div className='app-header segment-header'>
            <TabBar store={this.props.store} pagemanager={this.props.pagemanager}/>
       </div>
-      <Navigation.PageContainer className='full-screen' {...this.props}   owner={this}/>
+      <Navigation.PageContainer {...this.props}   owner={this}/>
     	</div>);
   }
 }

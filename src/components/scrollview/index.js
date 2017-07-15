@@ -305,6 +305,8 @@ class ScrollView extends React.Component {
     classNameArr.push(this.isHorizontal?"xz-scrollview-h":"xz-scrollview-v");
     if(this.props.className){
       classNameArr.push(this.props.className);
+    }else{
+      classNameArr.push("xz-sv-youcansetotherclassname");
     }
 
     var moveStyle = {};

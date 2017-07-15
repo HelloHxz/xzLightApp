@@ -3,6 +3,7 @@ import "./index.less"
 import Avatar from "../../components/headeravatar"
 import HomeStore from "../home/store"
 import {xz,Navigation} from "../../../../index"
+import SearchBar from "../../components/searchbar"
 
 
 class PageView extends React.Component {
@@ -16,6 +17,7 @@ class PageView extends React.Component {
 	render() {
 	return (<div>
 		<div className='qq-header'><Avatar homestore={this.props.homeStore}/></div>
+			<SearchBar/>
 			Blogs
 	  </div>);
 	}

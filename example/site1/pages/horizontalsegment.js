@@ -24,9 +24,9 @@ class PageView extends React.Component {
       width:params.itemInstance.Dom.offsetWidth+"px",
       height:style.px2rem(5)+"rem",
     };
-    var arr = ["segment-indi-nomal"];
+    var arr = ["xz-segment-indicator"];
     if(params.curIndex!=params.preIndex){
-    	arr.push("segment-indi-nomal-ani");
+    	arr.push("xz-segment-indicator-ani");
     }
     return <div className={arr.join(" ")} style={indicatorStyle}></div>
   }

@@ -10,11 +10,13 @@ import stickyview from './stickyview'
 import dropdowngroup from './dropdowngroup' 
 import picker from './picker' 
 import datepicker from './datepicker' 
+import statusview from './statusview' 
 
 
 export default {
 	"DatePicker":datepicker,
 	"Button":button,
+	"StatusView":statusview,
 	"Picker":picker,
 	"DrawLayout":drawlayout,
 	"ScrollView":scrollview,
