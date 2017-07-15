@@ -9,7 +9,7 @@ class PageView extends React.Component {
   }
 
   render() {
-    return (<div style={{width:style.px2px(600)+"px"}}>
+    return (<div style={{width:"8rem"}}>
     	Slide
       </div>);
   }
