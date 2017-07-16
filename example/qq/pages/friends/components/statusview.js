@@ -2,6 +2,7 @@ import React from "react"
 import {observer} from 'mobx-react'
 import {xz,Navigation,style} from "../../../../../index"
 import TabScroll from './tabscroll'
+import GroupList from '../../../components/grouplist'
 
 @observer
 class StatusView extends React.Component {
@@ -15,12 +16,18 @@ class StatusView extends React.Component {
 
   renderItem(params){
     var child = [];
-    for(var i=0;i<80;i++){
-      if(i===4){
-        child.push(<xz.StickyView scrollKey={params.key}  pageview={this.props.pageview}  key={i+"ss"}>xxxxxsss</xz.StickyView>);
+    if(params.key==="friends"){
+      child = <GroupList datasource={this.props.store.friendsListData}/>
+      //friendsListData
+    }else{
+       for(var i=0;i<80;i++){
+        if(i===4){
+          child.push(<xz.StickyView scrollKey={params.key}  pageview={this.props.pageview}  key={i+"ss"}>xxxxxsss</xz.StickyView>);
+        }
+        child.push(<div key={i}>{i}</div>);
       }
-      child.push(<div key={i}>{i}</div>);
     }
+   
     return <TabScroll 
     scrollKey={params.key} 
     store={this.props.store}

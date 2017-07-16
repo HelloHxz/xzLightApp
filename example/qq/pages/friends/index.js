@@ -19,6 +19,15 @@ class PageView extends React.Component {
 	}
 
 
+
+	test(){
+		this.props.store.friendsListData.push({id:"xx",name:"xxx",data:[
+    		{name:"xxxx",avatar:"xxx",id:"xx"},
+    		{name:"xxxx",avatar:"xxx",id:"xx"},
+    		{name:"xxxx",avatar:"xxx",id:"xx"}
+    	]});
+	}
+
  
  
 
@@ -31,7 +40,7 @@ class PageView extends React.Component {
 		<div className='qq-body'>
 			<div className='qq-fri-search'>
 				<SearchBar/>
-				<div className='qq-fri-newfri'>
+				<div onClick={this.test.bind(this)} className='qq-fri-newfri'>
 					<span>新朋友</span>
 				</div>
 			</div>
