@@ -67,6 +67,8 @@ class StickyView extends React.Component {
   componentDidMount(){
     if(!this.props.pageview.stickviewDict){
       this.props.pageview.stickviewDict = {};
+    }
+    if(!this.props.pageview.stickviewDict[this.props.scrollKey]){
       this.props.pageview.stickviewDict[this.props.scrollKey] = [];
     }
     this.props.pageview.stickviewDict[this.props.scrollKey].push(this);
