@@ -1,0 +1,19 @@
+import React from "react"
+
+class StickyView extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      children:this.props.children
+    }
+  }
+
+
+  render() {
+    return (<div style={{width:"100%",top:0,position:"absolute",zIndex:2}}>
+        {this.state.children}
+      </div>);
+  }
+}
+
+export default StickyView;

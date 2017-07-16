@@ -2,6 +2,7 @@ import React from "react"
 import Style from "../../../utils/style"
 import "./index.less"
 import Spin from '../spin'
+import StickyWrapper from './stickywrapper'
 
 class ScrollView extends React.Component {
   constructor(props) {
@@ -185,14 +186,22 @@ class ScrollView extends React.Component {
      if(this.seed%3!==0){
       return;
      }
-
+     var allNOSticky = true;
      if(!this.isHorizontal&&this.props.pageview&&this.props.pageview.stickviewDict){
         var stickyArr = this.props.pageview.stickviewDict[this.props.scrollKey];
         if(stickyArr&&stickyArr.length>0){
           for(var i=0,j=stickyArr.length;i<j;i++){
-            stickyArr[i].checkSticky();
+            var re = stickyArr[i].checkSticky();
+            if(re===true){
+              allNOSticky = false;
+            }
           }
         }
+      }
+      if(allNOSticky&&this.stickyWrapper){
+        this.stickyWrapper.setState({
+          children:null
+        });
       }
   }
 
@@ -347,12 +356,19 @@ class ScrollView extends React.Component {
     var innerClassName = this.isHorizontal?"xz-scrollview-inner-h":"xz-scrollview-inner-v";
 
     var scrollAreaClassName = this.isHorizontal?"xz-sv-scrollarea-h":"xz-sv-scrollarea-v";
+    this.stickview = null;
+    if(this.isHorizontal){
+
+    }else{
+      this.stickview=<StickyWrapper ref={(instance)=>{this.stickyWrapper = instance}}/>
+    }
     var outStyle = this.props.style||{};
     return (<div ref={(wrapper)=>{
       this.wrapperDom = wrapper;
     }} {...toucheEvent} 
     style={outStyle}
     className={classNameArr.join(" ")}>
+      {this.stickview}
     	<div className={innerClassName} style={moveStyle} ref={(wrapper)=>{
         this.innerWrapperDom = wrapper;
       }}>
