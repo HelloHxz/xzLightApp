@@ -16,7 +16,10 @@ class PageView extends React.Component {
 
 	render() {
 	return (<div>
-		<div className='qq-header'><Avatar homestore={this.props.homeStore}/></div>
+		<div className='qq-header'><Avatar homestore={this.props.homeStore}/>
+			 <span className='qq-title'>动态</span>
+       		 <span className='qq-header-act'>更多</span>
+		</div>
 			<SearchBar/>
 			Blogs
 	  </div>);

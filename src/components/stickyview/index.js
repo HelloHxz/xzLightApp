@@ -31,6 +31,9 @@ class StickyView extends React.Component {
           var curStickyTop = scrollViewCurStickyView.wrap.getBoundingClientRect().top;
           if(thisTop>curStickyTop){
             this.setSticky(true);
+            scrollViewCurStickyView.setState({
+              sticky:false
+            });
             return true;
           }
         }else{
@@ -45,8 +48,6 @@ class StickyView extends React.Component {
           return false;
         }
       }
-
-
     }
    
 

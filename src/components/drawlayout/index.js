@@ -99,7 +99,7 @@ class DrawLayout extends React.Component {
         }
     }
     if(needreRender){
-      setTimeout(()=>{this.setState({seed:1});},260);
+      setTimeout(()=>{this.setState({seed:1});},250);
     }
     var bkArr = ["xz-drawlayout-bk"];
     if(config&&config.key){

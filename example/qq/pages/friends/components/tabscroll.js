@@ -18,8 +18,7 @@ class tabScroll extends React.Component {
         if(curS>preS&&curS>=this.limit&&this.props.store.tabContentIsOpen){
           this.props.store.tabContentIsOpen=false;
         }
-
-        if(curS<preS&&curS<=1&&!this.props.store.tabContentIsOpen){
+        if(curS<=preS&&curS<=0&&!this.props.store.tabContentIsOpen){
           this.props.store.tabContentIsOpen=true;
         }
       },100);

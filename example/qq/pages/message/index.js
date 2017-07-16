@@ -20,6 +20,8 @@ class PageView extends React.Component {
     return (<div>
     	<div className='qq-header'>
     		<Avatar homestore={this.props.homeStore}/>
+        <span className='qq-title'>消息</span>
+        <span className='qq-header-act'>更多</span>
     	</div>
       <SearchBar/>
     		Message

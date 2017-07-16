@@ -198,11 +198,6 @@ class ScrollView extends React.Component {
           }
         }
       }
-      if(allNOSticky&&this.stickyWrapper){
-        this.stickyWrapper.setState({
-          children:null
-        });
-      }
   }
 
   _onScroll(e){
