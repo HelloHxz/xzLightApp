@@ -5,17 +5,17 @@ class Store {
 
 
     @observable friendsListData = [
-    	{id:"xx",name:"xxx",data:[
+    	{id:"xx",name:"hhxxx",data:[
     		{name:"xxxx",avatar:"xxx",id:"xx"},
     		{name:"xxxx",avatar:"xxx",id:"xx"},
     		{name:"xxxx",avatar:"xxx",id:"xx"}
     	]},
-    	{id:"xx",name:"xxx",data:[
+    	{id:"xx",name:"hxxx",data:[
     		{name:"xxxx",avatar:"xxx",id:"xx"},
     		{name:"xxxx",avatar:"xxx",id:"xx"},
     		{name:"xxxx",avatar:"xxx",id:"xx"}
     	]},
-    	{id:"xx",name:"xxx",data:[
+    	{id:"xx",name:"hhxxx",data:[
     		{name:"xxxx",avatar:"xxx",id:"xx"},
     		{name:"xxxx",avatar:"xxx",id:"xx"},
     		{name:"xxxx",avatar:"xxx",id:"xx"}

@@ -43,14 +43,14 @@ class GroupList extends React.Component {
   }
 }
 
-
+@observer
 class Group extends React.Component {
 
   constructor(props) {
     super(props)
   }
   renderHeader(){
-    return <div>header</div>;
+    return <div>{this.props.itemdata.name}</div>;
   }
   renderBody(){
     var data = this.props.itemdata.data||[];

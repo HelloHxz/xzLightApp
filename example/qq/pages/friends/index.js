@@ -21,11 +21,13 @@ class PageView extends React.Component {
 
 
 	test(){
-		this.props.store.friendsListData.push({id:"xx",name:"xxx",data:[
-    		{name:"xxxx",avatar:"xxx",id:"xx"},
-    		{name:"xxxx",avatar:"xxx",id:"xx"},
-    		{name:"xxxx",avatar:"xxx",id:"xx"}
-    	]});
+		// this.props.store.friendsListData.push({id:"xx",name:"xxx",data:[
+  //   		{name:"xxxx",avatar:"xxx",id:"xx"},
+  //   		{name:"xxxx",avatar:"xxx",id:"xx"},
+  //   		{name:"xxxx",avatar:"xxx",id:"xx"}
+  //   	]});
+
+this.props.store.friendsListData[0].name = "hixoaz";
 	}
 
  
