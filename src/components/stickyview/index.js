@@ -29,7 +29,7 @@ class StickyView extends React.Component {
     if(this.wrap&&this.scrollView){
       
       var rect = this.wrap.getBoundingClientRect();
-      if(rect.top-rect.height/2<=this.scrollViewRect.top){
+      if(rect.top-rect.height/4<=this.scrollViewRect.top){
         var scrollViewCurStickyView = this.scrollView.scrollViewCurStickyView;
         if(scrollViewCurStickyView&&scrollViewCurStickyView!==this){
           var thisTop = rect.top;
@@ -116,13 +116,17 @@ class StickyView extends React.Component {
     if(this.wrapperHeight){
       sizeStyle = {height:this.wrapperHeight+"px"};
     }
+    var innerClassName = ["xz-stickyview-inner"];
+    if(this.state.sticky){
+      innerClassName.push("xz-vis-hidden");
+    }
     return (<div className='xz-stickyview' style={sizeStyle} ref={(wrap)=>{
       if(wrap){
         var rect = wrap.getBoundingClientRect();
         this.wrapperHeight = rect.height;
       }
       this.wrap = wrap;}}>
-      <div className='xz-stickyview-inner'>{this.state.children}</div>
+      <div className={innerClassName.join(" ")}>{this.state.children}</div>
      </div>);
   }
 }

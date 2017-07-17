@@ -1,9 +1,95 @@
 import {observable} from 'mobx';
 class Store {
+
     @observable tabSelctedConfig = {key:"friends",cache:true};
     @observable tabContentIsOpen = true;
 
 
+    @observable multiChatData=[
+        {name:"xxx",icon:"",id:"xx"},
+        {name:"xxx",icon:"",id:"xx"},
+        {name:"xxx",icon:"",id:"xx"},
+        {name:"xxx",icon:"",id:"xx"},
+        {name:"xxx",icon:"",id:"xx"},
+        {name:"xxx",icon:"",id:"xx"},
+        {name:"xxx",icon:"",id:"xx"},
+    ];
+
+    @observable qqPublicData=[
+        {id:"xx",name:"A",data:[
+            {name:"AAA",icon:"",id:""},
+            {name:"AAA",icon:"",id:""},
+            {name:"AAA",icon:"",id:""},
+            {name:"AAA",icon:"",id:""},
+            {name:"AAA",icon:"",id:""},
+            {name:"AAA",icon:"",id:""},
+            {name:"AAA",icon:"",id:""},
+        ]},
+        {id:"xx",name:"B",data:[
+            {name:"BBB",icon:"",id:""},
+            {name:"BBB",icon:"",id:""},
+            {name:"BBB",icon:"",id:""},
+            {name:"BBB",icon:"",id:""},
+        ]},
+        {id:"xx",name:"C",data:[
+            {name:"CCC",icon:"",id:""},
+            {name:"CCC",icon:"",id:""},
+            {name:"ccc",icon:"",id:""},
+            {name:"ccc",icon:"",id:""},
+        ]},
+        {id:"xx",name:"D",data:[
+            {name:"ddd",icon:"",id:""},
+            {name:"ddd",icon:"",id:""},
+            {name:"ddd",icon:"",id:""},
+            {name:"ddd",icon:"",id:""},
+            {name:"ddd",icon:"",id:""},
+            {name:"ddd",icon:"",id:""},
+            {name:"ddd",icon:"",id:""},
+        ]},
+        {id:"xx",name:"Z",data:[
+            {name:"zzz",icon:"",id:""},
+            {name:"zzz",icon:"",id:""},
+            {name:"zzz",icon:"",id:""},
+            {name:"zzz",icon:"",id:""},
+            {name:"zzz",icon:"",id:""},
+            {name:"zzz",icon:"",id:""},
+            {name:"zzz",icon:"",id:""},
+            {name:"zzz",icon:"",id:""},
+            {name:"zzz",icon:"",id:""},
+            {name:"zzz",icon:"",id:""},
+            {name:"zzz",icon:"",id:""},
+            {name:"zzz",icon:"",id:""},
+            {name:"zzz",icon:"",id:""},
+        ]}
+    ];
+
+
+    @observable qqGroupListData = [
+        {id:"xx",name:"我创建的群",data:[
+            {name:"张三",avatar:"xxx",id:"xx"},
+            {name:"里斯本",avatar:"xxx",id:"xx"},
+            {name:"JASON hu",avatar:"xxx",id:"xx"}
+        ]},
+        {id:"xx",name:"我管理的群",data:[
+            {name:"张三",avatar:"xxx",id:"xx"},
+            {name:"里斯本",avatar:"xxx",id:"xx"},
+            {name:"JASON hu",avatar:"xxx",id:"xx"}
+        ]},
+         {id:"xx",name:"我加入的群",data:[
+            {name:"张三",avatar:"xxx",id:"xx"},
+            {name:"里斯本",avatar:"xxx",id:"xx"},
+            {name:"JASON hu",avatar:"xxx",id:"xx"},
+            {name:"JASON hu",avatar:"xxx",id:"xx"},
+            {name:"JASON hu",avatar:"xxx",id:"xx"},
+            {name:"JASON hu",avatar:"xxx",id:"xx"},
+            {name:"JASON hu",avatar:"xxx",id:"xx"},
+            {name:"JASON hu",avatar:"xxx",id:"xx"},
+            {name:"JASON hu",avatar:"xxx",id:"xx"},
+            {name:"JASON hu",avatar:"xxx",id:"xx"},
+            {name:"JASON hu",avatar:"xxx",id:"xx"}
+        ]},
+
+    ]
     @observable friendsListData = [
     	{id:"xx",name:"特别关心",data:[
     		{name:"张三",avatar:"xxx",id:"xx"},

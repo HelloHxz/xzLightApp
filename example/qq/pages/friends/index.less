@@ -24,9 +24,24 @@ height:100%;
 	.px2rem(margin-top,4);
 	position:relative;
 }
+.qq-public-section-header{
+	.px2rem(height,56);
+	.px2rem(line-height,56);
+	.px2rem(padding-left,20);
+	position:relative;
+	background-color:#eee;
+	color:gray;
+	.px2rem(font-size,28);
+}
+.create-group-btn{
+	.px2rem(height,90);
+	.px2rem(line-height,90);
+	.px2rem(padding-left,20);
+	border-bottom:1px solid @bc;
+	position:relative;
+}
 .qq-fri-content-name{
 	display:block;
-	.px2rem(padding-top,4);
 	.px2rem(font-size,32);
 	position:relative;
 }
@@ -52,10 +67,12 @@ height:100%;
 
 .qq-fri-rowcontent{
 	flex:1;
-	align-items:center;
 	border-bottom:1px solid @bc;
 	height:100%;
 	position:relative;
+	justify-content:center;
+	flex-direction:column;
+	display:flex;
 }
 .qq-gl-body .qq-gl-row:last-child .qq-fri-rowcontent{
 	border:none;
@@ -66,6 +83,13 @@ height:100%;
 	background-color:#fff;
 	flex-direction:row;
 	align-items:center;
+	justify-content:space-between;
+	position:relative;
+}
+.qq-fri-list-sectionheader-left{
+	.px2rem(margin-right,20);
+	color:#9a9a9a;
+	.px2rem(font-size,24);
 	position:relative;
 }
 .qq-fri-search{

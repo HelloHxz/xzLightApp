@@ -35,7 +35,7 @@ class Segment extends React.Component {
           scroll={true}>
           <xz.Segment.Item key='friends'>好友</xz.Segment.Item>
           <xz.Segment.Item key='group'>群</xz.Segment.Item> 
-          <xz.Segment.Item key='multchat'>多人聊天</xz.Segment.Item>  
+          <xz.Segment.Item key='multichat'>多人聊天</xz.Segment.Item>  
           <xz.Segment.Item key='device'>设备</xz.Segment.Item>
           <xz.Segment.Item key='contacts'>通讯录</xz.Segment.Item>
           <xz.Segment.Item key='public'>公众号</xz.Segment.Item>
