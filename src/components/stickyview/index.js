@@ -24,13 +24,16 @@ class StickyView extends React.Component {
        this.setSticky(false);
       return;
     }
+
     this.scrollView = this.props.pageview.scrollViewDict[this.props.scrollKey];
     this.scrollViewRect = this.scrollView.wrapperDom.getBoundingClientRect();
     if(this.wrap&&this.scrollView){
       
       var rect = this.wrap.getBoundingClientRect();
-      if(rect.top-rect.height/4<=this.scrollViewRect.top){
+      if(rect.top-rect.height/2<=this.scrollViewRect.top){
+          
         var scrollViewCurStickyView = this.scrollView.scrollViewCurStickyView;
+
         if(scrollViewCurStickyView&&scrollViewCurStickyView!==this){
           var thisTop = rect.top;
           var curStickyTop = scrollViewCurStickyView.wrap.getBoundingClientRect().top;
@@ -39,6 +42,7 @@ class StickyView extends React.Component {
             scrollViewCurStickyView.setState({
               sticky:false
             });
+
             return true;
           }
         }else{
@@ -62,7 +66,11 @@ class StickyView extends React.Component {
      if(this.state.sticky!==isSticky){
        if(isSticky){
          this.scrollView.scrollViewCurStickyView = this;
-       } 
+       }else{
+        if( this.scrollView.scrollViewCurStickyView===this){
+           this.scrollView.scrollViewCurStickyView = null;
+        }
+       }
         var scrollView = this.props.pageview.scrollViewDict[this.props.scrollKey];
         var children = this.state.children;
         if(scrollView&&this.wrap){
