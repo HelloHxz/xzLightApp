@@ -22,10 +22,11 @@ class TabBar extends React.Component {
   render() {
     return (
     	 <xz.Segment selectedKey={this.props.store.tabSelectedKey} 
-       onChange={this.tabbarChange.bind(this)} className="qq-home-tabbar">
-          <xz.Segment.Item key='home/message'>消息</xz.Segment.Item>
-          <xz.Segment.Item key='home/friends'>好友</xz.Segment.Item>
-          <xz.Segment.Item key='home/blogs'>动态</xz.Segment.Item> 
+    	 onChange={this.tabbarChange.bind(this)} className="zhifubao-home-tabbar">
+          <xz.Segment.Item key='home/main'>首页</xz.Segment.Item>
+          <xz.Segment.Item key='home/koubei'>口碑</xz.Segment.Item>
+          <xz.Segment.Item key='home/friend'>好友</xz.Segment.Item> 
+          <xz.Segment.Item key='home/me'>我的</xz.Segment.Item> 
          </xz.Segment>);
   }
 }

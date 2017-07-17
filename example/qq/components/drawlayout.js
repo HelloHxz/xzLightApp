@@ -17,7 +17,7 @@ class DrawLayout extends React.Component {
 
   drawLayoutRenderItem(params){
     if(params.key==="USERSLIDE"){
-      return <UserSlide/>
+      return <UserSlide store={this.props.store} pageview={this.props.pageview}/>
     }
 
     return null;
@@ -28,6 +28,7 @@ class DrawLayout extends React.Component {
   
     return (
         <xz.DrawLayout 
+
         onBackLayerClick = {this.drawLayoutBKClick.bind(this)}
         renderItem={this.drawLayoutRenderItem.bind(this)}
         config={this.props.store.showPageConfig}/>

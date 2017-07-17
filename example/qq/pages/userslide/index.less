@@ -1,5 +1,34 @@
 @import url('../../../../node_modules/xz-lightapp/css/common.less');
 
-.test{
-	.px2rem(width,600);
+
+.qq-slide-wrapper{
+	width:8rem;
+	display:flex;
+	 flex-direction: column;	
+	position:relative;
+	height:100%;
 }
+
+.qq-slide-item{
+	.px2rem(height,90);
+	.px2rem(line-height,90);
+	.px2rem(padding-left,30);
+	.px2rem(font-size,34);
+	position:relative;
+}
+.qq-slide-scroll .xz-sv-scrollarea-v{
+	.px2rem(padding-top,30);
+}
+.qq-slide-top{
+	.px2rem(height,350);
+	background-color:#79c8ff;
+}
+.qq-slide-scroll{
+	flex:1;
+}
+.qq-slide-bottom{
+	.px2rem(height,120);
+	background-color:#79c8ff;
+}
+
+

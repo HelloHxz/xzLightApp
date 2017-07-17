@@ -23,7 +23,7 @@ class PageView extends React.Component {
 
   render() {
     return (<div>
-      <DrawLayout store={this.props.store}/>
+      <DrawLayout pageview={this} store={this.props.store}/>
       <Navigation.PageContainer {...this.props} owner={this}/>
       <HomeTabbar pagemanager={this.props.pagemanager} store={this.props.store}/>
       </div>);

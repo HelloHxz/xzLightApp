@@ -2,6 +2,12 @@ import React from "react"
 import {observer} from 'mobx-react'
 import {xz,Navigation,style} from "../../../../../index"
 
+
+var seed = 0;
+function getUniqueKey(){
+  seed+=1;
+  return "mc_"+seed;
+}
 @observer
 class MultiChat extends React.Component {
 
@@ -15,7 +21,10 @@ class MultiChat extends React.Component {
     var data = this.props.store.multiChatData||[];
     for(var i=0,j=data.length;i<j;i++){
       var itemdata = data[i];
-      rows.push(<li>{itemdata.name}</li>);
+      if(!itemdata._hxzuid){
+        itemdata._hxzuid = getUniqueKey();
+      }
+      rows.push(<li key={itemdata._hxzuid}>{itemdata.name}</li>);
     }
     return (
       <div>
