@@ -178,7 +178,8 @@ class ScrollView extends React.Component {
   }
 
 
-  checkSticky(){
+
+  _checkSticky(){
     this.seed+=1;
     if(this.seed>1000){
       this.seed = 0 ;
@@ -186,6 +187,9 @@ class ScrollView extends React.Component {
      if(this.seed%3!==0){
       return;
      }
+    this.checkSticky();
+  }
+  checkSticky(){
      var allNOSticky = true;
      if(!this.isHorizontal&&this.props.pageview&&this.props.pageview.stickviewDict){
         var stickyArr = this.props.pageview.stickviewDict[this.props.scrollKey];
@@ -210,7 +214,7 @@ class ScrollView extends React.Component {
 
     if(this.props.scrollKey||this.props.onScrollEnd||this.props.onScrollToTail){
       if(!this.isBad){
-        this.checkSticky();
+        this._checkSticky();
       }
       if(this.scrollEndTimeoutId){
         window.clearTimeout(this.scrollEndTimeoutId);
