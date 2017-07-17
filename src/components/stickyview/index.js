@@ -13,12 +13,16 @@ class StickyView extends React.Component {
 
     this.state={
       sticky:false,
-      children:props.children
+      children:props.children,
+      disabled:props.disabled||false
     };
   }
 
 
   checkSticky(){
+    if(this.state.disabled===true){
+      return;
+    }
     this.scrollView = this.props.pageview.scrollViewDict[this.props.scrollKey];
     this.scrollViewRect = this.scrollView.wrapperDom.getBoundingClientRect();
     if(this.wrap&&this.scrollView){
@@ -76,6 +80,14 @@ class StickyView extends React.Component {
           children:children
         });
       }
+  }
+
+  componentWillReceiveProps(nextPros){
+      this.setState({
+        disabled:nextPros.disabled||false
+      },()=>{
+        this.checkSticky();
+      });
   }
 
   componentDidMount(){

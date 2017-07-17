@@ -27,7 +27,7 @@ class PageView extends React.Component {
   //   		{name:"xxxx",avatar:"xxx",id:"xx"}
   //   	]});
 
-this.props.store.friendsListData[0].name = "hixoaz";
+// this.props.store.friendsListData[0].data[0].name = "hixoaz";
 	}
 
  
