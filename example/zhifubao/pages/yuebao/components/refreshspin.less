@@ -1,0 +1,77 @@
+
+@outsize:.6rem;
+@innersize:.44rem;
+
+@halfoutsize:@outsize/2;
+@offset:(@outsize - @innersize)/2;
+@circlewidth:@outsize ;
+
+.yuebao-spin-wrapper{
+	position: relative; 
+	width: @outsize; 
+	height: @outsize; 
+	display: inline-block;
+}
+
+.yuebao-spin-progress{
+	position: absolute; 
+	width: @innersize; 
+	height: @innersize; 
+	overflow: hidden; 
+	transform: translateZ(130px);
+	border-radius: 50%; 
+	left: @offset; 
+	top:  @offset; 
+	z-index:4;
+	line-height: @innersize; 
+	text-align: center;
+ }
+ .yuebao-spin-circle{
+ 	position: absolute; 
+	width: @circlewidth; 
+	z-index:1;
+	height: @circlewidth; 
+	border-radius: 50%; 
+	border:@offset solid white;
+	line-height: @innersize; 
+	text-align: center;
+ }
+ .yuebao-spin-left,.yuebao-spin-right{
+ 	width: @halfoutsize;
+ 	height: @outsize;
+ 	overflow: hidden; 
+ 	z-index:3;
+ 	position: relative; 
+ 	float: left;
+ }
+
+.yuebao-span-ani{
+	animation: spinrotate .5s linear infinite;
+}
+ @keyframes yuebaospinrotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+ .yuebao-spin-left{
+ 	border-radius: @outsize 0 0 @outsize;
+ }
+ .yuebao-spin-right{ 
+ 	border-radius: 0 @outsize @outsize 0;
+ }
+ .yuebao-spin-left div,.yuebao-spin-right div{
+ 	content:"";  
+ 	position:absolute; 
+ 	display:block; 
+ 	width: @halfoutsize;
+ 	height: @outsize; 
+ 	background-color: #47b5d9;
+ 	transform-origin:right center; 
+ 	transform:rotateZ(-180deg);
+ }
+ .yuebao-spin-right div{
+ 	content:"";  
+ 	position:absolute; 
+ 	display:block;   
+ 	transform-origin:left center; 
+ }

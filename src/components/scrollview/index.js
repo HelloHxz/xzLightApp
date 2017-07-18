@@ -163,7 +163,6 @@ class ScrollView extends React.Component {
     this.isInLoading = false;
     this.setState({offset:-1,animate:true});
     this.scrollarea.style[scrollKey] = "auto";
-
     this.props.onRefreshClose&&this.props.onRefreshClose();
   }
 

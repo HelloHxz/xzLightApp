@@ -38,7 +38,6 @@ class PageView extends React.Component {
         {this.renderTopViewItems()}
     	</div>
     	<MainScroll pageview={this} homeStore={this.props.homeStore} store={this.props.store}/>
-
     	</div>);
   }
 }
