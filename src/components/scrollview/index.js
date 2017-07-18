@@ -17,7 +17,8 @@ class ScrollView extends React.Component {
     this.isHorizontal = direction.toLowerCase()!=="vertical";
     this.limitOffset = this.props.limitOffset||(!this.isHorizontal?Style.screen.height:Style.screen.width)*.1;
 
-    this.isBad = navigator.userAgent.indexOf("QYZone")>=0;
+    this.isBad = props.disableCheckSticky||false;
+ 
     this.config = {
       touchkey:"pageX",
       otherToucKey:"pageY"

@@ -12,17 +12,17 @@ class Scroll extends React.Component {
   
   onScroll(params){
     var curS = params.scroller.scrollTop;
-    if(curS>=this.limit&&this.props.store.mainStatusOpen){
-      this.props.store.mainStatusOpen=false;
+    if(curS>=this.limit&&this.props.homeStore.mainStatusOpen){
+      this.props.homeStore.mainStatusOpen=false;
     }
-    if(curS<=0&&!this.props.store.mainStatusOpen){
-      this.props.store.mainStatusOpen=true;
+    if(curS<=0&&!this.props.homeStore.mainStatusOpen){
+      this.props.homeStore.mainStatusOpen=true;
     }
   }
 
   render() {
     var className = ["zfb-main-scroll"];
-    className.push(this.props.store.mainStatusOpen?"zfb-main-scroll-open":"zfb-main-scroll-close");
+    className.push(this.props.homeStore.mainStatusOpen?"zfb-main-scroll-open":"zfb-main-scroll-close");
     return (<xz.ScrollView onScroll={this.onScroll.bind(this)} className={className.join(" ")}>
       <div className='iconfont icon-rectangle390'></div>
       <div style={{height:"40rem"}}></div>

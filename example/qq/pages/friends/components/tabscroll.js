@@ -8,7 +8,10 @@ class tabScroll extends React.Component {
 
   constructor(props) {
     super(props)
-    this.limit = style.rem2px(2.5);
+    this.limit = style.rem2px(1);
+    //disableCheckSticky
+    var u = navigator.userAgent;
+    this.disableCheckSticky = u.indexOf("QYZone")>=0&&(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/));
   }
 
   onScroll(params){
@@ -18,7 +21,7 @@ class tabScroll extends React.Component {
         if(curS>preS&&curS>=this.limit&&this.props.store.tabContentIsOpen){
           this.props.store.tabContentIsOpen=false;
         }
-        if(curS<=preS&&curS<=0&&!this.props.store.tabContentIsOpen){
+        if(curS<=preS&&curS<=1&&!this.props.store.tabContentIsOpen){
           this.props.store.tabContentIsOpen=true;
         }
       },100);
@@ -27,6 +30,7 @@ class tabScroll extends React.Component {
   render() {
     return (
         <xz.ScrollView 
+          disableCheckSticky={this.disableCheckSticky}
           onScroll={this.onScroll.bind(this)}
           scrollKey={this.props.scrollKey} 
           pageview={this.props.pageview}  className='qq-fir-scrollview'>

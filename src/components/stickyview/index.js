@@ -20,17 +20,20 @@ class StickyView extends React.Component {
 
 
   checkSticky(){
+    this.scrollView = this.props.pageview.scrollViewDict[this.props.scrollKey];
+    if(!this.scrollView||this.scrollView.isBad){
+      return;
+    }
     if(this.state.disabled===true){
        this.setSticky(false);
       return;
     }
 
-    this.scrollView = this.props.pageview.scrollViewDict[this.props.scrollKey];
     this.scrollViewRect = this.scrollView.wrapperDom.getBoundingClientRect();
     if(this.wrap&&this.scrollView){
       
       var rect = this.wrap.getBoundingClientRect();
-      if(rect.top-rect.height/2<=this.scrollViewRect.top){
+      if(rect.top-rect.height/3<=this.scrollViewRect.top){
           
         var scrollViewCurStickyView = this.scrollView.scrollViewCurStickyView;
 

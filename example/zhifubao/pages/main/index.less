@@ -4,6 +4,54 @@
 	background:#388ae8;
 	position:relative;
 	width:100%;
+	display:flex;
+	color:#fff;
+	flex-diretcion:row;
+	align-items:center;
+}
+.zfb-header-search{
+	height:.8rem;
+	line-height:.8rem;
+	background-color:rgb(23,93,171);
+	flex:1;
+	.px2rem(border-radius,10);
+	.px2rem(margin-left,44);
+	.px2rem(margin-right,24);
+
+}
+.zfb-main-searchtext{
+	.px2rem(font-size,26);
+	.px2rem(bottom,2);
+    position: relative;
+	.px2rem(margin-left,10);
+}
+
+.zfb-header-search .icon-sousuo{
+	.px2rem(font-size,32);
+	.px2rem(margin-left,20);
+}
+.zfb-open .icon-addressbook{
+	.px2rem(margin-left,2);
+	.px2rem(font-size,60);
+	.px2rem(margin-right,18);
+
+}
+.zfb-close .iconfont{
+	.px2rem(font-size,56);
+	.px2rem(margin-left,40);
+	.px2rem(margin-right,20);
+}
+.zfb-close .icon-tianjia{
+	position:absolute;
+	.px2rem(right,10);
+	font-weight:bold;
+	.px2rem(font-size,52);
+}
+.zfb-open .icon-tianjia{
+	.px2rem(margin-left,10);
+	font-weight: bold;
+	.px2rem(font-size,47);
+	.px2rem(margin-right,18);
 }
 .zfb-main-scroll{
 	position:absolute;
@@ -19,9 +67,29 @@
 .zfb-main-scroll-close{
 	top:1.4rem;
 }
-.zfu-main-topv{
+.zfb-main-topv{
 	height:3rem;
 	background:#388ae8;
 	position:relative;
 	width:100%;
+	top:-1px;
+	display:flex;
+	color:#fff;
+	flex-direction:row;
 }
+
+.zfb-top-name{
+	.px2rem(font-size,27);
+	.px2rem(margin-top,14);
+}
+.zfb-top-icon{
+	.px2rem(font-size,92);
+}
+.zfb-top-item{
+	flex:1;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	justify-content:center;
+}
+
