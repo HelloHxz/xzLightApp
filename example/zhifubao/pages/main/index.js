@@ -23,7 +23,7 @@ class PageView extends React.Component {
     for(var i=0,j=child.length;i<j;i++){
       var itemdata = child[i];
       var itemClass = "zfb-top-icon iconfont "+itemdata.icon;
-      items.push(<div className='zfb-top-item'>
+      items.push(<div key={itemdata.name} className='zfb-top-item'>
           <span className={itemClass}></span>
           <span className='zfb-top-name'>{itemdata.name}</span>
         </div>);
@@ -37,7 +37,7 @@ class PageView extends React.Component {
     	<div className='zfb-main-topv'>
         {this.renderTopViewItems()}
     	</div>
-    	<MainScroll homeStore={this.props.homeStore} store={this.props.store}/>
+    	<MainScroll pageview={this} homeStore={this.props.homeStore} store={this.props.store}/>
 
     	</div>);
   }

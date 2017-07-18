@@ -8,6 +8,7 @@ Navigation.start({
 		me:require("./pages/me").default,
 		friend:require("./pages/friend").default,
 		koubei:require("./pages/koubei").default,
+		yuebao:require("./pages/yuebao").default,
 	},
 });
 

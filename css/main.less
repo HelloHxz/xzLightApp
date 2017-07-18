@@ -15,6 +15,38 @@ html,body{
   position:relative;
 }
 
+.xz-fadein-show{
+  opacity:1;
+  animation:xzfadeinshow .4s ease
+}
+
+@keyframes xzfadeinshow {
+    0% {
+         opacity:0;
+    }
+
+    100% {
+       opacity:1;
+    }
+}
+.xz-fadein-hide{
+  visibility:visible;
+  opacity:0;
+  animation:xzfadeinhide .4s ease
+}
+
+@keyframes xzfadeinhide {
+    0% {
+        visibility:visible;
+       opacity:1;
+    }
+
+    100% {
+       visibility:hidden;
+         opacity:0;
+    }
+}
+
 
 .xz-page-base-page{
   background-color:#fff;

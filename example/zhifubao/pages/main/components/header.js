@@ -14,7 +14,7 @@ class Header extends React.Component {
     var icons = ["icon-saoyisao","icon-dangmianfu","icon-shoukuan","icon-sousuo","icon-tianjia"];
     for(var i=0,j=icons.length;i<j;i++){
       var className= "iconfont "+icons[i];
-      children.push(<span className={className}></span>);
+      children.push(<span key={className} className={className}></span>);
     }
     return children;
   }

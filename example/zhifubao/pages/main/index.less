@@ -41,16 +41,34 @@
 	.px2rem(margin-left,40);
 	.px2rem(margin-right,20);
 }
+.zfu-main-app-item{
+	width:25%;
+	.px2rem(height,150);
+	position:relative;
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	float:left;
+}
+.zfu-main-app-item .zfu-main-app-name{
+	.px2rem(margin-top,8);
+	color:#333;
+	.px2rem(font-size,26);
+}
+.zfu-main-app-item .iconfont{
+	.px2rem(font-size,56);
+}
 .zfb-close .icon-tianjia{
 	position:absolute;
 	.px2rem(right,10);
-	font-weight:bold;
+	top:50%;
+	transform:translateY(-50%);
 	.px2rem(font-size,52);
 }
 .zfb-open .icon-tianjia{
 	.px2rem(margin-left,10);
-	font-weight: bold;
-	.px2rem(font-size,47);
+	.px2rem(font-size,50);
 	.px2rem(margin-right,18);
 }
 .zfb-main-scroll{

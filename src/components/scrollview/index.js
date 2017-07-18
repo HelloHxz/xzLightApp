@@ -150,10 +150,7 @@ class ScrollView extends React.Component {
         this.props.onLoadMore();
 
         this.loadMoreEnd();
-
-        // setTimeout(()=>{
-        //   this.loadMoreEnd();
-        // },2000);
+       
       }else{
         this.loadMoreEnd();
       }
@@ -262,7 +259,16 @@ class ScrollView extends React.Component {
   }
 
   _renderRefreshIndicator(){
-    var wrapperClassName = this.isHorizontal?"xz-refresh-control-inner-h":"xz-refresh-control-inner-v";
+
+    var wrapperClassName = this.isHorizontal?["xz-refresh-control-inner-h"]:["xz-refresh-control-inner-v"];
+    if(this.props.renderRefreshIndicator){
+      return  (<div className={wrapperClassName.join(" ")}>{this.props.renderRefreshIndicator({
+        offset:this.state.offset,
+        limitOffset:this.limitOffset,
+        canRefresh:this.canRefresh,
+        isInLoading:this.isInLoading
+      })}</div>);
+    }
     var child = null;
     if(this.isInLoading){
       child = <span><Spin type='android'/></span>;
@@ -270,7 +276,12 @@ class ScrollView extends React.Component {
       var text = this.canRefresh?"释放更新":"下拉刷新";
       child = <span>{text}</span>;
     }
-    return <div className={wrapperClassName}>{child}</div>;
+    if(this.isHorizontal){
+      wrapperClassName.push("xz-refcon-h-default");
+    }else{
+      wrapperClassName.push("xz-refcon-v-default");
+    }
+    return <div className={wrapperClassName.join(" ")}>{child}</div>;
   }
 
   _renderLoadMoreIndicator(){
