@@ -11,7 +11,16 @@ class Segment extends React.Component {
 
 
   onChange(params){
-    this.props.store.statusConfig = {key:params.selectedKey,cache:true}
+    if(this.props.store.statusConfig.key===params.selectedKey){
+      if(this.props.store.dropDownGroupSelectedKey!==params.selectedKey){
+        this.props.store.dropDownGroupSelectedKey = params.selectedKey;
+      }else{
+        this.props.store.dropDownGroupSelectedKey = null;
+      }
+    }else{
+      this.props.store.dropDownGroupSelectedKey = null;
+      this.props.store.statusConfig = {key:params.selectedKey,cache:true}
+    }
   }
  
 

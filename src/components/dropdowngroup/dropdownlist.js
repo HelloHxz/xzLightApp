@@ -23,7 +23,6 @@ class DropDownGroupList extends React.Component {
   }
 
   onBkClick(){
-    alert("s");
     this.props.onBkClick();
   }
 
