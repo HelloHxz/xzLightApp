@@ -1,5 +1,5 @@
 import React from "react"
-import {xz,Navigation} from "../../../../../index"
+import {xz,Navigation,style} from "../../../../../index"
 import {observer} from 'mobx-react'
 
 @observer
@@ -22,15 +22,44 @@ class Segment extends React.Component {
       this.props.store.statusConfig = {key:params.selectedKey,cache:true}
     }
   }
+
+  renderIndicator(params){
+    var dom = params.itemInstance.Dom.children[0];
+    var indicatorStyle = {
+      position:"absolute",
+      bottom:"0",
+      left:dom.offsetLeft+"px",
+      width:dom.offsetWidth+"px",
+      height:style.px2rem(5)+"rem",
+    };
+    return <div className="weibo-segment-indicator" style={indicatorStyle}></div>
+  }
  
 
   render() {
+    var guanzhuTri = ["weibo-seg-tri"];
+    var hotTri = ["weibo-seg-tri"];
+    if(this.props.store.statusConfig){
+      if(this.props.store.statusConfig.key==="guanzhu"){
+        hotTri.push("visibilityhidden");
+      }else if(this.props.store.statusConfig.key==="hot"){
+        guanzhuTri.push("visibilityhidden");
+      }
+    }
+
+    if(this.props.store.dropDownGroupSelectedKey==="guanzhu"){
+      guanzhuTri.push("weibo-tri-rotate");
+    }
+    if(this.props.store.dropDownGroupSelectedKey==="hot"){
+      hotTri.push("weibo-tri-rotate");
+    }
     return (
           <xz.Segment 
+          renderIndicator={this.renderIndicator.bind(this)}
           onChange={this.onChange.bind(this)}
           selectedKey={this.props.store.statusConfig.key} className='weibo-main-segment'>
-            <xz.Segment.Item key='guanzhu'>关注</xz.Segment.Item>
-            <xz.Segment.Item key='hot'>热门</xz.Segment.Item>
+            <xz.Segment.Item key='guanzhu'><span>关注</span><i className={guanzhuTri.join(" ")}></i></xz.Segment.Item>
+            <xz.Segment.Item key='hot'><span>热门</span><i className={hotTri.join(" ")}></i></xz.Segment.Item>
           </xz.Segment>);
   }
 }

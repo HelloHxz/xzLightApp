@@ -10,9 +10,10 @@
 }
 .weibo-main-segment{
 	.px2rem(height,90);
-	.px2rem(width,230);
+	.px2rem(width,260);
 	.px2rem(font-size,30);
 }
+
 .weibo-main-header-btn{
 	.px2rem(width,100);
 	.px2rem(line-height,100);
@@ -21,4 +22,30 @@
 }
 .weibo-main-statusview{
 	flex:1;
+}
+.weibo-segment-indicator{
+	background-color: orange;
+    .px2rem(border-radius,10);
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+
+.weibo-seg-tri{
+	position:relative;
+	display:inline-block;
+	transition:transform .3s ease;
+	transform:rotate(0deg);
+	width: 0;
+    .px2rem(margin-left,10);
+    height: 0;
+    border-left: .12rem solid transparent;
+    border-right: .12rem solid transparent;
+    border-top: .12rem solid #5d5d5d;
+}
+.weibo-tri-rotate{
+	transform:rotate(180deg);
+}
+.visibilityhidden{
+	visibility:hidden;
 }
