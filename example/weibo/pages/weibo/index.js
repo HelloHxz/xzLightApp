@@ -1,23 +1,26 @@
 import React from "react"
 import "./index.less"
+import Store from './store'
+import DropDownGroup from './components/groupdropdown'
 import {xz,Navigation} from "../../../../index"
+import StatusView from './components/statusview'
 
 
 class PageView extends React.Component {
+
+  static connectStore(){
+    return {store:Store}
+  }
+
   constructor(props) {
     super(props)
   }
  
 
   render() {
-    return (<div><xz.DropDownGroup className='weibo-header'>
-          <span className='weibo-main-header-btn'>相机</span>
-          <xz.Segment selectedKey="guanzhu" className='weibo-main-segment'>
-            <xz.Segment.Item key='guanzhu'>关注</xz.Segment.Item>
-            <xz.Segment.Item key='hot'>热门</xz.Segment.Item>
-          </xz.Segment>
-        <span className='weibo-main-header-btn'>扫描</span>
-      </xz.DropDownGroup>weibolist</div>);
+    return (<div><DropDownGroup store={this.props.store} />
+      <StatusView store={this.props.store}/>
+      </div>);
   }
 }
 export default PageView;
