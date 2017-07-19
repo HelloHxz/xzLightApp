@@ -23,19 +23,28 @@ class PageView extends React.Component {
  	}else{
  		value = (params.offset*100/params.limitOffset);
  	}
-  console.log(value);
  	var child = <YueBaoSpin animation={animation} value={value} backgroundColor="rgb(250,59,32)" borderColor="#388ae8"/>
  	return <div className="yuebao-refresh-wrapper">{child}</div>
  }
 
+ goBack(){
+  window.history.go(-1);
+ }
+
   render() {
     return (<div>
-    		<div className='yuebao-header'>yuebao</div>
+    		<div className='yuebao-header'>
+          <span className='yuebao-bk-btn'><i className='iconfont icon-return'></i><span onClick={this.goBack.bind(this)}>首页</span></span>
+        </div>
     		<xz.ScrollView 
     		renderRefreshIndicator={this.renderRefreshIndicator.bind(this)}
     		onRefresh = {this.onPull2Refresh.bind(this)}
     		className='yuebao-scroll'>
-    			<div className='yuebao-topview'></div>
+    			<div className='yuebao-topview'>
+            <span className='yuebao-m-label'>3.82</span>
+            <span className='yuebao-m-desc'>昨日收益&nbsp;(元)</span>
+            <div className='yuebao-sum-label'>总金额****元</div>
+          </div>
     			<div style={{height:"30rem"}}/>
     		</xz.ScrollView>
     		<div className='yuebao-footer'>
