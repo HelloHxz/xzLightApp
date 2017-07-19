@@ -13,7 +13,7 @@ var siwperData = [
     {name:"设置",icon:"",key:"site1"},
     {name:"QQ",icon:"",key:"qq"},
     {name:"WeiChat",icon:"",key:"site1"},
-    {name:"微博",icon:"",key:"site1"},
+    {name:"微博",icon:"",key:"weibo"},
     {name:"支付宝",icon:"",key:"zhifubao"},
     {name:"京东",icon:"",key:"site1"},
   ]},
