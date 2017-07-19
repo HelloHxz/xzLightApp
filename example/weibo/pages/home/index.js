@@ -3,6 +3,7 @@ import "./index.less"
 import HomeTabbar from './tabbar'
 import {xz,Navigation} from "../../../../index"
 import HomeStore from "./store"
+import DrawLayout from './components/drawlayout'
 
 
 class PageView extends React.Component {
@@ -22,6 +23,7 @@ class PageView extends React.Component {
 
   render() {
     return (<div>
+      <DrawLayout store={this.props.store}/>
       <Navigation.PageContainer {...this.props} owner={this}/>
       <HomeTabbar pagemanager={this.props.pagemanager} store={this.props.store}/>
       </div>);

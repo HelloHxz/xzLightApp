@@ -17,6 +17,10 @@ class TabBar extends React.Component {
     this.props.pagemanager.replaceGo(key);
   }
 
+  showPage(){
+     this.props.store.showPageConfig = {key:"MORE",cache:false,showBackCover:false,direction:"fadein"};
+  }
+
 
 
   render() {
@@ -25,7 +29,7 @@ class TabBar extends React.Component {
     	 onChange={this.tabbarChange.bind(this)} className="weibo-home-tabbar">
           <xz.Segment.Item key='home/weibo'>微博</xz.Segment.Item>
           <xz.Segment.Item key='home/message'>消息</xz.Segment.Item>
-          <div className='weibo-tabbar-btn'></div>
+          <div onClick={this.showPage.bind(this)} className='weibo-tabbar-btn'></div>
           <xz.Segment.Item key='home/discover'>发现</xz.Segment.Item> 
           <xz.Segment.Item key='home/me'>我的</xz.Segment.Item> 
          </xz.Segment>);

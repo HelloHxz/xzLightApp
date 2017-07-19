@@ -4,12 +4,23 @@ import Store from './store'
 import DropDownGroup from './components/groupdropdown'
 import {xz,Navigation} from "../../../../index"
 import StatusView from './components/statusview'
+import HomeStore from '../home/store'
 
 
 class PageView extends React.Component {
 
   static connectStore(){
-    return {store:Store}
+    return {store:Store,homeStore:HomeStore}
+  }
+
+  onPageBeforeLeave(params){
+    if(params.action!=="前进"){
+      if(this.props.homeStore.showPageConfig&&this.props.homeStore.showPageConfig.key){
+        this.props.homeStore.showPageConfig = {};
+        return false;
+      }
+    }
+    return true;
   }
 
   constructor(props) {

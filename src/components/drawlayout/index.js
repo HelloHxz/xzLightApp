@@ -104,16 +104,19 @@ class DrawLayout extends React.Component {
     var bkArr = ["xz-drawlayout-bk"];
     if(config&&config.key){
       bkArr.push("xz-drawlayout-bk-show");
+      this.preConfig = config;
     }else{
       bkArr.push("xz-drawlayout-bk-hide");
     }
 
-    bk = <div onClick={this.bkClick.bind(this)} className={bkArr.join(" ")}></div>;
+    if(config&&config.showBackCover!==false){
+      bk = <div onClick={this.bkClick.bind(this)} className={bkArr.join(" ")}></div>;
+    }
 
+    if((!config||!config.key)&&this.preConfig&&this.preConfig.showBackCover===false){
+      bk = null;
+    }
 
-    // if(config.key&&config.cache!==true){
-    //     delete this.childrenDict[config.key];
-    // }
     return (<div ref={(root)=>{this.root = root;}} className="xz-drawlayout">
       {children}
       {bk}
