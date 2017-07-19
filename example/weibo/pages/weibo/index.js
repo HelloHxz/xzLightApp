@@ -23,6 +23,10 @@ class PageView extends React.Component {
     return true;
   }
 
+  componentDidMount(){
+    this.props.store.loadData();
+  }
+
   constructor(props) {
     super(props)
   }

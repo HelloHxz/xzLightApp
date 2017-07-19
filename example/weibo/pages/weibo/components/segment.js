@@ -26,11 +26,9 @@ class Segment extends React.Component {
   renderIndicator(params){
     var dom = params.itemInstance.Dom.children[0];
     var indicatorStyle = {
-      position:"absolute",
-      bottom:"0",
       left:dom.offsetLeft+"px",
       width:dom.offsetWidth+"px",
-      height:style.px2rem(5)+"rem",
+      backgroundColor:params.curIndex===0?"orange":"rgb(255, 93, 93)"
     };
     return <div className="weibo-segment-indicator" style={indicatorStyle}></div>
   }
