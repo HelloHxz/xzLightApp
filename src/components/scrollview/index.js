@@ -218,6 +218,7 @@ class ScrollView extends React.Component {
         this.scrollEndTimeoutId  = null;
       }
       this.scrollEndTimeoutId = setTimeout(()=>{
+        this.checkSticky();
         this.props.onScrollEnd&&this.props.onScrollEnd({
           instance:this,
           scroller:this.scrollarea,
