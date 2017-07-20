@@ -26,16 +26,66 @@
 
 .xz-popover-content-show{
 	visibility:visible;
+	animation:popcontentshow .2s ease;
 }
 .xz-popover-content-hide{
 	visibility:hidden;
+}
+@keyframes popcontentshow {
+    0% {
+       	visibility:hidden;
+       	opacity:0;
+    }
+
+    100% {
+       visibility:visible;
+       opacity:1;
+    }
+}
+@keyframes popcontenthide {
+    0% {
+       visibility:visible;
+       opacity:1;
+    }
+
+    100% {
+    
+       visibility:hidden;
+       	 opacity:0;
+    }
 }
 
 .xz-popover-bk-show{
 	visibility:visible;
 	opacity:.3;
+	animation:popbkshow .3s ease;
+}
+@keyframes popbkshow {
+    0% {
+       	visibility:hidden;
+       	opacity:0;
+    }
+
+    100% {
+       visibility:visible;
+       opacity:.3;
+    }
 }
 .xz-popover-bk-hide{
 	visibility:hidden;
 	opacity:0;
+	animation:popbkhide .3s ease;
+}
+
+@keyframes popbkhide {
+    0% {
+       	   visibility:visible;
+       opacity:.3;
+    }
+
+    100% {
+    
+       visibility:hidden;
+       	 opacity:0;
+    }
 }
