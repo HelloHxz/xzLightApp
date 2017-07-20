@@ -11,7 +11,7 @@ class Popover extends React.Component {
 
 
   renderItem(){
-  	return <div style={{width:"4rem",height:"5rem",backgroundColor:"#fff",borderRadius:".2rem"}}>sss</div>
+  	return <div style={{width:"4rem",height:"5rem",backgroundColor:"#fff",borderRadius:".1rem"}}>sss</div>
   }
 
   onBackLayerClick(){
