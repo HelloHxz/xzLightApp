@@ -1,15 +1,14 @@
 @import url('../../../css/common.less');
 
 .xz-popover{
-	position:fixed;
+	position:absolute;
+	top:0;
+	left:0;
+	width:0;
+	height:0;
 	z-index:1000;
 }
-.xz-popover-show{
-	visibility:visible;
-}
-.xz-popover-hide{
-	visibility:hidden;
-}
+
 .xz-popover-bk{
 	position:fixed;
 	top:0;
@@ -19,14 +18,22 @@
 	z-index:10;
 	background-color:#000;
 }
+
 .xz-popover-content{
-	position:relative;
+	position:fixed;
 	z-index:14;
+}
+
+.xz-popover-content-show{
+	visibility:visible;
+}
+.xz-popover-content-hide{
+	visibility:hidden;
 }
 
 .xz-popover-bk-show{
 	visibility:visible;
-	opacity:.5;
+	opacity:.3;
 }
 .xz-popover-bk-hide{
 	visibility:hidden;

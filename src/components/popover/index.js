@@ -39,6 +39,30 @@ class Popover extends React.Component {
     return this.props.renderItem();
   }
 
+  renderChild(){
+    if(this.isInit){
+      return null;
+    }
+     var contentArr = ["xz-popover-content"];
+    var bkArr = ["xz-popover-bk"];
+    if(this.state.target){
+      contentArr.push("xz-popover-content-show");
+      bkArr.push("xz-popover-bk-show");
+    }else{
+      contentArr.push("xz-popover-content-hide");
+      bkArr.push("xz-popover-bk-hide");
+    }
+    var bkClick={};
+    if(this.props.onBackLayerClick){
+      bkClick.onClick = this.onBackLayerClick.bind(this);
+    }
+    var child = [];
+    child.push(<div key="xz-popover-bk" {...bkClick} ref={(bkLayer)=>{this.bkLayer = bkLayer;}} className={bkArr.join(" ")}></div>);
+    child.push(<div key="xz-popover-content" style={this.getPos()} className={contentArr.join(" ")}>{this.renderItem()}</div>);
+    return child;
+      
+  }
+
   onBackLayerClick(){
     this.props.onBackLayerClick();
   }
@@ -48,22 +72,10 @@ class Popover extends React.Component {
   }
 
   render() {
-    var popClassArr = ["xz-popover"];
-    var bkArr = ["xz-popover-bk"];
-    if(this.state.target){
-      popClassArr.push("xz-popover-show");
-      bkArr.push("xz-popover-bk-show");
-    }else{
-      popClassArr.push("xz-popover-hide");
-      bkArr.push("xz-popover-bk-hide");
-    }
-    var bkClick={};
-    if(this.props.onBackLayerClick){
-      bkClick.onClick = this.onBackLayerClick.bind(this);
-    }
-    return (<div style={this.getPos()} ref={(root)=>{this.root = root;}} className={popClassArr.join(" ")}>
-      <div {...bkClick} ref={(bkLayer)=>{this.bkLayer = bkLayer;}} className={bkArr.join(" ")}></div>
-      <div className='xz-popover-content'>{this.renderItem()}</div></div>);
+   
+    return (<div ref={(root)=>{this.root = root;}} className="xz-popover">
+        {this.renderChild()}
+      </div>);
   }
 }
 
