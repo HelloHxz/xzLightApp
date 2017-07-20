@@ -4,6 +4,7 @@ import Fetch from '../../../../utils/fetch'
 class Store {
     @observable statusConfig = {key:"guanzhu",cache:true};
     @observable dropDownGroupSelectedKey = null;
+    @observable headerPopoverConfig = {};
 
     loadData(){
     	Fetch("",{}).then((re)=>{

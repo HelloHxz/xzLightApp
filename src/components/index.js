@@ -11,11 +11,13 @@ import dropdowngroup from './dropdowngroup'
 import picker from './picker' 
 import datepicker from './datepicker' 
 import statusview from './statusview' 
+import popover from './popover' 
 
 
 export default {
 	"DatePicker":datepicker,
 	"Button":button,
+	"Popover":popover,
 	"StatusView":statusview,
 	"Picker":picker,
 	"DrawLayout":drawlayout,

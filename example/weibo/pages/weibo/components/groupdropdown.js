@@ -14,6 +14,14 @@ class DropDownGroup extends React.Component {
   renderItem(params){
     return <div style={{height:"9rem",backgroundColor:"#fff"}}>{params}</div>
   }
+
+
+  showPopover(e){
+    this.props.store.headerPopoverConfig = {
+      target:e.target,
+      direction:"bottom"
+    };
+  }
  
 
   render() {
@@ -22,7 +30,7 @@ class DropDownGroup extends React.Component {
       selectedKey={this.props.store.dropDownGroupSelectedKey} className='weibo-header'>
           <span className='weibo-main-header-btn'>相机</span>
           <Segment store={this.props.store}/>
-        <span className='weibo-main-header-btn'>扫描</span>
+        <span className='weibo-main-header-btn' onClick={this.showPopover.bind(this)}>扫描</span>
       </xz.DropDownGroup>);
   }
 }

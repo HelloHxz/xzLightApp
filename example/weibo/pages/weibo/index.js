@@ -5,6 +5,7 @@ import DropDownGroup from './components/groupdropdown'
 import {xz,Navigation} from "../../../../index"
 import StatusView from './components/statusview'
 import HomeStore from '../home/store'
+import Popover from './components/popover'
 
 
 class PageView extends React.Component {
@@ -34,6 +35,7 @@ class PageView extends React.Component {
 
   render() {
     return (<div><DropDownGroup store={this.props.store} />
+      <Popover store={this.props.store}/>
       <StatusView store={this.props.store}/>
       </div>);
   }
