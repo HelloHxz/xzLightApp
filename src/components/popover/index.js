@@ -32,13 +32,6 @@ class Popover extends React.Component {
     }
   }
 
-  renderItem(){
-    if(this.isInit){
-      return null;
-    }
-    return this.props.renderItem();
-  }
-
   renderChild(){
     if(this.isInit){
       return null;
@@ -57,13 +50,17 @@ class Popover extends React.Component {
       bkClick.onClick = this.onBackLayerClick.bind(this);
     }
     var child = [];
+
     child.push(<div key="xz-popover-bk" {...bkClick} ref={(bkLayer)=>{this.bkLayer = bkLayer;}} className={bkArr.join(" ")}></div>);
     child.push(<div ref={(content)=>{
       this.content = content;
       this.showContent(content);
-      
+     
     }} key="xz-popover-content" 
-      className={contentArr.join(" ")}>{this.renderItem()}</div>);
+      className={contentArr.join(" ")}><div className='xz-popover-inner-content'>
+      <i ref={(tri)=>{
+        this.tri = tri;
+      }}></i>{this.props.renderItem()}</div></div>);
     return child;
       
   }
@@ -71,6 +68,10 @@ class Popover extends React.Component {
   showContent(content){
     if(content&&this.state.target){
       var rect = this.state.target.getBoundingClientRect();
+
+      // console.log(this.tri);
+      this.tri.className='xz-popover-tri xz-popover-tri-top';
+
       content.style.cssText = "top:"+rect.bottom+"px;left:"+(rect.right-content.offsetWidth)+"px;"
     }
   }
