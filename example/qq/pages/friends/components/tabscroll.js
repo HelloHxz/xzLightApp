@@ -15,14 +15,30 @@ class tabScroll extends React.Component {
   }
 
   onScroll(params){
+    //优化防止抖动 在动画的时候 不再进行判断
+    if(this.disableCheckScroll === true){
+      return;
+    }
       var preS = params.scroller.scrollTop;
       setTimeout(()=>{
         var curS = params.scroller.scrollTop;
         if(curS>preS&&curS>=this.limit&&this.props.store.tabContentIsOpen){
           this.props.store.tabContentIsOpen=false;
+
+          //优化防止抖动 在动画的时候 不再进行判断
+          this.disableCheckScroll = true;
+          setTimeout(()=>{
+            this.disableCheckScroll = false;
+          },300)
         }
         if(curS<=preS&&curS<=1&&!this.props.store.tabContentIsOpen){
           this.props.store.tabContentIsOpen=true;
+
+          //优化防止抖动 在动画的时候 不再进行判断
+          this.disableCheckScroll = true;
+          setTimeout(()=>{
+            this.disableCheckScroll = false;
+          },300)
         }
       },100);
      
