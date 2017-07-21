@@ -46,7 +46,7 @@ class Popover extends React.Component {
     var contentArr = ["xz-popover-content"];
     var bkArr = ["xz-popover-bk"];
     if(this.state.target){
-      contentArr.push("xz-popover-content-show");
+      contentArr.push("xz-popover-content-temp-show");
       bkArr.push("xz-popover-bk-show");
     }else{
       contentArr.push("xz-popover-content-hide");
@@ -60,12 +60,19 @@ class Popover extends React.Component {
     child.push(<div key="xz-popover-bk" {...bkClick} ref={(bkLayer)=>{this.bkLayer = bkLayer;}} className={bkArr.join(" ")}></div>);
     child.push(<div ref={(content)=>{
       this.content = content;
-      if(content){
-        console.log(content.offsetHeight);
-      }
-    }} key="xz-popover-content" style={this.getPos()} className={contentArr.join(" ")}>{this.renderItem()}</div>);
+      this.showContent(content);
+      
+    }} key="xz-popover-content" 
+      className={contentArr.join(" ")}>{this.renderItem()}</div>);
     return child;
       
+  }
+
+  showContent(content){
+    if(content&&this.state.target){
+      var rect = this.state.target.getBoundingClientRect();
+      content.style.cssText = "top:"+rect.bottom+"px;left:"+(rect.right-content.offsetWidth)+"px;"
+    }
   }
 
   onBackLayerClick(){
@@ -76,8 +83,8 @@ class Popover extends React.Component {
     if(!this.state.target){
       return {top:0,left:0}
     }
-    var rect = this.state.target.getBoundingClientRect();
-    return {top:rect.bottom+"px",left:(rect.left-380)+"px"};
+   
+    return {top:rect.bottom+"px",left:(rect.left-350)+"px"};
   }
 
   render() {
