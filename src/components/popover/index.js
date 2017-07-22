@@ -73,7 +73,6 @@ class Popover extends React.Component {
       var rect = this.state.target.getBoundingClientRect();
 
       // console.log();
-      this.tri.className='xz-popover-tri xz-popover-tri-top';
       var direction = (this.state.direction||"").toLowerCase();
       if(this.dirArr.indexOf(direction)<0){
         direction = "bottom";
@@ -87,27 +86,29 @@ class Popover extends React.Component {
           direction = "right";
         }
       }
+
       var cssText = "";
       switch(direction){
         case "top":
-          cssText= "bottom:" +rect.top+"px;";
-          cssText = this._getLeft(cssText,rect,content);
+          cssText= "bottom:" +(Style.screen.height-rect.top)+"px;";
+          cssText = this._getLeft(cssText,rect,content,"bottom");
         break;
         case "bottom":
           cssText= "top:" +rect.bottom+"px;";
-          cssText = this._getLeft(cssText,rect,content);
+          cssText = this._getLeft(cssText,rect,content,"top");
         break;
         case "right":
           cssText = "left:"+rect.right+"px;";
-          cssText = this._getTop(cssText,rect,content);
+          cssText = this._getTop(cssText,rect,content,"left");
         break;
         case "left":
-          cssText = "right:"+rect.left+"px;";
-          cssText = this._getTop(cssText,rect,content);
+        console.log(rect);
+          cssText = "right:"+(Style.screen.width-rect.left)+"px;";
+          cssText = this._getTop(cssText,rect,content,"right");
         break;
         default:
           cssText= "bottom:" +rect.top+"px;";
-          cssText = this._getLeft(cssText,rect,content);
+          cssText = this._getLeft(cssText,rect,content,"bottom");
         break;
       }
       //dirArr
@@ -115,23 +116,37 @@ class Popover extends React.Component {
     }
   }
 
-  _getTop(cssText,rect,content){
+  _getTop(cssText,rect,content,tridirection){
     //this.tri
-    var top = rect.top+rect.width/2-content.offsetHeight/2;
-    if(top){
-
+     var oh = content.offsetHeight;
+    var top = rect.top+rect.height/2-oh/2;
+    if(top+oh>Style.screen.height){
+      top = Style.screen.height - oh;
     }
+    if(top<0){
+      top = 0;
+    }
+
+    var triTop = (rect.top - top)+rect.height/2-Style.rem2px(0.28);
+    this.tri.className='xz-popover-tri xz-popover-tri-'+tridirection;
+     this.tri.style.top = triTop+"px";
     cssText = cssText+"top:"+top+"px";
     return cssText;
   }
 
-  _getLeft(cssText,rect,content){
+  _getLeft(cssText,rect,content,tridirection){
     //this.tri
     var ow = content.offsetWidth;
     var left = rect.left+rect.width/2-ow/2;
     if(left+ow>Style.screen.width){
       left = Style.screen.width - ow;
     }
+    if(left<0){
+      left = 0;
+    }
+    var triLeft = (rect.left - left)+rect.width/2-Style.rem2px(0.28);
+    this.tri.className='xz-popover-tri xz-popover-tri-'+tridirection;
+    this.tri.style.left = triLeft+"px";
     cssText = cssText+"left:"+left+"px";
     return cssText;
   }
