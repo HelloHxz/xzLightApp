@@ -11,6 +11,18 @@ class Popover extends React.Component {
       target:props.target,
       direction:props.direction
     }
+    this.offsetX = props.offsetX || 0;
+    if(isNaN(this.offsetX)){
+      this.offsetX = 0;
+    }else{
+      this.offsetX = parseInt(this.offsetX);
+    }
+    this.offsetY = props.offsetY || 0;
+    if(isNaN(this.offsetY)){
+      this.offsetY = 0;
+    }else{
+      this.offsetY = parseInt(this.offsetY);
+    }
     this.dirArr = ["bottom","top","left","right"];
   }
 
@@ -90,24 +102,24 @@ class Popover extends React.Component {
       var cssText = "";
       switch(direction){
         case "top":
-          cssText= "bottom:" +(Style.screen.height-rect.top)+"px;";
+          cssText= "bottom:" +(Style.screen.height-rect.top+this.offsetY)+"px;";
           cssText = this._getLeft(cssText,rect,content,"bottom");
         break;
         case "bottom":
-          cssText= "top:" +rect.bottom+"px;";
+          cssText= "top:" +(rect.bottom+this.offsetY)+"px;";
           cssText = this._getLeft(cssText,rect,content,"top");
         break;
         case "right":
-          cssText = "left:"+rect.right+"px;";
+          cssText = "left:"+(rect.right+this.offsetX)+"px;";
           cssText = this._getTop(cssText,rect,content,"left");
         break;
         case "left":
         console.log(rect);
-          cssText = "right:"+(Style.screen.width-rect.left)+"px;";
+          cssText = "right:"+(Style.screen.width-rect.left+this.offsetX)+"px;";
           cssText = this._getTop(cssText,rect,content,"right");
         break;
         default:
-          cssText= "bottom:" +rect.top+"px;";
+          cssText= "bottom:" +(Style.screen.height-rect.top+this.offsetY)+"px;";
           cssText = this._getLeft(cssText,rect,content,"bottom");
         break;
       }
@@ -119,12 +131,12 @@ class Popover extends React.Component {
   _getTop(cssText,rect,content,tridirection){
     //this.tri
      var oh = content.offsetHeight;
-    var top = rect.top+rect.height/2-oh/2;
+    var top = rect.top+rect.height/2-oh/2+this.offsetY;
     if(top+oh>Style.screen.height){
-      top = Style.screen.height - oh;
+      top = Style.screen.height - oh+this.offsetY;
     }
     if(top<0){
-      top = 0;
+      top = this.offsetY;
     }
 
     var triTop = (rect.top - top)+rect.height/2-Style.rem2px(0.28);
@@ -137,12 +149,12 @@ class Popover extends React.Component {
   _getLeft(cssText,rect,content,tridirection){
     //this.tri
     var ow = content.offsetWidth;
-    var left = rect.left+rect.width/2-ow/2;
+    var left = rect.left+rect.width/2-ow/2+this.offsetX;
     if(left+ow>Style.screen.width){
-      left = Style.screen.width - ow;
+      left = Style.screen.width - ow+this.offsetX;
     }
     if(left<0){
-      left = 0;
+      left = this.offsetX;
     }
     var triLeft = (rect.left - left)+rect.width/2-Style.rem2px(0.28);
     this.tri.className='xz-popover-tri xz-popover-tri-'+tridirection;
