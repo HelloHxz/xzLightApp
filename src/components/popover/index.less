@@ -53,7 +53,7 @@
 	right:0;
 	bottom:0;
 	z-index:10;
-	background-color:#000;
+  transition:visibility .2s ease,opacity .2s ease;
 }
 
 .xz-popover-content{
@@ -97,37 +97,4 @@
     }
 }
 
-.xz-popover-bk-show{
-	visibility:visible;
-	opacity:.2;
-	animation:popbkshow .2s ease;
-}
-@keyframes popbkshow {
-    0% {
-       	visibility:hidden;
-       	opacity:0;
-    }
 
-    100% {
-       visibility:visible;
-       opacity:.2;
-    }
-}
-.xz-popover-bk-hide{
-	visibility:hidden;
-	opacity:0;
-	animation:popbkhide .2s ease;
-}
-
-@keyframes popbkhide {
-    0% {
-       	   visibility:visible;
-       opacity:.2;
-    }
-
-    100% {
-    
-       visibility:hidden;
-       	 opacity:0;
-    }
-}

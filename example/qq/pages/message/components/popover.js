@@ -11,9 +11,20 @@ class Popover extends React.Component {
 
 
   renderItem(){
-  	return <ul className="weibo-header-popover">
-      <li>扫一扫</li>
-      <li>打车</li>
+    var data = [{name:"创建群聊",icon:"",action:""},
+    {name:"加好友/群",icon:"",action:""},
+    {name:"扫一扫",icon:"",action:""},
+    {name:"面对面快传",icon:"",action:""},
+    {name:"付款",icon:"",action:""},
+    {name:"拍摄",icon:"",action:""},
+    {name:"面对面红包",icon:"",action:""}];
+    var child = [];
+    for(var i=0,j=data.length;i<j;i++){
+      var itemData = data[i];
+      child.push(<li key={itemData.name}><span>{itemData.name}</span></li>);
+    }
+  	return <ul className='qq-header-popover'>
+      {child}
     </ul>
   }
 
