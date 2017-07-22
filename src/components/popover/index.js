@@ -8,14 +8,16 @@ class Popover extends React.Component {
     super(props)
     this.isInit = true;
     this.state={
-      target:props.target
+      target:props.target,
+      direction:props.direction
     }
+    this.dirArr = ["bottom","top","left","right"];
   }
 
   componentWillReceiveProps(nextPros){
     this.isInit = false;
     var config = nextPros.config||{};
-    this.setState({target:config.target});
+    this.setState({target:config.target,direction:nextPros.direction});
   }
 
   componentDidMount(){
@@ -66,14 +68,72 @@ class Popover extends React.Component {
   }
 
   showContent(content){
+
     if(content&&this.state.target){
       var rect = this.state.target.getBoundingClientRect();
 
-      // console.log(this.tri);
+      // console.log();
       this.tri.className='xz-popover-tri xz-popover-tri-top';
-
-      content.style.cssText = "top:"+rect.bottom+"px;left:"+(rect.right-content.offsetWidth)+"px;"
+      var direction = (this.state.direction||"").toLowerCase();
+      if(this.dirArr.indexOf(direction)<0){
+        direction = "bottom";
+        if(rect.top-content.offsetHeight>=0){
+          direction = "top";
+        }else if(rect.bottom+content.offsetHeight<=Style.screen.height){
+          direction = "bottom";
+        }else if(rect.left-content.offsetWidth>=0){
+          direction = "left";
+        }else if(rect.right+content.offsetWidth<=Style.screen.width){
+          direction = "right";
+        }
+      }
+      var cssText = "";
+      switch(direction){
+        case "top":
+          cssText= "bottom:" +rect.top+"px;";
+          cssText = this._getLeft(cssText,rect,content);
+        break;
+        case "bottom":
+          cssText= "top:" +rect.bottom+"px;";
+          cssText = this._getLeft(cssText,rect,content);
+        break;
+        case "right":
+          cssText = "left:"+rect.right+"px;";
+          cssText = this._getTop(cssText,rect,content);
+        break;
+        case "left":
+          cssText = "right:"+rect.left+"px;";
+          cssText = this._getTop(cssText,rect,content);
+        break;
+        default:
+          cssText= "bottom:" +rect.top+"px;";
+          cssText = this._getLeft(cssText,rect,content);
+        break;
+      }
+      //dirArr
+      content.style.cssText = cssText;
     }
+  }
+
+  _getTop(cssText,rect,content){
+    //this.tri
+    var top = rect.top+rect.width/2-content.offsetHeight/2;
+    if(top){
+
+    }
+    cssText = cssText+"top:"+top+"px";
+    return cssText;
+  }
+
+  _getLeft(cssText,rect,content){
+    //this.tri
+    var ow = content.offsetWidth;
+    var left = rect.left+rect.width/2-ow/2;
+    if(left+ow>Style.screen.width){
+      left = Style.screen.width - ow;
+    }
+    cssText = cssText+"left:"+left+"px";
+    return cssText;
   }
 
   onBackLayerClick(){
