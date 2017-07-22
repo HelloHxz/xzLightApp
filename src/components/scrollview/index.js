@@ -49,7 +49,10 @@ class ScrollView extends React.Component {
     // e.stopPropagation();
     // e.nativeEvent.stopImmediatePropagation();
     if(this.props.onBeforeTouch){
-      if(this.props.onBeforeTouch()===false){
+      if(this.props.onBeforeTouch({
+        eventName:"start",
+        diff:0
+      })===false){
         return;
       }
     }
@@ -75,17 +78,22 @@ class ScrollView extends React.Component {
   }
 
   onTouchMove(e){
-    if(this.props.onBeforeTouch){
-      if(this.props.onBeforeTouch()===false){
-        return;
-      }
-    }
+    
     if(this.isInLoading){return;}
       var touch = e.nativeEvent.touches[0];
       var curY = touch[this.config.touchkey];
       var curX = touch[this.config.otherToucKey];
 
       this.diff = curY-this.startY;
+
+      if(this.props.onBeforeTouch){
+        if(this.props.onBeforeTouch({
+          eventName:"move",
+          diff:this.diff
+        })===false){
+          return;
+        }
+      }
 
       var diffOtherDirection = curX - this.startX ;
 
@@ -132,7 +140,10 @@ class ScrollView extends React.Component {
 
   onTouchEnd(){
     if(this.props.onBeforeTouch){
-      if(this.props.onBeforeTouch()===false){
+      if(this.props.onBeforeTouch({
+        eventName:"end",
+        diff:this.diff
+      })===false){
         return;
       }
     }

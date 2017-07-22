@@ -107,12 +107,16 @@ class Segment extends React.Component {
   }
 
   onTouchMove(e){
-    e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
+  
 
     var curTouchX = e.nativeEvent.touches[0].pageX;
     this.diff =  curTouchX - this.touchStartValue;
+
+    if(Math.abs(this.diff)>20){
+      e.preventDefault();
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
+    }
     var offset = this.offsetValue+this.diff;
     if(offset>0){
       offset = offset/3;

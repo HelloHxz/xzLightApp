@@ -16,6 +16,7 @@ class PageView extends React.Component {
 	}
 	constructor(props) {
 		super(props)
+		this.scrollInstanceDict = {};
 	}
 
 
@@ -33,7 +34,18 @@ class PageView extends React.Component {
 	onRefresh(){}
 
 
-	onBeforeTouch(){
+	onBeforeTouch(params){
+		//实现没有滚动scroll事件的时候 也可以切换状态
+		if(params.eventName==="end"&&params.diff>0){
+			var curScrollInstance =  this.scrollInstanceDict[this.props.store.tabSelctedConfig.key];
+			if(curScrollInstance&&!this.props.store.tabContentIsOpen){
+				if(curScrollInstance.scrollarea.scrollTop===0){
+					this.props.store.tabContentIsOpen=true;
+					return false;
+				}
+			}
+		}
+		
 		//禁止滑动动画和下拉的冲突
 		if(this.props.store.tabContentIsOpen===true){
 			return true;

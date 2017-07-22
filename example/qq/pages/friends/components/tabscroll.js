@@ -46,6 +46,9 @@ class tabScroll extends React.Component {
   render() {
     return (
         <xz.ScrollView 
+          ref={(scrollInstance)=>{
+            this.props.pageview.scrollInstanceDict[this.props.scrollKey] = scrollInstance;
+          }}
           disableCheckSticky={this.disableCheckSticky}
           onScroll={this.onScroll.bind(this)}
           scrollKey={this.props.scrollKey} 

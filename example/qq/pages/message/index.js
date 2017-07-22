@@ -6,6 +6,7 @@ import SearchBar from "../../components/searchbar"
 import HomeStore from "../home/store"
 import Store from './store'
 import Popover from './components/popover'
+import List from './components/list'
 
 
 class PageView extends React.Component {
@@ -24,6 +25,8 @@ class PageView extends React.Component {
       direction:"bottom"
     };
   }
+
+  onRefresh(){}
   render() {
 
     return (<div>
@@ -33,8 +36,12 @@ class PageView extends React.Component {
         <span className='qq-title'>消息</span>
         <span className='qq-header-act' onClick={this.showPopver.bind(this)}>更多</span>
     	</div>
-      <SearchBar/>
-    		Message
+      <xz.ScrollView 
+      onRefresh={this.onRefresh.bind(this)}
+      className='qq-mes-scroll'>
+        <SearchBar/>
+      	<List store={this.props.store}/>
+        </xz.ScrollView>
       </div>);
   }
 }

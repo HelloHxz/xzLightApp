@@ -20,3 +20,40 @@
 .qq-header-popover li:last-child{
 	border:none;
 }
+.qq-mes-scroll{
+	flex:1;
+}
+
+.qq-mes-row{
+	display:flex;
+	position:relative;
+	flex-direction:row;
+	.px2rem(height,130);
+}
+
+.qq-mes-avatar-wrapper{
+	.px2rem(width,140);
+	position:relative;
+	height:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+.qq-mes-avatar{
+	.px2rem(width,94);
+	.px2rem(height,94);
+	background-color:#bbb;
+	position:relative;
+	border-radius:100%;
+}
+
+.qq-mes-row-content{
+	flex:1;
+	height:100%;
+	position:relative;
+	border-bottom:1px solid #bbb;
+}
+.qq-mes-list li:last-child .qq-mes-row-content{
+	border:none;
+}

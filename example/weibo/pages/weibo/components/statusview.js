@@ -1,6 +1,8 @@
 import React from "react"
 import {xz,Navigation} from "../../../../../index"
 import {observer} from 'mobx-react'
+import GuanZhuPage from '../guanzhupage'
+import HotPage from '../hotpage'
 
 @observer
 class StatusView extends React.Component {
@@ -10,7 +12,12 @@ class StatusView extends React.Component {
   }
  
   onRenderItem(params){
-    return <div>{params.key}</div>
+    if(params.key==="guanzhu"){
+      return <GuanZhuPage store={this.props.store}/>
+    }else if(params.key==="hot"){
+      return <HotPage store={this.props.store}/>
+    }
+    return <div>{params.key}none</div>
   }
 
   render() {
