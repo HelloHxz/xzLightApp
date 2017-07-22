@@ -48,6 +48,11 @@ class ScrollView extends React.Component {
     // e.preventDefault();
     // e.stopPropagation();
     // e.nativeEvent.stopImmediatePropagation();
+    if(this.props.onBeforeTouch){
+      if(this.props.onBeforeTouch()===false){
+        return;
+      }
+    }
     if(this.isInLoading){return;}
     this.isInLoading = false;
     this.canRefresh = false;
@@ -70,6 +75,11 @@ class ScrollView extends React.Component {
   }
 
   onTouchMove(e){
+    if(this.props.onBeforeTouch){
+      if(this.props.onBeforeTouch()===false){
+        return;
+      }
+    }
     if(this.isInLoading){return;}
       var touch = e.nativeEvent.touches[0];
       var curY = touch[this.config.touchkey];
@@ -121,6 +131,11 @@ class ScrollView extends React.Component {
   }
 
   onTouchEnd(){
+    if(this.props.onBeforeTouch){
+      if(this.props.onBeforeTouch()===false){
+        return;
+      }
+    }
     var scrollKey =this.isHorizontal?"overflow-x":"overflow-y";
     this.props.onTouchEnd&&this.props.onTouchEnd({
       instance:this,

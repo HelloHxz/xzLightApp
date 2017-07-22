@@ -30,6 +30,17 @@ class PageView extends React.Component {
 // this.props.store.friendsListData[0].data[0].name = "hixoaz";
 	}
 
+	onRefresh(){}
+
+
+	onBeforeTouch(){
+		//禁止滑动动画和下拉的冲突
+		if(this.props.store.tabContentIsOpen===true){
+			return true;
+		}
+		return false;
+	}
+
  
  
 
@@ -39,7 +50,10 @@ class PageView extends React.Component {
 		<span className='qq-title'>联系人</span>
 		<span className='qq-header-act'>添加</span>
 		</div>
-		<div className='qq-body'>
+		<xz.ScrollView 
+		onBeforeTouch={this.onBeforeTouch.bind(this)}
+		onRefresh = {this.onRefresh.bind(this)}
+		className='qq-body'>
 			<div className='qq-fri-search'>
 				<SearchBar/>
 				<div onClick={this.test.bind(this)} className='qq-fri-newfri'>
@@ -47,7 +61,7 @@ class PageView extends React.Component {
 				</div>
 			</div>
 			<TabContent store={this.props.store} pageview={this}/>
-		</div>
+		</xz.ScrollView>
 	  </div>);
 	}
 }

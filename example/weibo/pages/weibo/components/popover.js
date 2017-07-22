@@ -29,7 +29,8 @@ class Popover extends React.Component {
           offsetX={-10}
           offsetY={-10}
           onBackLayerClick={this.onBackLayerClick.bind(this)} 
-          renderItem={this.renderItem.bind(this)} config={this.props.store.headerPopoverConfig}/>);
+          renderItem={this.renderItem.bind(this)} 
+          config={this.props.store.headerPopoverConfig}/>);
   }
 }
 export default Popover;
