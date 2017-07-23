@@ -12,7 +12,7 @@ var siwperData = [
     {name:"邮件",icon:"",key:"email"},
     {name:"设置",icon:"",key:"site1"},
     {name:"QQ",icon:"",key:"qq"},
-    {name:"WeiChat",icon:"",key:"site1"},
+    {name:"WeiChat",icon:"",key:"weichat"},
     {name:"微博",icon:"",key:"weibo"},
     {name:"支付宝",icon:"",key:"zhifubao"},
     {name:"京东",icon:"",key:"site1"},

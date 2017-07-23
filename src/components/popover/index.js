@@ -54,8 +54,12 @@ class Popover extends React.Component {
     var bkStyle = {};
     if(this.state.target){
       contentArr.push("xz-popover-content-temp-show");
-      bkStyle.opacity = .3;
-      bkStyle.backgroundColor = "#000";
+      if(this.props.bkOpacity===0){
+        bkStyle.opacity = 0;
+      }else{
+        bkStyle.opacity = this.props.bkOpacity||.3;
+      }
+      bkStyle.backgroundColor =this.props.bkColor||"#000";
       bkStyle.visibility = "visible";
     }else{
       contentArr.push("xz-popover-content-hide");
@@ -78,9 +82,10 @@ class Popover extends React.Component {
      
     }} key="xz-popover-content" 
       className={contentArr.join(" ")}><div className='xz-popover-inner-content'>
+      {this.props.renderItem()}
       <i ref={(tri)=>{
         this.tri = tri;
-      }}></i>{this.props.renderItem()}</div></div>);
+      }}></i></div></div>);
     return child;
       
   }

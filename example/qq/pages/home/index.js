@@ -4,6 +4,7 @@ import HomeTabbar from './tabbar'
 import {xz,Navigation} from "../../../../index"
 import HomeStore from "./store"
 import DrawLayout from '../../components/drawlayout'
+import '../../fonts/iconfont.css'
 
 
 class PageView extends React.Component {

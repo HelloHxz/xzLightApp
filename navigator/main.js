@@ -100,6 +100,9 @@ class Navigation extends React.Component {
 
   }
 
+
+ 
+
   getMaxSeed(){
     var seedObj = this.getUrlSeedObj();
 
@@ -259,6 +262,19 @@ class Navigation extends React.Component {
     setTimeout(()=>{
       this.isForward = false;
     },200);
+  }
+
+
+
+  modifyParams(params){
+    isWantToPreventRoute = true;
+    var curParams = this.getParamsFromUrl();
+    params = params||{};
+    for(var key in params){
+      curParams[key] = params[key];
+    }
+    var pagename = this.getPageNameFromUrl();
+    this.replaceGo(pagename,curParams);
   }
 
 
