@@ -31,13 +31,19 @@ class ContactsList extends React.Component {
         pageview={this.props.pageview} scrollKey={this.props.scrollKey}><div className='weichat-contact-secheader'>{rowdata.name}</div></xz.StickyView>
     </div>);
     var childData = rowdata.data||[];
+    var groupchild = [];
     for(var i=0,j=childData.length;i<j;i++){
       var itemdata = childData[i];
       if(!itemdata._hxzuid){
         itemdata._hxzuid = getUniqueKey();
       }
-      children.push(<div className={"wei-chart-row"} key={itemdata._hxzuid}>{itemdata.name}</div>);
+      groupchild.push(<div className="weichat-contact-row" key={itemdata._hxzuid}>
+          <div className='weichat-contact-avatar'></div>
+          <span>{itemdata.name}</span>
+        </div>);
     }
+    children.push(<div className='weichat-contact-group'>{groupchild}</div>);
+
     return children;
   }
 
