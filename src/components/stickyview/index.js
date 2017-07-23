@@ -87,6 +87,11 @@ class StickyView extends React.Component {
               });
             }
         }
+        if(isSticky&&this.props.onSticky){
+          this.props.onSticky({
+            instance:this
+          });
+        }
         this.setState({
           sticky:isSticky,
           children:children
@@ -131,7 +136,11 @@ class StickyView extends React.Component {
     if(this.state.sticky){
       innerClassName.push("xz-vis-hidden");
     }
-    return (<div className='xz-stickyview' style={sizeStyle} ref={(wrap)=>{
+    var idprop = {};
+    if(this.props.id){
+      idprop.id = this.props.id;
+    }
+    return (<div {...idprop} className='xz-stickyview' style={sizeStyle} ref={(wrap)=>{
       if(wrap){
         var rect = wrap.getBoundingClientRect();
         this.wrapperHeight = rect.height;

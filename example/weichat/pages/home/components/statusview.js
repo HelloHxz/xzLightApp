@@ -5,6 +5,8 @@ import WeiXinPage from '../weixin'
 import WeiXinStore from '../weixin/store'
 import DisCoverPage from '../discover'
 import ContactsPage from '../contacts'
+import ContactsPageStore from '../contacts/store'
+
 import MePage from '../me'
 
 @observer
@@ -24,7 +26,7 @@ class StatusView extends React.Component {
     }else if(key==="me"){
       return <MePage store={this.props.store} pageview={this.props.pageview}/>
     }else if(key==="contacts"){
-      return <ContactsPage store={this.props.store} pageview={this.props.pageview}/>
+      return <ContactsPage store={ContactsPageStore} pageview={this.props.pageview}/>
     }
     return <div>todo..{params.key}</div>;
   }
