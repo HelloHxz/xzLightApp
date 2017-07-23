@@ -42,7 +42,7 @@ class ContactsList extends React.Component {
           <span>{itemdata.name}</span>
         </div>);
     }
-    children.push(<div className='weichat-contact-group'>{groupchild}</div>);
+    children.push(<div key="group" className='weichat-contact-group'>{groupchild}</div>);
 
     return children;
   }
