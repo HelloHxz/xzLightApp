@@ -8,6 +8,8 @@ import YearView from '../yearview'
 import MonthView from '../monthview'
 
 
+var seed = 0;
+
 @observer
 class PageView extends React.Component {
 
@@ -47,6 +49,9 @@ class PageView extends React.Component {
     return <div>year</div>
   }
   showPage(pagename){
+    seed+=1;
+    xz.Toast.show({text:seed});
+    return;
   	this.props.store.showPageConfig = {key:pagename,direction:"bottom"};
   }
   
