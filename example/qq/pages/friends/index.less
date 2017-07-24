@@ -49,9 +49,12 @@ height:100%;
 	.px2rem(font-size,32);
 	position:relative;
 }
+.icon-rotate{
+	transform:rotate(90deg);
+}
 .qq-list-section-name{
 	.px2rem(font-size,34);
-	.px2rem(margin-left,20);
+	.px2rem(margin-left,10);
 	color:#333;
 	position:relative;
 }
@@ -87,14 +90,21 @@ height:100%;
 	background-color:#fff;
 	flex-direction:row;
 	align-items:center;
-	justify-content:space-between;
 	position:relative;
+}
+.qq-fri-list-sectionheader .iconfont{
+	font-size:.5rem;
+	transition:transform .2s ease;
+	margin-left:.1rem;
 }
 .qq-fri-list-sectionheader-left{
 	.px2rem(margin-right,20);
 	color:#9a9a9a;
 	.px2rem(font-size,24);
-	position:relative;
+	position:absolute;
+	right:.2rem;
+	top:50%;
+	transform:translateY(-50%);
 }
 .qq-fri-search{
 	position:relative;

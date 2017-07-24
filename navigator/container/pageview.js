@@ -34,6 +34,8 @@ class PageView extends React.Component {
     this.setState({isDestory:false});
   }
 
+
+
   destroy(){
     this.setState({isDestory:true});
   }
@@ -114,6 +116,7 @@ class PageView extends React.Component {
             pkey={this.props.pkey+"_inner"} 
             key={this.props.pkey+"_inner"}>
           </ToPageInstance>
+          
       </div>);
   }
 }

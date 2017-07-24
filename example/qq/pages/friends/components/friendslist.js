@@ -16,8 +16,13 @@ class FriendsList extends React.Component {
   }
 
   renderFriendListSectionHeader(params){
+    var iconClassName = ["iconfont","icon-enter"];
+    if(params.isOpen){
+      iconClassName.push("icon-rotate");
+    }
     return <xz.StickyView name={params.data.name} disabled={!params.isOpen} scrollKey={this.props.listkey} pageview={this.props.pageview}>
       <div className='qq-fri-list-sectionheader' onClick={this.onFriendsSectionHeaderClick.bind(this,params)}>
+        <span className={iconClassName.join(" ")}></span>
         <span className='qq-list-section-name'>{params.data.name}</span>
         <span className='qq-fri-list-sectionheader-left'>2/4</span>
       </div>

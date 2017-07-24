@@ -3,6 +3,9 @@ import {observer} from 'mobx-react'
 import "./index.less"
 import Store from './store'
 import DrawLayout from './drawlayout'
+import {xz,style} from '../../../../index'
+import YearView from '../yearview'
+import MonthView from '../monthview'
 
 
 @observer
@@ -22,10 +25,27 @@ class PageView extends React.Component {
         this.props.store.showPageConfig= {};
         return false;
       }
+      if( this.props.store.statusViewKey === "month"){
+         this.props.store.statusViewKey = "year";
+         return false;
+      }
     }
     return true;
   }
 
+  componentDidMount(){
+    this.props.store.statusViewKey = "year";
+  }
+
+  renderItem(config){
+    var key = config.key;
+    if(key==="year"){
+      return <YearView homeStore={this.props.store}/>
+    }else if(key==="month"){
+      return <MonthView homeStore={this.props.store}/>
+    }
+    return <div>year</div>
+  }
   showPage(pagename){
   	this.props.store.showPageConfig = {key:pagename,direction:"bottom"};
   }
@@ -33,10 +53,13 @@ class PageView extends React.Component {
  
 
   render() {
+  
     return (<div>
     	<DrawLayout store={this.props.store}/>
     	 <div className='calendar-header'></div>
-    	 <div className='calendar-body'></div>
+    	 <xz.StatusView config={{key:this.props.store.statusViewKey,cache:true}} renderItem={this.renderItem.bind(this)} className='calendar-body'>
+
+       </xz.StatusView>
     	 <div className='calendar-footer'>
     	 	<div className='toolbar-btn' >今天</div>
     	 	<div className='toolbar-btn' onClick={this.showPage.bind(this,"SETTING")}>日历</div>

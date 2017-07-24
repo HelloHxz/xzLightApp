@@ -101,7 +101,8 @@ class StickyView extends React.Component {
 
   componentWillReceiveProps(nextPros){
       this.setState({
-        disabled:nextPros.disabled||false
+        disabled:nextPros.disabled||false,
+        children:nextPros.children
       },()=>{
         this.checkSticky();
       });

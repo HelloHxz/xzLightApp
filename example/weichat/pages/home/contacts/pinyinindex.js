@@ -23,7 +23,10 @@ class PinYinList extends React.Component {
     return <span data-name={rowdata.name}>{rowdata.name}</span>;
   }
 
-  setPosByName(name,index){
+  setPosByName(name,index,isUp){
+    // if(isUp&&this.props.pageview.scrollInstance){
+    //   this.props.pageview.scrollInstance.checkSticky();
+    // }
     if(this.props.store.stickyKey!==name){
       this.props.store.stickyKey = name;
       var id = "contact_"+name;
@@ -44,8 +47,6 @@ class PinYinList extends React.Component {
             }
             this.indicator.style["top"] = (index*this.itemHeight-this.itemHeight/2)+"px";
             this.indicator.children[0].innerHTML = name;
-              console.log(name);
-
           }
         }
       }
@@ -71,6 +72,7 @@ class PinYinList extends React.Component {
     if(this.indicator){
       this.indicator.className = 'weichat-pinyin-wrapper weichat-pinyin-indicator-hide'
     }
+    
   }
   onTouchMove(e){
     if(!this.curName){
@@ -87,7 +89,7 @@ class PinYinList extends React.Component {
     curIndex = curIndex<0?0:curIndex;
     curIndex = curIndex>=this.KeysArr.length?this.KeysArr.length-1:curIndex;
 
-    this.setPosByName(this.KeysArr[curIndex],curIndex);
+    this.setPosByName(this.KeysArr[curIndex],curIndex,diff<0);
   }
 
   render() {
