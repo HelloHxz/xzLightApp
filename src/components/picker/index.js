@@ -100,7 +100,7 @@ class SelectorColumn extends React.Component{
     this.goAuto(tad.len,tad.d);
   }
 
-  goAuto(distance,time,){
+  goAuto(distance,time){
     var t=0,b=this.state.offset;
       this.scrollEngine = Style.run(t, b,distance , time);
       this.scrollEngine.start((val)=>{
