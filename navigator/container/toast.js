@@ -1,19 +1,19 @@
 import React from "react"
 import './toast.less'
-
-
-    /*{
+    /*
+    xz.Toast.show();
+    {
       text:"xx",
+      component:<div style={{backgroundColor:"green",color:"#fff",height:"1rem",lineHeight:"1rem"}}>asdas</div>,
       component:<div></div>,
       className:"",
       direction:"top/bottom/center",
       animation:"slide/fade/pop/none"
-
     }*/
 
 var zIndex = 10000;
 var directionArr = ["top","bottom","center"];
-var aimationArr = ["slide","fade","pop","none"];
+var aimationArr = ["slide","fade"];
 class ToastItem extends React.Component {
 
   constructor(props) {
@@ -38,7 +38,7 @@ class ToastItem extends React.Component {
           this.config.direction = "top";
        }
        this.config.animation = (this.config.animation||"slide").toLowerCase();
-       if(aimationArr.indexOf(this.config.direction)<0){
+       if(aimationArr.indexOf(this.config.animation)<0){
           this.config.animation = "slide";
        }
 
@@ -50,6 +50,7 @@ class ToastItem extends React.Component {
     }else{
        this.config.duration = 2000;
     }
+
 
     this.config.showClassName = "xz-toast-"+this.config.direction+"-"+this.config.animation+"-show";
     this.config.hideClassName = "xz-toast-"+this.config.direction+"-"+this.config.animation+"-hide";
