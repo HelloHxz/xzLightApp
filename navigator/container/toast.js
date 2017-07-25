@@ -11,7 +11,7 @@ import './toast.less'
 
     }*/
 
-var zIndex = 1000;
+var zIndex = 10000;
 var directionArr = ["top","bottom","center"];
 var aimationArr = ["slide","fade","pop","none"];
 class ToastItem extends React.Component {
@@ -26,7 +26,7 @@ class ToastItem extends React.Component {
       animation:"slide"
     };
     if(typeof(props.config)==="string"){
-      defaultConfig = props.config;
+      defaultConfig.text = props.config;
       this.config = defaultConfig;
     }else{
        this.config = props.config||defaultConfig;
@@ -41,11 +41,19 @@ class ToastItem extends React.Component {
        if(aimationArr.indexOf(this.config.direction)<0){
           this.config.animation = "slide";
        }
+
+    }
+
+    this.config.duration =props.config.duration||2000;
+    if(!isNaN( this.config.duration)){
+       this.config.duration = parseInt( this.config.duration);
+    }else{
+       this.config.duration = 2000;
     }
 
     this.config.showClassName = "xz-toast-"+this.config.direction+"-"+this.config.animation+"-show";
     this.config.hideClassName = "xz-toast-"+this.config.direction+"-"+this.config.animation+"-hide";
-   
+    this.config.className = this.config.className||"";
     this.wrapperClassName = "xz-toast-item-wrapper"+(this.config.text?" xz-toast-flex":"");
 
 
@@ -55,7 +63,7 @@ class ToastItem extends React.Component {
     setTimeout(()=>{
       this.root.className=this.wrapperClassName+" "+this.config.hideClassName;
       delete this.props.parent.Dict[this.props.pkey];
-    },2000)    
+    },this.config.duration)    
   }
 
   render() {
@@ -64,7 +72,7 @@ class ToastItem extends React.Component {
     if(this.config.component){
       children = this.config.component;
     }else{
-      var spanClassName= "xz-toast-span"+(this.config.className?(" "+this.config.className):"")
+      var spanClassName= "xz-toast-span "+"xz-toast-span-"+this.config.direction+" "+this.config.className;
       children = <span className={spanClassName}>{this.config.text}</span>;
     }
     return (<div 

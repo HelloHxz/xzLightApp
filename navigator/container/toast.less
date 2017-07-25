@@ -1,14 +1,5 @@
 @import url('../../css/common.less');
 
-.xz-toast-top-slide-show{
-  top:0;
-  left:0;
-  right:0;
-  min-height:20px;
-  width:100%;
-  animation:toasttopsildeshow .25s ease;
-  transform: translate3d(0,0,0);
-}
 .xz-toast-flex{
 	display:flex;
 	align-items:center;
@@ -20,11 +11,28 @@
 	max-width:90%;
 	min-width:2rem;
 	color:#fff;
+	font-size:.35rem;
 	text-align:center;
-	margin-top:1rem;
 	padding:.2rem;
 	border-radius:.06rem;
 	background-color:rgba(0,0,0,.7);
+}
+.xz-toast-span-top{
+	margin-top:1.4rem;
+}
+.xz-toast-span-bottom{
+	margin-bottom:1.4rem;
+}
+
+
+.xz-toast-top-slide-show{
+  top:0;
+  left:0;
+  right:0;
+  min-height:20px;
+  width:100%;
+  animation:toasttopsildeshow .25s ease;
+  transform: translate3d(0,0,0);
 }
 
 @keyframes toasttopsildeshow {
@@ -71,6 +79,102 @@
 }
 
 .xz-toast-item-wrapper{
-	position:absolute;
+	position:fixed;
 	width:100%;
+	overflow:hidden;
+}
+
+
+
+.xz-toast-bottom-slide-show{
+  bottom:0;
+  left:0;
+  right:0;
+  min-height:20px;
+  width:100%;
+  animation:toastbottomsildeshow .25s ease;
+  transform: translate3d(0,0,0);
+}
+
+@keyframes toastbottomsildeshow {
+    0% {
+        transform: translate3d(0, 100%, 0);
+    }
+
+    100% {
+        transform: translate3d(0,0,0);
+    }
+}
+
+
+.xz-toast-bottom-slide-hide{
+  bottom:0;
+  left:0;
+  right:0;
+  min-height:20px;
+  width:100%;
+  animation:toastbottomsildehide .25s ease;
+  transform: translate3d(0,100%,0);
+  visibility:hidden;
+}
+
+@keyframes toastbottomsildehide {
+    0% {
+      visibility:visible;
+        transform: translate3d(0,0,0);
+    }
+
+    100% {
+      visibility:hidden;
+        transform: translate3d(0, 100%, 0);
+    }
+}
+
+
+.xz-toast-center-slide-show{
+  top:50%;
+  left:0;
+  right:0;
+  min-height:20px;
+  width:100%;
+  animation:toastcentersildeshow .3s ease;
+  transform: translate3d(0,-50%,0);
+}
+
+@keyframes toastcentersildeshow {
+    0% {
+    	top:0;
+        transform: translate3d(0, -100%, 0);
+    }
+
+    100% {
+    	top:50%;
+        transform: translate3d(0,-50%,0);
+    }
+}
+
+
+.xz-toast-center-slide-hide{
+  top:0;
+  left:0;
+  right:0;
+  min-height:20px;
+  width:100%;
+  animation:toastcentersildehide .4s ease;
+  transform: translate3d(0,-100%,0);
+  visibility:hidden;
+}
+
+@keyframes toastcentersildehide {
+    0% {
+      visibility:visible;
+      top:50%;
+        transform: translate3d(0,-50%,0);
+    }
+
+    100% {
+      visibility:hidden;
+        top:0;
+        transform: translate3d(0, -100%, 0);
+    }
 }

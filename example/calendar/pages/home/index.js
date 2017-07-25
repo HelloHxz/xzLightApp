@@ -50,7 +50,10 @@ class PageView extends React.Component {
   }
   showPage(pagename){
     seed+=1;
-    xz.Toast.show({text:seed});
+    xz.Toast.show({
+      text:"提示",
+      direction:"center"
+    });
     return;
   	this.props.store.showPageConfig = {key:pagename,direction:"bottom"};
   }
