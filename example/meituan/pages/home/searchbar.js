@@ -28,7 +28,7 @@ class SearchBar extends React.Component {
     return (
       <div className={classNameArr.join(" ")}>
           <div className='search-bar-inner'><div className='search-bar-bk'></div>
-            <div className='meituan-home-header-left'></div>
+            <div className='meituan-home-header-left'>水产工业园</div>
             <div className='meituan-home-header-right'></div>
             <span className='meituan-home-search-text'>搜索</span>
           </div>

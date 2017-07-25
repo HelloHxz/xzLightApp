@@ -117,7 +117,7 @@ return {
       },
       { 
         test: /\.(png|jpg|jpeg|gif|woff)$/, 
-        loader: 'url-loader?limit=6144&name=images/[path][name].[ext]'
+        loader: 'url-loader?limit=6144&name=imgs/[path][name].[ext]'
       },
        {
           test: /\.(eot|svg|ttf|woff|woff2)$/,

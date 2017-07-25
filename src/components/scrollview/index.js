@@ -14,11 +14,17 @@ class ScrollView extends React.Component {
     this.startY = 0;
     this.isInLoading = 0;
     var direction = this.props.direction||"vertical";
+
+    this.stickyOffset = this.props.stickyOffset||0;
+    if(!isNaN(this.stickyOffset)){
+      this.stickyOffset = parseInt(this.stickyOffset);
+    }else{
+      this.stickyOffset = 0;
+    }
     this.isHorizontal = direction.toLowerCase()!=="vertical";
     this.limitOffset = this.props.limitOffset||(!this.isHorizontal?Style.screen.height:Style.screen.width)*.1;
 
     this.isBad = props.disableCheckSticky||false;
- 
     this.config = {
       touchkey:"pageX",
       otherToucKey:"pageY"
@@ -218,7 +224,7 @@ class ScrollView extends React.Component {
         var stickyArr = this.props.pageview.stickviewDict[this.props.scrollKey];
         if(stickyArr&&stickyArr.length>0){
           for(var i=0,j=stickyArr.length;i<j;i++){
-            var re = stickyArr[i].checkSticky();
+            var re = stickyArr[i].checkSticky(this.stickyOffset);
             if(re===true){
               allNOSticky = false;
             }
@@ -397,7 +403,7 @@ class ScrollView extends React.Component {
     if(this.isHorizontal){
 
     }else{
-      this.stickview=<StickyWrapper ref={(instance)=>{this.stickyWrapper = instance}}/>
+      this.stickview=<StickyWrapper stickyOffset={this.stickyOffset} ref={(instance)=>{this.stickyWrapper = instance}}/>
     }
     var outStyle = this.props.style||{};
     return (<div ref={(wrapper)=>{

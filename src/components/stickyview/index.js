@@ -19,7 +19,8 @@ class StickyView extends React.Component {
   }
 
 
-  checkSticky(){
+  checkSticky(stickyOffset){
+    stickyOffset = stickyOffset||0;
     this.scrollView = this.props.pageview.scrollViewDict[this.props.scrollKey];
     if(!this.scrollView||this.scrollView.isBad){
       return;
@@ -33,7 +34,7 @@ class StickyView extends React.Component {
     if(this.wrap&&this.scrollView){
       
       var rect = this.wrap.getBoundingClientRect();
-      if(rect.top-rect.height/3<=this.scrollViewRect.top){
+      if(rect.top-rect.height/3-stickyOffset<=this.scrollViewRect.top){
           
         var scrollViewCurStickyView = this.scrollView.scrollViewCurStickyView;
 
