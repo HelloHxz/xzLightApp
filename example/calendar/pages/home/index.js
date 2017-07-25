@@ -49,14 +49,6 @@ class PageView extends React.Component {
     return <div>year</div>
   }
   showPage(pagename){
-    seed+=1;
-    xz.Toast.show({
-      component:<div style={{backgroundColor:"green",color:"#fff",height:"1rem",lineHeight:"1rem"}}>asdas</div>,
-      direction:"top",
-      duration:1000,
-      animation:"slide"
-    });
-    return;
   	this.props.store.showPageConfig = {key:pagename,direction:"bottom"};
   }
   

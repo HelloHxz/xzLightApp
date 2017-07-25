@@ -6,15 +6,10 @@ import {xz,Navigation} from "../../../../index"
 class PageView extends React.Component {
   constructor(props) {
     super(props)
-    console.log("constructor: two");
   }
-   onResume(){
-    // alert("two");
-  }
-
-
+  
   render() {
-    return (<div><div className='qq-header'></div>sss</div>);
+    return (<div><div className='meituan-header'></div>me</div>);
   }
 }
 export default PageView;

@@ -10,7 +10,7 @@ var siwperData = [
  {apps:[
     {name:"日历",icon:"",key:"calendar"},
     {name:"邮件",icon:"",key:"email"},
-    {name:"设置",icon:"",key:"site1"},
+    {name:"美团",icon:"",key:"meituan"},
     {name:"QQ",icon:"",key:"qq"},
     {name:"WeiChat",icon:"",key:"weichat"},
     {name:"微博",icon:"",key:"weibo"},

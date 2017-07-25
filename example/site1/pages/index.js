@@ -38,7 +38,7 @@ var appSwiperData = [
     {"key":"","title":"segment",url:"tabbarpage/segmentdemo/horizontalsegment"},
     {"key":"","title":"one3",url:"threelevelroute/twolevelroute/one"},
     {"key":"","title":"one",url:"twolevelroute/one"},
-    {"key":"","title":"index",url:"index"},
+    {"key":"","title":"Toast",url:"ToastDemo"},
     {"key":"","title":"lazyload",url:"lazyload"},
     {"key":"","title":"drawlayout",url:"drawlayoutdemo"},
     {"key":"","title":"sticky",url:"sticky"},

@@ -44,7 +44,7 @@ class ToastItem extends React.Component {
 
     }
 
-    this.config.duration =props.config.duration||2000;
+    this.config.duration =props.config.duration;
     if(!isNaN( this.config.duration)){
        this.config.duration = parseInt( this.config.duration);
     }else{
@@ -61,10 +61,18 @@ class ToastItem extends React.Component {
   }
 
   componentDidMount(){
-    setTimeout(()=>{
-      this.root.className=this.wrapperClassName+" "+this.config.hideClassName;
-      delete this.props.parent.Dict[this.props.pkey];
-    },this.config.duration)    
+    if(this.config.duration!==0){
+        setTimeout(()=>{
+        this.hide();
+      },this.config.duration)  
+    }
+      
+  }
+
+  hide(){
+     this.root.className=this.wrapperClassName+" "+this.config.hideClassName;
+    delete this.props.parent.Dict[this.props.pkey];
+    delete this.props.parent.instanceDict[this.props.pkey];
   }
 
   render() {
@@ -89,13 +97,24 @@ class Toast extends React.Component {
   constructor(props) {
     super(props);
     this.Dict = {};
+    this.instanceDict = {};
   }
 
   show(config){
     seedkey+=1;
     var key = "toast_"+seedkey;
-    this.Dict[key] = <ToastItem pkey={key} parent={this} config={config} key={key}/>
-    this.setState({seed:1})
+    this.Dict[key] = <ToastItem ref={(instance)=>{
+      this.instanceDict[key] = instance;
+    }} pkey={key} parent={this} config={config} key={key}/>
+    this.setState({seed:1});
+    return key;
+  }
+
+  hide(key){
+    var instance = this.instanceDict[key];
+    if(instance){
+      instance.hide();
+    }
   }
 
   tip(){

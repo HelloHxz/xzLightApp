@@ -10,6 +10,7 @@ Navigation.start({
 		slidepage:require("./pages/slidepage").default,
 		dpdcdemo:require("./pages/dpdcdemo").default,
 		goodlist:require("./pages/goodlist").default,
+		ToastDemo:require("./pages/ToastDemo").default,
 		userinfo:require("./pages/userinfo").default,
 		sticky:require("./pages/sticky").default,
 		drawlayoutdemo:require("./pages/drawlayoutdemo").default,

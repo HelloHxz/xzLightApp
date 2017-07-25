@@ -1,0 +1,77 @@
+@import url('../../../../node_modules/xz-lightapp/css/common.less');
+.search-bar-bk{
+	position:absolute;
+	top:0;
+	z-index:-1;
+	left:0;
+	width:100%;
+	height:100%;
+	background: #fff;
+	opacity:0;
+	transition:opacity .6s ease;
+}
+
+.meituan-home-scroll{
+	flex:1;
+}
+.search-bar{
+	 .px2rem(height, 80);
+	 position:absolute;
+	 top:0;
+	 width:100%;
+	 z-index:10;
+	
+}
+
+.meituan-home-header-left{
+	 .px2rem(height, 60);
+	 .px2rem(border-radius, 30);
+	 .px2rem(top, 10);
+	 .px2rem(left, 20);
+	 .px2rem(width, 220);
+	 background-color:rgba(0,0,0,.6);
+	 position:absolute;
+}
+
+
+
+.meituan-home-header-right{
+	 .px2rem(height, 60);
+	 .px2rem(border-radius, 30);
+	  .px2rem(top, 10);
+	  .px2rem(left, 260);
+	  .px2rem(right, 20);
+	  position:absolute;
+	  transition: left .3s ease;
+	  background-color:#fff;
+}
+.meituan-home-search-text{
+	position:absolute;
+	z-index:1;
+	left:50%;
+	.px2rem(top, 20);
+	.px2rem(font-size,30);
+	transition: transform .3s ease;
+	.px2remtransfrom(-80,0);
+	color:gray;
+
+}
+
+.searchbar-opacity-show .meituan-home-search-text{
+	transform:translateX(-50%);
+}
+
+.searchbar-opacity-show .meituan-home-header-right{
+	 background-color:rgb(207,207,207);
+	 .px2rem(left, 20);
+}
+.searchbar-opacity-show .meituan-home-header-left{
+	 display:none;
+}
+.searchbar-opacity-none .search-bar-bk{
+	opacity:0;
+}
+
+.searchbar-opacity-show .search-bar-bk{
+	opacity:1;
+}
