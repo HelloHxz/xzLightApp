@@ -11,14 +11,20 @@ class Diancai extends React.Component {
     super(props)
   }
 
+  componentDidMount(){
+    setTimeout(()=>{
+     this.props.shopStore.loadData();
+    },100)
+  }
+
   
   render() {
     return (
     	<div className='meituan-shop-diancai'>
-        <ShopScroll shopStore={this.props.shopStore} pageview={this.props.pageview} className='meituan-diancai-left'>
+        <ShopScroll role="diancaileft" shopStore={this.props.shopStore} pageview={this.props.pageview} className='meituan-diancai-left'>
           <DianCaiLeft shopStore={this.props.shopStore} pageview={this.props.pageview}/>
         </ShopScroll>
-        <ShopScroll shopStore={this.props.shopStore} pageview={this.props.pageview} scrollKey="meituan-diancai-right" className='meituan-diancai-right'>
+        <ShopScroll role="diancairight" shopStore={this.props.shopStore} pageview={this.props.pageview} scrollKey="meituan-diancai-right" className='meituan-diancai-right'>
           <DianCaiRight scrollKey="meituan-diancai-right" shopStore={this.props.shopStore} pageview={this.props.pageview}/>
         </ShopScroll>
     	</div>);

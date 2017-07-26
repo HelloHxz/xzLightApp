@@ -2,57 +2,41 @@ import {observable} from 'mobx';
 class Store {
     @observable segmentSelectedKey = "diancai";
     @observable UIisOpen = true;
+    @observable selectedLeftID = null;
 
-    @observable diancaiData = [{
-    	name:"专场",
-    	id:"xx",
-    	data:[{name:"专场套餐"},{name:"专场套餐"},{name:"专场套餐"},{name:"专场套餐"}]
-    },{
-    	name:"折扣",
-    	id:"xx",
-    	data:[{name:"折扣套餐"},{name:"折扣套餐"},{name:"折扣套餐"},{name:"折扣套餐"}]
-    },{
-    	name:"热销",
-    	id:"xx",
-    	data:[{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"}]
-    },{
-    	name:"单人点餐",
-    	id:"xx",
-    	data:[{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"}]
-    },{
-    	name:"双人点餐",
-    	id:"xx",
-    	data:[{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"}]
-    },{
-    	name:"基友套餐",
-    	id:"xx",
-    	data:[{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"}]
-    },{
-    	name:"三人点餐",
-    	id:"xx",
-    	data:[{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"}]
-    },{
-    	name:"热销",
-    	id:"xx",
-    	data:[{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"}]
-    },{
-    	name:"米饭",
-    	id:"xx",
-    	data:[{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"}]
-    },{
-    	name:"折扣单人",
-    	id:"xx",
-    	data:[{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"}]
-    },{
-    	name:"折扣双人",
-    	id:"xx",
-    	data:[{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"}]
-    },{
-    	name:"激情无限",
-    	id:"xx",
-    	data:[{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"},{name:"热销套餐"}]
-    }];
+
+    loadData(){
+        var arr = ["专场","折扣","热销热销热热销热销热销销","单人点餐","双人点餐","基友套餐","三人点餐","米饭","折扣单人","折扣双人"
+        ,"饮料","进店必买","粉","面","精美小炒","免费"
+        ,"激情无限"];
+        var data = [];
+        for(var i=0,j=arr.length;i<j;i++){
+            var id = i;
+            if(this.selectedLeftID===null){
+                this.selectedLeftID = id.toString();
+            }
+            var name = arr[i];
+            var rowdata = {
+                name:name,
+                id:i,
+            };
+            var children = [] ;
+            for(var n=0;n<6;n++){
+                children.push({
+                    name:name+"n",
+                    id:i+"_"+n,
+                });
+            }
+            rowdata.data = children;
+            data.push(rowdata);
+        }
+
+        this.diancaiData = data;
+
+    }
+
+    @observable diancaiData = [];
 }
 
-export default new Store;
+export default Store;
 

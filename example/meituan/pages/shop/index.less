@@ -19,7 +19,7 @@
 	left:0;
 	background-color:#fff;
 	right:0;
-	transition:top .23s ease;
+	transition:top .2s ease;
 }
 .meituan-shop-bottomview-open{
 	top:3.4rem;
@@ -41,6 +41,31 @@
 .meituan-shop-statusview{
 	flex:1;
 }
+.mt-dc-row{
+	display:flex;
+	flex-direction:row;
+	position:relative;
+	padding-top:.2rem;
+	padding-bottom:.2rem;
+}
+.mt-dc-row-left{
+	width:1.3rem;
+	height:100%;
+	position:relative;
+}
+
+.mt-dc-row-left .avatar{
+	width:1.1rem;
+	height:1.1rem;
+	position:relative;
+	background-color:#eee;
+}
+
+.mt-dc-row-right{
+	flex:1;
+	height:100%;
+	position:relative;
+}
 .meituan-shop-diancai{
 	position:relative;
 	height:100%;
@@ -48,11 +73,28 @@
 	display:flex;
 	flex-direction:row;
 }
+.meituan-diancai-leftlist{
+	font-size:.35rem;
+}
 .meituan-diancai-leftlist li{
-	height:1.2rem;
-	line-height:1.2rem;
 	padding-left:.2rem;
+	padding-top:.3rem;
+	padding-bottom:.3rem;
+	padding-right:.2rem;
 	border-bottom:1px solid #ccc;
+	
+}
+.meituan-diancai-leftlist li span{
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+.meituan-diancai-leftlist li.selected{
+	background-color:#fff;
 }
 
 .meituan-diancai-left{
@@ -63,6 +105,14 @@
 .meituan-diancai-right{
 	flex:1;
 	height:100%;
+
+}
+
+.meituan-diancai-rightlist{
+	padding:.2rem;
+}
+.meituan-diancai-right .xz-scroll-sticky-wrapper{
+	padding-left:.2rem;
 }
 .mt-dc-secheader{
 	height:.8rem;
@@ -79,7 +129,7 @@
 	width:.05rem;
 	content:' ';
 	left:.1rem;
-	height:.4rem;
+	height:.3rem;
 	background-color:rgb(219,165,45);
 	top:50%;
 	position:absolute;

@@ -41,6 +41,11 @@ class ShopScroll extends React.Component {
       scrollKey.scrollKey = this.props.scrollKey;
     }
     return (<xz.ScrollView 
+      ref={(instance)=>{
+        if(this.props.role==='diancairight'){
+          this.props.pageview.diancaiRightScroll = instance;
+        }
+      }}
       onScroll={this.onScroll.bind(this)}
       {...scrollKey} pageview={this.props.pageview} className={className}>
         {this.props.children}

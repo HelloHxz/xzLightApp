@@ -75,9 +75,6 @@ class Swiper extends React.Component {
 
     }
 
- 
-    
-
     this.startInterval();
   }
 
@@ -135,6 +132,11 @@ class Swiper extends React.Component {
   componentWillUnmount(){
     this.stopInterval();
   }
+
+  stop(){
+    this.stopInterval();
+  }
+
   stopInterval(){
     if( this.goNextTimeoutID){
       this.setIsInTransitionFalse();
@@ -145,6 +147,9 @@ class Swiper extends React.Component {
 	    	window.clearInterval(this.intervalID);
 	    	this.intervalID = null;
   	}
+  }
+  start(){
+    this.startInterval();
   }
 	startInterval(){
 		if(!this.props.interval){

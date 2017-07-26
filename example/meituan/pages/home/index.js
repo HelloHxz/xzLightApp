@@ -4,21 +4,9 @@ import HomeStore from './store'
 import SearchBar from './searchbar'
 import StickyBar from './stickybar'
 import List from './list'
+import TopSwiper from './topswiper'
 import {xz,Navigation,style} from "../../../../index"
-import image1 from '../../imgs/1.jpg'
-import image2 from '../../imgs/2.jpg'
-import image3 from '../../imgs/3.jpg'
-import image4 from '../../imgs/4.jpg'
 
-
-var siwperData = [
- {src:image1,title:"xxx"},
- {
-   src:image2,title:"xxx",
-  },
-  {src:image3,title:"xxx"},
-  {src:image4,title:"xxx"}
-];
 
 var appSwiperData = [
   [
@@ -92,8 +80,13 @@ class PageView extends React.Component {
     return <ul className='appswiper-ul' key={"xxx"+params.index}>{child}</ul>
   }
 
- renderSwiperItem(params){
-    return (<xz.Image className="index-top-swipe-image" src={params.data.src} key={"xx"+params.index}></xz.Image>);
+ 
+  onPageBeforeLeave(){
+    this.topswiper&&this.topswiper.stop();
+  }
+
+  onPageResume(){
+    this.topswiper&&this.topswiper.start();
   }
 
 
@@ -111,15 +104,7 @@ class PageView extends React.Component {
       onRefreshClose = {this.onRefreshClose.bind(this)}
       onRefresh = {this.onRefresh.bind(this)}
       >
-         <xz.Swiper ref={(instance)=>{this.topswiper = instance;}} 
-            className="meituan-top-swiper"
-            lazyrender={false} 
-            loop={true} 
-            interval={3000} 
-            cache={false} 
-            datasource={siwperData} 
-            renderItem = {this.renderSwiperItem.bind(this)}>
-          </xz.Swiper>
+       <TopSwiper pageview={this}/>
         
          <xz.Swiper className='meituan-app-swiper' cache={true} datasource={appSwiperData} renderItem={this.renderAppSwiper.bind(this)}/>
          

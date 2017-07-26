@@ -8,11 +8,15 @@ import Store from './store'
 class PageView extends React.Component {
 
   static connectStore(){
-  	return {shopStore:Store}
+  	return {shopStore:new Store}
   }
 
   constructor(props) {
     super(props)
+  }
+
+  componentWillUnmount(){
+    console.log(this.props.shopStore) ;
   }
 
   renderIndicator(params){
