@@ -7,6 +7,7 @@ Navigation.start({
 		home:require("./pages/home").default,
 		orderlist:require("./pages/orderlist").default,
 		me:require("./pages/me").default,
+		shop:require("./pages/shop").default,
 	},
 });
 

@@ -20,7 +20,7 @@
 .meituan-home-dd li{
 	height:1.2rem;
 	line-height:1.2rem;
-	border-top:1px solid #ccc;
+	border-bottom:1px solid #ccc;
 	padding-left:.2rem;
 
 }
@@ -29,6 +29,7 @@
 	height:1rem;
 	display:flex;
 	flex-direction:row;
+	border-bottom:1px solid #ccc;
 	background-color:#fff;
 }
 .meituan-sticky-item{
@@ -89,6 +90,50 @@
 	.px2remtransfrom(-80,0);
 	color:gray;
 
+}
+
+.appswiper-ul{
+	position:relative;
+}
+.appswiper-ul li{
+	float:left;
+	width:25%;
+	text-align:center;
+	.px2rem(padding-top,20);
+}
+
+.meituan-app-swiper{
+	z-index:1;
+	.px2rem(height,370)
+}
+.meituan-app-swiper .xz-swipe-selin,.meituan-app-swiper .xz-swipe-in{
+	width:.16rem;
+	height:.16rem;
+	border:none;
+	border-radius:0;
+	margin-bottom:0rem;
+}
+.meituan-app-swiper .xz-swipe-selin{
+	background-color:rgb(250,188,20);
+}
+.meituan-app-swiper .xz-swipe-in{
+	background-color:#ccc;
+}
+
+.swiper-app-title{
+	position:relative;
+	display:block;
+	font-size:.33rem;
+	.px2rem(margin-top,10);
+}
+
+.swiper-app-icon{
+	.px2rem(width,100);
+	position:relative;
+	margin:auto;
+	.px2rem(height,100);
+	border-radius:100%;
+	background-color:orange;
 }
 
 .searchbar-opacity-show .meituan-home-search-text{

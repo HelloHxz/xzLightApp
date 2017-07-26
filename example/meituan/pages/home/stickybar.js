@@ -38,7 +38,7 @@ class SearchBar extends React.Component {
 
   showDropDown(key,e){
      if(!this.root.state.sticky){
-      this.props.pageview.mainScroll.scrollarea.scrollTop = this.root.wrap.offsetTop - style.rem2px(1);
+      this.props.pageview.mainScroll.scrollarea.scrollTop = this.root.wrap.offsetTop;
     }
     setTimeout(()=>{
        if(this.props.store.dropdownSelectedKey===key){

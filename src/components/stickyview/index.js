@@ -22,7 +22,7 @@ class StickyView extends React.Component {
   checkSticky(stickyOffset){
     stickyOffset = stickyOffset||0;
     this.scrollView = this.props.pageview.scrollViewDict[this.props.scrollKey];
-    if(!this.scrollView||this.scrollView.isBad){
+    if(!this.scrollView){
       return;
     }
     if(this.state.disabled===true){
@@ -30,9 +30,10 @@ class StickyView extends React.Component {
       return;
     }
 
+
     this.scrollViewRect = this.scrollView.wrapperDom.getBoundingClientRect();
     if(this.wrap&&this.scrollView){
-      
+        
       var rect = this.wrap.getBoundingClientRect();
       if(rect.top-rect.height/3-stickyOffset<=this.scrollViewRect.top){
           
@@ -55,7 +56,7 @@ class StickyView extends React.Component {
         }
 
       }else{
-        if(this.state.sticky===true){
+        if(this.state.sticky===true||this.scrollView.isBad){
           this.scrollView.scrollViewCurStickyView = null;
           this.setSticky(false);
           return false;
@@ -67,7 +68,7 @@ class StickyView extends React.Component {
   }
 
   setSticky(isSticky){
-     if(this.state.sticky!==isSticky){
+     if(this.state.sticky!==isSticky||this.scrollView.isBad){
        if(isSticky){
          this.scrollView.scrollViewCurStickyView = this;
        }else{
@@ -77,7 +78,7 @@ class StickyView extends React.Component {
        }
         var scrollView = this.props.pageview.scrollViewDict[this.props.scrollKey];
         var children = this.state.children;
-        if(scrollView&&this.wrap){
+        if(scrollView&&this.wrap&&!this.scrollView.isBad){
           if(isSticky){
               this.scrollView.stickyWrapper.setState({
                 children:<div className='xz-stickyview-inner'>{this.state.children}</div>
@@ -93,7 +94,8 @@ class StickyView extends React.Component {
             instance:this
           });
         }
-        this.setState({
+
+        !this.scrollView.isBad&&this.setState({
           sticky:isSticky,
           children:children
         });
