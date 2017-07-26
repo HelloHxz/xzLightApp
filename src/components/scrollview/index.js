@@ -328,6 +328,15 @@ class ScrollView extends React.Component {
     return <div className={wrapperClassName}>{child}</div>;
   }
 
+  disableScroll(isDisable){
+    var className = this.isHorizontal?"xz-sv-scrollarea-h":"xz-sv-scrollarea-v";
+    if(isDisable){
+      className += " xz-sv-scrollarea-disabled";
+    }else{
+       
+    }
+    this.scrollarea.className = className;
+  }
 
   render() {
 

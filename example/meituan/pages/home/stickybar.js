@@ -39,7 +39,7 @@ class SearchBar extends React.Component {
   showDropDown(key,e){
     var scrollTop = this.root.wrap.offsetTop;
     if(this.props.pageview.mainScroll.props.disableCheckSticky===true){
-      scrollTop -= style.rem2px(1.06);
+      scrollTop -= style.rem2px(1.14);
     }
     this.props.pageview.mainScroll.scrollarea.scrollTop = scrollTop;
 
@@ -57,8 +57,20 @@ class SearchBar extends React.Component {
     //或者直接视具体情况写死变量  
     if(!this.StickyViewBottom){
       this.StickyViewBottom = this.props.pageview.mainScroll.stickyWrapper.rootDom.getBoundingClientRect().bottom;
+      if(this.props.pageview.mainScroll.props.disableCheckSticky===true){
+        this.StickyViewBottom+=style.rem2px(1.06);
+      }
     }
+    
     return this.StickyViewBottom;
+  }
+
+  onShow(){
+    this.props.pageview.mainScroll.disableScroll(true);
+  }
+
+  onHide(){
+    this.props.pageview.mainScroll.disableScroll(false);
   }
 
 
@@ -68,8 +80,11 @@ class SearchBar extends React.Component {
         <xz.StickyView 
         ref={(root)=>{this.root = root;}}
         scrollKey={this.props.scrollKey}
-        pageview={this.props.pageview}><xz.DropDownGroup 
+        pageview={this.props.pageview}>
+        <xz.DropDownGroup 
         className='meituan-home-ddg'
+        onShow={this.onShow.bind(this)}
+        onHide={this.onHide.bind(this)}
         repairTop = {this.repairTop.bind(this)}
         renderItem = {this.renderItem.bind(this)}
         selectedKey={this.props.store.dropdownSelectedKey}>

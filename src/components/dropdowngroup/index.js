@@ -59,7 +59,10 @@ class DropDownGroup extends React.Component {
     }
     var list = null;
     if(this.wrapper){
-      list = <DropDownList onBkClick={this.onBkClick.bind(this)} preSelectedKey={this.preSelectedKey} pageview={this.props.pageview} renderItem={this.props.renderItem} selectedKey={this.state.selectedKey} style={bkStyle} className={dropDonwListClassArr.join(" ")}/>;
+      list = <DropDownList 
+      onShow={this.props.onShow}
+      onHide={this.props.onHide}
+      onBkClick={this.onBkClick.bind(this)} preSelectedKey={this.preSelectedKey} pageview={this.props.pageview} renderItem={this.props.renderItem} selectedKey={this.state.selectedKey} style={bkStyle} className={dropDonwListClassArr.join(" ")}/>;
     }
     return (
       <div 

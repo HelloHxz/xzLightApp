@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 class ShopScroll extends React.Component {
   constructor(props) {
     super(props)
-    this.limit = style.rem2px(1);
+    this.limit = style.rem2px(.5);
      var u = navigator.userAgent;
     this.disableCheckSticky = u.indexOf("QYZone")>=0&&(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/));
   }
@@ -26,7 +26,7 @@ class ShopScroll extends React.Component {
         this.disableCheckScroll = false;
       },300)
     }
-    if(curS<=0&&!this.props.shopStore.UIisOpen){
+    if(curS<=this.limit&&!this.props.shopStore.UIisOpen){
       this.props.shopStore.UIisOpen=true;
      //优化防止抖动 在动画的时候 不再进行判断
       this.disableCheckScroll = true;

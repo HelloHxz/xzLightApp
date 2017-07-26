@@ -43,14 +43,23 @@ class DropDownGroupList extends React.Component {
       var classArr = ["xz-dropdown-item"];
       var bk = null;
       if(key===this.props.selectedKey){
-        var showClassName = (!this.props.preSelectedKey||this.props.preSelectedKey==="")?"xz-dd-item-show-ani":"xz-dd-item-show";
+        var isFirstShow = (!this.props.preSelectedKey||this.props.preSelectedKey==="");
+        var showClassName = isFirstShow?"xz-dd-item-show-ani":"xz-dd-item-show";
+        if(isFirstShow&&this.props.onShow){
+          this.props.onShow();
+        }
         classArr.push(showClassName);
         this.lastSelectedKey = key;
       }else{
-        var hideClassName = (this.lastSelectedKey===key&&(!this.props.selectedKey||this.props.selectedKey===""))?"xz-dd-item-hide-ani":"xz-dd-item-hide";
+        var lastHide = (this.lastSelectedKey===key&&(!this.props.selectedKey||this.props.selectedKey===""));
+        var hideClassName = lastHide?"xz-dd-item-hide-ani":"xz-dd-item-hide";
+        if(lastHide&&this.props.onHide){
+          this.props.onHide();
+        }
         classArr.push(hideClassName);
       }
-      child.push(<div onClick={this.itemClick.bind(this)} role='xx' key={"dd_"+key} className={classArr.join(" ")}>
+      child.push(<div 
+        onClick={this.itemClick.bind(this)} role='xx' key={"dd_"+key} className={classArr.join(" ")}>
         {this.itemDict[key]}</div>);
     }
     return <div className="xz-dropdown-inner">
