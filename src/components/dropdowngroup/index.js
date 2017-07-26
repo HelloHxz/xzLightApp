@@ -47,7 +47,15 @@ class DropDownGroup extends React.Component {
     }
     var bkStyle = {};
     if(this.wrapper){
-      bkStyle.top = this.wrapper.getBoundingClientRect().bottom+"px";
+      if(this.props.repairTop){
+        var ret = this.props.repairTop();
+        if(ret.toString().indexOf("px")<0){
+          ret = ret+"px";
+        }
+        bkStyle.top = ret;
+      }else{
+        bkStyle.top = this.wrapper.getBoundingClientRect().bottom+"px";
+      }
     }
     var list = null;
     if(this.wrapper){
