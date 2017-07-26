@@ -24,7 +24,7 @@ class ScrollView extends React.Component {
     this.isHorizontal = direction.toLowerCase()!=="vertical";
     this.limitOffset = this.props.limitOffset||(!this.isHorizontal?Style.screen.height:Style.screen.width)*.1;
 
-    this.isBad = props.disableCheckSticky||false;
+    this.disableCheckSticky = props.disableCheckSticky||false;
     this.config = {
       touchkey:"pageX",
       otherToucKey:"pageY"
@@ -242,7 +242,7 @@ class ScrollView extends React.Component {
     });
 
     if(this.props.scrollKey||this.props.onScrollEnd||this.props.onScrollToTail){
-      if(!this.isBad){
+      if(!this.disableCheckSticky){
         this._checkSticky();
       }
       if(this.scrollEndTimeoutId){

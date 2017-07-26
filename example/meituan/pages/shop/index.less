@@ -2,13 +2,40 @@
 
 .meituan-header{
 	height:1.2rem;
-	position:relative;
-	border-bottom:1px solid #bbb;
+	position:absolute;
+	top:0;
+	width:100%;
+	z-index:2;
 }
 .meituan-shop-topview{
-	height:2.2rem;
+	height:3.4rem;
+	position:relative;
 	z-index:1;
 	background-color:#eee;
+	padding-top:1.2rem;
+		background-repeat:no-repeat;
+	background-size:100%;
+}
+.meituan-shop-header{
+	background-color:#fff;
+	border-bottom:1px solid #bbb;
+}
+
+.meituan-top-content{
+	position:relative;
+	color:#fff;
+	z-index:3;
+}
+
+.meituan-shop-topview:before{
+	content:"";
+	position:absolute;
+	z-index:1;
+	top:0;
+	background-color:rgba(0,0,0,.66);
+	left:0;
+	right:0;
+	bottom:0;
 }
 .meituan-shop-bottomview{
 	position:absolute;
@@ -30,6 +57,7 @@
 
 .meitu-shop-segment{
 	height:1.2rem;
+	z-index:2;
 	border-bottom:1px solid #bbb;
 }
 .meitu-shop-segment .xz-segment-selected-item{
@@ -75,11 +103,12 @@
 }
 .meituan-diancai-leftlist{
 	font-size:.35rem;
+	padding-bottom:2rem;
 }
 .meituan-diancai-leftlist li{
 	padding-left:.2rem;
-	padding-top:.3rem;
-	padding-bottom:.3rem;
+	padding-top:.4rem;
+	padding-bottom:.4rem;
 	padding-right:.2rem;
 	border-bottom:1px solid #ccc;
 	
@@ -109,7 +138,7 @@
 }
 
 .meituan-diancai-rightlist{
-	padding:.2rem;
+	padding:.2rem .2rem 1.4rem .2rem;
 }
 .meituan-diancai-right .xz-scroll-sticky-wrapper{
 	padding-left:.2rem;
@@ -121,6 +150,15 @@
 	position:relative;
 	background-color:#fff;
 	padding-left:.24rem;
+}
+
+.meituan-shop-bottom-bar{
+	position:absolute;
+	bottom:0;
+	width:100%;
+	z-index:3;
+	height:1.2rem;
+	background-color:rgba(0,0,0,.83);
 }
 
 

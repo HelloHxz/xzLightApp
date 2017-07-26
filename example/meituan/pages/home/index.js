@@ -39,6 +39,8 @@ class PageView extends React.Component {
 
   constructor(props) {
     super(props)
+    var u = navigator.userAgent;
+    this.disableCheckSticky = u.indexOf("QYZone")>=0&&(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/));
   }
   
 
@@ -94,6 +96,7 @@ class PageView extends React.Component {
     return (<div>
       <SearchBar store={this.props.homeStore}/>
       <xz.ScrollView
+      disableCheckSticky={this.disableCheckSticky}
       ref={(scroll)=>{this.mainScroll = scroll;}}
       className='meituan-home-scroll'
       stickyOffset = {style.rem2px(1.06)}
@@ -105,10 +108,7 @@ class PageView extends React.Component {
       onRefresh = {this.onRefresh.bind(this)}
       >
        <TopSwiper pageview={this}/>
-        
-         <xz.Swiper className='meituan-app-swiper' cache={true} datasource={appSwiperData} renderItem={this.renderAppSwiper.bind(this)}/>
-         
-      
+       <xz.Swiper className='meituan-app-swiper' cache={true} datasource={appSwiperData} renderItem={this.renderAppSwiper.bind(this)}/>
       <StickyBar store={this.props.homeStore} pageview={this} scrollKey="meituan-home-scroll"/>
         <List pageview={this} store={this.props.homeStore}/>
         <div style={{height:"30rem"}}></div>

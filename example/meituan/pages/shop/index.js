@@ -3,6 +3,9 @@ import "./index.less"
 import {xz,Navigation,style} from "../../../../index"
 import BottomView from './components/bottomview'
 import Store from './store'
+import BottomBar from './components/bottombar'
+import Header from './components/header'
+import TopView from './components/topview'
 
 
 class PageView extends React.Component {
@@ -32,9 +35,11 @@ class PageView extends React.Component {
   }
   
   render() {
-    return (<div><div className='meituan-header'></div>
-    	<div className='meituan-shop-topview'></div>
+    return (<div>
+      <Header shopStore={this.props.shopStore}/>
+      <TopView/>
     	<BottomView pageview={this} shopStore={this.props.shopStore}/>
+      <BottomBar/>
     	</div>);
   }
 }

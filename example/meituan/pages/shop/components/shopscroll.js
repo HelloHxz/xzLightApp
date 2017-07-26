@@ -7,6 +7,8 @@ class ShopScroll extends React.Component {
   constructor(props) {
     super(props)
     this.limit = style.rem2px(1);
+     var u = navigator.userAgent;
+    this.disableCheckSticky = u.indexOf("QYZone")>=0&&(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/));
   }
 
   onScroll(params){
@@ -41,6 +43,7 @@ class ShopScroll extends React.Component {
       scrollKey.scrollKey = this.props.scrollKey;
     }
     return (<xz.ScrollView 
+      disableCheckSticky={this.disableCheckSticky}
       ref={(instance)=>{
         if(this.props.role==='diancairight'){
           this.props.pageview.diancaiRightScroll = instance;

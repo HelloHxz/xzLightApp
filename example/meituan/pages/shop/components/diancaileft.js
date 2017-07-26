@@ -34,6 +34,7 @@ class DianCaiLeftList extends React.Component {
         }
       }} onClick={this.leftClick.bind(this,itemData)} className={itemClassName} key={itemData.id}><span>{itemData.name}</span></li>);
     } 
+
     return (
     	<ul className='meituan-diancai-leftlist'>
         {children}
