@@ -16,24 +16,27 @@ class ShopScroll extends React.Component {
     if(this.disableCheckScroll === true){
       return;
     }
+      var preS = params.scroller.scrollTop;
+      setTimeout(()=>{
+        var curS = params.scroller.scrollTop;
+        if(curS>preS&&curS>=this.limit&&this.props.shopStore.UIisOpen){
+          this.props.shopStore.UIisOpen=false;
+          //优化防止抖动 在动画的时候 不再进行判断
+          this.disableCheckScroll = true;
+          setTimeout(()=>{
+            this.disableCheckScroll = false;
+          },300)
+        }
+        if(curS<=preS&&curS<=1&&!this.props.shopStore.UIisOpen){
+          this.props.shopStore.UIisOpen=true;
 
-    var curS = params.scroller.scrollTop;
-    if(curS>=this.limit&&this.props.shopStore.UIisOpen){
-      this.props.shopStore.UIisOpen=false;
-     //优化防止抖动 在动画的时候 不再进行判断
-      this.disableCheckScroll = true;
-      setTimeout(()=>{
-        this.disableCheckScroll = false;
-      },300)
-    }
-    if(curS<=this.limit&&!this.props.shopStore.UIisOpen){
-      this.props.shopStore.UIisOpen=true;
-     //优化防止抖动 在动画的时候 不再进行判断
-      this.disableCheckScroll = true;
-      setTimeout(()=>{
-        this.disableCheckScroll = false;
-      },300)
-    }
+          //优化防止抖动 在动画的时候 不再进行判断
+          this.disableCheckScroll = true;
+          setTimeout(()=>{
+            this.disableCheckScroll = false;
+          },300)
+        }
+      },100);
   }
   
   render() {
