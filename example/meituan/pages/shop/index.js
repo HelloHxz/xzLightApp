@@ -6,6 +6,7 @@ import Store from './store'
 import BottomBar from './components/bottombar'
 import Header from './components/header'
 import TopView from './components/topview'
+import BottomPopLayer from './components/bottompoplayer'
 
 
 class PageView extends React.Component {
@@ -19,7 +20,6 @@ class PageView extends React.Component {
   }
 
   componentWillUnmount(){
-    console.log(this.props.shopStore) ;
   }
 
   renderIndicator(params){
@@ -39,7 +39,8 @@ class PageView extends React.Component {
       <Header shopStore={this.props.shopStore}/>
       <TopView/>
     	<BottomView pageview={this} shopStore={this.props.shopStore}/>
-      <BottomBar/>
+      <BottomBar shopStore={this.props.shopStore}/>
+      <BottomPopLayer shopStore={this.props.shopStore}/>
     	</div>);
   }
 }

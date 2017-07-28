@@ -13,7 +13,7 @@
 	z-index:1;
 	background-color:#eee;
 	padding-top:1.2rem;
-		background-repeat:no-repeat;
+	background-repeat:no-repeat;
 	background-size:100%;
 }
 .meituan-shop-header{
@@ -99,6 +99,7 @@
 	height:100%;
 	width:100%;
 	display:flex;
+	top:1px;
 	flex-direction:row;
 }
 .meituan-diancai-leftlist{
@@ -108,6 +109,7 @@
 .meituan-diancai-leftlist li{
 	padding-left:.2rem;
 	padding-top:.4rem;
+	position:relative;
 	padding-bottom:.4rem;
 	padding-right:.2rem;
 	border-bottom:1px solid #ccc;
@@ -143,6 +145,41 @@
 .meituan-diancai-right .xz-scroll-sticky-wrapper{
 	padding-left:.2rem;
 }
+.mt-dc-left-cou{
+	position:absolute;
+	display:block;
+	right:.1rem;
+	top:.1rem;
+	text-align:center;
+	height:.4rem;
+	width:.4rem;
+	line-height:.4rem;
+	font-size:.3rem;
+	border-radius:100%;
+	background-color:red;
+	color:#fff;
+}
+.mt-dc-row-pj{
+	color:#adadad;
+	font-size:.35rem;
+	position:relative;
+}
+.mt-dc-row-num{
+	position:relative;
+	display:flex;
+	flex-direction:row;
+	justify-content:space-between;
+}
+.mt-dc-row-money .now{
+	color:red;
+	font-size:.45rem;
+}
+.mt-dc-row-money .old{
+	color:#aaa;
+	text-decoration: line-through;
+	font-size:.35rem;
+	margin-left:.14rem;
+}
 .mt-dc-secheader{
 	height:.8rem;
 	line-height:.8rem;
@@ -156,11 +193,35 @@
 	position:absolute;
 	bottom:0;
 	width:100%;
-	z-index:3;
+	z-index:103;
 	height:1.2rem;
 	background-color:rgba(0,0,0,.83);
 }
+.mt-sp-allc{
+	position:absolute;
+	left:1.5rem;
+	width:.5rem;
+	height:.5rem;
+	line-height:.5rem;
+	text-align:center;
+	background-color:#6f6a6a;
+	border-radius:100%;
+	top:-.5rem;
+	color:#fff;
+	background-color:red;
+	z-index:5;
+}
 
+.mt-s-b-btn{
+	position:absolute;
+	left:.5rem;
+	width:1.4rem;
+	height:1.4rem;
+	background-color:#6f6a6a;
+	border-radius:100%;
+	top:-.5rem;
+	z-index:3;
+}
 
 
 .mt-dc-secheader:before{

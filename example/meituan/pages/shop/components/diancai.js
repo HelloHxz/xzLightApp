@@ -14,7 +14,7 @@ class Diancai extends React.Component {
   componentDidMount(){
     setTimeout(()=>{
      this.props.shopStore.loadData();
-    },100)
+    },300)
   }
 
   

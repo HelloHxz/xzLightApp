@@ -1,0 +1,49 @@
+@import url('../../../../../node_modules/xz-lightapp/css/common.less');
+
+.meituan-num-wrapper{
+	width:2rem;
+	position:relative;
+	height:.6rem;
+	text-align:center;
+	line-height:.6rem;
+}
+
+.meituan-num-val{
+	
+}
+
+.meituan-num-plus,.meituan-num-subtra{
+	height:.6rem;
+	width:.6rem;
+	right:0;
+	text-align:center;
+	border-radius:100%;
+	
+	position:absolute;
+	font-weight:bold;
+	
+	font-size:.5rem;
+	top:0;
+}
+
+.meituan-num-plus{
+	line-height:.52rem;
+	color:#fff;
+	background-color:rgb(0,138,213);
+}
+.meituan-num-subtra-hide{
+	visibility:hidden;
+	transform:translate3d(0,0,0) rotate(0deg);
+}
+.meituan-num-subtra-show{
+	transform:translate3d(-1.4rem,0,0) rotate(-180deg);
+	visibility:visible;
+}
+.meituan-num-subtra{
+	line-height:.45rem;
+	transition:transform .3s ease,visibility .3s ease;
+	color:rgb(0,138,213);
+	border:.04rem solid rgb(0,138,213);
+}
+
+
