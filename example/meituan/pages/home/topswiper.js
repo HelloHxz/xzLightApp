@@ -26,7 +26,7 @@ class TopSwiper extends React.Component {
   }
 
   renderSwiperItem(params){
-    return (<xz.Image className="index-top-swipe-image" src={params.data.src} key={"xx"+params.index}></xz.Image>);
+    return (<xz.Image className="index-top-swipe-image" src={params.data.src} key={"xx"+params.index}/>);
   }
 
   render() {

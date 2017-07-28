@@ -475,7 +475,8 @@ class Swiper extends React.Component {
         }
       }
     }
-    return (<div ref={(outerWrapper)=>{this.wrapInit(outerWrapper)}} {...toucheEvent} className={classNameArr.join(" ")}>{children}
+    return (<div ref={(outerWrapper)=>{this.wrapInit(outerWrapper)}} {...toucheEvent} className={classNameArr.join(" ")}>
+      {children}
       {this._renderIndicator()}
       </div>);
   }

@@ -45,7 +45,10 @@ class ImageCom extends React.Component {
       _this.renderDefault();
       _this.loadDone();
     }
-    image.src = src;
+    //靠！！！解决safri 回退BUG
+    setTimeout(()=>{
+      image.src = src;
+    },0)
   }
 
   loadDone(){

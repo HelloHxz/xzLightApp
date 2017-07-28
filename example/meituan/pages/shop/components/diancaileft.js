@@ -29,12 +29,11 @@ class LeftRow extends React.Component{
       var countLable = null;
       var count = this.props.shopStore.getOneClassCount(itemId);
       if(count>0){
-        countLable = <span className='mt-dc-left-cou'>{count}</span>;
+         countLable = <span className='mt-dc-left-cou'>{count}</span>;
       }
     return <li data-id={itemId} ref={(instance)=>{
         if(instance){
           if(instance.getAttribute("data-id")===this.props.shopStore.selectedLeftID){
-            instance.scrollIntoViewIfNeeded();
           }
         }
       }} onClick={this.leftClick.bind(this,this.props.itemData)} className={itemClassName}><span>{this.props.itemData.name}

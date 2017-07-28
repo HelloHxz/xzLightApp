@@ -7,6 +7,7 @@ class ShopScroll extends React.Component {
   constructor(props) {
     super(props)
     this.limit = style.rem2px(.5);
+    this.rad = Math.random()*1000;
      var u = navigator.userAgent;
     this.disableCheckSticky = u.indexOf("QYZone")>=0&&(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/));
   }
@@ -16,27 +17,26 @@ class ShopScroll extends React.Component {
     if(this.disableCheckScroll === true){
       return;
     }
-      var preS = params.scroller.scrollTop;
+    var preS = this.preScroll||0;
+    var curS = params.scroller.scrollTop;
+    if(curS>preS&&curS>=this.limit&&this.props.shopStore.UIisOpen){
+      this.props.shopStore.UIisOpen=false;
+      //优化防止抖动 在动画的时候 不再进行判断
+      this.disableCheckScroll = true;
       setTimeout(()=>{
-        var curS = params.scroller.scrollTop;
-        if(curS>preS&&curS>=this.limit&&this.props.shopStore.UIisOpen){
-          this.props.shopStore.UIisOpen=false;
-          //优化防止抖动 在动画的时候 不再进行判断
-          this.disableCheckScroll = true;
-          setTimeout(()=>{
-            this.disableCheckScroll = false;
-          },300)
-        }
-        if(curS<=preS&&curS<=1&&!this.props.shopStore.UIisOpen){
-          this.props.shopStore.UIisOpen=true;
+        this.disableCheckScroll = false;
+      },300)
+    }
+    if(curS<preS&&curS<=1&&!this.props.shopStore.UIisOpen){
+      this.props.shopStore.UIisOpen=true;
 
-          //优化防止抖动 在动画的时候 不再进行判断
-          this.disableCheckScroll = true;
-          setTimeout(()=>{
-            this.disableCheckScroll = false;
-          },300)
-        }
-      },100);
+      //优化防止抖动 在动画的时候 不再进行判断
+      this.disableCheckScroll = true;
+      setTimeout(()=>{
+        this.disableCheckScroll = false;
+      },300)
+    }
+    this.preScroll =  params.scroller.scrollTop;
   }
   
   render() {

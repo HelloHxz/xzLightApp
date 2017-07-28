@@ -71,7 +71,7 @@ class PageView extends React.Component {
 
 
   SwiperAppItemClick(){
-    this.props.pagemanager.go("shop");
+    this.props.pagemanager.go("shop",{test:"d"});
 
   }
   renderAppSwiper(params){
