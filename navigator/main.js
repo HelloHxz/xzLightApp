@@ -241,9 +241,9 @@ class Navigation extends React.Component {
     }
 
     //当没有出发hashchange的时候
-    // setTimeout(()=>{
-    //   this.isForward = false;
-    // },200);
+    setTimeout(()=>{
+      this.isForward = false;
+    },200);
 
   }
 
