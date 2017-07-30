@@ -14,9 +14,9 @@ class ShopScroll extends React.Component {
 
   onScroll(params){
     //优化防止抖动 在动画的时候 不再进行判断
-    if(this.disableCheckScroll === true){
-      return;
-    }
+    // if(this.disableCheckScroll === true){
+    //   return;
+    // }
     var preS = this.preScroll||0;
     var curS = params.scroller.scrollTop;
     if(curS>preS&&curS>=this.limit&&this.props.shopStore.UIisOpen){

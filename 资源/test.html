@@ -1,0 +1,39 @@
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+
+	function base() {
+        this.member = " dnnsun_Member111";
+        this.method = function() {
+            window.alert(this.member);
+        }
+   }
+
+   function child(){
+   		base.call(this);
+   }
+
+
+   function extend(subClass,baseClass){
+   	 	function inheritance() {}
+        inheritance.prototype = baseClass.prototype;
+        subClass.prototype = new inheritance();
+        // subClass.prototype.constructor = subClass;
+        // subClass.baseConstructor = baseClass;
+        // subClass.superClass = baseClass.prototype;
+   }
+
+   extend(child,base)
+
+
+
+   var c = new child();
+   alert(c.member);
+   console.log(c.member)
+</script>
+</head>
+<body>
+
+</body>
+</html>

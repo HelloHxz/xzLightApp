@@ -87,9 +87,12 @@ return {
 
     contentBase: path.resolve(__dirname, 'dist'),
     // match the output path
-
-    publicPath: isProd?'./':'/'
-    // match the output `publicPath`
+    publicPath: isProd?'./':'/',
+    setup(app){  //模拟数据
+      app.get('/getJSON', function(req, res) {
+          res.json({ name: 'vajoy' });
+      });
+    }
   },
 
   module: {
