@@ -9,7 +9,7 @@ var siwperData = [
  {apps:[]},
  {apps:[
     {name:"日历",icon:"",key:"calendar"},
-    {name:"邮件",icon:"",key:"email"},
+    {name:"迅雷有料",icon:"",key:"youliao"},
     {name:"美团",icon:"",key:"meituan"},
     {name:"QQ",icon:"",key:"qq"},
     {name:"WeiChat",icon:"",key:"weichat"},
@@ -18,6 +18,7 @@ var siwperData = [
     {name:"京东",icon:"",key:"site1"},
   ]},
  {apps:[
+  {name:"邮件",icon:"",key:"email"},
     {name:"手机淘宝",icon:"",key:"site1"},
     {name:"短信",icon:"",key:"site1"},
     {name:"饿了么",icon:"",key:"site1"},
@@ -39,11 +40,10 @@ class DeskTop extends React.Component {
   constructor(props) {
     super(props)
   }
-
   renderSwiperItem(params){
     var child = [];
     if(params.index===0){
-      child.push(<div key="main">todo... searchpage</div>);
+      child.push(<div key="main-search">todo... searchpage</div>);
     }else{
       var appsData = params.data.apps;
       var apps = [];

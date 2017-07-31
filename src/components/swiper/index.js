@@ -75,7 +75,12 @@ class Swiper extends React.Component {
 
     }
 
-    this.startInterval();
+    var datasource = props.datasource||[];
+    if(datasource.length>1){
+      this.startInterval();
+    }else{
+      this.stopInterval();
+    }
   }
 
   goNextByStep(step){
@@ -359,7 +364,8 @@ class Swiper extends React.Component {
         }
       }
     }
-    
+
+
     if(sourceIndex!==-1){
       childrenItem = this.cacheDict[sourceIndex.toString()];
       if((this.props.lazyrender&&index===1&&!childrenItem)||!this.props.lazyrender){
