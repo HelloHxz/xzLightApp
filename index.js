@@ -7,6 +7,7 @@ import React from 'react';
 
 var init = false;
 var toast = null;
+
 var Navigation = {
 		start(config){
 			style._shipei();

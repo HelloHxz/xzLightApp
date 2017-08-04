@@ -13,7 +13,7 @@ class PageView extends React.Component {
 
 
   render() {
-    return (<RefreshScroll/>);
+    return (<RefreshScroll><br/><br/>流行页面</RefreshScroll>);
   }
 }
 export default PageView;

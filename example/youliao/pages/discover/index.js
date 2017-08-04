@@ -10,6 +10,14 @@ class PageView extends React.Component {
     super(props)
   }
 
+  onPageBeforeLeave(){
+    this.topswiper&&this.topswiper.stop();
+  }
+
+  onPageResume(){
+    this.topswiper&&this.topswiper.start();
+  }
+
 
   render() {
     return (<div>

@@ -20,6 +20,7 @@ export default {
 			config={config}/>
 			</div>,
    		 document.getElementById('xz-lightapp-root'));
+
 	},
 	PageContainer:require("./container/pageContainer").default
 

@@ -18,7 +18,7 @@
     height:.12rem;
     border-radius: .06rem;
     margin-left:.1rem;
-    background: lightgreen;
+    background: #fff;
 }
 
 .youliao-loading{
@@ -36,7 +36,7 @@
     height:.4rem;
     border-radius: .05rem;
     margin-left:.1rem;
-    background: lightgreen;
+    background: #fff;
 	animation: youliaoload .7s ease infinite;
 }
 @-webkit-keyframes youliaoload{
@@ -46,6 +46,9 @@
     50%{
         height: .8rem;
     }
+}
+.youliao-loading span:nth-child(1),.youliao-preloading span:nth-child(1){
+	background-color:red;
 }
 .youliao-loading span:nth-child(2){
 	animation-delay:0.2s;
@@ -58,4 +61,8 @@
 }
 .youliao-loading span:nth-child(5){
 	animation-delay:0.8s;
+	background-color:lightblue;
+}
+.youliao-preloading span:nth-child(5){
+	background-color:lightblue;
 }

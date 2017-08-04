@@ -18,7 +18,7 @@ class TabBar extends React.Component {
   }
 
   showPage(){
-    
+    this.props.pagemanager.go("add");
   }
 
 

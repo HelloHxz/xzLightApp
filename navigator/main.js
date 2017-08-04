@@ -80,6 +80,7 @@ var isWantToPreventRoute = false,isReplaceGo=false,splitchar='_',systemseedname=
 
 class Navigation extends React.Component {
   constructor(props) {
+
     super(props)
     this.routeStack = [];
     this.seed = this.getMaxSeed();
@@ -323,6 +324,7 @@ class Navigation extends React.Component {
 
   /*seed格式  id_preid*/
   hashChange(){
+
     if(isWantToPreventRoute){
       isWantToPreventRoute = false;
       this.firstLoadToChangeHash = false;
@@ -516,7 +518,6 @@ class Navigation extends React.Component {
     isReplaceGo = false;
 
     this.setState({pages:pages,isDestory:false});
-    
     if(this.firstLoadToChangeHash){
         var p = this.getParamsFromUrl()||{};
         isWantToPreventRoute = true;

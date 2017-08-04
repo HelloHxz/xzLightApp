@@ -8,6 +8,7 @@ Navigation.start({
 		me:require("./pages/me").default,
 		discover:require("./pages/discover").default,
 		message:require("./pages/message").default,
+		add:require("./pages/add").default,
 	},
 });
 

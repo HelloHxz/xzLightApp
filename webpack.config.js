@@ -5,6 +5,11 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
+var config = {
+  host:null,
+  port:8080
+}
+
 
 function getEntryAndHtmlPlugin(){
   var siteArr = ["site1","qq","calendar","desktop","email","zhifubao","weibo","weichat","meituan",'youliao'];
@@ -57,8 +62,8 @@ module.exports = function (env) {
   
   
   if(!isProd){
-    var ip = arguments["1"].host||"localhost";
-    var port =  arguments["1"].port;
+    var ip =config.host||"localhost";
+    var port =  config.port||8080;
     var url = ip+":"+port;
     url = "http://"+url;
     entry.dev_patch = 'react-hot-loader/patch';

@@ -445,7 +445,8 @@ class Swiper extends React.Component {
           continue;
         }
         var key = 'xz-swiper-item-'+sourceIndex;
-        if(this.sourceArr[0]===this.sourceArr[2]&&i!==1){
+        if(this.sourceArr[0]===this.sourceArr[2]){
+          //&&i!==1
           key+="_"+wrapIndex;
         }
         
