@@ -2,7 +2,7 @@ require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
 
-var oldFetchfn = fetch; //拦截原始的fetch方法
+var oldFetchfn = fetch; 
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -15,13 +15,16 @@ function checkStatus(response) {
   };
 }
 
-var NewFetch = function(url, opts){//定义新的fetch方法，封装原有的fetch方法
+var NewFetch = function(url, opts){
 	opts = opts||{};
 	if(["include","same-origin","omit"].indexOf(opts.credentials)<0){
 		opts.credentials = "include";
 	}
-	if(!opts["Content-Type"]){
-		opts["Content-Type"] = 'application/json';
+	if(opts.method&&opts.method.toLowerCase()==='post'){
+		opts.headers=opts.headers||{};
+		if(!opts.headers["Content-Type"]){
+			opts.headers["Content-Type"] = 'application/json';
+		}
 	}
     var fetchPromise = oldFetchfn(url, opts);
     var timeoutPromise = new Promise(function(resolve, reject){
@@ -39,5 +42,5 @@ var NewFetch = function(url, opts){//定义新的fetch方法，封装原有的fe
 
 
 export default (url,config)=>{
-	return NewFetch(url, config);
+	return  NewFetch(url, config);
 }

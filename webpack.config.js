@@ -3,7 +3,7 @@ const webpack = require('webpack');
 var fs= require('fs');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-
+var bodyParser = require('body-parser')
 
 var config = {
   host:null,
@@ -81,7 +81,6 @@ return {
     path: path.resolve(__dirname, 'dist'),
 
     publicPath: isProd?'./':'/'
-    // necessary for HMR to know where to load the hot update chunks
   },
 
   devtool: isProd ? 'hidden-source-map' : 'eval',
@@ -93,13 +92,28 @@ return {
     contentBase: path.resolve(__dirname, 'dist'),
     // match the output path
     publicPath: isProd?'./':'/',
-    setup(app){  //模拟数据
+    setup(app){  
+
+      // parse application/x-www-form-urlencoded
+      app.use(bodyParser.urlencoded({ extended: false }))
+
+      // parse application/json
+      app.use(bodyParser.json())
+
+      app.post('/postJSON', function(req, res) {
+          // console.log(req.query.id);
+          res.json(req.body||{});
+      });
+
       app.get('/getJSON', function(req, res) {
           setTimeout(()=>{
-            res.status(500)
+            // res.status(500)
+            // console.log(req.query.id);
             res.json({ name: 'vajoy' });
           },3000);
       });
+
+
     }
   },
 

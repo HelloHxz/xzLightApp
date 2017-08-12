@@ -1,5 +1,5 @@
 import {observable, autorun} from 'mobx';
-import {fetch} from "../../../index"
+import Fetch from '../../../utils/fetch' 
 class IndexStore {
 	
     @observable searchBarStatus = 'init';// show hide
@@ -22,10 +22,15 @@ class IndexStore {
     		return;
     	}
     	this.isInLoading = true;
-    	setTimeout(()=>{
-    		this.ListDataSource = this.ListDataSource.concat([{},{},{},{},{}]);
-    		this.isInLoading = false;
-    	},2000)
+        Fetch('./getJSON',{timeout:10000})
+        .then((res)=>{return res.json()})
+        .then((data)=>{
+            this.ListDataSource = this.ListDataSource.concat([{},{},{},{},{}]);
+            this.isInLoading = false;
+        }).catch((e)=>{
+            this.isInLoading = false;
+        });
+
     }
 }
 
