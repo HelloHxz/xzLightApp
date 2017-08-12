@@ -6,46 +6,26 @@ import Fetch from '../../utils/fetch'
 
 
 
+async function getData(){
+	try {
+	  let response = await Fetch('./getJSON',{timeout:10000});
+	  let data = response.json();
+	  data.then((re)=>{
+			console.log(re);
+	  });
+	} catch(e) {
+	  console.error(e);
+	}
+}
 
 
-// function deleteData() {
-//   return fetch("./getJSON", {
-//     method: 'GET',
-//   })
-//   .then(function(response) { return response.json(); })
-//   .then(response => {
-//   	console.log(response);
-//   });
-// }
+getData();
 
-// deleteData();
+async function f() {
+  return await 123;
+}
 
-
-
-
-// async function getData(){
-// 	try {
-		
-// 	  let response = await Fetch('./getJSON');
-
-// 	  console.log("--->>");
-
-// 	  let data = response.json();
-// 	  console.log(data);
-// 	  return response;
-// 	} catch(e) {
-// 	  console.log("Oops, error", e);
-// 	}
-// }
-
-
-// getData();
-
-// async function f() {
-//   return await 123;
-// }
-
-// f().then(v => console.log(v))
+f().then(v => console.log(v))
 
 style._shipei();
 ReactDOM.render(<DeskTop/>,

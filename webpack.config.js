@@ -96,6 +96,7 @@ return {
     setup(app){  //模拟数据
       app.get('/getJSON', function(req, res) {
           setTimeout(()=>{
+            res.status(500)
             res.json({ name: 'vajoy' });
           },3000);
       });
