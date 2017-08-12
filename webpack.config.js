@@ -95,7 +95,9 @@ return {
     publicPath: isProd?'./':'/',
     setup(app){  //模拟数据
       app.get('/getJSON', function(req, res) {
-          res.json({ name: 'vajoy' });
+          setTimeout(()=>{
+            res.json({ name: 'vajoy' });
+          },3000);
       });
     }
   },

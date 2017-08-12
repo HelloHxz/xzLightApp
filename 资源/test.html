@@ -1,44 +1,41 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<title></title>
-	<script type="text/javascript">
+    <meta charset="UTF-8">
+    <title>IPHONE DESKTOP</title>
+    <meta charset="UTF-8">
+    <meta name="wap-font-scale" content="no">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+    <style type="text/css">
+      a:active{
+        color:red;
+      }
 
-	function base() {
-        this.member = " dnnsun_Member111";
-        this.method = function() {
-            window.alert(this.member);
-        }
-   }
+    </style>
+    <script type="text/javascript">
 
-   function child(){
-   		base.call(this);
-   }
-
-
-   function extend(subClass,baseClass){
-   	 	function inheritance() {}
-        inheritance.prototype = baseClass.prototype;
-        subClass.prototype = new inheritance();
-        // subClass.prototype.constructor = subClass;
-        // subClass.baseConstructor = baseClass;
-        // subClass.superClass = baseClass.prototype;
-   }
-
-   extend(child,base)
-
-
-
-   var c = new child();
-   console.log(c.member)
-</script>
+    function test(){
+      document.getElementById("xz-lightapp-root").click();
+    }
+    </script>
 </head>
 <body>
-<div>
-  
-<div style='position:relative;height:100px;width:100px;background-color:red;margin-top:10px;margin-bottom: 10px'></div>
-<div style='position:relative;height:100px;width:100px;background-color:green;margin-top:10px;margin-bottom: 10px'></div>
-<div style='position:relative;height:100px;width:100px;background-color:yellow;margin-top:10px;margin-bottom: 10px'></div>
-
-</div>
+  <a id="xz-lightapp-root">
+      aa
+  </a>
+  <button onclick="test()">sdsds</button>
 </body>
 </html>
+
+
+
