@@ -68,7 +68,11 @@ class ScrollView extends React.Component {
         return;
       }
     }
-    if(this.isInLoading){return;}
+    if(this.isInLoading){
+       e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+      return;}
     this.isInLoading = false;
     this.canRefresh = false;
     this.touchAction = "";
@@ -90,8 +94,12 @@ class ScrollView extends React.Component {
   }
 
   onTouchMove(e){
-    
-    if(this.isInLoading){return;}
+    if(this.isInLoading){
+      e.preventDefault();
+      e.stopPropagation();
+      e.nativeEvent.stopImmediatePropagation();
+      return;
+    }
     this.inTouch = true;
       var touch = e.nativeEvent.touches[0];
       var curY = touch[this.config.touchkey];
@@ -174,10 +182,7 @@ class ScrollView extends React.Component {
       if(this.canRefresh){
         this.isInLoading = true;
         this.setState({offset:this.limitOffset,animate:true,refreshState:"loading"});
-        setTimeout(()=>{
-          this.refreshEnd();
-          this.props.onRefresh();
-        },1000);
+        this.props.onRefresh();
       }else{
         this.refreshEnd();
       }
@@ -347,11 +352,9 @@ class ScrollView extends React.Component {
   }
 
   componentWillReceiveProps(nextPros){
-    if(nextPros.refreshState!==this.state.refreshState){
       this.setState({
         refreshState:nextPros.refreshState
       });
-    }
   }
 
   render() {
@@ -380,6 +383,8 @@ class ScrollView extends React.Component {
     
     var classNameArr = ['xz-scrollview'];
     classNameArr.push(this.isHorizontal?"xz-scrollview-h":"xz-scrollview-v");
+    var scrollAreaClassName = this.isHorizontal?["xz-sv-scrollarea-h"]:["xz-sv-scrollarea-v"];
+
     if(this.props.className){
       classNameArr.push(this.props.className);
     }else{
@@ -393,6 +398,7 @@ class ScrollView extends React.Component {
       if(this.state.refreshState==='loading'){
           offset = this.limitOffset;
           this.isInLoading = true;
+          scrollAreaClassName.push("xz-sv-scrollarea-disabled");
           needAnimate = true;
       }else{// if(this.state.refreshState==='done')
           offset = -1;
@@ -438,7 +444,6 @@ class ScrollView extends React.Component {
 
     var innerClassName = this.isHorizontal?"xz-scrollview-inner-h":"xz-scrollview-inner-v";
 
-    var scrollAreaClassName = this.isHorizontal?"xz-sv-scrollarea-h":"xz-sv-scrollarea-v";
     this.stickview = null;
     if(this.isHorizontal){
 
@@ -456,7 +461,7 @@ class ScrollView extends React.Component {
         this.innerWrapperDom = wrapper;
       }}>
         {refreshControl}
-        <div {...scrollEvent} className={scrollAreaClassName}
+        <div {...scrollEvent} className={scrollAreaClassName.join(" ")}
           ref={(instance)=>{this.scrollarea=instance;}}
         >
           {this.props.children}

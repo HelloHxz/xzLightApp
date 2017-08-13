@@ -17,6 +17,7 @@ class PageView extends React.Component {
 
   constructor(props) {
     super(props)
+    this.seed = 0;
   }
 
 
@@ -36,7 +37,12 @@ class PageView extends React.Component {
     },2400)
   }
 
-  onRefresh(){}
+  onRefresh(){
+    setTimeout(()=>{
+       this.seed +=1;
+      this.props.store.listRefreshState = "done"+this.seed;
+    },2400)
+  }
   render() {
     return (<div>
       <Popover store={this.props.store}/>
