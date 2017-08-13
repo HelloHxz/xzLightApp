@@ -1,5 +1,6 @@
 import React from "react"
 import "./index.less"
+import {observer} from 'mobx-react'
 import HomeStore from './store'
 import SearchBar from './searchbar'
 import StickyBar from './stickybar'
@@ -31,6 +32,8 @@ var appSwiperData = [
   ]
 ];
 
+
+@observer
 class PageView extends React.Component {
 
   static connectStore(){
@@ -39,6 +42,7 @@ class PageView extends React.Component {
 
   constructor(props) {
     super(props)
+    this.seed = 0;
     var u = navigator.userAgent;
     this.disableCheckSticky = u.indexOf("QYZone")>=0&&(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/));
   }
@@ -55,9 +59,7 @@ class PageView extends React.Component {
     }
   }
 
-  onRefresh(){
-
-  }
+ 
 
   onScroll(params){
     if(params.scroller.scrollTop<80&&!this.props.homeStore.searchBarIsOpacity){
@@ -92,10 +94,19 @@ class PageView extends React.Component {
   }
 
 
+  onRefresh(){
+    setTimeout(()=>{
+      this.seed+=1;
+      this.props.homeStore.refreshState = "done"+this.seed;
+    },2000)
+  }
+
+
   render() {
     return (<div>
       <SearchBar store={this.props.homeStore}/>
       <xz.ScrollView
+      refreshState={this.props.homeStore.refreshState}
       disableCheckSticky={this.disableCheckSticky}
       ref={(scroll)=>{this.mainScroll = scroll;}}
       className='meituan-home-scroll'

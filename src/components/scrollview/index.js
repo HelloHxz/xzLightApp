@@ -136,7 +136,7 @@ class ScrollView extends React.Component {
           if(this.diff>20){ 
             e.preventDefault();
             e.stopPropagation();
-            this.scrollarea.style["overflow"] = "hidden";
+            this.scrollarea.classList.add("xz-sv-scrollarea-disabled");
           }
           
           var pullOffsetY = (this.diff- this.startScrollValue)/3;
@@ -148,7 +148,7 @@ class ScrollView extends React.Component {
       if(this.diff<0&&this.props.onLoadMore){
       
         if(this.scrollHeightSize<=this.wrapperSize+this.scrollValue+Style.px2px(10)){
-          this.scrollarea.style["overflow"] = "hidden";
+          this.scrollarea.classList.add("xz-sv-scrollarea-disabled");
           e.preventDefault();
           e.stopPropagation();
           this.touchAction = "loadmore";
@@ -207,14 +207,14 @@ class ScrollView extends React.Component {
     var scrollKey =this.isHorizontal?"overflow-x":"overflow-y";
     this.isInLoading = false;
     this.setState({offset:-1,animate:true,refreshState:"done"});
-    this.scrollarea.style[scrollKey] = "auto";
+    this.scrollarea.classList.remove("xz-sv-scrollarea-disabled");
     this.props.onRefreshClose&&this.props.onRefreshClose();
   }
 
   loadMoreEnd(){
      var scrollKey =this.isHorizontal?"overflow-x":"overflow-y";
      this.isInLoading = false;
-     this.scrollarea.style[scrollKey] = "auto";
+     this.scrollarea.classList.remove("xz-sv-scrollarea-disabled");
      this.setState({offset:-1,animate:true});
      this.props.onLoadMoreClose&&this.props.onLoadMoreClose();
   }
@@ -404,6 +404,12 @@ class ScrollView extends React.Component {
           offset = -1;
           this.isInLoading = false;
           needAnimate = true;
+          if(this.props.onRefreshClose){
+            setTimeout(()=>{
+             this.props.onRefreshClose();
+            },0)
+          }
+          
       }
      
     }
