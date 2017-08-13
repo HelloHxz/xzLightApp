@@ -10,23 +10,26 @@ class loadingLayer extends React.Component {
     };
   }
 
-
+  renderCustom(state){
+    var child = null;
+    if(this.props.renderItem){
+      var child = this.props.renderItem(state);
+    }
+    return child;
+  }
   renderError(){
-    return null;
+    var child = this.renderCustom("error");
+    return child||null;
   }
 
   renderSuccess(){
-    if(this.props.successAutoHide!==false){
-
-    }
-    return null;
+    var child = this.renderCustom("success");
+    return child||null
   }
 
   renderDone(){
-    if(this.props.renderItem){
-      var child = this.props.renderItem("done");
-    }
-    return null;
+    var child = this.renderCustom("done");
+    return child||null
   }
 
   componentWillReceiveProps(nextPros){
@@ -38,13 +41,8 @@ class loadingLayer extends React.Component {
   }
 
   renderLoading(){
-     if(this.props.renderItem){
-      var child = this.props.renderItem("loading");
-      if(child){
-        return child;
-      }
-    }
-    return <Spin type={this.props.type||"ios"}/>;
+    var child = this.renderCustom("loading");
+    return child||<Spin type={this.props.type||"ios"}/>;
   }
 
 

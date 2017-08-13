@@ -34,6 +34,13 @@ class Spin extends React.Component {
   	}else{
 		  classNameArr.push("ios-spin");
   	}
+    if(!this.props.size){
+      style.width = ".67rem";
+      style.height = ".67rem";
+    }else{
+      style.width =this.props.size;
+      style.height = this.props.size;
+    }
     style["backgroundImage"] = 'url("'+getIOS(this.props.color,this.props.type)+'")'
     return (<span style={style} className={classNameArr.join(" ")}></span>);
   }

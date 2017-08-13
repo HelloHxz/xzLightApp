@@ -8,11 +8,12 @@ class ScrollView extends React.Component {
   constructor(props) {
     super(props)
     this.seed  = 0;
+    this.inTouch = false;
     this.tranDict = Style.getTransitionKeys();
     this.state = {
       offset:-1,
       animate:false,
-      refreshState:"none"// or done loading
+      refreshState:props.refreshState||"done"// or done loading
     };
     this.startScrollValue = 0;
     this.startY = 0;
@@ -55,6 +56,7 @@ class ScrollView extends React.Component {
   }
 
   onTouchStart(e){
+
     // e.preventDefault();
     // e.stopPropagation();
     // e.nativeEvent.stopImmediatePropagation();
@@ -90,6 +92,7 @@ class ScrollView extends React.Component {
   onTouchMove(e){
     
     if(this.isInLoading){return;}
+    this.inTouch = true;
       var touch = e.nativeEvent.touches[0];
       var curY = touch[this.config.touchkey];
       var curX = touch[this.config.otherToucKey];
@@ -149,6 +152,7 @@ class ScrollView extends React.Component {
   }
 
   onTouchEnd(){
+     this.inTouch = false; 
     if(this.props.onBeforeTouch){
       if(this.props.onBeforeTouch({
         eventName:"end",
@@ -169,7 +173,7 @@ class ScrollView extends React.Component {
     if(this.touchAction==="refresh"){
       if(this.canRefresh){
         this.isInLoading = true;
-        this.setState({offset:this.limitOffset,animate:true});
+        this.setState({offset:this.limitOffset,animate:true,refreshState:"loading"});
         setTimeout(()=>{
           this.refreshEnd();
           this.props.onRefresh();
@@ -182,7 +186,7 @@ class ScrollView extends React.Component {
     if(this.touchAction==="loadmore"){
       if(this.canLoadMore){
         this.isInLoading = true;
-        this.setState({offset:0-this.limitOffset,animate:true});
+        this.setState({offset:0-this.limitOffset,animate:true,refreshState:"done"});
         this.props.onLoadMore();
 
         this.loadMoreEnd();
@@ -197,7 +201,7 @@ class ScrollView extends React.Component {
   refreshEnd(){
     var scrollKey =this.isHorizontal?"overflow-x":"overflow-y";
     this.isInLoading = false;
-    this.setState({offset:-1,animate:true});
+    this.setState({offset:-1,animate:true,refreshState:"done"});
     this.scrollarea.style[scrollKey] = "auto";
     this.props.onRefreshClose&&this.props.onRefreshClose();
   }
@@ -342,6 +346,14 @@ class ScrollView extends React.Component {
     this.scrollarea.className = className;
   }
 
+  componentWillReceiveProps(nextPros){
+    if(nextPros.refreshState!==this.state.refreshState){
+      this.setState({
+        refreshState:nextPros.refreshState
+      });
+    }
+  }
+
   render() {
 
     var toucheEvent = {};
@@ -374,12 +386,27 @@ class ScrollView extends React.Component {
       classNameArr.push("xz-sv-youcansetotherclassname");
     }
 
+    var offset = this.state.offset;
+    var needAnimate = this.state.animate;
+
+    if(this.props.onRefresh&&!this.inTouch){
+      if(this.state.refreshState==='loading'){
+          offset = this.limitOffset;
+          this.isInLoading = true;
+          needAnimate = true;
+      }else{// if(this.state.refreshState==='done')
+          offset = -1;
+          this.isInLoading = false;
+          needAnimate = true;
+      }
+     
+    }
+
     var moveStyle = {};
     if(needTranslate){
-      var valueStr = this.isHorizontal?this.state.offset+"px,0,0":"0,"+this.state.offset+"px,0";
+      var valueStr = this.isHorizontal?offset+"px,0,0":"0,"+offset+"px,0";
       moveStyle[this.tranDict.transform] ="translate3d("+valueStr+")";
-
-      if(this.state.animate){
+      if(needAnimate){
          moveStyle[this.tranDict.transition] = "all .3s ease";
       }else{
         moveStyle[this.tranDict.transition] = "none";

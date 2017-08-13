@@ -17,17 +17,25 @@ class PageView extends React.Component {
 
   setLoadingState(){
   	this.props.store.loadingState = 'loading';
-  	// setTimeout(()=>{
-  	// 	this.props.store.loadingState = 'done';
-  	// },2000);
+  	setTimeout(()=>{
+  		this.props.store.loadingState = 'success';
+  		setTimeout(()=>{
+	  		this.props.store.loadingState = 'done';
+	  	},800);
+  	},2000);
   }
 
 
-  loadingLayerRender(status){
-  	if(status==='loading'){
+  loadingLayerRender(state){
+  	if(state==='loading'){
   		return <div className='zfb-kb-loading'>
-  			<xz.Spin color="#fff" type='android'/>
+  			<xz.Spin size='.69rem' color="#fff" type='android'/>
   			<span>加载中...</span>
+  		</div>;
+  	}else if(state==="success"){
+  		return <div className='zfb-kb-loading'>
+  			<div className='iconfont icon-chenggong'></div>
+  			<span>提交成功</span>
   		</div>;
   	}
   }

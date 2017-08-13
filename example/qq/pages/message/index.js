@@ -7,8 +7,9 @@ import HomeStore from "../home/store"
 import Store from './store'
 import Popover from './components/popover'
 import List from './components/list'
+import {observer} from 'mobx-react'
 
-
+@observer
 class PageView extends React.Component {
 	static connectStore(){
 		return {homeStore:HomeStore,store:Store}
@@ -26,9 +27,17 @@ class PageView extends React.Component {
     };
   }
 
+  componentDidMount(){
+    setTimeout(()=>{
+      this.props.store.listRefreshState = "loading";
+    },400)
+    setTimeout(()=>{
+      this.props.store.listRefreshState = "done";
+    },2400)
+  }
+
   onRefresh(){}
   render() {
-
     return (<div>
       <Popover store={this.props.store}/>
     	<div className='qq-header'>
@@ -37,6 +46,7 @@ class PageView extends React.Component {
         <span className='qq-header-act' onClick={this.showPopver.bind(this)}>更多</span>
     	</div>
       <xz.ScrollView 
+      refreshState={this.props.store.listRefreshState}
       onRefresh={this.onRefresh.bind(this)}
       className='qq-mes-scroll'>
         <SearchBar/>
