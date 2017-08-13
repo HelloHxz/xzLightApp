@@ -9,7 +9,11 @@ class ScrollView extends React.Component {
     super(props)
     this.seed  = 0;
     this.tranDict = Style.getTransitionKeys();
-    this.state = {offset:-1,animate:false};
+    this.state = {
+      offset:-1,
+      animate:false,
+      refreshState:"none"// or done loading
+    };
     this.startScrollValue = 0;
     this.startY = 0;
     this.isInLoading = 0;

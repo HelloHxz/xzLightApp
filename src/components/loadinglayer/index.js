@@ -6,7 +6,7 @@ class loadingLayer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      status:props.status||"loading" // or error  or done or success or none
+      status:props.status||"loading" // or error  or done or success or none 
     };
   }
 
@@ -23,6 +23,9 @@ class loadingLayer extends React.Component {
   }
 
   renderDone(){
+    if(this.props.renderItem){
+      var child = this.props.renderItem("done");
+    }
     return null;
   }
 
@@ -35,6 +38,12 @@ class loadingLayer extends React.Component {
   }
 
   renderLoading(){
+     if(this.props.renderItem){
+      var child = this.props.renderItem("loading");
+      if(child){
+        return child;
+      }
+    }
     return <Spin type={this.props.type||"ios"}/>;
   }
 
@@ -45,6 +54,7 @@ class loadingLayer extends React.Component {
       classNameArr.push(this.props.className);
     }
     var status = this.state.status;
+    var innerClassNameArr = ["xz-lol-t"];
     var child =null;
     if(status==="error"){
       child = this.renderError();
@@ -52,13 +62,19 @@ class loadingLayer extends React.Component {
       classNameArr.push("xz-loadinglayer-none");
     }else if(status==="done"){
       child = this.renderDone();
+      if(!child){
+        innerClassNameArr.push("xz-loadinglayer-none");
+      }
     }else if(status==="success"){
       child = this.renderSuccess();
     }else{
       child = this.renderLoading();
     }
 
-    return (<div className={classNameArr.join(" ")}>{child}</div>);
+    return (<div className={classNameArr.join(" ")}>
+      <div className={innerClassNameArr.join(" ")}>{child}</div>
+       {this.props.children}
+      </div>);
   }
 }
 

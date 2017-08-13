@@ -15,7 +15,7 @@ function checkStatus(response) {
   };
 }
 
-var NewFetch = function(url, opts){
+var nfetch = function(url, opts){
 	opts = opts||{};
 	if(["include","same-origin","omit"].indexOf(opts.credentials)<0){
 		opts.credentials = "include";
@@ -24,6 +24,9 @@ var NewFetch = function(url, opts){
 		opts.headers=opts.headers||{};
 		if(!opts.headers["Content-Type"]){
 			opts.headers["Content-Type"] = 'application/json';
+		}
+		if(!opts.headers["Accept"]){
+			opts.headers["Accept"] = 'application/json';
 		}
 	}
     var fetchPromise = oldFetchfn(url, opts);
@@ -42,5 +45,5 @@ var NewFetch = function(url, opts){
 
 
 export default (url,config)=>{
-	return  NewFetch(url, config);
+	return nfetch(url, config);
 }

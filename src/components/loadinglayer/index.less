@@ -2,13 +2,17 @@
 
 
 .xz-loadinglayer{
+	position:relative;
+	z-index:1000;
+}
+
+.xz-lol-t{
 	position:absolute;
-	.px2rem(min-height,100);
+	bottom:0;
 	top:0;
 	left:0;
 	right:0;
-	z-index:100000;
-	background-color:#fff;
+	z-index:1000;
 	display:flex;
 	align-items:center;
 	justify-content:center;
@@ -16,16 +20,4 @@
 
 .xz-loadinglayer-none{
 	visibility:hidden;
-	opacity:0;
-	animation:hideloading .5s ease;
-}
-@keyframes hideloading{
-	0%{
-		opacity:1;
-		visibility:visible;
-	}
-	100%{
-		opacity:0;
-		visibility:hidden;
-	}
 }
