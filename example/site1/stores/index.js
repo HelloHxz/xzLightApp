@@ -7,6 +7,7 @@ class IndexStore {
     @observable mainLoadingStatus = "loading";
     @observable listLoadingStatus = "loading";
     @observable drawLayoutConfig = {};
+    @observable refreshState="done";
     @observable isShowSelector =false;
     @observable showDatePicer =false;
     @observable pickerSelectedIndexs =[0,0,0];

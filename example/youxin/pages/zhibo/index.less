@@ -1,0 +1,77 @@
+@import url('../../../../node_modules/xz-lightapp/css/common.less');
+.weibo-header{
+	.px2rem(height,100);
+	position:relative;
+	background-color:rgb(253,208,43);
+	display:flex;
+	flex-direction:row;
+	justify-content:center;
+	align-items:center;
+}
+.weibo-main-segment{
+	.px2rem(height,90);
+	.px2rem(width,460);
+	.px2rem(font-size,30);
+}
+
+.weibo-header-popover{
+	width:3rem;
+	background-color:#fff;
+	border-radius:.1rem;
+	color:#2b2b2b;
+}
+.weibo-header-popover li{
+	border-bottom:1px solid #bbb;
+	height:1.1rem;
+	line-height:1.1rem;
+	padding-left:.2rem;
+}
+.weibo-header-popover li:last-child{
+	border:none;
+}
+.weibo-main-header-btn{
+	position:absolute;
+	left:0rem;
+	.px2rem(width,100);
+	.px2rem(line-height,100);
+	text-align:center;
+	font-size:.54rem;
+	height:100%;
+}
+.weibo-main-statusview{
+	flex:1;
+}
+.weibo-segment-indicator{
+    .px2rem(border-radius,10);
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+     .px2rem(height,5);
+     position:absolute;
+     bottom:0;
+}
+
+.weibo-main-statusview .xz-statusview-item>div{
+	position:relative;
+	overflow:hidden;
+	flex:1;
+}
+
+
+.weibo-seg-tri{
+	position:relative;
+	display:inline-block;
+	transition:transform .3s ease;
+	transform:rotate(0deg);
+	width: 0;
+    .px2rem(margin-left,10);
+    height: 0;
+    border-left: .12rem solid transparent;
+    border-right: .12rem solid transparent;
+    border-top: .12rem solid #5d5d5d;
+}
+.weibo-tri-rotate{
+	transform:rotate(180deg);
+}
+.visibilityhidden{
+	visibility:hidden;
+}

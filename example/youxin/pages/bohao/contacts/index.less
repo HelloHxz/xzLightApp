@@ -1,0 +1,103 @@
+@import url('../../../../../node_modules/xz-lightapp/css/common.less');
+.weichat-contact-secheader{
+	height:.7rem;
+	line-height:.7rem;
+	background-color:rgb(229,226,216);
+	padding-left:.3rem;
+
+	color:rgb(157,153,149);
+}
+
+.weichat-scroll .xz-scroll-sticky-wrapper .weichat-contact-secheader{
+	color:#3db93d;
+	background-color:#fff;
+	border:1px solid #bbb;
+}
+.weichat-contact-group{
+	padding-left:.2rem;
+}
+.weichat-contact-group .weichat-contact-row{
+	border-bottom:1px solid #bbb;
+	height:1.5rem;
+	display:flex;
+	flex-direction:row;
+	align-items:center;
+}
+.weichat-contact-row span{
+	margin-left:.4rem;
+}
+.weichat-contact-avatar{
+	height:1rem;
+	width:1rem;
+	background-color:#bbb;
+}
+
+.weichat-pinyin-wrapper{
+	position:absolute;
+	right:1.2rem;
+}
+.weichat-pinyin-indicator-hide{
+	transition:visibility .6s ease, opacity .6s ease;
+	visibility:hidden;
+	opacity:0;
+}
+.weichat-pinyin-indicator{
+	position:relative;
+	z-index:2;
+	color:#fff;
+	line-height:1rem;
+	text-align:center;
+	font-size:.6rem;
+	width:1.04rem;
+	opacity:.3;
+	height:1rem;
+	border-radius:100%;
+	background-color:rgb(0,0,0);
+}
+.weichat-pinyin-indicator:before{
+	content:"";
+	width: 0;
+	display:block;
+	position:absolute;
+	right:-.16rem;
+	top:50%;
+	transform:translateY(-50%);
+    height: 0;
+    border-top: .3rem solid transparent;
+    border-left: .3rem solid rgb(0,0,0);
+    border-bottom: .3rem solid transparent;
+}
+
+.weichat-pinyin-list{
+	position:absolute;
+	width:1rem;
+	top:50%;
+	z-index:10;
+	margin-top:.8rem;
+	font-size:.3rem;
+	transform:translateY(-50%);
+	right:0;
+}
+.weichat-pinyin-row{
+	text-align:right;
+	position:relative;
+	padding-right:.1rem;
+	height:.5rem;
+	line-height:.5rem;
+}
+
+.weichat-pinyin-row span{
+	display:inline-block;
+	position:relative;
+	width:.4rem;
+	height:.4rem;
+	line-height:.4rem;
+	border-radius:100%;
+	text-align:center;
+}
+
+.weichat-pinyin-row.selected span{
+	color:#fff;
+	font-size:.28rem;
+	background-color:#3db93d;
+}

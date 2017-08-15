@@ -2,6 +2,10 @@ import React from "react"
 import "./index.less"
 import Spin from "../spin"
 
+
+/*
+  scrollKey pageview onIntoView
+*/
 class loadingLayer extends React.Component {
   constructor(props) {
     super(props)

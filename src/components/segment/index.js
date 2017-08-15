@@ -49,6 +49,7 @@ class Segment extends React.Component {
 
   _change(selectedKey,itemInstance){
       this.props.onChange&&this.props.onChange({
+        preSelectedKey:this.state.selectedKey,
         selectedKey:selectedKey,
         itemInstance:itemInstance,
         selectedIndex:itemInstance.props.index,  

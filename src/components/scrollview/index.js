@@ -27,7 +27,8 @@ class ScrollView extends React.Component {
       this.stickyOffset = 0;
     }
     this.isHorizontal = direction.toLowerCase()!=="vertical";
-    this.limitOffset = this.props.limitOffset||(!this.isHorizontal?Style.screen.height:Style.screen.width)*.1;
+
+    this.limitOffset = this.props.limitOffset||(!this.isHorizontal?Style.rem2px(1.3):Style.rem2px(1.3));
 
     this.disableCheckSticky = props.disableCheckSticky||false;
     this.config = {
@@ -183,6 +184,11 @@ class ScrollView extends React.Component {
         this.isInLoading = true;
         this.setState({offset:this.limitOffset,animate:true,refreshState:"loading"});
         this.props.onRefresh();
+        if(!this.props.refreshState){
+          setTimeout(()=>{
+           this.refreshEnd();//只是演示
+          },1300);
+        }
       }else{
         this.refreshEnd();
       }

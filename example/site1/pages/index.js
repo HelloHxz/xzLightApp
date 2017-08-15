@@ -153,7 +153,10 @@ class PageView extends React.Component {
   }
 
   onRefresh(){
-
+    setTimeout(()=>{
+      this.seed+=1;
+      this.props.indexStore.refreshState = "done"+this.seed;
+    },2000)
   }
 
   onLoadMore(){
@@ -273,6 +276,7 @@ class PageView extends React.Component {
            <xz.ScrollView 
             scrollKey="mainhorscroll"
             pageview={this}
+            refreshState={this.props.indexStore.refreshState}
             limitOffset={style.px2px(60)}
             renderLoadMoreIndicator={this.hrRenderLoadMoreIndicator.bind(this)}
             onLoadMore ={this.onLoadMoreHor.bind(this)}

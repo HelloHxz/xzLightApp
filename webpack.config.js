@@ -5,14 +5,8 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var bodyParser = require('body-parser')
 
-var config = {
-  host:null,
-  port:8080
-}
-
-
 function getEntryAndHtmlPlugin(){
-  var siteArr = ["site1","qq","calendar","desktop","email","zhifubao","weibo","weichat","meituan",'youliao'];
+  var siteArr = ["site1","qq","calendar","desktop","email","zhifubao","weibo","weichat","meituan",'youliao','youxin'];
   var re = {entry:{},htmlplugins:[]};
   for(var i=0,j=siteArr.length;i<j;i++){
     var siteName = siteArr[i];
@@ -62,10 +56,9 @@ module.exports = function (env) {
   
   
   if(!isProd){
-    var ip =config.host||"localhost";
-    var port =  config.port||8080;
-    var url = ip+":"+port;
-    url = "http://"+url;
+    var ip = arguments["1"].host||"localhost";
+    var port =   arguments["1"].port||8080;
+    var url = "http://"+ip+":"+port;
     entry.dev_patch = 'react-hot-loader/patch';
     entry.dev_client = 'webpack-dev-server/client?'+url;
     entry.dev_server= 'webpack/hot/only-dev-server';

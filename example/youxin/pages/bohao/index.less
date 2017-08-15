@@ -1,0 +1,40 @@
+@import url('../../../../node_modules/xz-lightapp/css/common.less');
+.weibo-bohao-segment{
+	.px2rem(height,90);
+	.px2rem(width,290);
+	.px2rem(font-size,30);
+}
+
+.weibo-bohao-segment,.weibo-main-segment{
+	color:rgb(137,100,13);
+}
+.weibo-bohao-segment .xz-segment-selected-item,.weibo-main-segment .xz-segment-selected-item{
+	color:#333;
+}
+
+.youxin-keyborad{
+	position:absolute;
+	z-index:3;
+	width:100%;
+	height:9rem;
+	background-color:#fff;
+	bottom:0;
+	transition:transform .2s ease;
+	transform:translate3d(0,100%,0);
+}
+
+.youxin-keyborad-show{
+	transform:translate3d(0,0,0);
+}
+
+.full-scoll{
+	height:100%;
+	width:100%;
+	overflow:hidden;
+}
+
+.youxin-contacts-page,.youxin-out{
+	position:relative;
+	height:100%;
+	width:100%;
+}
