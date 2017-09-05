@@ -322,7 +322,7 @@ class ScrollView extends React.Component {
     }
     var child = null;
     if(this.isInLoading){
-      child = <span><Spin type='android'/></span>;
+      child = <span><Spin/></span>;
     }else{
       var text = this.canRefresh?"释放更新":"下拉刷新";
       child = <span>{text}</span>;

@@ -449,6 +449,7 @@ class Swiper extends React.Component {
           //&&i!==1
           key+="_"+wrapIndex;
         }
+
         
         var itemStyle = {};
         var v = ((i-1)*this.space+(i-1)*this.WrapperSizeValue+this.state.offset);

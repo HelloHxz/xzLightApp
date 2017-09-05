@@ -114,7 +114,28 @@ return {
     rules: [
       {
         test: /\.jsx?$/,
-        use: [ 'babel-loader', ],
+        use: {
+          loader:'babel-loader',
+          options:{
+            "presets": [
+              ["es2015", {"modules": false}],
+              "react",
+              "stage-0"
+            ],
+            "plugins": [
+              "transform-decorators-legacy","transform-class-properties","react-hot-loader/babel",[
+                "transform-runtime",
+                {
+                  "helpers": false,
+                  "polyfill": false,
+                  "regenerator": true,
+                  "moduleName": "babel-runtime"
+                }
+              ]
+            ]
+          }
+        },
+        
       },
       {
         test: /\.css$/,

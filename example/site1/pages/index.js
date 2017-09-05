@@ -1,7 +1,7 @@
 import React from "react"
 
 import "../css/index.less"
-import {xz,style,shallowEqual} from "../../../index"
+import {xz,style} from "../../../index"
 
 import globalStore from "../stores/global"
 import indexStore from "../stores/index"
@@ -84,15 +84,6 @@ class PageView extends React.Component {
       this.props.indexStore.mainLoadingStatus = "none";
     },1000)
   }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      !shallowEqual(this.state, nextState)
-    );
-  }
-
- 
-
 
 
   showPage(){

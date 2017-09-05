@@ -24,6 +24,7 @@ Fetch('./getJSON',{timeout:10000})
 .then((res)=>{return res.json()})
 .then((data)=>{
 	console.log(data)
+	
 }).catch((e)=>{
 	console.log(e);
 });
@@ -35,7 +36,8 @@ Fetch('./postJSON',{method:"POST",body:JSON.stringify({s:"ss","name":"huxiaozhon
 	console.log(data)
 }).catch((e)=>{
 	console.log(e);
-});;
+});
+
 
 
 
